@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mintlify Starter Kit",
+  "name": "RugFreePump Documentation",
   "colors": {
     "primary": "#16A34A",
     "light": "#07C983",
@@ -11,44 +11,149 @@
   "navigation": {
     "pages": [
       {
-        "group": "Getting Started",
+        "group": "Welcome",
         "pages": [
-          "index",
-          "quickstart"
+          "index"
+        ]
+      },
+      {
+        "group": "Overview",
+        "pages": [
+          "overview/what-is-rugfreepump",
+          "overview/how-rugfreepump-works"
+        ]
+      },
+      {
+        "group": "User Guides",
+        "pages": [
+          {
+            "group": "First Steps",
+            "pages": [
+              "user-guides/first-steps/getting-started",
+              "user-guides/first-steps/what-you-need",
+              "user-guides/first-steps/choosing-a-wallet",
+              "user-guides/first-steps/creating-a-wallet",
+              "user-guides/first-steps/funding-a-wallet",
+              "user-guides/first-steps/your-first-purchase"
+            ]
+          },
+          "user-guides/trust-and-safety",
+          {
+            "group": "For Token Creators",
+            "pages": [
+              "user-guides/for-token-creators/creating-a-bonding-curve-sale",
+              "user-guides/for-token-creators/migrating-raised-liquidity"
+            ]
+          },
+          {
+            "group": "For Token Buyers",
+            "pages": [
+              "user-guides/for-token-buyers/buying-bonding-curve-sale-tokens",
+              "user-guides/for-token-buyers/withdrawing-contributed-sol"
+            ]
+          },
+          "user-guides/faq"
+        ]
+      },
+      {
+        "group": "Core Mechanics",
+        "pages": [
+          "core-mechanics/tokenomics",
+          "core-mechanics/token-metadata",
+          "core-mechanics/slippage-and-priority",
+          "core-mechanics/oracle-price",
+          "core-mechanics/bonding-curve",
+          "core-mechanics/protocol-fees",
+          "core-mechanics/sale-lifecycle"
+        ]
+      },
+      {
+        "group": "On-Chain Program",
+        "pages": [
+          "on-chain-program/overview",
+          "on-chain-program/proof-of-execution"
+        ]
+      },
+      {
+        "group": "Developer Guide",
+        "pages": [
+          "developer-guide/building-on-rugfreepump",
+          {
+            "group": "On-Chain Program",
+            "pages": [
+              "developer-guide/on-chain-program/program-id-and-network",
+              "developer-guide/on-chain-program/public-instructions",
+              "developer-guide/on-chain-program/accounts-and-account-structures",
+              "developer-guide/on-chain-program/pda-derivation-and-seeds",
+              "developer-guide/on-chain-program/instruction-arguments",
+              "developer-guide/on-chain-program/transaction-requirements",
+              "developer-guide/on-chain-program/anchor-idl",
+              "developer-guide/on-chain-program/generated-types"
+            ]
+          },
+          {
+            "group": "API Integration",
+            "pages": [
+              "developer-guide/api-integration/overview",
+              "developer-guide/api-integration/create-sale",
+              "developer-guide/api-integration/buy",
+              "developer-guide/api-integration/withdraw",
+              "developer-guide/api-integration/migrate-liquidity",
+              "developer-guide/api-integration/request-and-response",
+              "developer-guide/api-integration/rate-limits-and-restrictions",
+              "developer-guide/api-integration/errors",
+              "developer-guide/api-integration/realtime-websocket"
+            ]
+          }
+        ]
+      },
+      {
+        "group": "Security & Risk",
+        "pages": [
+          "security-and-risk/security-model",
+          "security-and-risk/smart-contract-risks",
+          "security-and-risk/oracle-risks",
+          "security-and-risk/launch-and-sale-risks",
+          "security-and-risk/fees-and-refunds",
+          "security-and-risk/transaction-and-wallet-risks",
+          "security-and-risk/token-and-creator-risks",
+          "security-and-risk/liquidity-and-migration-risks",
+          "security-and-risk/platform-and-infrastructure-risks",
+          "security-and-risk/user-responsibilities",
+          "security-and-risk/security-disclosure"
+        ]
+      },
+      {
+        "group": "Reward Program",
+        "pages": [
+          "reward-program/overview",
+          "reward-program/how-rewards-are-earned",
+          "reward-program/reward-periods-and-rankings",
+          "reward-program/reward-calculation",
+          "reward-program/reward-distribution"
+        ]
+      },
+      {
+        "group": "Legal & Compliance",
+        "pages": [
+          "legal-and-compliance/terms-of-service",
+          "legal-and-compliance/privacy-policy",
+          "legal-and-compliance/risk-disclosure",
+          "legal-and-compliance/dmca-policy",
+          "legal-and-compliance/trademark-guidelines"
+        ]
+      },
+      {
+        "group": "Announcements",
+        "pages": [
+          "announcements/updates-and-changelog"
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://app.mintlify.com"
-    }
   },
   "contextual": {
     "options": [
@@ -61,12 +166,5 @@
       "cursor",
       "vscode"
     ]
-  },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
-    }
   }
 }
