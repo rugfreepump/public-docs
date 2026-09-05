@@ -1,1 +1,279 @@
+---
+title: "How RugFreePump Works"
+description: "Follow the complete RugFreePump sale lifecycle from token creation and bonding curve fundraising to migration, expiration, withdrawal, and emergency outcomes."
+---
 
+Every RugFreePump sale follows a defined lifecycle enforced by the RugFreePump on-chain program.
+
+A creator starts a bonding curve sale, buyers contribute SOL during the active fundraising period, and the sale progresses toward a defined hard cap. From there, the protocol provides a clear path for both successful and unsuccessful outcomes.
+
+A successful sale can migrate its designated liquidity to Raydium CPMM, with the resulting LP tokens automatically burned upon migration. A sale that expires before reaching its target can be resolved through the withdrawal mechanism available to eligible contributors. Completed sales can also be subject to authorized emergency procedures when required.
+
+The important distinction is that these outcomes are governed by the **on-chain program**. RugFreePump's database and indexer provide the data infrastructure used by the website, but they do not determine the underlying financial validity or protocol state.
+
+## The Sale Lifecycle
+
+At a high level, a RugFreePump sale moves through the following process:
+
+<Steps>
+  <Step title="Create a sale">
+    A creator defines a token and initializes its bonding curve sale.
+  </Step>
+
+  <Step title="Fundraising begins">
+    The sale becomes live and buyers can purchase tokens with SOL through the bonding curve.
+  </Step>
+
+  <Step title="The sale progresses">
+    Each purchase increases the amount raised and advances the sale toward its hard cap.
+  </Step>
+
+  <Step title="The sale reaches an outcome">
+    The sale either reaches its hard cap and becomes completed, or reaches its expiration without completing.
+  </Step>
+
+  <Step title="The outcome is resolved">
+    Completed sales proceed toward liquidity migration. Expired sales provide an eligible withdrawal path for contributors.
+  </Step>
+</Steps>
+
+The sections below explain each stage in more detail.
+
+## 1. Creating a Bonding Curve Sale
+
+The lifecycle begins when a creator creates a new token and initializes its bonding curve sale.
+
+The creator provides the token's core information, including its name, ticker, description, image, and optional social links. The token metadata is established as part of the creation process and becomes immutable once the coin is created.
+
+The sale is also configured with the protocol-defined supply allocation, bonding curve, funding target, and other rules that govern the fundraising process.
+
+RugFreePump can also allow the creator to make an initial purchase during creation. When used, this purchase is executed as part of the creation transaction rather than as a separate post-creation operation.
+
+Once the creation process succeeds on-chain, the sale can enter its active fundraising stage.
+
+For the complete creation process, see [Creating a Bonding Curve Sale](/user-guides/for-token-creators/creating-a-bonding-curve-sale).
+
+## 2. The Sale Goes Live
+
+A live sale is the active fundraising stage of the lifecycle.
+
+Buyers can connect their wallets and purchase the sale's tokens using SOL. The bonding curve determines the token allocation associated with each contribution according to the protocol's pricing rules.
+
+The sale displays its current state to participants, including information such as:
+
+- Amount of SOL raised
+- USD value of the raised amount
+- Sale progress
+- Tokens sold
+- Remaining sale allocation
+- Hard cap
+- Number of buyers
+- Sale start and end times
+- Individual contribution history
+
+The hard cap is the defined funding milestone that determines when the fundraising phase can be completed.
+
+### No Standard Sell During Fundraising
+
+RugFreePump intentionally does not provide a standard sell operation through the bonding curve while a sale is being funded.
+
+A buyer therefore participates in the fundraising process by contributing SOL and receiving tokens according to the bonding curve. The protocol does not provide the conventional buy-then-sell-back cycle found in unrestricted bonding curve markets.
+
+This is a fundamental part of the RugFreePump model.
+
+The purpose is to make the initial phase a structured fundraising period rather than an unrestricted market designed primarily around rapid entry and exit.
+
+## 3. SOL Contributions and Bonding Curve Pricing
+
+When a buyer makes a purchase, the RugFreePump program processes the transaction according to the current protocol state and pricing rules.
+
+The protocol uses the SOL/USD price supplied by its configured oracle together with the bonding curve to determine the token amount associated with the contribution.
+
+This allows the sale to operate against a defined economic model while participants contribute directly in SOL.
+
+The important point is that **buyers do not send SOL to an off-chain account and wait for a database to calculate their allocation**. The purchase and its resulting state are processed by the Solana program.
+
+Detailed pricing formulas, oracle validation, slippage behavior, and fee calculations are documented separately in [Core Mechanics](/core-mechanics/tokenomics).
+
+## 4. The Sale Progresses Toward Its Hard Cap
+
+Every successful fundraising campaign has a defined hard cap.
+
+As buyers contribute SOL, the sale progresses toward that target. The platform continuously reflects the resulting on-chain state through its indexed data and real-time interfaces.
+
+The sale remains live until one of its defined outcomes occurs:
+
+- It reaches the hard cap and becomes **Completed**.
+- Its fundraising period ends before reaching the required target and becomes **Expired**.
+
+A sale therefore cannot simply remain indefinitely in an undefined intermediate state.
+
+## 5. A Sale Becomes Completed
+
+When the sale reaches its hard cap, the fundraising phase is complete.
+
+The sale enters the **Completed** state and the bonding curve is no longer treated as an active fundraising campaign.
+
+At this point, the next objective is liquidity migration.
+
+A completed sale has a defined migration period during which the required migration operation can be performed. The migration process transitions the project from the bonding curve fundraising environment to public decentralized liquidity.
+
+For creators, this is the point at which the responsibility shifts from completing the fundraising campaign to completing its liquidity migration.
+
+See [Migrating Raised Liquidity](/user-guides/for-token-creators/migrating-raised-liquidity) for the operational migration process.
+
+## 6. Liquidity Migrates to Raydium
+
+A successfully completed sale can migrate its designated liquidity to **Raydium CPMM**.
+
+The migration is performed through the RugFreePump protocol rather than by simply changing a status in the platform database.
+
+Once the migration succeeds, the sale enters the **Migrated** state.
+
+The migration represents the transition from the bonding curve phase to the project's public liquidity phase.
+
+### LP Tokens Are Automatically Burned
+
+As part of the migration, the resulting **liquidity-provider (LP) tokens are automatically burned**.
+
+This is an important part of the RugFreePump design.
+
+The LP tokens created through the migration are not left as ordinary creator-controlled assets after the migration. They are burned as part of the protocol's migration process.
+
+This behavior is enforced on-chain.
+
+The database may display the resulting migrated state and liquidity information, but it does not control whether the LP tokens are burned.
+
+## 7. A Sale Expires
+
+A sale does not need to reach its hard cap to reach a final outcome.
+
+If the fundraising period ends before the required target is reached, the sale becomes **Expired**.
+
+An expired sale is no longer an active fundraising campaign and cannot continue accepting purchases as though it were still live.
+
+Instead, the protocol provides an exit path for eligible contributors through the withdrawal mechanism.
+
+## 8. Eligible Buyers Can Withdraw
+
+For an expired sale, buyers who have eligible contributions can invoke the withdrawal operation through the platform.
+
+The withdrawal operation is performed on-chain and follows the protocol's withdrawal rules.
+
+Importantly, withdrawal is **not a token sell**.
+
+It is the protocol's mechanism for resolving an eligible buyer's contribution when the fundraising campaign does not reach its required outcome.
+
+The amount recoverable by the buyer is determined by the on-chain withdrawal rules rather than by a value stored or calculated by the website.
+
+For the detailed withdrawal rules, see [Withdrawing Contributed SOL](/user-guides/for-token-buyers/withdrawing-contributed-sol).
+
+### Purchased Tokens Are Resolved During Withdrawal
+
+When an eligible buyer withdraws, the protocol also resolves the tokens associated with that contribution.
+
+Any remaining purchased tokens still held in the withdrawing wallet are **automatically burned** as part of the withdrawal process.
+
+This means those tokens do not remain as a valuable token position after the buyer has withdrawn their contribution.
+
+If the buyer previously transferred those tokens to another wallet, the transfer does not create an additional withdrawal claim. Those transferred tokens have **no value or entitlement in the withdrawal process**.
+
+This distinction is important: withdrawal resolves the buyer's eligible contribution according to the protocol rules; it does not attempt to track or recover tokens that have been transferred elsewhere.
+
+## 9. Canceled Sales
+
+Cancellation is different from expiration.
+
+An expired sale reaches that state because its fundraising period ends without reaching the required target. A canceled sale is an **authority-controlled emergency outcome**.
+
+A completed sale can be canceled when an authorized emergency procedure is required.
+
+Cancellation is not an ordinary part of a successful sale's expected lifecycle. It exists as a protocol-defined emergency path.
+
+When a sale is canceled, eligible buyers can use the **same withdrawal mechanism** used for expired sales.
+
+There is no separate buyer withdrawal operation specifically for canceled sales.
+
+The cancellation authority and the conditions under which the operation can be performed are enforced by the on-chain program.
+
+## 10. Emergency Recovery and Migration
+
+RugFreePump also provides an emergency recovery path for finalized sales.
+
+Recovery is not a normal user-facing sale stage. It is an authority-restricted procedure designed for exceptional situations where a finalized sale requires intervention before its liquidity can be migrated.
+
+Under the recovery process, the required on-chain authority can recover the applicable finalized-sale liquidity and subsequently perform the migration operation.
+
+The important distinction is that this is still governed by the protocol's on-chain rules. The database cannot independently recover funds, change ownership of a sale, or authorize a migration simply by changing stored data.
+
+These procedures exist as controlled emergency mechanisms rather than as ordinary alternatives to the normal migration lifecycle.
+
+## 11. The Blockchain Is the Source of Truth
+
+The entire lifecycle is built around a clear separation between **on-chain protocol state** and **off-chain application infrastructure**.
+
+The RugFreePump on-chain program is responsible for enforcing the rules governing critical operations.
+
+The indexer and database serve a different purpose.
+
+They observe blockchain activity and maintain indexed representations that allow the platform to provide:
+
+- Project discovery
+- Search
+- Sorting
+- Statistics
+- Profiles
+- Contribution history
+- Sale status displays
+- Rankings
+- Real-time application updates
+
+This architecture means the database is not trusted to decide whether a user is entitled to funds or whether a protocol operation is valid.
+
+For example, changing a database record cannot:
+
+- Create a valid withdrawal entitlement.
+- Mark a sale as successfully migrated on-chain.
+- Move user funds.
+- Burn protocol-controlled LP tokens.
+- Authorize an otherwise unauthorized operation.
+
+The underlying Solana state and the rules enforced by the RugFreePump program remain authoritative.
+
+## 12. The Complete Lifecycle at a Glance
+
+The normal lifecycle can therefore be summarized as:
+
+```text
+Create Sale
+     │
+     ▼
+   Live
+     │
+     ├─────────────── reaches hard cap ───────────────┐
+     │                                                 │
+     │                                                 ▼
+     │                                            Completed
+     │                                                 │
+     │                                  ┌──────────────┴──────────────┐
+     │                                  │                             │
+     │                             Normal path                 Emergency path
+     │                                  │                             │
+     │                                  ▼                             ▼
+     │                             Migrated                     Canceled
+     │                                  │                             │
+     │                         LP tokens burned                       │
+     │                                                                │
+     │                                  └──────────────┬──────────────┘
+     │                                                 │
+     │                                        Eligible withdrawal
+     │
+     └─────────────── expires before target ───────────┘
+                                                       │
+                                                       ▼
+                                                   Expired
+                                                       │
+                                              Eligible withdrawal
+                                                       │
+                                                       ▼
+                                      Remaining held tokens burned
