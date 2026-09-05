@@ -10,6 +10,11 @@
   "interaction": {
     "drilldown": false
   },
+  "feedback": {
+    "thumbsRating": true,
+    "suggestEdit": true,
+    "raiseIssue": true
+  },
   "favicon": "/favicon.svg",
   "navigation": {
     "pages": [
