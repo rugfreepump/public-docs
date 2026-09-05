@@ -5,27 +5,27 @@ description: "The official documentation for RugFreePump."
 
 # Welcome To RugFreePump
 
-RugFreePump is a next-generation, high-conviction crowdfunded launchpad built natively on Solana. It moves away from the unrestricted buy-and-sell model commonly used by traditional bonding curve launchpads and introduces a structured, protocol-enforced framework for taking a token from creation through its funding phase and, when successful, into public liquidity.
+RugFreePump is a next-generation, high-conviction crowdfunded launchpad built natively on Solana. Shifting away from the unrestricted buy-and-sell execution patterns commonly used by traditional bonding curve launchpads, RugFreePump introduces a structured, protocol-enforced framework designed to navigate a token's lifecycle from initial creation through its fundraising phase and into public liquidity.
 
-Traditional token launches can expose participants to extreme early-stage speculation, automated sniping, rapid sell-offs, and significant reliance on the behavior of token creators. RugFreePump takes a different approach: important rules governing the launch are enforced by the on-chain program itself, creating a clearly defined environment where creators and buyers know how a sale can progress and what happens at each stage.
+Traditional token launches can expose participants to extreme early-stage speculation, automated sniping, rapid token dumps, and significant reliance on the individual behavior of token creators. RugFreePump addresses these specific challenges by embedding foundational operational rules directly within an on-chain smart contract program. This architectural approach establishes a clearly defined environment where creators and buyers can independently evaluate how a sale progresses and understand the programmatic conditions set for each stage.
 
 ### Built Around Conviction
 
-RugFreePump's launch model is designed to make the fundraising phase about building genuine participation rather than enabling an unrestricted race to buy and immediately sell. During an active sale, the protocol does not provide a normal sell operation, creating a purely additive funding phase in which contributions move the project toward its defined funding milestone.
+RugFreePump’s launch model is designed to steer the fundraising phase toward genuine community alignment rather than enabling an unrestricted race to buy and immediately flip assets. During an active sale, the protocol's smart contract does not provide a standard sell routine, creating a purely additive funding phase in which token contributions move the project sequentially toward its designated funding milestone.
 
 ### Defined Outcomes
 
-Every sale follows a defined lifecycle. A successful sale reaches its funding target and becomes eligible for liquidity migration. A sale that expires without reaching its target enters an expired state, allowing eligible buyers to invoke the withdrawal mechanism and recover their contributed SOL according to the protocol's rules.
+Every token sale on the platform follows a strict, code-driven lifecycle. A successful sale that fulfills its funding target becomes eligible for liquidity migration. Conversely, a sale that expires without reaching its target enters a formal expiration state, which allows eligible buyers to invoke a manual withdrawal mechanism on the dashboard to recover their contributed SOL according to the protocol's internal rules.
 
 ### On-Chain by Design
 
-The rules that govern pricing, contributions, sale state transitions, fees, withdrawals, and migration are implemented through RugFreePump's Solana program. This reduces dependence on off-chain promises and gives participants a way to verify protocol execution directly on-chain.
+The rules that govern pricing curves, asset contributions, sale state transitions, protocol fees, withdrawals, and liquidity migration are implemented programmatically through RugFreePump's Solana program. This design architecture reduces dependence on off-chain variables or counterparty assurances, providing participants with a transparent method to verify protocol execution directly on the ledger.
 
 ### An Ecosystem, Not Just a Launch
 
-RugFreePump also provides infrastructure for developers, real-time integrations, and a reward program that recognizes active creators and buyers. From the public on-chain program to APIs and real-time data feeds, the platform is designed to support an ecosystem that can grow beyond the launch interface itself.
+RugFreePump provides more than a standalone frontend interface; it establishes an automated infrastructure layer supporting developers, real-time data integrations, and an ecosystem reward program that recognizes active creators and buyers. From the public on-chain program to custom APIs and low-latency data feeds, the platform is engineered to support a scalable network that expands beyond the launch interface itself.
 
-These docs provide the complete guide to RugFreePump. Explore the sections below to understand how the platform works, how to create and participate in sales, how its mechanics are enforced on-chain, and how to build on top of the protocol.
+These docs serve as the complete technical and operational guide to RugFreePump. Explore the sections below to understand how the platform works, how to navigate sales, how mechanics are enforced on-chain, and how to build on top of the protocol.
 
 ## Explore the Documentation
 
