@@ -240,17 +240,16 @@ The complete sale lifecycle can be summarized in one view:
 flowchart LR
     A["Create"] --> B["Live"]
 
-    B -->|"Sale threshold reached"| C["Completed"]
+    B -->|"Threshold reached"| C["Completed"]
     B -->|"Time limit reached"| D["Expired"]
 
-    C -->|"Successful liquidity migration"| E["Migrated"]
+    C -->|"Successful migration"| E["Migrated"]
 
-    C -->|"Authorized emergency cancellation"| F["Canceled"]
+    C -->|"Authorized emergency action"| F["Canceled"]
 
     D --> G["Withdrawal"]
     F --> G
 
-    C -.->|"Exceptional recovery"| H["Emergency Recovery"]
-    H -.->|"Normal migration can proceed"| E
+    C -.-> H["Emergency Recovery"]
 
 Continue with [How RugFreePump Works](/overview/how-rugfreepump-works) to see how a campaign progresses from creation through fundraising and its possible outcomes.
