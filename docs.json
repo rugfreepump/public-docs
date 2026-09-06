@@ -27,8 +27,7 @@
       {
         "group": "Overview",
         "pages": [
-          "overview/what-is-rugfreepump",
-          "overview/how-rugfreepump-works"
+          "overview"
         ]
       },
       {
