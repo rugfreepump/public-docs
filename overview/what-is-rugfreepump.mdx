@@ -1,161 +1,197 @@
 ---
 title: "What is RugFreePump"
-description: "Understand what RugFreePump is, why it was designed, and how its high-conviction fundraising model differs from conventional token launches."
+description: "Understand how RugFreePump gives creators and buyers a more focused fundraising environment through its high-conviction launch model."
 ---
 
 RugFreePump is a **Solana-native, high-conviction crowdfunded launchpad designed to replace unrestricted buy-and-sell bonding curves with a structured fundraising phase**.
 
 Instead of allowing immediate trading and potential short-term sell pressure, the protocol requires buyers to contribute SOL toward a defined funding target. Successful campaigns can migrate liquidity to **Raydium CPMM**, with the resulting LP tokens automatically burned, while unsuccessful campaigns provide a protocol-defined mechanism for eligible buyers to withdraw their contributed SOL.
 
-The result is a launch model built around **committed fundraising, defined outcomes, and protocol-enforced execution**.
+The result is a launch model built around **committed fundraising, shared incentives, and protocol-enforced outcomes**.
 
 ## Why RugFreePump Exists
 
-The earliest stage of a token launch can create difficult conditions for both creators and buyers.
+Launching a token is more than creating a mint and opening a market.
 
-Traditional unrestricted bonding curve launches can encourage rapid speculation, automated sniping, immediate profit-taking, and sudden token selling. A creator can spend significant time building a project and attracting a community while newly purchased tokens can still be sold back into the bonding curve moments later.
+Creators spend time developing their project, building a brand, growing a community, preparing their roadmap, creating content, and promoting the launch. They need contributors to believe in what they are building and help the campaign reach the funding required to move forward.
 
-This can make the fundraising environment heavily influenced by short-term market behavior.
+Traditional buy-and-sell bonding curve launches can make this difficult.
 
-Buyers may feel pressure to react to rapid price movements rather than evaluate a project on its fundamentals, while creators can face continuous sell pressure during the period in which they are trying to build momentum and community participation.
+When buyers can immediately sell their tokens back into the bonding curve, early participants can take profits or exit their positions while the creator is still trying to build momentum. Rapid selling can create pressure on later buyers, weaken confidence in the launch, and make fundraising increasingly difficult.
 
-RugFreePump was designed to address this structural problem by changing the role of the bonding curve during the initial launch.
+The result can be frustrating for both sides.
 
-Instead of functioning as an unrestricted early market, the bonding curve operates within a **committed fundraising phase** with predefined rules and a defined path toward completion or resolution.
+A creator can put substantial effort into building a project and attracting a community, only to see the launch dominated by short-term trading behavior. At the same time, buyers may become more concerned about who is going to sell next than about the project they originally came to support.
 
-The objective is not to eliminate the broader risks of cryptocurrency or individual projects. It is to reduce specific risks and incentives created by unrestricted early-stage token trading.
+RugFreePump was designed around a different idea:
 
-## Built Around Conviction
+**The fundraising phase should give the creator and contributors an opportunity to build toward the same objective.**
 
-The defining feature of RugFreePump is its **high-conviction fundraising model**.
+## Built for Creators
 
-During an active sale, the protocol does not provide a standard token-selling operation. Buyers can contribute SOL and receive tokens according to the bonding curve, but they cannot immediately sell those tokens back through the same mechanism.
+Creators are not simply launching another token. They are putting their work behind a project.
 
-This changes the nature of participation.
+They may spend weeks or months developing an idea, building a community, preparing products, creating a brand, and promoting the launch. When the fundraising campaign begins, every new contributor represents progress toward turning that work into a funded project.
 
-For creators, marketing and community-building efforts can have more durable value because newly acquired tokens cannot simply be dumped back into the bonding curve during the fundraising phase. Capital attracted through the launch remains aligned with the project's progress toward its funding target.
+RugFreePump is designed to protect that fundraising momentum from one of the most disruptive mechanics of traditional bonding curve launches: **immediate sell-back through the bonding curve**.
 
-For buyers, the rules make the purpose of the fundraising phase explicit: participation is a commitment to the campaign rather than an unrestricted opportunity to enter and exit the bonding curve.
+During an active sale, there is no standard token-selling operation. A buyer can contribute SOL and receive tokens according to the bonding curve, but those tokens cannot simply be sold back through the bonding curve while the fundraising phase is active.
 
-This structure is intended to create a more focused environment for building a project and evaluating a launch without the constant pressure of immediate bonding curve sell-back activity.
+This means the capital contributed during the campaign remains committed to the fundraising process rather than constantly flowing in and out through buy-and-sell activity.
 
-For detailed purchase and pricing mechanics, see [Bonding Curve](/core-mechanics/bonding-curve) and [Slippage & Priority](/core-mechanics/slippage-and-priority).
+That can give creators a more focused environment in which to:
 
-## Defined Outcomes
+- Build and communicate their project.
+- Grow their community.
+- Promote the campaign.
+- Attract new contributors.
+- Work toward the funding target.
+- Turn fundraising momentum into a successful liquidity migration.
 
-RugFreePump gives every sale a defined protocol-level lifecycle.
+Most importantly, **a creator's marketing effort is not immediately competing against bonding-curve sell pressure from the same launch mechanism**.
 
-A sale can ultimately become:
+The protocol cannot guarantee that a project will succeed, but its design is intended to give the creator's work a stronger opportunity to build sustained fundraising momentum.
 
-- **Completed** — the sale reaches its funding target and becomes eligible for liquidity migration.
-- **Migrated** — the completed sale successfully transitions its designated liquidity to Raydium.
-- **Expired** — the sale reaches its time limit without reaching its funding target.
-- **Canceled** — a completed sale is canceled through an authorized emergency procedure.
+## Built for Buyers
 
-These outcomes provide a predictable framework for how a campaign can conclude rather than leaving its resolution entirely to off-chain decisions.
+The same design changes the experience for contributors.
 
-The complete lifecycle and transition conditions are covered in [How RugFreePump Works](/overview/how-rugfreepump-works) and [Sale Lifecycle](/core-mechanics/sale-lifecycle).
+In an unrestricted bonding curve launch, buying can become a race against other participants. A buyer may have to constantly consider whether earlier buyers are about to sell, whether a large wallet will dump into the curve, or whether the next price movement will trigger another wave of selling.
+
+That can turn participation into a highly reactive experience.
+
+RugFreePump separates the fundraising phase from that immediate buy-and-sell cycle.
+
+While the sale is active, contributors cannot simply sell their newly acquired tokens back through the bonding curve. This removes one of the primary sources of early sell-back pressure within the fundraising mechanism.
+
+Contributors can therefore participate with a clearer understanding of what their purchase represents:
+
+**they are contributing toward a campaign's funding target, not entering an unrestricted market where every participant can immediately reverse their position through the same bonding curve.**
+
+This does not remove the risks of participating in a token project. Buyers still need to evaluate the creator, project, community, and broader market risks.
+
+What RugFreePump changes is the **fundraising environment in which that decision takes place**.
+
+## One Fundraising Goal
+
+The most important consequence of the model is that creators and contributors can work toward the same immediate objective:
+
+**Reach the funding target.**
+
+The creator can focus on building the project and attracting contributors.
+
+Contributors can participate, support the project, and help move the campaign toward completion.
+
+The creator's community-building and marketing efforts can bring additional participants into the campaign, while those contributions increase progress toward the same funding target.
+
+Because there is no standard bonding-curve sell operation during the active sale, that progress is not continually offset by contributors selling their tokens back through the same fundraising mechanism.
+
+This creates a fundamentally different relationship between the two sides of a launch:
+
+> **Creators build the project. Contributors help fund it. The protocol provides the rules that connect both sides to the same funding objective.**
+
+If the target is reached, the fundraising phase can move toward public liquidity.
 
 ## From Fundraising to Public Liquidity
 
-When a sale reaches its funding target, it enters the completion stage and becomes eligible for liquidity migration.
+When a sale reaches its funding target, it becomes **Completed** and can proceed to liquidity migration.
 
 The designated liquidity is migrated to **Raydium CPMM**, transitioning the project from its structured fundraising phase toward public decentralized liquidity.
 
-As part of the migration, the resulting **LP tokens are automatically burned**. This means the LP tokens created through the migration are not left under the creator's ordinary control after migration.
+As part of the migration, the resulting **LP tokens are automatically burned**.
 
-The migration and LP-token burn are executed through the on-chain protocol.
+The result is a clear progression from fundraising to public liquidity rather than leaving the project inside an indefinite launch phase.
 
-For the practical creator workflow, see [Migrating Raised Liquidity](/user-guides/for-token-creators/migrating-raised-liquidity).
+For the practical migration process, see [Migrating Raised Liquidity](/user-guides/for-token-creators/migrating-raised-liquidity).
 
-## When a Sale Does Not Complete
+## When a Campaign Does Not Reach Its Target
 
-A sale may reach its time limit without reaching its funding target.
+Not every campaign will reach its funding target.
 
-When this happens, eligible buyers can manually withdraw their contributed SOL through the platform according to the protocol's withdrawal rules.
+If a sale reaches its time limit without completing, it becomes **Expired**. Eligible buyers can then manually withdraw their contributed SOL through the platform according to the protocol's withdrawal rules.
 
-Withdrawal is **not a token sell**. As part of an eligible withdrawal, any remaining purchased tokens from that contribution that are still held by the withdrawing wallet are automatically burned.
+Withdrawal is a protocol-defined resolution rather than a creator voluntarily returning contributions.
 
-If those tokens were previously transferred to another wallet, the transfer does not create another withdrawal entitlement. Those transferred tokens have no value or claim within the withdrawal process.
-
-The same withdrawal mechanism applies to eligible buyers when a completed sale is subsequently canceled through an authorized emergency procedure.
+The same withdrawal mechanism is available to eligible buyers when a completed sale is subsequently **Canceled** through an authorized emergency procedure.
 
 For the complete withdrawal process, see [Withdrawing Contributed SOL](/user-guides/for-token-buyers/withdrawing-contributed-sol).
 
-## On-Chain by Design
+## Enforced by the Protocol
 
-RugFreePump places its core financial and lifecycle rules within a **Solana on-chain program**.
+The principles behind RugFreePump are not simply promises made by the platform.
 
-The program is responsible for enforcing protocol operations such as:
+Its core financial and lifecycle rules are implemented through a **Solana on-chain program**.
 
-- Creating token sales
-- Processing purchases
-- Applying bonding curve rules
-- Managing sale progression
-- Processing eligible withdrawals
-- Migrating liquidity
-- Burning applicable tokens
-- Enforcing authority-restricted operations
+The program governs critical operations including:
 
-This creates a clear separation between **protocol execution** and **platform infrastructure**.
+- Creating sales.
+- Processing purchases.
+- Applying bonding curve rules.
+- Managing sale progression.
+- Processing eligible withdrawals.
+- Migrating liquidity.
+- Burning applicable tokens.
+- Enforcing authority-restricted operations.
 
-The blockchain is the source of truth for protocol state and financial execution. The RugFreePump database and indexer observe blockchain activity and maintain an indexed representation used for features such as search, project discovery, statistics, profiles, rankings, and real-time updates.
+The blockchain is the source of truth for protocol state and financial execution.
 
-The platform infrastructure therefore improves accessibility and performance without becoming the authority over user funds or independently authorizing protocol operations.
+RugFreePump's database and indexer exist around that foundation. They process blockchain activity and maintain indexed data for features such as discovery, search, statistics, profiles, rankings, and real-time updates.
 
-> **The blockchain is the source of truth. The platform infrastructure is built around that truth.**
+This creates an important separation:
 
-This architecture allows participants and developers to independently verify critical protocol behavior through Solana.
+> **The platform helps you interact with the protocol. The blockchain determines what the protocol actually allows.**
 
 For a deeper technical explanation, see [On-Chain Program](/on-chain-program/overview) and [Proof of Execution](/on-chain-program/proof-of-execution).
 
 ## What "Rug-Free" Means
 
-The name **RugFreePump** represents the platform's design objective. It is not a promise that cryptocurrency, individual projects, or participants are free from risk.
+The name **RugFreePump** represents the platform's design objective, not a guarantee that every project or participant is free from risk.
 
-Risks can still arise from creators, communities, market conditions, wallets, user decisions, blockchain infrastructure, and the broader cryptocurrency ecosystem.
+A creator can still fail to deliver a roadmap. A project can still lose community interest. Markets can still move unpredictably. Users can still make poor decisions, and blockchain infrastructure can still experience failures.
 
-RugFreePump focuses specifically on making the **launch mechanism itself more structured and constrained**.
+RugFreePump focuses on a narrower problem: **the structure of the launch itself**.
 
-Its design is intended to give participants clearer rules around how fundraising works, how a sale can conclude, how eligible contributions can be resolved, and how successful campaigns transition to public liquidity.
+By making the fundraising phase committed, defining how campaigns can resolve, and enforcing critical rules through the Solana program, the protocol is designed to make the launch process more predictable and less dependent on unrestricted early trading behavior.
 
-Participants remain responsible for evaluating the projects they choose to support and the risks associated with their decisions.
+Participants should still perform their own research and understand the risks before participating.
 
-For a detailed discussion of remaining risks and participant responsibilities, see [Security & Risk](/security-and-risk/security-model).
+For the risks and responsibilities that remain, see [Security & Risk](/security-and-risk/security-model).
 
-## More Than a Launch Interface
+## More Than a Launchpad Interface
 
-RugFreePump combines its on-chain protocol with infrastructure designed to support participants, creators, developers, and the wider ecosystem.
+RugFreePump combines its on-chain launch protocol with infrastructure built around the needs of its ecosystem.
 
-The platform provides:
+Creators and contributors have access to the platform interface for discovering and participating in campaigns, while developers can interact with the protocol through public APIs, real-time WebSocket infrastructure, and the public on-chain program.
 
-- A public interface for discovering and participating in token sales.
-- Creator tools for launching bonding curve fundraising campaigns.
-- Buyer tools for managing purchases and eligible withdrawals.
-- Project and wallet information.
-- Search, statistics, rankings, and ecosystem analytics.
-- REST APIs for application integration.
-- Real-time data through WebSocket infrastructure.
-- An ecosystem reward program for qualifying creators and buyers.
-- Public documentation and developer resources.
+The ecosystem also includes:
 
-These services extend the usability of the protocol while the on-chain program remains the authority for protocol execution.
+- Project discovery and search.
+- Creator and buyer profiles.
+- Statistics and analytics.
+- Real-time project and market data.
+- REST APIs and WebSocket integrations.
+- An ecosystem reward program.
+- Public developer documentation.
 
-Developers can begin with [Building on RugFreePump](/developer-guide/building-on-rugfreepump) to explore the available integration surfaces.
+The goal is to provide the infrastructure around the launch without moving authority over the underlying protocol away from the blockchain.
 
 ## The RugFreePump Model
 
-RugFreePump can be summarized by a simple principle:
+RugFreePump is built around a simple idea:
 
-**Creators launch.  
-Buyers contribute.  
-The protocol enforces the rules.  
-Fundraising follows a defined path.  
-Successful sales transition to public liquidity.  
-Unsuccessful sales have a defined resolution.**
+**Let creators build.  
+Let contributors commit.  
+Give both sides a common funding objective.  
+Let the protocol enforce the rules.**
 
-RugFreePump is designed to replace unrestricted early trading with a more structured fundraising model where the rules governing participation and outcomes are established by the protocol itself.
+The creator brings the project, community, effort, and vision.
 
-The result is a launch environment centered on **high conviction, defined outcomes, and verifiable execution**.
+Contributors bring participation and capital toward the campaign.
 
-To follow the complete process from creation through fundraising and its possible outcomes, continue with [How RugFreePump Works](/overview/how-rugfreepump-works).
+The protocol provides the structure that keeps the fundraising phase focused on reaching its defined outcome rather than functioning as an unrestricted early trading market.
+
+When the target is reached, the project can transition toward public liquidity. When it is not, eligible contributors have a defined resolution path.
+
+That is the foundation of RugFreePump's **high-conviction crowdfunded launch model**.
+
+Continue with [How RugFreePump Works](/overview/how-rugfreepump-works) to follow a campaign from creation through fundraising and its possible outcomes.
