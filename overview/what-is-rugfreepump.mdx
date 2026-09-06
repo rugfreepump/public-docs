@@ -230,26 +230,3 @@ The goal is not simply to launch more tokens.
 It is to create a fundraising environment where a creator's effort has a better opportunity to translate into sustained participation, where contributors are not immediately competing against bonding-curve sell pressure, and where both sides can focus on the same objective during the fundraising phase.
 
 That is the foundation of RugFreePump's **high-conviction crowdfunded launch model**.
-
-
-## The RugFreePump Sale Lifecycle
-
-The complete sale lifecycle can be summarized in one view:
-
-```mermaid
-flowchart LR
-    A["Create"] --> B["Live"]
-
-    B -->|"Threshold reached"| C["Completed"]
-    B -->|"Time limit reached"| D["Expired"]
-
-    C -->|"Successful migration"| E["Migrated"]
-
-    C -->|"Authorized emergency action"| F["Canceled"]
-
-    D --> G["Withdrawal"]
-    F --> G
-
-    C -.-> H["Emergency Recovery"]
-
-Continue with [How RugFreePump Works](/overview/how-rugfreepump-works) to see how a campaign progresses from creation through fundraising and its possible outcomes.
