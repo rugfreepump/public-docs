@@ -7,7 +7,7 @@ These docs are designed to help you **understand, use, research, verify, integra
 
 ## Who Is This Documentation For?
 
-RugFreePump documentation is organized around the different participants, builders, and reviewers who interact with the ecosystem.
+RugFreePump documentation is organized around the different participants, builders, researchers, and reviewers who interact with the ecosystem.
 
 ### Token Buyers
 
@@ -31,13 +31,13 @@ Review the on-chain program, public instructions, account structures, Program De
 
 ### Ecosystem Participants
 
-Explore the reward program, platform updates, security considerations, legal policies, and other resources covering the broader RugFreePump ecosystem.
+Explore the reward program, platform announcements, security considerations, legal policies, and other resources covering the broader RugFreePump ecosystem.
 
 ## Explore the Documentation
 
 <CardGroup cols={3}>
   <Card title="Overview" icon="circle-info" href="/overview/what-is-rugfreepump">
-    Understand what RugFreePump is, why it was created, how its launch model works, and how a sale progresses from creation to its final outcome.
+    Understand what RugFreePump is, why it was created, how its launch model works, and how a sale progresses through its lifecycle.
   </Card>
 
   <Card title="User Guides" icon="book-open" href="/user-guides/first-steps/getting-started">
@@ -45,7 +45,7 @@ Explore the reward program, platform updates, security considerations, legal pol
   </Card>
 
   <Card title="Core Mechanics" icon="gear" href="/core-mechanics/tokenomics">
-    Explore the economic and protocol rules behind tokenomics, metadata, bonding curve pricing, oracle pricing, fees, slippage, and sale lifecycle.
+    Explore the economic and protocol rules behind tokenomics, metadata, bonding curve pricing, oracle pricing, fees, slippage, and the sale lifecycle.
   </Card>
 
   <Card title="On-Chain Program" icon="code" href="/on-chain-program/overview">
@@ -61,7 +61,7 @@ Explore the reward program, platform updates, security considerations, legal pol
   </Card>
 
   <Card title="Reward Program" icon="trophy" href="/reward-program/overview">
-    Learn how the RugFreePump reward program works, how activity is evaluated, and how qualifying creators and buyers can earn rewards.
+    Learn how the RugFreePump reward program works, how participation is evaluated, and how qualifying creators and buyers can earn rewards.
   </Card>
 
   <Card title="Legal & Compliance" icon="scale-balanced" href="/legal-and-compliance/terms-of-service">
@@ -77,33 +77,102 @@ Explore the reward program, platform updates, security considerations, legal pol
 
 Choose the path that best matches what you are trying to accomplish.
 
-* **New to RugFreePump?** Start with **Overview** -> [What is RugFreePump](/overview/what-is-rugfreepump) to understand the platform and its anti-rug launch model, then follow a token's lifecycle in **Overview** -> [How RugFreePump Works](/overview/how-rugfreepump-works).
+### New to RugFreePump
 
-* **Want to participate in a launch?** Begin with **User Guides** -> [Getting Started](/user-guides/first-steps/getting-started) to understand the platform. From there, learn how to handle your wallet in **User Guides** -> [Choosing a Wallet](/user-guides/first-steps/choosing-a-wallet), [Creating a Wallet](/user-guides/first-steps/creating-a-wallet), and [Funding a Wallet](/user-guides/first-steps/funding-a-wallet), make your first purchase in **User Guides** -> [Your First Purchase](/user-guides/first-steps/your-first-purchase), and navigate platform safety rules in **User Guides** -> [Trust & Safety](/user-guides/trust-and-safety).
+Start with the **Overview** section to understand the platform and its launch model.
 
-* **Want to launch a new token?** Learn how to initialize your market in **User Guides** -> [Creating a Bonding Curve Sale](/user-guides/for-token-creators/creating-a-bonding-curve-sale). If the graduation threshold is met, see how to execute the automated LP process in **User Guides** -> [Migrating Raised Liquidity](/user-guides/for-token-creators/migrating-raised-liquidity).
+Begin with [What is RugFreePump](/overview/what-is-rugfreepump), then follow [How RugFreePump Works](/overview/how-rugfreepump-works) to understand how a token sale progresses from creation through its possible outcomes.
 
-* **Want to manage your contributions?** Walk through the purchase workflow in **User Guides** -> [Buying Bonding Curve Sale Tokens](/user-guides/for-token-buyers/buying-bonding-curve-sale-tokens). If a sale expires without meeting its target, read **User Guides** -> [Withdrawing Contributed SOL](/user-guides/for-token-buyers/withdrawing-contributed-sol) to safely reclaim your funds.
+### Want to Participate in a Launch
 
-* **Want to understand the protocol mechanics?** Master the math and system rules by exploring **Core Mechanics** -> [Tokenomics](/core-mechanics/tokenomics), [Token Metadata](/core-mechanics/token-metadata), [Slippage & Priority](/core-mechanics/slippage-and-priority), [Oracle Price](/core-mechanics/oracle-price), [Bonding Curve](/core-mechanics/bonding-curve), [Protocol Fees](/core-mechanics/protocol-fees), and [Sale Lifecycle](/core-mechanics/sale-lifecycle).
+Start with the **User Guides → First Steps** section.
 
-* **Want to audit or verify the protocol?** Review the core Solana program layout via **On-Chain Program** -> [Overview](/on-chain-program/overview) and learn how state transitions are mathematically validated in **On-Chain Program** -> [Proof of Execution](/on-chain-program/proof-of-execution).
+Begin with [Getting Started](/user-guides/first-steps/getting-started), then work through [What You Need](/user-guides/first-steps/what-you-need), [Choosing a Wallet](/user-guides/first-steps/choosing-a-wallet), [Creating a Wallet](/user-guides/first-steps/creating-a-wallet), and [Funding a Wallet](/user-guides/first-steps/funding-a-wallet).
 
-* **Want to build on-chain integrations or bots?** Read **Developer Guide** -> [Building on RugFreePump](/developer-guide/building-on-rugfreepump) for a blueprint. Then move through the contract references in **Developer Guide** -> **On-Chain Program** -> [Program ID & Network](/developer-guide/on-chain-program/program-id-and-network), [Public Instructions](/developer-guide/on-chain-program/public-instructions), [Account Structures](/developer-guide/on-chain-program/accounts-and-account-structures), [PDA Derivation](/developer-guide/on-chain-program/pda-derivation-and-seeds), [Anchor IDL](/developer-guide/on-chain-program/anchor-idl), and [Generated Types](/developer-guide/on-chain-program/generated-types).
+When you are ready to participate, continue with [Your First Purchase](/user-guides/first-steps/your-first-purchase).
 
-* **Want to programmatically interact via API or WebSockets?** Read **Developer Guide** -> **API Integration** -> [Overview](/developer-guide/api-integration/overview) to parse payload formats. Follow explicit steps for programmatic actions—including [Create Sale](/developer-guide/api-integration/create-sale), [Buy](/developer-guide/api-integration/buy), [Withdraw](/developer-guide/api-integration/withdraw), and [Migrate Liquidity](/developer-guide/api-integration/migrate-liquidity)—while managing [Rate Limits](/developer-guide/api-integration/rate-limits-and-restrictions) and streaming state changes via the [Real-Time WebSocket](/developer-guide/api-integration/realtime-websocket).
+For practical guidance on participating safely, see [User Guides → Trust & Safety](/user-guides/trust-and-safety).
 
-* **Want to analyze risk boundaries or disclose a flaw?** Review the complete **Security & Risk** -> [Security Model](/security-and-risk/security-model) alongside dedicated risk disclosure frameworks for [Smart Contract Risks](/security-and-risk/smart-contract-risks), [Oracle Risks](/security-and-risk/oracle-risks), [Liquidity & Migration Risks](/security-and-risk/liquidity-and-migration-risks), and [User Responsibilities](/security-and-risk/user-responsibilities). For reporting vulnerabilities, consult the [Security Disclosure](/security-and-risk/security-disclosure) framework.
+### Want to Launch a Token
 
-* **Want to track platform incentives and rewards?** Check out the **Reward Program** -> [Overview](/reward-program/overview) to see how incentives are structures, then look into [How Rewards Are Earned](/reward-program/how-rewards-are-earned), [Reward Periods & Rankings](/reward-program/reward-periods-and-rankings), [Reward Calculation](/reward-program/reward-calculation), and [Reward Distribution](/reward-program/reward-distribution).
+Start with **User Guides → For Token Creators**.
 
-* **Want to review legal policies and compliance guidelines?** Read through **Legal & Compliance** -> [Terms of Service](/legal-and-compliance/terms-of-service), [Privacy Policy](/legal-and-compliance/privacy-policy), [Risk Disclosure](/legal-and-compliance/risk-disclosure), [DMCA Policy](/legal-and-compliance/dmca-policy), and [Trademark Guidelines](/legal-and-compliance/trademark-guidelines).
+Follow [Creating a Bonding Curve Sale](/user-guides/for-token-creators/creating-a-bonding-curve-sale) to create and launch a sale.
 
-* **Want to stay updated with platform updates?** Follow **Announcements** -> [Updates and Changelog](/announcements/updates-and-changelog) to monitor recent releases, protocol changes, and documentation modifications.
+After a sale successfully completes, continue with [Migrating Raised Liquidity](/user-guides/for-token-creators/migrating-raised-liquidity) to understand the liquidity migration process.
 
+### Want to Manage Your Contributions
+
+Start with **User Guides → For Token Buyers**.
+
+Learn the purchase process in [Buying Bonding Curve Sale Tokens](/user-guides/for-token-buyers/buying-bonding-curve-sale-tokens).
+
+If a sale expires or is canceled and your contribution becomes eligible for withdrawal, follow [Withdrawing Contributed SOL](/user-guides/for-token-buyers/withdrawing-contributed-sol).
+
+### Want to Understand the Protocol
+
+Start with the **Core Mechanics** section.
+
+Begin with [Tokenomics](/core-mechanics/tokenomics) and then explore [Token Metadata](/core-mechanics/token-metadata), [Slippage & Priority](/core-mechanics/slippage-and-priority), [Oracle Price](/core-mechanics/oracle-price), [Bonding Curve](/core-mechanics/bonding-curve), [Protocol Fees](/core-mechanics/protocol-fees), and [Sale Lifecycle](/core-mechanics/sale-lifecycle).
+
+For a deeper look at the program that enforces these rules, continue to **On-Chain Program** with the [On-Chain Program Overview](/on-chain-program/overview) and [Proof of Execution](/on-chain-program/proof-of-execution).
+
+### Want to Build on RugFreePump
+
+Start with the **Developer Guide**.
+
+Begin with [Building on RugFreePump](/developer-guide/building-on-rugfreepump) for the overall integration approach.
+
+For direct interaction with the Solana program, continue to **Developer Guide → On-Chain Program**, starting with [Program ID & Network](/developer-guide/on-chain-program/program-id-and-network) and [Public Instructions](/developer-guide/on-chain-program/public-instructions), followed by [Account Structures](/developer-guide/on-chain-program/accounts-and-account-structures), [PDA Derivation & Seeds](/developer-guide/on-chain-program/pda-derivation-and-seeds), [Instruction Arguments](/developer-guide/on-chain-program/instruction-arguments), [Transaction Requirements](/developer-guide/on-chain-program/transaction-requirements), [Anchor IDL](/developer-guide/on-chain-program/anchor-idl), and [Generated Types](/developer-guide/on-chain-program/generated-types).
+
+### Want to Integrate Through APIs or WebSockets
+
+Start with **Developer Guide → API Integration**.
+
+Begin with the [API Integration Overview](/developer-guide/api-integration/overview) to understand the integration model and request/response structure.
+
+For programmatic protocol operations, follow the dedicated guides for [Create Sale](/developer-guide/api-integration/create-sale), [Buy](/developer-guide/api-integration/buy), [Withdraw](/developer-guide/api-integration/withdraw), and [Migrate Liquidity](/developer-guide/api-integration/migrate-liquidity).
+
+Then review [Rate Limits & Restrictions](/developer-guide/api-integration/rate-limits-and-restrictions), [Errors](/developer-guide/api-integration/errors), and [Real-Time WebSocket](/developer-guide/api-integration/realtime-websocket) for production integrations.
+
+### Want to Audit or Verify the Protocol
+
+Start with **On-Chain Program**.
+
+Read the [On-Chain Program Overview](/on-chain-program/overview) to understand the program's role, then use [Proof of Execution](/on-chain-program/proof-of-execution) to understand how important protocol behavior can be verified from on-chain execution.
+
+For implementation-level review, continue through **Developer Guide → On-Chain Program**, including [Public Instructions](/developer-guide/on-chain-program/public-instructions), [Account Structures](/developer-guide/on-chain-program/accounts-and-account-structures), and [PDA Derivation & Seeds](/developer-guide/on-chain-program/pda-derivation-and-seeds).
+
+### Want to Understand Security and Risk
+
+Start with the **Security & Risk** section.
+
+Begin with the [Security Model](/security-and-risk/security-model), then review the risk areas most relevant to your research, including [Smart Contract Risks](/security-and-risk/smart-contract-risks), [Oracle Risks](/security-and-risk/oracle-risks), [Launch & Sale Risks](/security-and-risk/launch-and-sale-risks), and [Liquidity & Migration Risks](/security-and-risk/liquidity-and-migration-risks).
+
+For participant-specific guidance, see [User Responsibilities](/security-and-risk/user-responsibilities).
+
+If you discover a potential vulnerability, follow the [Security Disclosure](/security-and-risk/security-disclosure) process.
+
+### Want to Understand the Reward Program
+
+Start with **Reward Program**.
+
+Begin with the [Reward Program Overview](/reward-program/overview) to understand the program, then explore [How Rewards Are Earned](/reward-program/how-rewards-are-earned), [Reward Periods & Rankings](/reward-program/reward-periods-and-rankings), [Reward Calculation](/reward-program/reward-calculation), and [Reward Distribution](/reward-program/reward-distribution) for the complete reward lifecycle.
+
+### Want to Review Legal and Compliance Information
+
+Start with **Legal & Compliance**.
+
+Review the [Terms of Service](/legal-and-compliance/terms-of-service), [Privacy Policy](/legal-and-compliance/privacy-policy), [Risk Disclosure](/legal-and-compliance/risk-disclosure), [DMCA Policy](/legal-and-compliance/dmca-policy), and [Trademark Guidelines](/legal-and-compliance/trademark-guidelines).
+
+### Want to Follow Platform Updates
+
+Start with **Announcements**.
+
+The [Updates & Changelog](/announcements/updates-and-changelog) page contains platform updates, protocol changes, infrastructure improvements, releases, and documentation changes.
 
 ## Find What You Need
 
 Use the search bar to quickly find a page, concept, instruction, account, API endpoint, error, or technical term.
 
-If you already know what you are looking for, search directly. If you are exploring RugFreePump for the first time, use the documentation structure above to follow the path that best matches your role and goal.
+If you already know what you are looking for, search directly. If you are exploring RugFreePump for the first time, use the documentation structure above to find the section and page that best match your role and objective.
