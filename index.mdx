@@ -1,72 +1,93 @@
 ---
-title: "Welcome To RugFreePump"
-description: "The official documentation for RugFreePump."
+title: "Navigating the Documentation"
+description: "Welcome to the official documentation for RugFreePump."
 ---
 
-RugFreePump is a next-generation, high-conviction crowdfunded launchpad built natively on Solana. Shifting away from the unrestricted buy-and-sell model commonly used by traditional bonding curve launchpads, RugFreePump introduces a structured, protocol-enforced framework designed to navigate a token's lifecycle from initial creation through its fundraising phase and into public liquidity.
 
-Traditional token launches can expose participants to extreme early-stage speculation, automated sniping, rapid token dumps, and significant reliance on the individual behavior of token creators. RugFreePump addresses these specific challenges by embedding foundational operational rules directly within an on-chain smart contract program. This architectural approach establishes a clearly defined environment where creators and buyers can independently evaluate how a sale progresses and understand the programmatic conditions governing each stage.
+These docs are designed to help you understand, use, research, verify, integrate with, and build on RugFreePump. Whether you are participating in a token sale, launching a project, developing an integration, reviewing the on-chain program, or researching how the protocol works, you can find the information relevant to you here.
 
-### Built Around Conviction
+## Who Is This Documentation For?
 
-RugFreePump's launch model is designed to steer the fundraising phase toward genuine community alignment rather than enabling an unrestricted race to buy and immediately flip assets. During an active sale, the protocol's smart contract does not provide a standard sell routine, creating a purely additive funding phase in which buyer contributions move the project sequentially toward its designated funding milestone.
+RugFreePump documentation is built for different types of users and participants across the ecosystem.
 
-### Defined Outcomes
+### Token Buyers
 
-Every token sale on the platform follows a strict, code-driven lifecycle. A successful sale that fulfills its funding target becomes eligible for liquidity migration. Conversely, a sale that expires without reaching its target enters a formal expiration state, allowing eligible buyers to invoke a manual withdrawal mechanism from the dashboard to recover their contributed SOL according to the protocol's rules.
+Learn how to get started, connect and fund a wallet, participate in bonding curve sales, understand withdrawals, and navigate the platform safely.
 
-### On-Chain by Design
+### Token Creators
 
-The rules that govern pricing curves, SOL contributions, sale state transitions, protocol fees, withdrawals, and liquidity migration are implemented programmatically through RugFreePump's Solana program. This architecture reduces dependence on off-chain variables or counterparty assurances, providing participants with a transparent method to verify protocol execution directly on the ledger.
+Learn how to create a token, launch a bonding curve sale, understand the fundraising process, and migrate successfully completed liquidity.
 
-### An Ecosystem, Not Just a Launch
+### Developers & Integrators
 
-RugFreePump provides more than a standalone frontend interface. The platform includes infrastructure for developers, real-time data integrations, and an ecosystem reward program that recognizes active creators and buyers. From the public on-chain program to APIs and real-time data feeds, RugFreePump is designed to support an ecosystem that extends beyond the launch interface itself.
+Build applications, bots, analytics tools, trading interfaces, and other integrations using RugFreePump's on-chain program, APIs, generated types, and real-time infrastructure.
 
-These docs serve as the complete technical and operational guide to RugFreePump. Explore the sections below to understand how the platform works, how to navigate sales, how its mechanics are enforced on-chain, and how to build on top of the protocol.
+### Researchers & Analysts
+
+Explore the protocol's mechanics, tokenomics, bonding curve, oracle pricing, fees, sale lifecycle, and other technical and economic concepts.
+
+### Auditors & Technical Reviewers
+
+Review the RugFreePump on-chain program, account structures, instruction design, PDA derivation, proof of execution, and security model.
+
+### Ecosystem Participants
+
+Understand the reward program, platform updates, security considerations, legal policies, and other aspects of the RugFreePump ecosystem.
 
 ## Explore the Documentation
 
 <CardGroup cols={2}>
   <Card title="Overview" icon="circle-info" href="/overview/what-is-rugfreepump">
-    Discover the core philosophy behind RugFreePump and how its structured launch model differs from conventional token launchpads.
+    Learn what RugFreePump is, why it was created, and how its launch model approaches the challenges of traditional token launches.
   </Card>
 
   <Card title="User Guides" icon="book-open" href="/user-guides/first-steps/getting-started">
-    Learn how to create a sale, participate as a buyer, manage your position, and navigate the platform.
+    Step-by-step guides for getting started, creating sales, buying tokens, withdrawing eligible contributions, and using the platform.
   </Card>
 
   <Card title="Core Mechanics" icon="gear" href="/core-mechanics/tokenomics">
-    Explore the economic and technical rules governing token supply, pricing, funding, fees, oracle pricing, and sale progression.
+    Explore the protocol mechanics behind tokenomics, metadata, bonding curve pricing, oracle pricing, fees, slippage, and the sale lifecycle.
   </Card>
 
   <Card title="On-Chain Program" icon="code" href="/on-chain-program/overview">
-    Examine how RugFreePump's core rules are implemented on Solana and how protocol execution can be independently verified.
+    Understand the RugFreePump Solana program, how protocol execution works, and how critical operations can be verified on-chain.
   </Card>
 
   <Card title="Developer Guide" icon="terminal" href="/developer-guide/building-on-rugfreepump">
-    Build on RugFreePump using its on-chain program, APIs, generated types, and real-time integration capabilities.
+    Build on RugFreePump using the public program, Anchor IDL, generated types, APIs, and real-time WebSocket infrastructure.
   </Card>
 
   <Card title="Security & Risk" icon="shield-check" href="/security-and-risk/security-model">
-    Understand the platform's security model, protocol boundaries, remaining risks, and responsibilities for creators and buyers.
+    Understand the protocol's security model, risk boundaries, remaining risks, and the responsibilities of platform participants.
   </Card>
 
   <Card title="Reward Program" icon="trophy" href="/reward-program/overview">
-    Learn how active creators and buyers can qualify for rewards through participation in the RugFreePump ecosystem.
+    Learn how the RugFreePump reward program works and how qualifying creators and buyers can earn ecosystem rewards.
   </Card>
 
   <Card title="Legal & Compliance" icon="scale-balanced" href="/legal-and-compliance/terms-of-service">
-    Review the terms, policies, risk disclosures, and legal framework governing use of the platform.
+    Review the terms, policies, risk disclosures, privacy information, and other legal documentation.
   </Card>
 
   <Card title="Announcements" icon="bullhorn" href="/announcements/updates-and-changelog">
-    Follow protocol updates, platform changes, infrastructure improvements, and documentation releases.
+    Follow platform updates, protocol changes, infrastructure improvements, and documentation releases.
   </Card>
 </CardGroup>
 
-## Need Help Finding Something?
+## How to Use These Docs
 
-Use the search bar to quickly find a page, concept, program instruction, error, or technical term.
+If you are new to RugFreePump, start with the **Overview** to understand the platform and its launch model.
 
-If you know what you're looking for, search directly. If you're not sure where to start, ask the AI assistant in natural language and let it help you find the relevant documentation.
+If you want to participate in a sale or launch a project, go to **User Guides**.
+
+If you want to understand how the protocol works, explore **Core Mechanics** and the **On-Chain Program**.
+
+If you are building an application or integration, start with the **Developer Guide**.
+
+If you are reviewing security, risks, or protocol boundaries, see **Security & Risk**.
+
+## Find What You Need
+
+Use the search bar to quickly find a page, concept, instruction, account, error, API endpoint, or technical term.
+
+If you already know what you are looking for, search directly. If you are not sure where to begin, use the documentation structure above to find the section designed for your role and goal.
