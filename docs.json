@@ -35,6 +35,7 @@
         "pages": [
           "user-guides/getting-started",
           "user-guides/trust-and-safety",
+          "user-guides/rugfreepump-consent",
           {
             "group": "For Token Creators",
             "pages": [
