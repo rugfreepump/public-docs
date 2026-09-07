@@ -33,17 +33,7 @@
       {
         "group": "User Guides",
         "pages": [
-          {
-            "group": "First Steps",
-            "pages": [
-              "user-guides/first-steps/getting-started",
-              "user-guides/first-steps/what-you-need",
-              "user-guides/first-steps/choosing-a-wallet",
-              "user-guides/first-steps/creating-a-wallet",
-              "user-guides/first-steps/funding-a-wallet",
-              "user-guides/first-steps/your-first-purchase"
-            ]
-          },
+          "user-guides/getting-started",
           "user-guides/trust-and-safety",
           {
             "group": "For Token Creators",
