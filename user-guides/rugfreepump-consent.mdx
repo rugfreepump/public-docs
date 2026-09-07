@@ -3,7 +3,6 @@ title: "RugFreePump Consent"
 description: "Understand the RugFreePump consent process, required documents, wallet signatures, document versions, and when consent is required."
 ---
 
-
 RugFreePump uses a wallet-based consent process before users can access financial operations on the platform.
 
 You can freely explore RugFreePump without completing consent. However, you must have a valid consent for operations such as creating a coin, buying bonding curve sale tokens, withdrawing contributed SOL, or migrating raised liquidity.
@@ -24,9 +23,9 @@ The consent process consists of:
 
 The wallet signature provides cryptographic confirmation that the wallet controlling the address approved the consent.
 
-The signature is a **message signature**, not a blockchain transaction.
+The consent is completed through a **message signature**. It does not initiate a blockchain transaction, move SOL or tokens from your wallet, or require blockchain transaction/network fees.
 
-It does not transfer SOL or tokens, authorize a token transfer, or give RugFreePump custody of your assets.
+Your assets remain under your control. The consent signature does not give RugFreePump permission to spend or transfer your assets.
 
 ---
 
@@ -38,9 +37,9 @@ The RugFreePump on-chain program is permissionless. Users can interact with it t
 
 When a financial operation is performed through the **RugFreePump platform**, it is subject to RugFreePump's platform services, consent process, Terms of Service, Privacy Policy, Risk Disclosure, and other applicable platform requirements.
 
-RugFreePump's platform is responsible for ensuring that its applicable financial operations are performed through the required consent process.
+RugFreePump is responsible for its own platform services and for ensuring that applicable financial operations performed through the RugFreePump platform follow the required consent process.
 
-When a financial operation is performed through an **external application or service**, the operation takes place outside the RugFreePump platform. The user is responsible for complying with the terms, consent requirements, disclosures, and applicable legal requirements of the external application or service being used.
+When a financial operation is performed through an **external application or service**, the operation takes place outside the RugFreePump platform. Users are responsible for complying with the terms, consent requirements, disclosures, and applicable legal requirements of the external application or service they use.
 
 RugFreePump does not control the consent processes, terms, disclosures, or legal requirements of independent external applications that interact with the RugFreePump on-chain program.
 
@@ -48,21 +47,21 @@ RugFreePump does not control the consent processes, terms, disclosures, or legal
 
 RugFreePump's indexer monitors transactions involving the RugFreePump on-chain program and records the resulting on-chain activity in the RugFreePump database.
 
-Because this process is independent of RugFreePump platform authentication and consent, a wallet may be recorded in the RugFreePump database even if it has never used the RugFreePump platform or completed RugFreePump Consent.
+Because this process is independent of RugFreePump platform authentication and consent, a wallet may be recorded in the RugFreePump database through its on-chain interaction with the program even if it has not used the RugFreePump platform or completed RugFreePump Consent.
 
 **External Application → RugFreePump On-Chain Program → Indexer → RugFreePump Database**
 
-A wallet may therefore appear in the RugFreePump database solely as a result of its on-chain interaction with the program. The existence of such a database record does not establish that the wallet used the RugFreePump platform.
+The existence of a database record does not, by itself, establish that the wallet used the RugFreePump platform or completed RugFreeFreePump Consent.
 
 ### Responsibility
 
-RugFreePump's responsibility is limited to its own platform services and the operation of its platform-level consent process for applicable financial operations performed through the RugFreePump platform.
+RugFreePump's responsibility is limited to its own platform services and the platform-level consent process for applicable financial operations performed through the RugFreePump platform.
 
 Financial operations performed through external applications, platforms, services, bots, scripts, or other independent interfaces are outside the RugFreePump platform. RugFreePump is not responsible for the activities, representations, terms, compliance requirements, or consent processes of those external interfaces.
 
 Complaints concerning the RugFreePump platform or its consent process should be directed to RugFreePump through the applicable support channels. Matters arising from an external application or service should be addressed to the respective provider.
 
-**Important:** Interacting with the RugFreePump on-chain program through an external application does not, by itself, constitute use of the RugFreePump platform or completion of RugFreePump Consent.
+> **Important:** Interacting with the RugFreePump on-chain program through an external application does not, by itself, constitute use of the RugFreePump platform or completion of RugFreePump Consent.
 
 ---
 
@@ -105,19 +104,19 @@ Consent covers three required legal documents:
 
 The **Terms of Service** define the terms and conditions governing your use of RugFreePump.
 
-[Read the Terms of Service](https://rugfreepump.com/docs/legal-and-compliance/terms-of-service)
+Read the [Terms of Service](https://rugfreepump.com/docs/legal-and-compliance/terms-of-service)
 
 ### Privacy Policy
 
 The **Privacy Policy** explains how information associated with your use of RugFreePump is handled.
 
-[Read the Privacy Policy](https://rugfreepump.com/docs/legal-and-compliance/privacy-policy)
+Read the [Privacy Policy](https://rugfreepump.com/docs/legal-and-compliance/privacy-policy)
 
 ### Risk Disclosure
 
 The **Risk Disclosure** explains important risks associated with using RugFreePump, including risks related to tokens, bonding curve sales, blockchain transactions, wallets, market conditions, and other aspects of the platform.
 
-[Read the Risk Disclosure](https://rugfreepump.com/docs/legal-and-compliance/risk-disclosure)
+Read the [Risk Disclosure](https://rugfreepump.com/docs/legal-and-compliance/risk-disclosure)
 
 > **Important:** When completing consent, always use the document links provided directly in the RugFreePump consent card. Those links identify the exact documents and versions you are being asked to agree to.
 
@@ -163,7 +162,7 @@ Your wallet will display a signature request.
 
 Review the request before approving it.
 
-The consent request is a **message signature**, not a blockchain transaction.
+The consent request is a **message signature**. It does not initiate a blockchain transaction, move SOL or tokens, or require blockchain transaction/network fees.
 
 ### 5. Approve the Signature
 
@@ -174,8 +173,6 @@ The signature confirms that the wallet controlling the connected address complet
 ### 6. Continue With Your Operation
 
 After the consent has been successfully recorded, you can continue with the financial operation you originally attempted.
-
-For example, if you were creating a coin, you can proceed with the coin creation transaction.
 
 ---
 
@@ -239,28 +236,19 @@ You may still be asked to authenticate again when signing in from another device
 
 ## Wallet Signatures and Asset Security
 
-The consent signature confirms agreement to the applicable documents. It does not authorize RugFreePump to spend your assets.
+The consent signature only confirms your agreement to the applicable documents. It does not authorize RugFreePump to spend or transfer your assets.
 
 A consent signature:
 
-- Does **not** transfer SOL
-- Does **not** transfer tokens
-- Does **not** approve a token transfer
-- Does **not** create a blockchain transaction
+- Does **not** move SOL or tokens
+- Does **not** initiate a blockchain transaction
+- Does **not** require blockchain transaction/network fees
 - Does **not** give RugFreePump custody of your assets
 - Does **not** provide RugFreePump with your private key
 
-Actual blockchain operations require their own transaction approval through your wallet.
+Actual financial operations require their own blockchain transaction approval through your wallet.
 
-For example, creating a coin involves separate stages:
-
-1. Complete consent if required
-2. Prepare the coin creation transaction
-3. Review the transaction in your wallet
-4. Approve the blockchain transaction
-5. Wait for blockchain confirmation
-
-The consent signature does not replace transaction approval.
+The consent signature is separate from those financial transactions.
 
 ---
 
@@ -298,28 +286,6 @@ You can return later and complete the process if you decide to use those feature
 
 ---
 
-## Consent Does Not Guarantee Transaction Success
-
-Completing consent only satisfies the consent requirement.
-
-It does **not** guarantee that a financial transaction will succeed.
-
-A subsequent transaction can still fail because of conditions such as:
-
-- Insufficient SOL
-- Wallet rejection
-- Network conditions
-- Transaction fees
-- Slippage conditions
-- Sale state changes
-- Oracle conditions
-- Smart contract validation
-- Other blockchain or platform conditions
-
-Consent should therefore be understood separately from transaction authorization and transaction execution.
-
----
-
 ## Frequently Asked Questions
 
 ### Do I need consent to use RugFreePump?
@@ -352,7 +318,7 @@ If the required document versions remain current, the consent remains valid for 
 
 No.
 
-The consent is completed through a message signature and does not transfer SOL or tokens.
+The consent is completed through a message signature. It does not move SOL or tokens, initiate a blockchain transaction, or require blockchain transaction/network fees.
 
 ### Does signing consent allow RugFreePump to spend my SOL?
 
@@ -360,7 +326,7 @@ No.
 
 The consent signature does not authorize RugFreePump to spend your assets or take custody of your wallet.
 
-Blockchain transactions require separate wallet approval.
+Financial transactions require separate wallet approval.
 
 ### What if I connect another wallet?
 
@@ -385,22 +351,3 @@ You can browse the platform without completing consent, but financial operations
 The consent process requires you to review and agree to the applicable legal documents, including the Risk Disclosure.
 
 You should carefully read the Risk Disclosure and understand the risks before participating in any token sale.
-
----
-
-## Related Documentation
-
-### Legal & Compliance
-
-- [Terms of Service](https://rugfreepump.com/docs/legal-and-compliance/terms-of-service)
-- [Privacy Policy](https://rugfreepump.com/docs/legal-and-compliance/privacy-policy)
-- [Risk Disclosure](https://rugfreepump.com/docs/legal-and-compliance/risk-disclosure)
-
-### User Guides
-
-- [Getting Started](https://rugfreepump.com/docs/user-guides/getting-started)
-- [Trust & Safety](https://rugfreepump.com/docs/user-guides/trust-and-safety)
-- [Creating a Bonding Curve Sale](https://rugfreepump.com/docs/user-guides/for-token-creators/creating-a-bonding-curve-sale)
-- [Buying Bonding Curve Sale Tokens](https://rugfreepump.com/docs/user-guides/for-token-buyers/buying-bonding-curve-sale-tokens)
-- [Withdrawing Contributed SOL](https://rugfreepump.com/docs/user-guides/for-token-buyers/withdrawing-contributed-sol)
-- [Migrating Raised Liquidity](https://rugfreepump.com/docs/user-guides/for-token-creators/migrating-raised-liquidity)
