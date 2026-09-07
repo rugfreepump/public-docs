@@ -143,6 +143,22 @@ Your incentive eligibility and rate are determined when your coin is created. If
 
 The incentive is paid when the sale successfully reaches its hard cap and liquidity migration is successfully completed.
 
+## Sale Lifetime
+
+Every bonding curve sale has a fixed lifetime determined by the protocol when the sale is created.
+
+The protocol currently allows a sale lifetime between **24 and 48 hours**. The lifetime is configured in seconds, so the protocol can use any duration within this range rather than being limited to whole-hour values.
+
+For example, the protocol could use a lifetime of 24 hours, 25.1 hours, 36 hours, or another duration within the allowed range.
+
+The lifetime is determined when the sale is created and is fixed for that individual sale.
+
+If the protocol lifetime setting is changed later, the change applies only to newly created sales. **Existing and currently running sales are not affected.**
+
+If a sale reaches its hard cap before its lifetime expires, it becomes **Completed** and can proceed to liquidity migration.
+
+If the lifetime expires before the hard cap is reached, the sale becomes **Expired** and does not proceed to liquidity migration.
+
 ## Choose Your Initial Purchase
 
 After entering your coin information and signing in, select **Create coin**.
@@ -251,23 +267,61 @@ No sale is created when the creation transaction is canceled or times out.
 
 After a successful creation transaction, you are automatically redirected to the new sale page.
 
-The newly created bonding curve sale starts in the **Live** state.
+The newly created bonding curve sale starts in the **Live** state and is immediately available for buyers to discover and participate in.
 
-Your initial purchase is already reflected in the sale's:
+### Bonding Curve Pool Information
 
-- Raised SOL
-- Raised USD
-- Tokens sold
-- Buyer count
-- Sale progress
+The sale page shows the main information about your bonding curve sale, including:
 
-The sale also has its configured sale period and hard cap.
+- **Total Supply** — the total supply of the coin
+- **Tokens For Sale** — the portion of the supply available through the bonding curve
+- **Tokens For Liquidity** — the portion reserved for liquidity after a successful migration
+- **Hard Cap** — the maximum amount the sale can raise
+- **Started Time** — when the sale became Live
+- **End Time** — when the sale lifetime expires
+- **Listing On** — the DEX where liquidity will be created after a successful migration
+- **LP Tokens** — the treatment of liquidity-provider tokens after migration
 
-Buyers can now participate in the bonding curve sale while it remains Live.
+### Sale Progress
+
+While the sale is Live, the sale page displays its current progress, including:
+
+- **Raised SOL**
+- **Raised USD**
+- **Sale Progress**
+- **Tokens Sold**
+- **Total Buyers**
+- Remaining time until the sale lifetime expires
+
+Your initial purchase is included in these figures after the sale is created.
+
+The contributions section also records purchases made during the sale, including the contributor, SOL amount, USD value, tokens received, time, and transaction.
+
+### Sale Status
+
+The sale progresses according to its conditions:
+
+- **Live** — the sale is active and accepting purchases.
+- **Completed** — the sale has reached its hard cap.
+- **Expired** — the sale lifetime has ended before the hard cap was reached.
+
+A sale that becomes **Completed** can proceed to liquidity migration.
+
+A sale that becomes **Expired** does **not** proceed to liquidity migration. Eligible contributors can instead use the withdrawal process described in the buyer guide.
+
+The normal lifecycle before and after the sale is therefore:
+
+**Live → Completed → Migrated**
+
+or:
+
+**Live → Expired**
+
+Only a **Completed** sale proceeds to the migration process.
 
 ## What's Next?
 
-Once your sale reaches its hard cap, it becomes eligible for liquidity migration to **Raydium CPMM**.
+If your sale reaches its hard cap and becomes **Completed**, you can proceed with liquidity migration to **Raydium CPMM**.
 
 Learn what happens next:
 
