@@ -372,9 +372,9 @@ You should carefully read the Risk Disclosure and understand the risks before pa
 
 
 
-## RugFreePump On-Chain Program Access Through External Entities
+## RugFreePump On-Chain Program Access Through External Applications
 
-The RugFreePump on-chain program is permissionless and can be interacted with through the RugFreePump platform or through independent external applications, services, bots, scripts, and other software.
+The RugFreePump on-chain program is permissionless and can be interacted with through the RugFreePump platform or through independent external applications, platforms, services, bots, scripts, and other software.
 
 When financial operations are executed through the **RugFreePump platform**, the user is using RugFreePump's platform services and is subject to the RugFreePump consent process, terms, policies, and risk disclosures.
 
@@ -382,59 +382,16 @@ When financial operations are executed through an **external application or serv
 
 RugFreePump does not control or provide the consent process, terms, or legal requirements of independent external applications that interact with the RugFreePump on-chain program.
 
-### On-Chain Activity
+### On-Chain Activity and Database Records
 
-RugFreePump's indexer monitors transactions involving the RugFreePump on-chain program regardless of where they originate. Therefore, an external application may execute a transaction involving the program and that transaction may still appear in RugFreePump's indexed records.
+RugFreePump's indexer monitors transactions involving the RugFreePump on-chain program and records the resulting on-chain activity in RugFreePump's database.
 
-An indexed on-chain transaction establishes that the RugFreePump program was interacted with. It does not, by itself, establish that the transaction was initiated through the RugFreePump platform or that the wallet completed RugFreePump Consent.
+Because the indexer processes program activity independently of platform sign-in and consent, a wallet may be recorded in RugFreePump's database even if the wallet has never used the RugFreePump platform or completed RugFreePump Consent.
 
-Platform consent and on-chain program activity are maintained separately. RugFreePump's consent process applies to the use of RugFreePump's own platform services, while interactions performed through external applications remain subject to the requirements of those applications.
+For example:
 
+**External Application → RugFreePump On-Chain Program → Indexer → RugFreePump Database**
 
+In this case, the wallet may appear in RugFreePump's database because of its on-chain interaction with the program. This database record does not by itself mean that the wallet used the RugFreePump platform.
 
-
-
-
-
-
-
-
-
-
-
-
-## Platform Use and External Program Access
-
-RugFreePump operates a permissionless on-chain program on Solana. Because the program is permissionless, it can be accessed through RugFreePump's platform or through independent third-party applications, services, bots, scripts, and other software.
-
-RugFreePump's platform consent and service terms apply to users who use the RugFreePump platform and its applicable services.
-
-If a user performs financial operations through the RugFreePump platform, those operations are subject to the RugFreePump consent process and the applicable RugFreePump terms, policies, and risk disclosures.
-
-If a user interacts directly with the RugFreePump on-chain program through an external application or service, that interaction occurs outside the RugFreePump platform.
-
-Users accessing the program through an external service are responsible for complying with the terms, consent requirements, disclosures, and applicable legal obligations of the service or application they choose to use.
-
-RugFreePump does not require or control the consent process of independent third-party services that interact with the public on-chain program.
-
-### On-Chain Activity and Platform Use
-
-RugFreePump's indexer monitors transactions involving the RugFreePump on-chain program regardless of where those transactions originate.
-
-Therefore, a wallet may appear in RugFreePump's indexed on-chain records even if it has never completed RugFreePump Consent.
-
-An indexed transaction only establishes that an interaction with the RugFreePump on-chain program occurred. It does not by itself establish that the transaction was initiated through the RugFreePump platform.
-
-Platform consent and on-chain program activity are recorded separately.
-
-This distinction allows RugFreePump to identify whether a wallet had completed the RugFreePump platform consent process when using applicable platform services, while still maintaining visibility of public on-chain activity involving the RugFreePump program.
-
-### External Services
-
-When using a third-party application, bot, service, or other software to interact with the RugFreePump on-chain program, users are responsible for understanding and complying with the requirements applicable to that external service.
-
-Users should review the external service's terms, consent requirements, risk disclosures, and other applicable policies before performing financial operations through that service.
-
-Interaction with the RugFreePump on-chain program through an external service does not constitute acceptance of RugFreePump's platform consent process merely because the transaction interacts with the RugFreePump program.
-
-RugFreePump's platform consent applies to the use of RugFreePump's own platform services.
+RugFreePump Consent applies specifically to the use of RugFreePump's platform services. On-chain interactions performed through external applications remain outside the RugFreePump platform and are subject to the requirements of those external services.
