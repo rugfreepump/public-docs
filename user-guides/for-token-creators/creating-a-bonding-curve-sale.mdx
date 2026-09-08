@@ -3,8 +3,7 @@ title: "Creating a Bonding Curve Sale"
 description: "Learn how to create a new bonding curve sale on RugFreePump."
 ---
 
-
-Creating a bonding curve sale on RugFreePump starts with creating your coin, configuring its metadata, and making an initial purchase during creation.
+Creating a bonding curve sale on RugFreePump starts with creating your coin, configuring its metadata, and making the creator's initial purchase during creation.
 
 Once the transaction succeeds, your bonding curve sale becomes **Live** and is available for buyers to discover and participate in.
 
@@ -26,27 +25,42 @@ Creators bear sole responsibility for ensuring their submissions do not infringe
 
 ### Before creating a sale, make sure you have:
 
-- A supported wallet — **Phantom** or **Solflare**
+- A supported Solana wallet provider — **Phantom** or **Solflare**
 - Enough SOL for the creation process
 - Your coin name and ticker
 - A description if you want to provide one
 - Your website and social links if applicable
 - An image that meets the upload requirements
 
-### Keep Enough SOL in Your Wallet
+# Keep Enough SOL in Your Wallet
 
-Creating a coin requires more SOL than the amount you enter for the initial purchase.
+As a creator, initializing a new coin and bonding curve requires a higher SOL balance than just the amount you intend to deploy for your initial token purchase. 
 
-Your wallet may need SOL for:
+To prevent transaction failures, your wallet must contain sufficient SOL to cover the initial buy order plus all protocol, storage, and network execution costs.
 
-- The **escrow creation fee**, which is currently **$5 USD worth of SOL**
-- Required Solana account creation and rent costs
-- Your initial creator purchase
-- The Solana network transaction fee
+## Total Wallet Balance Breakdown
 
-The $5 escrow creation fee is converted from USD to SOL using the SOL/USD price available when the coin is created.
+Before executing the creation transaction, ensure your wallet can comfortably cover the following distinct line items:
 
-Make sure your wallet retains enough SOL to cover all required costs. If your wallet does not have enough SOL available for the transaction and network fee, the transaction may fail during simulation or execution.
+### 1. Protocol Creation Fee
+* **Mechanism:** A mandatory protocol fee currently set at the **$5 USD equivalent in SOL**.
+* **Calculation:** The smart contract reads the real-time SOL/USD oracle price at the exact moment of transaction execution to dynamically calculate and deduct the required SOL fraction.
+
+### 2. On-Chain Storage Rent Exemption
+* **Mechanism:** Solana requires a baseline allocation of SOL to make the **Program Derived Addresses (PDAs)** rent-exempt.
+* **Purpose:** This deposit permanently secures the validator storage space required to maintain your coin's metadata, token mint configuration, and bonding curve state.
+
+### 3. Initial Creator Buy-In
+* **Mechanism:** The optional or mandatory amount of SOL you choose to contribute toward the immediate purchase of your own coin supply at launch.
+
+### 4. Solana Network Transaction Fees
+* **Mechanism:** The micro-amounts of SOL required by the network to pay for compute budget units, prioritization fees, and signature verification.
+
+<Callout type="warning" title="Execution Warning">
+The RugFreePump on-chain program validates your total balance before initiating the launch sequence. If your wallet possesses insufficient SOL to cover the combined sum of the creation fee, PDA rent, your initial purchase, and network fees, the transaction will **fail during the simulation phase or revert during mainnet execution**. 
+
+Always maintain a small buffer of extra SOL in your deployment wallet to ensure seamless execution.
+</Callout>
 
 ## Open the Create Coin Page
 
