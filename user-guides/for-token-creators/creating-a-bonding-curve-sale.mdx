@@ -203,11 +203,15 @@ Your wallet balance is displayed in the panel, along with:
 
 Your initial purchase is the first purchase made in your newly created bonding curve sale.
 
+This initial purchase is **mandatory** when creating a coin. The minimum purchase amount is based on approximately **$1 USD worth of SOL** and is calculated using the current SOL/USD price.
+
+The minimum purchase requirement is enforced by both the UI input box and the on-chain program. If you enter an amount below the required minimum, the UI automatically adjusts the amount to the minimum permitted value.
+
 The amount you enter is the **purchase amount**, not the net amount that is ultimately counted toward the bonding curve.
 
 RugFreePump currently applies a **1% buy fee** to purchases. This fee is deducted by the on-chain program, and the remaining amount is used for the bonding curve purchase.
 
-For example, if you enter `10 SOL`, the 1% buy fee is deducted from that purchase and the remaining `9.9 SOL` is used as the net bonding-curve contribution.
+For example, if you enter `10 SOL`, the 1% buy fee is deducted from that purchase, and the remaining `9.9 SOL` is used as the net bonding-curve contribution.
 
 The number of tokens you receive is calculated from the bonding curve using the applicable SOL/USD price at the time of the transaction.
 
