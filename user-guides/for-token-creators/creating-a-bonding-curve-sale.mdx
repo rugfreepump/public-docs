@@ -239,61 +239,43 @@ If the transaction is successful, you will be redirected to the new sale page. Y
 
 ## Bonding Curve Pool Information
 
-The sale page shows the main information about your bonding curve sale, including:
+Once your sale is active, the main dashboard displays the core structural details of your bonding curve. Here is what each metric means:
 
-- **Pool Address** — The on-chain account that stores raising SOL
-- **Total Supply** — the total supply of the coin
-- **Tokens For Sale** — the portion of the supply available through the bonding curve
-- **Tokens For Liquidity** — the portion reserved for liquidity after a successful migration
-- **Hard Cap** — the maximum amount the sale can raise
-- **Started Time** — when the sale became Live
-- **End Time** — when the sale lifetime expires
-- **Listing On** — the DEX where liquidity will be created after a successful migration
-- **LP Tokens** — the treatment of liquidity-provider tokens after migration
+* **Pool Address:** The secure on-chain account where all raised SOL is stored safely during the sale.
+* **Total Supply:** The absolute total number of tokens created for your coin.
+* **Tokens For Sale:** The specific portion of the total supply that buyers can purchase through the bonding curve.
+* **Tokens For Liquidity:** The portion of the supply locked and saved to fund the liquidity pool after a successful launch.
+* **Hard Cap:** The maximum amount of SOL the sale is allowed to raise before successfully closing.
+* **Start Time:** The exact date and time your coin went live on the platform.
+* **End Time:** The exact moment the sale's time limit expires.
+* **Listing On:** The decentralized exchange (DEX) where your coin's official trading pool will be created after a successful migration.
+* **LP Tokens:** Information detailing how the liquidity-provider tokens are handled or permanently locked after migration to guarantee safety.
 
-## Sale Progress
+## Tracking Sale Progress
 
-While the sale is Live, the sale page displays its current progress, including:
+While your sale is active, the dashboard provides real-time data tracking its market performance. Your initial creator purchase is automatically included in these statistics:
 
-- **Ticking Timer for Expiration**
-- **Sale Status**
-- **Raised SOL & Equivalent USD Amount**
-- **Sale Progress Percentage**
-- **Sold Token Amount**
-- **Total Unique Buyers**
-- **Contributions & Count**
-- **Top Token Holders**
+* **Countdown Timer:** A ticking clock showing exactly how much time is left before the sale expires.
+* **Sale Status:** The current state of your bonding curve (e.g., Live).
+* **Raised Funds:** The total amount of SOL collected so far, along with its current USD market value.
+* **Progress Bar:** The percentage of the hard cap that has been filled.
+* **Sold Tokens:** The total number of tokens purchased by participants so far.
+* **Unique Buyers:** The total number of individual, unique wallets that have joined the sale.
+* **Contributions Feed:** A live ledger showing every individual purchase, including the wallet address, SOL spent, USD value, tokens received, and the transaction time.
+* **Top Holders:** A Leaderboard showing the wallets holding the largest percentages of the token supply.
 
-Your initial purchase is included in these figures after the sale is created.
+## Understanding Sale Statuses
 
-The contributions section also records purchases made during the sale, including the contributor, SOL amount, USD value, tokens received, time, and transaction.
+Your sale moves through a simple lifecycle based on time limits and funding targets. 
 
-## Sale Status
-
-The sale progresses according to its conditions:
-
-- **Live** — the sale is active and accepting purchases.
-- **Completed** — the sale has reached its hard cap.
-- **Expired** — the sale lifetime has ended before the hard cap was reached.
-
-A sale that becomes **Completed** can proceed to liquidity migration.
-
-A sale that becomes **Expired** does **not** proceed to liquidity migration. Eligible contributors can instead use the withdrawal process described in the buyer guide.
-
-The normal lifecycle before and after the sale is therefore:
-
-**Live → Completed → Migrated**
-
-or:
-
-**Live → Expired**
-
-Only a **Completed** sale proceeds to the migration process.
+* **Live:** The sale is fully active, open to the public, and actively accepting buy orders.
+* **Completed:** The sale successfully hit its hard cap before time ran out and is now ready to transition to the exchange.
+* **Expired:** The time limit ran out before the hard cap could be reached. The sale is closed, and no liquidity migration will occur.
 
 # What's Next?
 
-If your sale reaches its hard cap and becomes **Completed**, you can proceed with liquidity migration to **Raydium CPMM**.
+If your bonding curve sale successfully reaches its hard cap and hits the **Completed** status, you are ready to migrate your raised liquidity directly to **Raydium CPMM**.
 
-Learn what happens next:
+Discover how the migration pipeline operates step-by-step:
 
-[**Migrating Raised Liquidity**](https://rugfreepump.com/docs/user-guides/for-token-creators/migrating-raised-liquidity)
+[**Migrating Raised Liquidity Guide**](https://rugfreepump.com/docs/user-guides/for-token-creators/migrating-raised-liquidity)
