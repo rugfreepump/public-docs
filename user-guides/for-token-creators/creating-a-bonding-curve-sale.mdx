@@ -64,269 +64,177 @@ The RugFreePump on-chain program validates your total balance before initiating 
 
 # Open the Create Coin Page
 
-You can start from any RugFreePump page.
+You can initiate the creation process from any page on the platform:
+* **Navigation:** Select **Create Coin** from the top header navigation or the sidebar.
+* **Direct Access:** Navigate directly to the creation interface via [rugfreepump.com/create](https://rugfreepump.com/create).
 
-Select **Create Coin** from the main header or from the sidebar.
+# Sign In & Wallet Authentication
 
-You can also open the creation page directly:
+You can begin filling out your coin's details before authenticating. However, wallet connection and authentication are strictly required before submitting the final transaction.
 
-[Create a Coin](https://rugfreepump.com/create)
+* **Initiate Login:** Select **Sign In** from the top header, or click **Login to create coin** situated at the bottom of the creation form.
+* **Supported Wallets:** RugFreePump natively supports [Phantom](https://phantom.app) and [Solflare](https://solflare.com).
 
-# Sign In
-
-You can begin entering your coin information before signing in.
-
-However, you must sign in before you can create the coin.
-
-If you are not signed in, you can select **Sign In** from the header.
-
-You can also select **Login to create coin** at the bottom of the creation form when you are ready to continue.
-
-## Connect Your Wallet
-
-RugFreePump currently supports:
-
-- Phantom
-- Solflare
-
-When signing in for the first time, your wallet will ask you to approve a connection request.
-
-Approve the connection request in your wallet to continue.
+# Connect Your Wallet
+When connecting for the first time, your wallet extension or mobile app will prompt you with a connection request. Approve this request to grant the platform permission to view your public wallet address.
 
 # Sign the Login Message
+After connecting, your wallet will prompt you for a secure cryptographic message signature.
+* **Purpose:** This proves you own the private keys to the connected wallet address.
+* **Safety Note:** This is a zero-cost message signature. It is used strictly for authentication and **does not transfer SOL, tokens, or grant contract allowances**.
 
-After connecting, your wallet will request a message signature.
-
-Approve the signature to prove that you control the connected wallet.
-
-This signature is used for authentication and **does not transfer SOL or tokens**.
-
-Once authentication is complete, the **Login to create coin** button changes to **Create coin**.
+Once successfully signed, the **Login to create coin** button will transition to **Create coin**.
 
 # Complete the Consent Process
 
-Before creating a bonding curve sale, you must complete the RugFreePump consent process.
+RugFreePump permits read-only platform exploration without authentication. However, executing financial operations—such as initializing a token bonding curve—mandates explicit legal consent.
 
-RugFreePump allows users to explore the platform without completing consent. However, consent is required before performing financial operations such as creating a coin.
+When required, a **Consent Card** will appear on your screen presenting three primary legal frameworks:
+1. **Terms of Service**
+2. **Privacy Policy**
+3. **Risk Disclosure**
 
-When consent is required, RugFreePump displays the required documents in a consent card.
+## Consent Steps
+* **Review:** Click each legal link at the bottom of the card to read the respective documentation fully.
+* **Acceptance:** Once reviewed, select **Continue**.
+* **Cryptographic Agreement:** Your wallet will prompt you to sign a consent confirmation message. Approve the signature to write your compliance state locally. Like the login message, this signature **costs no network fees and transfers no assets**.
 
-You must **carefully read all three documents** before continuing:
+<Callout type="info" title="Policy Updates">
+Your consent signature remains valid for the lifespan of the current document versions. If RugFreePump updates any of these three core legal frameworks, you will be prompted to re-verify and sign an updated consent message before executing your next financial transaction. For deeper insights, review the [RugFreePump Consent Documentation](https://rugfreepump.com/docs/user-guides/rugfreepump-consent).
+</Callout>
 
-- Terms of Service
-- Privacy Policy
-- Risk Disclosure
+# Enter Coin Details & Specifications
 
-Use the document links provided at the bottom of the consent card to read the documents. These links take you directly to the documents you are being asked to agree to.
-
-After carefully reviewing all three documents, select **Continue**.
-
-Your wallet will then ask you to sign the consent message. Approve the signature to confirm your agreement and continue with the creation process.
-
-This signature **does not transfer SOL or tokens**.
-
-You only need to complete the consent process once for the current versions of the required documents. If a new version of any of the three documents is published, you will be asked to review and sign the updated consent again before performing financial operations.
-
-For a detailed explanation of the consent process, see [**RugFreePump Consent**](https://rugfreepump.com/docs/user-guides/rugfreepump-consent).
-
-# Enter Coin Details
-
-Enter the information for your new coin.
+Carefully input your token parameters within the creation interface. Ensure your metadata adheres strictly to the protocol's hardcoded constraints:
 
 ### Coin Name
-
-Enter the name of your coin.
-
-Make sure the name is correct before continuing.
+* **Constraint:** Maximum **32 characters**.
+* **Guideline:** Enter the full public name of your cryptocurrency asset. Double-check spelling before deploying.
 
 ### Ticker
-
-Enter the coin ticker, such as `DOGE`.
+* **Constraint:** Maximum **10 characters**.
+* **Guideline:** Enter the shortened stock-style asset identifier symbol (e.g., `DOGE`, `BONK`).
 
 ### Description
+* **Constraint:** Maximum **500 characters**.
+* **Guideline:** Provide a concise summary outlining your coin's core concept, utility, or community thesis (Optional).
 
-Add a short description of your coin.
+### Social Links (Optional)
+Input the complete, absolute URLs for your project's digital ecosystem channels:
+* **Website:** Your project's central landing page URL.
+* **Telegram:** Your official community group or announcement channel invite link.
+* **X (Twitter):** Your project's official X profile link.
 
-This field is optional.
+# Upload Coin Image
 
-### Social Links
+Select your token image, or drag and drop the image directly into the designated drop zone. Your media must satisfy these baseline engine constraints:
 
-You can optionally add links for:
+* **File Size Limit:** Maximum **20 MB**
+* **Supported Extensions:** `.jpg`, `.png`, `.gif`
+* **Recommended Resolution:** **1024 × 1024 pixels**
+* **Recommended Aspect Ratio:** Exact square (**1:1**)
 
-- Website
-- Telegram
-- Twitter
+<Callout type="error" title="Metadata Is Permanent">
+Double-check every field, link, and file parameter before signing the creation transaction. Once finalized on-chain, your coin's **Name, Ticker, Description, Profile Image, and Social Links** are deeply bound to the token mint. They are **completely immutable and cannot be edited, deleted, or updated** at a later date.
+</Callout>
 
-Enter the appropriate URL for each link you want to associate with your coin.
+# Creator Incentive Program
 
-# Upload an Image
+When the Creator Incentive Program is active, the creation page will display the current rewards available for launching a new coin.
 
-Select an image for your coin or drag and drop it into the upload area.
-
-The current image requirements are:
-
-- **Maximum file size:** 20 MB
-- **Supported formats:** JPG, PNG, GIF
-- **Minimum resolution:** 1024 × 1024 pixels
-- **Recommended aspect ratio:** Square (1:1)
-
-# Metadata Is Permanent
-
-Review your information carefully before creating the coin.
-
-The coin's:
-
-- Name
-- Ticker
-- Description
-- Image
-- Social links
-
-are set when the coin is created and cannot be changed afterward.
-
-# Creator Incentive
-
-When the Creator Incentive Program is active, the creation page displays information about the incentive available to eligible creators.
-
-The current incentive rate is **1%**.
-
-The program can be enabled or disabled by the protocol, and the configured rate can be changed for future creations.
-
-Your incentive eligibility and rate are determined when your coin is created. If the program is active when you create your coin, that incentive remains associated with your sale even if the global program is later disabled or its rate is changed.
-
-The incentive is paid when the sale successfully reaches its hard cap and liquidity migration is successfully completed.
+* **Current Rate:** Eligible creators receive a **1% reward**.
+* **Program Changes:** The platform administration can enable, disable, or change this reward rate for future launches.
+* **Rate Protection:** Your reward rate is permanently locked in the moment you create your coin. Even if the platform later turns off the program or changes the rate, your active sale will keep its original rate.
+* **Payout Timing:** Your reward is paid out automatically as soon as your sale successfully reaches its hard cap and completes liquidity migration to the DEX.
 
 # Sale Lifetime
 
-Every bonding curve sale has a fixed lifetime determined by the protocol when the sale is created.
+Every bonding curve sale has a fixed time limit set by the platform at launch.
 
-The protocol currently allows a sale lifetime between **24 and 48 hours**. The lifetime is configured in seconds, so the protocol can use any duration within this range rather than being limited to whole-hour values.
-
-For example, the protocol could use a lifetime of 24 hours, 25.1 hours, 36 hours, or another duration within the allowed range.
-
-The lifetime is determined when the sale is created and is fixed for that individual sale.
-
-If the protocol lifetime setting is changed later, the change applies only to newly created sales. **Existing and currently running sales are not affected.**
-
-If a sale reaches its hard cap before its lifetime expires, it becomes **Completed** and can proceed to liquidity migration.
-
-If the lifetime expires before the hard cap is reached, the sale becomes **Expired** and does not proceed to liquidity migration.
+* **Time Window:** Sales are configured to last between **24 and 48 hours**. 
+* **Precise Timing:** The system counts the time in seconds. This means a lifetime does not have to be a whole hour—it can be a precise duration like 24.5 hours or 35.2 hours.
+* **No Retrospective Changes:** Your sale's lifetime is locked upon creation. If the platform changes the default time limit rules later, **your ongoing sale will not be affected**.
+* **Sale Outcomes:**
+  * **Completed:** If your sale hits its hard cap before time runs out, it automatically finishes and moves to liquidity migration.
+  * **Expired:** If the timer reaches zero before hitting the hard cap, the sale closes unsuccessfully and does not move forward.
 
 # Choose Your Initial Purchase
 
-After entering your coin information and signing in, select **Create coin**.
+After filling out your coin details and logging in, click **Create coin**. A purchase panel will appear where you can buy the very first supply of your new token.
 
-A creator purchase panel will open.
+In this panel, you will see your available wallet balance alongside these options and metrics:
+* The amount of SOL you wish to spend
+* **Reset** button
+* **Max** button
+* The estimated number of tokens you will receive
 
-Enter the amount of SOL you want to use for your initial purchase.
+## Initial Purchase Rules
 
-Your wallet balance is displayed in the panel, along with:
+Your initial purchase is the first buy transaction on your new bonding curve.
 
-- The SOL amount
-- **Reset**
-- **Max**
-- The estimated number of tokens you will receive
-
-## Initial Purchase
-
-Your initial purchase is the first purchase made in your newly created bonding curve sale.
-
-This initial purchase is **mandatory** when creating a coin. The minimum purchase amount is based on approximately **$1 USD worth of SOL** and is calculated using the current SOL/USD price.
-
-The minimum purchase requirement is enforced by both the UI input box and the on-chain program. If you enter an amount below the required minimum, the UI automatically adjusts the amount to the minimum permitted value.
-
-The amount you enter is the **purchase amount**, not the net amount that is ultimately counted toward the bonding curve.
-
-RugFreePump currently applies a **1% buy fee** to purchases. This fee is deducted by the on-chain program, and the remaining amount is used for the bonding curve purchase.
-
-For example, if you enter `10 SOL`, the 1% buy fee is deducted from that purchase, and the remaining `9.9 SOL` is used as the net bonding-curve contribution.
-
-The number of tokens you receive is calculated from the bonding curve using the applicable SOL/USD price at the time of the transaction.
+* **Mandatory Step:** Making an initial purchase is **required** to launch your coin. 
+* **Minimum Requirement:** You must spend at least **$1 USD worth of SOL** (calculated using real-time market prices at launch).
+* **Automatic Correction:** The interface and the smart contract enforce this minimum. If you type an amount lower than $1 USD, the system automatically corrects it to the minimum allowed amount.
+* **Total Cost vs. Net Buy:** The amount you enter is your total spending amount, not the final amount that goes into the bonding curve.
+* **Platform Fee:** RugFreePump charges a **1% buy fee**. The system protocol deducts this fee automatically and sends the rest to the bonding curve pricing model. For example, if you spend `10 SOL`, a 0.1 SOL fee is deducted, and **9.9 SOL** goes toward purchasing your tokens.
+* **Token Pricing:** The final number of tokens you get is calculated automatically by the bonding curve pricing model based on the current oracle SOL/USD price when the transaction is processed.
 
 ## Reset
 
-Select **Reset** to clear the entered purchase amount.
+Click **Reset** to clear the numbers in the purchase field and start over.
 
 ## Max
 
-Select **Max** to automatically use the maximum available purchase amount.
+Click **Max** to automatically fill in the highest amount you can spend.
 
-If your wallet balance is greater than the sale's remaining hard-cap capacity, **Max** uses the maximum amount permitted by the sale rather than your entire wallet balance.
+* **Smart Cap:** If your wallet balance is larger than what the sale needs to hit its hard cap, the **Max** button will only fill in the exact amount needed to fill the sale, rather than using your entire balance.
+* **Gas Buffer:** Make sure to leave a little extra SOL in your wallet to cover the platform creation costs and Solana network transaction fees.
 
-You should still keep enough SOL in your wallet to cover the creation costs and Solana network fee.
+# Launching and Completing the Sale
 
-# Create the Coin
+Once you enter a valid initial purchase amount, the final **Create coin** button becomes active. Click it to start the launch process.
 
-Once you enter a valid initial purchase amount, the **Create coin** button becomes available.
+If you have not completed the required legal consent step, the platform will prompt you to do so before continuing.
 
-Select **Create coin** to begin the creation process.
+### Step 1: Preparing Metadata
+The platform will first upload your coin details and prepare the blockchain transaction.
+> **Status Message:** *Uploading Metadata & Preparing The Transaction...*
+* **Rule:** Do not close or refresh your browser window while this process is running.
 
-If you have not completed the required consent process, RugFreePump will ask you to complete it before continuing.
+### Step 2: Approve the Transaction
+Your connected wallet (Phantom or Solflare) will open a pop-up window asking you to confirm the transaction.
+> **Status Message:** *Waiting For Transaction Approval...*
+* **Rule:** Review the transaction details in your wallet and click Approve. **Do not close or reload the website window.**
 
-After all requirements are complete, RugFreePump will first upload and prepare the coin metadata and transaction.
+### Step 3: Wait for Blockchain Confirmation
+The system will now wait for the Solana network to confirm and finalize your transaction.
+> **Status Message:** *Waiting For Transaction Confirmation...*
 
-You will see a status such as:
+### Step 4: Finalizing the Page
+Once confirmed, RugFreePump securely processes the blockchain data to build your new sale webpage.
+> **Status Message:** *Transaction Succeeded. Waiting For Transaction data To Map The Sale Page...*
+* **Outcome:** You do not need to do anything. The platform will automatically redirect you directly to your new, live sale page.
 
-> Uploading Metadata & Preparing The Transaction...
+# Handling Cancelled Transactions
 
-Keep the creation window open while this process is running.
+If you reject the wallet request or if the Solana network times out, the launch will stop and no sale will be created. RugFreePump will automatically clean up the temporary files prepared for the launch.
 
-# Approve the Transaction
+<Callout type="warning" title="Cleanup in Progress">
+During this cleanup process, the webpage will lock and display:
+**"IPFS Metadata Cleanup Is In Progress..."**
 
-After the metadata and transaction are prepared, your wallet will request transaction approval.
+Please keep your browser window open until this automated cleanup finishes.
+</Callout>
 
-The creation window will show:
+Once the cleanup completes, the interface unlocks, and you can safely:
+* Try launching the coin again
+* Edit your coin's name, ticker, or description
+* Change your initial purchase amount
+* Safely navigate away or leave the page
 
-> Waiting For Transaction Approval...
+# Your Sale Is Live!
 
-Review the transaction in your wallet and approve it if everything is correct.
-
-Do not close or reload the creation window while the process is running.
-
-## Wait for Confirmation
-
-After approving the transaction, RugFreePump waits for the transaction to be confirmed on Solana.
-
-The creation window will show:
-
-> Waiting For Transaction Confirmation...
-
-Once the transaction succeeds, RugFreePump begins processing the resulting transaction data so the new sale can be displayed.
-
-You may briefly see:
-
-> Transaction Succeeded. Waiting For Transaction data To Map The Sale Page...
-
-You do not need to take any additional action during this step.
-
-RugFreePump will automatically redirect you to your newly created sale.
-
-# If You Cancel the Transaction
-
-If you reject the wallet request or the transaction times out, the creation does not complete.
-
-RugFreePump cleans up the metadata that was prepared for the attempted creation.
-
-During this cleanup process, the creation window remains locked and displays:
-
-> IPFS Metadata Cleanup Is In Progress...
-
-Keep the window open until the cleanup finishes.
-
-After cleanup is complete, you can:
-
-- Try creating the coin again
-- Change your coin information
-- Change your initial purchase amount
-- Leave the creation page
-
-No sale is created when the creation transaction is canceled or times out.
-
-# Your Sale Is Live
-
-After a successful creation transaction, you are automatically redirected to the new sale page.
-
-The newly created bonding curve sale starts in the **Live** state and is immediately available for buyers to discover and participate in.
+If the transaction is successful, you will be redirected to your new page instantly. Your bonding curve sale starts in the **Live** state, making it immediately visible to global buyers and search systems.
 
 ## Bonding Curve Pool Information
 
