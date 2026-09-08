@@ -3,164 +3,254 @@ title: "Migrating Raised Liquidity"
 description: "Learn how to migrate a completed bonding curve sale to Raydium CPMM."
 ---
 
-Once your bonding curve sale reaches its hard cap, its status changes to **Completed** and liquidity migration becomes available.
+When your bonding curve sale reaches its hard cap, the sale status changes to **Completed**.
 
-Liquidity migration moves the completed sale's raised funds and reserved tokens to **Raydium CPMM**, completing the transition from the bonding curve sale to a tradable liquidity pool.
+A Completed sale is ready for liquidity migration. During migration, the funds raised by the sale and the tokens reserved for liquidity are used to create liquidity on **Raydium CPMM**.
+
+After a successful migration, the sale status changes to **Migrated**.
+
+# When Your Sale Is Ready for Migration
+
+Once your sale reaches its hard cap before its lifetime expires, it becomes **Completed** and the **Migrate liquidity** button appears on the sale page.
+
+Liquidity migration is normally the responsibility of the coin creator.
+
+## Creator-Only Access
+
+Only the wallet that created the coin can normally initiate liquidity migration.
+
+The **Migrate liquidity** button is displayed only when you are logged in using the wallet associated with the coin's creation.
+
+Other users, contributors, and wallet holders cannot perform the normal creator migration process.
 
 # Before You Migrate
 
-Only the creator can normally initiate liquidity migration from the sale page.
+Make sure your creator wallet is connected and has enough SOL to pay the Solana network transaction fee.
 
-The **Migrate liquidity** button is shown only when:
+RugFreePump does not charge the creator an additional migration fee. The migration transaction itself is processed on Solana, so your wallet must have enough SOL to submit and confirm the transaction.
 
-- The sale status is **Completed**.
-- You are signed in with the wallet that created the coin.
+The migration process also includes protocol and liquidity-related deductions from the completed sale's raised funds. These are processed automatically during migration and are not charged separately to the creator's wallet.
 
-You must also have a small amount of SOL in the creator wallet to pay the Solana network transaction fee.
+# Migration Reminder Period
 
-## Consent Requirement
+When a sale becomes **Completed**, the sale page displays a **Time left to migrate** countdown.
 
-Liquidity migration is a financial operation and requires valid **RugFreePump Consent**.
+The countdown provides approximately **1 hour** for the creator to prepare for the liquidity launch.
 
-If your consent is missing or needs to be updated, RugFreePump will ask you to complete the required consent process before continuing.
+During this time, the creator may prepare launch-related activities such as:
 
-For details, see the [RugFreePump Consent Documentation](https://rugfreepump.com/docs/user-guides/rugfreepump-consent).
+- Launch announcements
+- Community communications
+- Marketing activities
+- Project updates
+- Other launch preparations
 
-# Migration Time Reminder
+The purpose of this period is to give the creator reasonable time to prepare before liquidity is migrated and trading begins on Raydium CPMM.
 
-After a sale becomes **Completed**, the sale page displays a **Time left to migrate** countdown.
+## What Happens When the Timer Ends?
 
-The countdown currently provides a **1-hour reminder period** for the creator to prepare and complete the launch, including activities such as marketing and other launch preparations.
+The countdown is only a reminder and does not automatically trigger an on-chain or off-chain action.
 
-This countdown is **not an on-chain or off-chain enforcement mechanism**. When the timer reaches zero:
+When the timer reaches zero:
 
-- The sale does not automatically change state.
-- The migration is not automatically canceled.
-- Liquidity is not automatically migrated.
-- The creator can still migrate the sale.
+- The sale does not automatically migrate.
+- The sale does not automatically expire.
+- The sale status does not automatically change.
+- The creator can still migrate the liquidity.
+- The **Migrate liquidity** button remains available to the eligible creator.
 
-However, contributors may raise complaints if a completed sale has not been migrated within the expected timeframe.
+The timer is intended to encourage prompt migration and give contributors a reasonable expectation for when the creator may complete the liquidity launch.
 
-<Callout type="warning" title="Please Complete Migration Promptly">
-Liquidity migration should be completed within the required timeframe.
+# Migrate Liquidity
 
-If you cannot complete the migration for any reason, including insufficient SOL for network fees or a problem with the migration process, contact the RugFreePump support team as soon as possible.
-</Callout>
+Once your sale is **Completed**, follow these steps to migrate the liquidity.
 
-# Start Liquidity Migration
+## Step 1: Select Migrate Liquidity
 
-When your sale is **Completed**, select **Migrate liquidity** on the sale page.
+On your Completed sale page, select **Migrate liquidity**.
 
-The migration process then proceeds through the following steps.
+The migration process begins and the migration window displays:
 
-## Step 1: Preparing the Transaction
-
-After selecting **Migrate liquidity**, RugFreePump prepares the migration transaction.
-
-The migration window displays:
-
-> Processing...  
 > Preparing The Transaction...
 
-Keep the page open while the transaction is being prepared.
+RugFreePump prepares the transaction required to migrate the completed sale's liquidity.
+
+Keep the migration window open while the transaction is being prepared.
 
 ## Step 2: Approve the Transaction
 
-Once the transaction is ready, your wallet will open and request approval.
+After the transaction is prepared, your wallet will request approval.
 
 The migration window displays:
 
-> Processing...  
 > Waiting For Transaction Approval...
 
-Review the transaction in your wallet and approve it if everything is correct.
+Review the transaction in your wallet and approve it to continue.
 
-The migration transaction does not require a separate migration fee from RugFreePump. You only need enough SOL in your wallet to cover the Solana network transaction fee.
+## Step 3: Wait for Transaction Confirmation
 
-## Step 3: Migration Completes
+After approving the transaction, RugFreePump waits for confirmation from the Solana network.
 
-After you approve the transaction, RugFreePump waits for the transaction to be confirmed on Solana.
+Once the transaction succeeds, the liquidity migration is complete.
 
-Once the transaction succeeds:
+# What Happens During Migration?
 
-- The raised liquidity is migrated to **Raydium CPMM**.
-- The reserved tokens for liquidity are added to the Raydium pool.
-- Applicable protocol and migration deductions are processed.
-- The creator incentive is paid in the same transaction when the sale was created with an active Creator Incentive Program.
-- The sale status changes from **Completed** to **Migrated**.
+During migration, the completed bonding curve sale is transitioned into a **Raydium CPMM** liquidity pool.
 
-# How the Raised Funds Are Distributed
+The migration uses:
 
-During a successful migration, the raised funds are distributed according to the protocol's configured migration rules.
+- The funds raised by the bonding curve sale.
+- The tokens reserved for liquidity.
 
-Currently:
+Each sale reserves a portion of its token supply specifically for liquidity migration.
 
-- **3%** of the raised funds goes to RugFreePump as protocol fees.
-- If the sale has an active **Creator Incentive Program**, the configured creator incentive is paid to the creator.
-- **0.5 SOL** is deducted for the Raydium fee and required account rent.
-- The remaining funds are provided to **Raydium CPMM** as liquidity.
+For example, a sale with a total supply of 1 billion tokens may have:
 
-The creator incentive is determined when the coin is created. If your sale was not included in the Creator Incentive Program, no creator incentive is paid during migration.
+- **800 million tokens for sale**
+- **200 million tokens reserved for liquidity**
 
-## Creator Incentive Payment
+The reserved liquidity tokens are combined with the applicable raised funds to create the Raydium CPMM liquidity pool.
 
-When your sale is eligible for the Creator Incentive Program, the migration transaction also sends the applicable incentive directly to your creator wallet.
+## Raised Fund Distribution
 
-Your wallet transaction approval may therefore show a SOL amount being received by your wallet in addition to the migration activity.
+The raised funds are processed automatically as part of the migration transaction.
 
-This payment occurs as part of the same transaction that migrates the liquidity.
+Currently, the migration process includes:
 
-# After Successful Migration
+1. **Protocol Fee:** 3% of the raised funds is allocated as the RugFreePump protocol fee.
+2. **Creator Incentive:** If the creator was eligible for the Creator Incentive Program when the coin was created, the applicable incentive is paid to the creator.
+3. **Raydium and Account Costs:** A fixed **0.5 SOL** is deducted for Raydium-related fees and required account rent.
+4. **Liquidity:** The remaining applicable funds are used to provide liquidity on Raydium CPMM.
 
-After the migration transaction succeeds, the sale page changes to the **Migrated** state.
+The creator does not need to manually calculate or distribute these amounts. The migration transaction handles the applicable protocol fee, creator incentive, Raydium-related costs, account rent, and liquidity allocation automatically.
 
-The sale page shows:
+## LP Tokens
 
-- **Sale Progress:** 100%
-- **Raised SOL:** The final amount used for the completed sale and migration.
-- **Raised USD:** The corresponding USD value.
-- **Cap:** The completed sale amount.
-- **Pool Status:** **This pool has been migrated**
-- **View:** A button for viewing the migrated project on [DEX Screener](https://dexscreener.com/).
+The liquidity-provider tokens associated with the migrated liquidity pool are automatically burned according to the protocol's configured LP token handling.
 
-Selecting **View** opens the project's market information on DEX Screener.
+# Creator Incentive Payment
 
-The normal lifecycle is:
+If your sale was eligible for the **Creator Incentive Program** when the coin was created, the creator incentive is paid during the same transaction that migrates the liquidity.
 
-**Live → Completed → Migrated**
+Your wallet may therefore show an incoming SOL amount when reviewing the migration transaction.
 
-Once a sale has successfully migrated, the bonding curve sale has completed its lifecycle and the project's liquidity is available through the Raydium CPMM pool.
+For example, your wallet may display:
 
-# If Migration Fails or You Cannot Migrate
+> Solana +1.54886 SOL
 
-If you reject the wallet transaction, the transaction times out, or the migration cannot be completed, the sale remains **Completed**.
+This incoming SOL represents the applicable creator incentive payment.
 
-You can try the migration again when the issue has been resolved.
+## Incentive Eligibility
 
-If you cannot complete the migration because of:
+Creator incentive eligibility and the applicable rate are determined when the coin is created.
 
-- Insufficient SOL for the network fee
-- A problem with the **Migrate liquidity** button
-- A transaction preparation or execution problem
-- Any other unexpected issue
+If your sale was created with an applicable creator incentive:
 
-contact the RugFreePump support team promptly.
+- The incentive configuration remains associated with the sale.
+- The applicable reward is paid when liquidity migration succeeds.
+- The reward is sent to the creator wallet as part of the migration transaction.
 
-## Authority Emergency Handling
+If your sale was not eligible for the Creator Incentive Program when it was created, no creator incentive payment is made.
 
-RugFreePump has authority-level mechanisms that can be used when a creator does not complete migration and circumstances require intervention.
+Liquidity migration works normally regardless of incentive eligibility.
 
-Depending on the situation and responses from the creator and contributors, the authority may either:
+# After Migration
 
-- Complete the liquidity migration using the authorized migration wallet, or
-- Cancel the sale when cancellation is necessary.
+After the migration transaction is successfully confirmed, the sale status changes from:
 
-Cancellation is an **emergency measure**, not an automatic consequence of the migration reminder timer.
+**Completed → Migrated**
 
-If a completed sale is canceled, it does not proceed to liquidity migration, and eligible contributors can use the withdrawal process to withdraw their contributed SOL.
+The sale page updates to show:
 
-# What's Next?
+**This pool has been migrated**
 
-After successful migration, your project is listed through the **Raydium CPMM** liquidity pool.
+A **View** button also appears, allowing you to view the project on [DEX Screener](https://dexscreener.com/).
 
-You can use the **View** button on the migrated sale page to open the project on [DEX Screener](https://dexscreener.com/) and view its market information.
+Select **View** to open the project's market information on DEX Screener.
+
+No additional action is required from the creator after the migration transaction succeeds.
+
+# If You Cannot Migrate
+
+If you are unable to complete the liquidity migration, contact the RugFreePump support team as soon as possible.
+
+Contact support if, for example:
+
+- Your creator wallet does not have enough SOL for the network fee.
+- The **Migrate liquidity** button is not available when it should be.
+- The transaction fails repeatedly.
+- You experience a wallet connection problem.
+- You experience a transaction preparation or execution problem.
+- You encounter another technical issue preventing migration.
+
+If you cannot migrate for any reason, do not wait unnecessarily to contact support. Prompt communication allows the situation to be reviewed and addressed where possible.
+
+# Delayed Migration and Authority Review
+
+The creator is normally responsible for completing liquidity migration after the sale becomes **Completed**.
+
+The 1-hour migration countdown gives the creator time to prepare for the launch. However, if the creator does not migrate the liquidity and remains unresponsive, contributors may raise complaints regarding the delay.
+
+<Callout type="warning" title="Important Notice">
+Liquidity migration should be completed within the required timeframe.
+
+Failure to meet the expected timeframe, particularly if complaints from contributors are received, may result in the situation being reviewed by the platform authority.
+
+Please complete migration promptly. If you experience any issues or complications, contact the RugFreePump support team immediately.
+</Callout>
+
+## Authority Review
+
+The migration countdown does not automatically trigger cancellation or authority intervention.
+
+There is also no automatic rule requiring the authority to migrate or cancel a sale after a specific amount of time.
+
+If a migration is delayed, the circumstances may be reviewed before any action is taken. This may include considering:
+
+- Whether the creator is responding.
+- Whether the creator is experiencing a genuine technical problem.
+- Whether the creator intends to complete migration.
+- Whether contributors have raised complaints.
+- Whether additional time or assistance is appropriate.
+- Whether migration or cancellation better protects contributors.
+
+The appropriate action depends on the circumstances and the responses of the creator and contributors.
+
+## Exceptional Migration Assistance
+
+RugFreePump maintains an authorized migration mechanism that can be used in exceptional circumstances when intervention is necessary.
+
+This mechanism allows the authorized migration wallet to complete migration for a Completed sale when appropriate.
+
+It is not part of the normal migration process and does not replace the creator's responsibility to migrate liquidity.
+
+Under normal circumstances, the creator should complete migration using the wallet that created the coin.
+
+## Sale Cancellation
+
+In certain circumstances, the platform authority may determine that cancellation is necessary instead of proceeding with liquidity migration.
+
+If a Completed sale is canceled:
+
+- The sale does not proceed to liquidity migration.
+- The sale status changes to **Canceled**.
+- Eligible contributors can withdraw their contributed SOL through the applicable withdrawal process.
+
+Cancellation is an exceptional action. It is not automatically triggered when the migration countdown reaches zero and is determined based on the circumstances of the delayed migration.
+
+# Migration Summary
+
+The normal migration process is:
+
+1. Your bonding curve sale reaches its hard cap.
+2. The sale status changes to **Completed**.
+3. Log in using the wallet that created the coin.
+4. Select **Migrate liquidity**.
+5. Approve the transaction in your wallet.
+6. Wait for Solana transaction confirmation.
+7. Liquidity is migrated to **Raydium CPMM**.
+8. Any eligible creator incentive is paid in the same transaction.
+9. The sale status changes to **Migrated**.
+10. Select **View** to view your migrated project on DEX Screener.
+
+Once the migration transaction succeeds, the liquidity migration process is complete.
