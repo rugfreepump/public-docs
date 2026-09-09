@@ -27,7 +27,8 @@
       {
         "group": "Overview",
         "pages": [
-          "overview/overview"
+          "overview/overview",
+          "overview/protocol-Fees"
         ]
       },
       {
@@ -51,18 +52,6 @@
             ]
           },
           "user-guides/faq"
-        ]
-      },
-      {
-        "group": "Core Mechanics",
-        "pages": [
-          "core-mechanics/tokenomics",
-          "core-mechanics/token-metadata",
-          "core-mechanics/slippage-and-priority",
-          "core-mechanics/oracle-price",
-          "core-mechanics/bonding-curve",
-          "core-mechanics/protocol-fees",
-          "core-mechanics/sale-lifecycle"
         ]
       },
       {
