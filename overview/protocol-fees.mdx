@@ -1,19 +1,18 @@
 ---
 title: "Protocol Fees"
-description: "Reference the current RugFreePump protocol fees and rates."
+description: "Reference the current RugFreePump protocol fees and their authorized update ranges."
 ---
 
-The following are the current fees and rates applied by the RugFreePump protocol.
+The following fees are configured and enforced by the RugFreePump on-chain program. Each fee has a defined range that the authorized protocol authority can set.
 
-| Operation | Fee / Rate | Paid By |
-| --- | ---: | --- |
-| Create a bonding curve sale | **$5 USD equivalent in SOL** | Creator |
-| Buy bonding curve sale tokens | **1%** | Buyer |
-| Migrate raised liquidity | **3% of raised funds** | Sale funds |
-| Creator Incentive | **0.1%–1%** | Sale funds, when enabled |
-| Raydium CPI-related costs and required account rent | **0.5 SOL** | Sale funds |
-| Solana network transaction fees | **Variable** | Transaction sender |
+| On-chain Variable | Current Fee | Authorized Range |
+| --- | ---: | ---: |
+| `bondingcurve_escrow_creation_fee_usd_e2`<br/><small>Fixed USD-equivalent fee charged to the creator when creating a bonding curve sale.</small> | **$5.00** | **$0.00–$10.00** |
+| `buy_fee_bps`<br/><small>Percentage fee deducted from each token purchase.</small> | **1%** | **0.5%–1%** |
+| `bondingcurve_escrow_completed_fee_bps`<br/><small>Percentage fee deducted from finalized sale funds before liquidity migration or recovery.</small> | **3%** | **2%–3%** |
+| `token_creator_incentive_bps`<br/><small>Optional percentage allocated to the token creator from finalized sale funds when the creator incentive is enabled.</small> | **1%** | **0.1%–1%** |
+| `dex_pool_creation_fee_lamports`<br/><small>Fixed SOL amount reserved from finalized sale funds for DEX pool creation and related migration costs.</small> | **0.5 SOL** | **0.25–1 SOL** |
 
-<Callout type="info" title="Fee Updates">
-Protocol fees and rates may be updated over time. The amounts shown on this page represent the current protocol configuration.
+<Callout type="info" title="On-Chain Fee Controls">
+All protocol fee changes are enforced by the RugFreePump on-chain program. The authorized protocol authority can only update each fee within its predefined on-chain range.
 </Callout>
