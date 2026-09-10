@@ -27,9 +27,9 @@ Other users, contributors, and wallet holders cannot perform the normal creator 
 
 Make sure your creator wallet is connected and has enough SOL to pay the Solana network transaction fee.
 
-RugFreePump does not charge the creator an additional migration fee. The migration transaction itself is processed on Solana, so your wallet must have enough SOL to submit and confirm the transaction.
+RugFreePump does not charge the creator an additional migration fee. The creator only needs enough SOL to submit and confirm the migration transaction.
 
-The migration process also includes protocol and liquidity-related deductions from the completed sale's raised funds. These are processed automatically during migration and are not charged separately to the creator's wallet.
+Protocol fees, creator incentives where applicable, Raydium-related costs, required account rent, and liquidity allocation are processed automatically from the completed sale's raised funds during migration.
 
 # Migration Reminder Period
 
@@ -37,7 +37,7 @@ When a sale becomes **Completed**, the sale page displays a **Time left to migra
 
 The countdown provides approximately **1 hour** for the creator to prepare for the liquidity launch.
 
-During this time, the creator may prepare launch-related activities such as:
+During this time, the creator may prepare:
 
 - Launch announcements
 - Community communications
@@ -111,18 +111,9 @@ For example, a sale with a total supply of 1 billion tokens may have:
 
 The reserved liquidity tokens are combined with the applicable raised funds to create the Raydium CPMM liquidity pool.
 
-## Raised Fund Distribution
+The migration transaction automatically handles the required distribution of the raised funds, including applicable protocol fees, creator incentives, Raydium-related costs, required account rent, and the remaining liquidity allocation.
 
-The raised funds are processed automatically as part of the migration transaction.
-
-Currently, the migration process includes:
-
-1. **Protocol Fee:** 3% of the raised funds is allocated as the RugFreePump protocol fee.
-2. **Creator Incentive:** If the creator was eligible for the Creator Incentive Program when the coin was created, the applicable incentive is paid to the creator.
-3. **Raydium and Account Costs:** A fixed **0.5 SOL** is deducted for Raydium-related fees and required account rent.
-4. **Liquidity:** The remaining applicable funds are used to provide liquidity on Raydium CPMM.
-
-The creator does not need to manually calculate or distribute these amounts. The migration transaction handles the applicable protocol fee, creator incentive, Raydium-related costs, account rent, and liquidity allocation automatically.
+The creator does not need to manually calculate or distribute these amounts.
 
 ## LP Tokens
 
@@ -164,9 +155,7 @@ The sale page updates to show:
 
 **This pool has been migrated**
 
-A **View** button also appears, allowing you to view the project on [DEX Screener](https://dexscreener.com/).
-
-Select **View** to open the project's market information on DEX Screener.
+A **View** button also appears, allowing you to view the project's market information on DEX Screener.
 
 No additional action is required from the creator after the migration transaction succeeds.
 
@@ -192,11 +181,11 @@ The creator is normally responsible for completing liquidity migration after the
 The 1-hour migration countdown gives the creator time to prepare for the launch. However, if the creator does not migrate the liquidity and remains unresponsive, contributors may raise complaints regarding the delay.
 
 <Callout type="warning" title="Important Notice">
-Liquidity migration should be completed within the required timeframe.
+Liquidity migration should be completed promptly.
 
-Failure to meet the expected timeframe, particularly if complaints from contributors are received, may result in the situation being reviewed by the platform authority.
+A delayed migration, particularly when the creator is unresponsive or contributors have raised complaints, may result in the situation being reviewed by the platform authority.
 
-Please complete migration promptly. If you experience any issues or complications, contact the RugFreePump support team immediately.
+If you experience any issues or complications, contact the RugFreePump support team as soon as possible.
 </Callout>
 
 ## Authority Review
@@ -248,7 +237,7 @@ The normal migration process is:
 4. Select **Migrate liquidity**.
 5. Approve the transaction in your wallet.
 6. Wait for Solana transaction confirmation.
-7. Liquidity is migrated to **Raydium CPMM**.
+7. The raised funds and reserved liquidity tokens are used to create liquidity on **Raydium CPMM**.
 8. Any eligible creator incentive is paid in the same transaction.
 9. The sale status changes to **Migrated**.
 10. Select **View** to view your migrated project on DEX Screener.
