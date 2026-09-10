@@ -5,7 +5,7 @@ description: "Learn how to migrate a completed bonding curve sale to Raydium CPM
 
 When your bonding curve sale reaches its hard cap, the sale status changes to **Completed**.
 
-A completed sale is ready for liquidity migration. During migration, the funds raised by the sale and the tokens reserved for liquidity are used to create liquidity on **Raydium CPMM**.
+A completed sale is ready for liquidity migration. During migration, the funds raised by the sale and the tokens reserved for liquidity are used to create liquidity pool on **Raydium CPMM**.
 
 After a successful migration, the sale status changes to **Migrated**.
 
@@ -19,7 +19,7 @@ Liquidity migration is normally the responsibility of the coin creator.
 
 Only the wallet that created the coin can normally initiate liquidity migration.
 
-The **Migrate liquidity** button is displayed only when you are logged in using the wallet associated with the coin's creation.
+The **Migrate liquidity** button is displayed when you are logged in using the wallet associated with the coin's creation.
 
 Other users, contributors, and wallet holders cannot perform the normal creator migration process.
 
@@ -27,9 +27,9 @@ Other users, contributors, and wallet holders cannot perform the normal creator 
 
 Make sure your creator wallet is connected and has enough SOL to pay the Solana network transaction fee.
 
-RugFreePump does not charge the creator an additional migration fee. The creator only needs enough SOL to submit and confirm the migration transaction.
+RugFreePump protocol does not charge the creator an additional migration fee. The creator only needs enough SOL to submit and confirm the migration transaction.
 
-Protocol fees, creator incentives where applicable, Raydium-related costs, required account rent, and liquidity allocation are processed automatically from the completed sale's raised funds during migration.
+Protocol fees, creator incentives where applicable, Raydium CPI-related costs, required account rent, and liquidity allocation are processed automatically from the completed sale's raised funds during migration.
 
 # Migration Reminder Period
 
@@ -57,23 +57,23 @@ When the timer reaches zero:
 - The sale does not automatically expire.
 - The sale status does not automatically change.
 - The creator can still migrate the liquidity.
-- The **Migrate liquidity** button remains available to the eligible creator.
+- The **Migrate liquidity** button remains available to the creator.
 
-The timer is intended to encourage prompt migration and give contributors a reasonable expectation for when the creator may complete the liquidity launch.
+The timer is intended to encourage prompt migration and give contributors a reasonable expectation of when the creator may complete the liquidity launch.
 
 # Migrate Liquidity
 
 Once your sale is **Completed**, follow these steps to migrate the liquidity.
 
-## Step 1: Click Migrate Liquidity Button
+## Step 1: Select Migrate Liquidity
 
-On your Completed sale page, click the **Migrate liquidity** button. 
+On your Completed sale page, select the **Migrate liquidity** button.
 
 The migration process begins, and the migration window displays:
 
 > Preparing The Transaction...
 
-platform prepares the transaction required to migrate the completed sale's liquidity.
+RugFreePump prepares the transaction required to migrate the completed sale's liquidity.
 
 Keep the migration window open while the transaction is being prepared.
 
@@ -89,7 +89,13 @@ Review the transaction in your wallet and approve it to continue.
 
 ## Step 3: Wait for Transaction Confirmation
 
-After approving the transaction, the platform waits for confirmation from the Solana network.
+After approving the transaction, RugFreePump waits for confirmation from the Solana network.
+
+The migration window displays:
+
+> Waiting For Transaction Confirmation...
+
+Keep the migration window open while the transaction is being confirmed.
 
 Once the transaction succeeds, the liquidity migration is complete.
 
@@ -113,7 +119,9 @@ The creator does not need to calculate or process these amounts manually. The mi
 
 ## Liquidity Protection via LP Token Burn
 
-As part of the migration process, the generated Liquidity Provider (LP) tokens are automatically burned. This prevents any individual or team entity from withdrawing the migrated liquidity through the pool's LP tokens. The migrated liquidity remains in the Raydium pool and stays fully available for public trading.
+As part of the migration process, the generated Liquidity Provider (LP) tokens are automatically burned.
+
+This prevents any individual or team entity from withdrawing the migrated liquidity through the pool's LP tokens. The migrated liquidity remains in the Raydium pool and stays fully available for public trading.
 
 ## Creator Incentive
 
@@ -143,7 +151,7 @@ The sale page updates to show:
 
 **This pool has been migrated**
 
-A **View** button also appears, allowing you to view the project's market information on DEX Screener.
+A **View** button also appears, allowing you to view the project's market information on **DEX Screener**.
 
 No additional action is required from the creator after the migration transaction succeeds.
 
@@ -180,7 +188,7 @@ If you experience any issues or complications, contact the RugFreePump support t
 
 The migration countdown does not automatically trigger cancellation or authority intervention.
 
-There is also no automatic rule requiring the authority to migrate or cancel a sale after a specific amount of time.
+There is no automatic rule requiring the authority to migrate or cancel a sale after a specific amount of time.
 
 If a migration is delayed, the circumstances may be reviewed before any action is taken. This may include considering:
 
@@ -225,9 +233,9 @@ The normal migration process is:
 4. Select **Migrate liquidity**.
 5. Approve the transaction in your wallet.
 6. Wait for Solana transaction confirmation.
-7. The raised funds and reserved liquidity tokens are used to create liquidity on **Raydium CPMM**.
-8. Any eligible creator incentive is paid in the same transaction.
+7. The raised funds, after applicable fees and allocations, are combined with the reserved liquidity tokens to create liquidity on **Raydium CPMM**.
+8. Any applicable creator incentive is paid in the same transaction if the Creator Incentive Program was enabled when the bonding curve sale was created.
 9. The sale status changes to **Migrated**.
-10. Select **View** to view your migrated project on DEX Screener.
+10. Select **View** to view your migrated project on **DEX Screener**.
 
-Once the migration transaction succeeds, the liquidity migration process is complete.
+Once the migration transaction succeeds, the liquidity migration process is complete, and public traders can trade the token on Raydium.
