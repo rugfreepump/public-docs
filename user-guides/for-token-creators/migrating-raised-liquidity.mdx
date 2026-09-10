@@ -109,13 +109,11 @@ Each sale has a total supply of **1 billion tokens**, with:
 
 The 200 million liquidity tokens are combined with the applicable raised funds to create the Raydium CPMM liquidity pool.
 
-The migration transaction automatically handles the required distribution of the raised funds, including applicable protocol fees, creator incentives, Raydium-related costs, required account rent, and the remaining liquidity allocation.
+The creator does not need to calculate or process these amounts manually. The migration transaction automatically applies the applicable protocol fee, creator incentive, Raydium CPI-related costs, required account rent, and liquidity allocation.
 
-The creator does not need to manually calculate or distribute these amounts.
+## Liquidity Protection via LP Token Burn
 
-## LP Tokens
-
-The liquidity-provider tokens associated with the migrated liquidity pool are automatically burned according to the protocol's configured LP token handling.
+As part of the migration process, the generated Liquidity Provider (LP) tokens are automatically burned. This prevents any individual or team entity from withdrawing the migrated liquidity through the pool's LP tokens. The migrated liquidity remains in the Raydium pool and stays fully available for public trading.
 
 # Creator Incentive Payment
 
