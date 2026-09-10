@@ -115,9 +115,13 @@ The creator does not need to calculate or process these amounts manually. The mi
 
 As part of the migration process, the generated Liquidity Provider (LP) tokens are automatically burned. This prevents any individual or team entity from withdrawing the migrated liquidity through the pool's LP tokens. The migrated liquidity remains in the Raydium pool and stays fully available for public trading.
 
-# Creator Incentive Payment
+## Creator Incentive
 
-If the bonding curve sale was enabled for the **Creator Incentive Program** when the coin was created, the applicable creator incentive is paid during the same transaction that migrates the liquidity.
+The **Creator Incentive Program** is enabled or disabled by the RugFreePump protocol.
+
+When a bonding curve sale is created, the protocol's current Creator Incentive setting and applicable rate are applied to that sale.
+
+If the Creator Incentive Program is enabled when the sale is created, the applicable incentive is paid to the creator during the same transaction that migrates the liquidity.
 
 Your wallet provider interface may therefore show an incoming SOL amount as part of the migration transaction.
 
@@ -127,19 +131,7 @@ For example, your wallet provider interface may display:
 
 This incoming SOL represents the applicable creator incentive payment. It is **not a deduction from your wallet balance**.
 
-## Incentive Eligibility
-
-Creator incentive eligibility and the applicable rate are determined when the coin is created.
-
-If your sale was created with an applicable creator incentive:
-
-- The incentive configuration remains associated with the sale.
-- The applicable reward is paid when liquidity migration succeeds.
-- The reward is sent to the creator wallet as part of the migration transaction.
-
-If your sale was not eligible for the Creator Incentive Program when it was created, no creator incentive payment is made.
-
-Liquidity migration works normally regardless of incentive eligibility.
+If the Creator Incentive Program was disabled when the sale was created, no creator incentive is paid to the creator during the transaction that migrates the liquidity.
 
 # After Migration
 
