@@ -1,6 +1,6 @@
 ---
 title: "Buying Bonding Curve Sale Tokens"
-description: "Learn how to buy tokens from an active bonding curve sale."
+description: "Learn how to buy tokens from an active RugFreePump bonding curve sale."
 ---
 
 RugFreePump allows anyone with a compatible Solana wallet to participate in an active bonding curve sale.
@@ -18,11 +18,16 @@ Before purchasing, make sure:
 - The sale is still **Live** and has available purchase capacity.
 - You have completed the required RugFreePump consent process.
 
+RugFreePump currently supports:
+
+- [Phantom](https://phantom.com)
+- [Solflare](https://solflare.com/)
+
 See [Protocol Fees](/overview/protocol-fees) for the current **Buy Fee** and its authorized update range.
 
-# Required Consent
+# Complete the Consent Process
 
-RugFreePump allows users to explore the platform without completing consent. Consent is required before performing financial operations such as buying tokens.
+RugFreePump allows users to explore the platform without completing consent. However, consent is required before performing financial operations such as buying tokens.
 
 When consent is required, RugFreePump displays a consent card containing:
 
@@ -30,11 +35,13 @@ When consent is required, RugFreePump displays a consent card containing:
 2. **Privacy Policy**
 3. **Risk Disclosure**
 
+## Consent Steps
+
 To complete the consent process:
 
-1. Review all three documents using the links provided in the consent card.
-2. Select **Continue**.
-3. Sign the consent confirmation message in your wallet.
+1. **Review the Documents:** Use the links provided at the bottom of the consent card to read all three documents.
+2. **Continue:** After reviewing the documents, select **Continue**.
+3. **Sign the Consent Message:** Your wallet will ask you to sign a consent confirmation message.
 
 The consent signature **does not transfer SOL or tokens**.
 
@@ -46,6 +53,101 @@ If RugFreePump publishes a new version of the Terms of Service, Privacy Policy, 
 For more information, see the [RugFreePump Consent Documentation](/user-guides/rugfreepump-consent).
 </Callout>
 
+# Understanding a Bonding Curve Sale
+
+A bonding curve sale starts in the **Live** state and accepts purchases from participants.
+
+Each sale has a fixed lifetime determined when the sale is created. The protocol currently allows a sale lifetime between **24 and 48 hours**.
+
+The sale page displays information that helps you understand the current state of the sale, including:
+
+- **Countdown Timer:** The remaining time until the sale lifetime expires.
+- **Sale Status:** The current state of the sale.
+- **Raised SOL:** The amount of SOL raised by the sale.
+- **Raised USD:** The USD value associated with the raised amount.
+- **Sale Progress:** The percentage of the hard cap reached.
+- **Tokens Sold:** The number of tokens purchased through the sale.
+- **Total Buyers:** The number of unique buyers who have participated in the sale.
+- **Contributions:** Purchase activity associated with the sale.
+- **Top Holders:** Wallets holding the largest portions of the token supply.
+
+The sale's available purchase capacity can change as other users participate.
+
+# Sale States and Outcomes
+
+The sale progresses according to its funding, lifetime, and liquidity migration status.
+
+## Live
+
+**Live** means the bonding curve sale is active and accepting purchases.
+
+You can purchase tokens while the sale remains Live and has available capacity.
+
+The sale remains Live until it reaches its hard cap or its lifetime expires.
+
+## Completed
+
+**Completed** means the bonding curve has reached its hard cap.
+
+Once the sale becomes Completed:
+
+- No further bonding curve purchases can be made.
+- The creator can proceed with liquidity migration to **Raydium CPMM**.
+- The sale page displays that the pool has completed.
+- A migration countdown is shown for the creator's migration window.
+
+### Liquidity Migration Pending
+
+After a sale becomes Completed, the creator is given a **60-minute window** to migrate the raised liquidity.
+
+During this period, it is normal for the liquidity to remain unmigrated.
+
+The sale page may display:
+
+> ⚠️ Liquidity Migration Pending
+
+The page also displays the remaining migration time.
+
+The 60-minute window gives the creator time to complete the migration and prepare the project for public trading on Raydium.
+
+The countdown itself does **not** automatically migrate or cancel the sale when it reaches zero.
+
+If the timer expires and the liquidity has not been migrated, you should not assume that the sale has been canceled or that your contribution has been lost.
+
+If you experience delays or have concerns about an unmigrated completed sale, contact RugFreePump support so the situation can be reviewed.
+
+## Migrated
+
+**Migrated** means the completed bonding curve sale has successfully migrated its liquidity to **Raydium CPMM**.
+
+After successful migration:
+
+- The bonding curve sale no longer accepts purchases.
+- The migrated liquidity becomes available for public trading.
+- The sale page provides access to view the project's market information.
+
+A Migrated sale is not eligible for bonding-curve contribution withdrawal because the sale has successfully proceeded to liquidity migration.
+
+## Expired
+
+**Expired** means the sale lifetime ended before the bonding curve reached its hard cap.
+
+An Expired sale does not proceed to liquidity migration.
+
+Eligible contributors can withdraw their contributed SOL through the applicable withdrawal process.
+
+See [Withdrawing Contributed SOL](/user-guides/for-token-buyers/withdrawing-contributed-sol) for the withdrawal process and requirements.
+
+## Canceled
+
+**Canceled** is an exceptional sale outcome that may occur when the platform authority determines that cancellation is necessary.
+
+A canceled sale does not proceed to liquidity migration.
+
+Eligible contributors can withdraw their contributed SOL through the applicable withdrawal process.
+
+See [Withdrawing Contributed SOL](/user-guides/for-token-buyers/withdrawing-contributed-sol) for the withdrawal process and requirements.
+
 # Buy Settings
 
 Before submitting a purchase, you can configure the purchase amount, maximum slippage, and transaction priority.
@@ -54,9 +156,11 @@ Before submitting a purchase, you can configure the purchase amount, maximum sli
 
 Enter the amount of SOL you want to use for the purchase.
 
-The amount you enter is the total purchase amount submitted for the transaction. The applicable **Buy Fee** is deducted from this amount, and the remaining amount is used as the bonding curve contribution.
+The amount you enter is the total purchase amount submitted for the transaction.
 
-The number of tokens you receive is calculated from the applicable contribution amount and the current state of the bonding curve.
+The applicable **Buy Fee** is deducted from the purchase amount, and the remaining amount is used as the bonding curve contribution.
+
+The number of tokens you receive is calculated from the applicable contribution and the current state of the bonding curve.
 
 ## Reset
 
@@ -72,6 +176,8 @@ The maximum is determined by both your wallet balance and the current maximum am
 - If your wallet balance is greater than the current maximum purchase amount, **Max** sets the purchase amount to the exact current maximum permitted by the sale.
 
 The maximum amount can change as the sale progresses or your wallet balance changes.
+
+You should still keep enough SOL available for applicable Solana network fees and your selected priority fee.
 
 ## Max Slippage
 
@@ -113,18 +219,24 @@ Once the sale is **Live** and has available capacity, you can purchase its token
 
 Enter the amount of SOL you want to use.
 
-Review the displayed:
+The Buy panel displays:
 
-- Wallet balance
+- Your wallet balance
 - Purchase amount
 - **Max Slippage**
 - **Reset**
 - **Max**
 - Estimated tokens you will receive
 
+Review the displayed purchase amount and estimated token quantity before continuing.
+
 ## Step 2: Review Your Settings
 
-Review your purchase amount, **Max Slippage**, and **Transaction Priority**.
+Review your:
+
+- Purchase amount
+- **Max Slippage**
+- **Transaction Priority**
 
 Make sure your wallet contains enough SOL for the purchase and applicable Solana network fees.
 
@@ -172,7 +284,7 @@ The bonding curve determines the token amount based on the applicable contributi
 
 You do not need to calculate the bonding curve manually.
 
-Your selected slippage tolerance is also checked when the purchase is executed.
+Your selected slippage tolerance is checked when the purchase is executed.
 
 See [Protocol Fees](/overview/protocol-fees) for the current **Buy Fee**.
 
@@ -198,56 +310,6 @@ Your wallet should contain enough SOL to cover:
 The **Buy Fee** is a RugFreePump protocol fee.
 
 The standard Solana transaction fee and selected priority fee are network fees and are separate from the Buy Fee.
-
-# When the Sale Reaches Its Hard Cap
-
-When the bonding curve reaches its hard cap, no further purchases can be made through the bonding curve.
-
-The sale becomes **Completed** and the sale page displays:
-
-> This pool has completed
-
-The creator is then given a **60-minute migration window** to migrate the raised liquidity to **Raydium CPMM**.
-
-During this period, it is normal for the liquidity to remain unmigrated.
-
-The buyer cannot perform additional bonding curve purchases while the sale is **Completed**.
-
-## Liquidity Migration Pending
-
-While the creator's migration window is active, the sale page may display:
-
-> ⚠️ Liquidity Migration Pending
-
-The page also displays a countdown showing the remaining migration time.
-
-The migration window is provided to the creator to complete the liquidity migration and prepare the project for public trading on Raydium.
-
-If the 60-minute timer expires without migration, the timer itself does **not** automatically migrate, cancel, or otherwise change the sale.
-
-If liquidity remains unmigrated after the migration window and you experience delays or concerns, contact RugFreePump support so the situation can be reviewed.
-
-Once migration succeeds, the sale becomes **Migrated** and the migrated liquidity becomes available for public trading.
-
-# Transaction States
-
-During a purchase, RugFreePump displays the current transaction state.
-
-### Preparing The Transaction...
-
-RugFreePump is preparing the transaction required to complete your purchase.
-
-### Waiting For Transaction Approval...
-
-The transaction has been prepared and your wallet is requesting approval.
-
-Review the transaction and approve it if the details are correct.
-
-### Waiting For Transaction Confirmation...
-
-The transaction has been submitted and RugFreePump is waiting for confirmation from Solana.
-
-Keep the transaction window open until confirmation is complete.
 
 # If Your Purchase Fails
 
@@ -287,16 +349,19 @@ The normal buying process is:
 1. Open an active **Live** bonding curve sale.
 2. Connect your compatible Solana wallet.
 3. Complete the required consent process if prompted.
-4. Enter the amount of SOL you want to use.
-5. Use **Reset** or **Max** as needed.
-6. Select your **Max Slippage**.
-7. Select your **Transaction Priority**.
-8. Review the estimated tokens you will receive and available sale capacity.
-9. Select **Buy**.
-10. Review and approve the transaction in your wallet.
-11. Wait for Solana transaction confirmation.
-12. Receive the purchased tokens in your wallet after the transaction succeeds.
+4. Review the sale's status, progress, remaining capacity, and lifetime.
+5. Enter the amount of SOL you want to use.
+6. Use **Reset** or **Max** as needed.
+7. Select your **Max Slippage**.
+8. Select your **Transaction Priority**.
+9. Review the estimated tokens you will receive.
+10. Select **Buy**.
+11. Review and approve the transaction in your wallet.
+12. Wait for Solana transaction confirmation.
+13. Receive the purchased tokens in your wallet after the transaction succeeds.
 
-Every purchase is subject to the applicable **Buy Fee**, selected slippage tolerance, sale limits, and selected transaction priority fee.
+If the sale later becomes **Completed**, the creator receives a 60-minute migration window. If the sale becomes **Migrated**, the liquidity is available for public trading on Raydium. If the sale becomes **Expired** or **Canceled**, eligible contributors can use the withdrawal process.
+
+See [Withdrawing Contributed SOL](/user-guides/for-token-buyers/withdrawing-contributed-sol) for information about withdrawing contributed SOL.
 
 See [Protocol Fees](/overview/protocol-fees) for the current **Buy Fee** and other RugFreePump protocol fees.
