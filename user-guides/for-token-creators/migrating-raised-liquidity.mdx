@@ -29,7 +29,7 @@ Make sure your creator wallet is connected and has enough SOL to pay the Solana 
 
 RugFreePump protocol does not charge the creator an additional migration fee. The creator only needs enough SOL to submit and confirm the migration transaction.
 
-Protocol fees, creator incentives where applicable, Raydium CPI-related costs, required account rent, and liquidity allocation are processed automatically from the completed sale's raised funds during migration.
+The applicable [**Bonding Curve Escrow Completed Fee**](/overview/protocol-fees), [**Token Creator Incentive**](/overview/protocol-fees) where applicable, [**Raydium Liquidity Pool Creation Fee**](/overview/protocol-fees), required account rent, and liquidity allocation are processed automatically from the completed sale's raised funds during migration.
 
 # Migration Reminder Period
 
@@ -115,7 +115,7 @@ Each sale has a total supply of **1 billion tokens**, with:
 
 The 200 million liquidity tokens are combined with the applicable raised funds to create the Raydium CPMM liquidity pool.
 
-The creator does not need to calculate or process these amounts manually. The migration transaction automatically applies the applicable protocol fee, creator incentive, Raydium CPI-related costs, required account rent, and liquidity allocation.
+The creator does not need to calculate or process these amounts manually. The migration transaction automatically applies the applicable [**Bonding Curve Escrow Completed Fee**](/overview/protocol-fees), [**Token Creator Incentive**](/overview/protocol-fees) where applicable, [**Raydium Liquidity Pool Creation Fee**](/overview/protocol-fees), required account rent, and liquidity allocation.
 
 ## Liquidity Protection via LP Token Burn
 
@@ -129,7 +129,7 @@ The **Creator Incentive Program** is enabled or disabled by the RugFreePump prot
 
 When a bonding curve sale is created, the protocol's current Creator Incentive setting and applicable rate are applied to that sale.
 
-If the Creator Incentive Program is enabled when the sale is created, the applicable incentive is paid to the creator during the same transaction that migrates the liquidity.
+If the Creator Incentive Program is enabled when the sale is created, the applicable [**Token Creator Incentive**](/overview/protocol-fees) is paid to the creator during the same transaction that migrates the liquidity.
 
 Your wallet provider interface may therefore show an incoming SOL amount as part of the migration transaction.
 
@@ -233,7 +233,7 @@ The normal migration process is:
 4. Select **Migrate liquidity**.
 5. Approve the transaction in your wallet.
 6. Wait for Solana transaction confirmation.
-7. The raised funds, after applicable fees and allocations, are combined with the reserved liquidity tokens to create liquidity on **Raydium CPMM**.
+7. The raised funds, after applicable [**Bonding Curve Escrow Completed Fee**](/overview/protocol-fees), [**Token Creator Incentive**](/overview/protocol-fees) where applicable, [**Raydium Liquidity Pool Creation Fee**](/overview/protocol-fees), and other applicable allocations, are combined with the reserved liquidity tokens to create liquidity on **Raydium CPMM**.
 8. Any applicable creator incentive is paid in the same transaction if the Creator Incentive Program was enabled when the bonding curve sale was created.
 9. The sale status changes to **Migrated**.
 10. Select **View** to view your migrated project on **DEX Screener**.
