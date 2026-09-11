@@ -46,10 +46,13 @@ Your wallet must have enough SOL to cover your initial purchase as well as the p
 
 Before creating your coin, make sure your wallet can cover the following:
 
-### 1. Protocol Creation Fee
+### 1. Bonding Curve Escrow Creation Fee
 
-- **Amount:** A mandatory protocol fee currently set at the **$5 USD equivalent in SOL**.
-- **Calculation:** The on-chain program uses the current SOL/USD oracle price during transaction execution to calculate the amount of SOL required to equal the configured USD fee.
+A mandatory protocol fee is charged when creating a bonding curve sale.
+
+The fee is calculated using the applicable SOL/USD price during transaction execution.
+
+For the current **Bonding Curve Escrow Creation Fee** and its authorized update range, see [Protocol Fees](/protocol-fees).
 
 ### 2. On-Chain Storage Rent
 
@@ -198,10 +201,11 @@ Once the coin is created, its **Name, Ticker, Description, Image, and Social Lin
 
 When the Creator Incentive Program is active, the creation page displays information about the incentive available to eligible creators.
 
-- **Current Rate:** Eligible creators currently receive a **1% reward**.
 - **Program Changes:** The protocol can enable, disable, or change the incentive rate for future coin creations.
 - **Rate Protection:** Your incentive eligibility and rate are determined when your coin is created. If the program is later disabled or the global rate changes, your existing sale keeps the incentive configuration associated with it at creation.
 - **Payout Timing:** The incentive is paid when the sale successfully reaches its hard cap and liquidity migration is successfully completed.
+
+For the current **Token Creator Incentive** and its authorized update range, see [Protocol Fees](/protocol-fees).
 
 # Sale Lifetime
 
@@ -248,11 +252,11 @@ The minimum purchase requirement is enforced by both the UI input and the on-cha
 
 The amount you enter is the **purchase amount**, not the net amount that is ultimately used by the bonding curve.
 
-RugFreePump currently applies a **1% buy fee** to purchases. The on-chain program deducts this fee, and the remaining amount is used for the bonding curve purchase.
-
-For example, if you enter `10 SOL`, the 1% buy fee is deducted and the remaining `9.9 SOL` is used as the net bonding-curve contribution.
+A **Buy Fee** is deducted from each purchase, and the remaining amount is used as the net bonding-curve sale contribution.
 
 The number of tokens you receive is calculated by the bonding curve using the applicable SOL/USD price at the time the transaction is processed.
+
+For the current **Buy Fee** and its authorized update range, see [Protocol Fees](/protocol-fees).
 
 ## Reset
 
