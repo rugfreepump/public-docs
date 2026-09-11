@@ -3,33 +3,127 @@ title: "Buying Bonding Curve Sale Tokens"
 description: "Learn how to buy tokens from an active RugFreePump bonding curve sale."
 ---
 
-RugFreePump allows anyone with a compatible Solana wallet to participate in an active bonding curve sale.
+Buying tokens on RugFreePump allows you to participate in an active bonding curve sale using SOL.
 
-You can purchase tokens directly from the sale page using the **Buy** panel.
+Before buying, review the sale information, understand how the purchase works, and make sure your wallet has enough SOL to cover the purchase and associated transaction costs.
 
-The panel displays your wallet balance, purchase amount, **Max Slippage**, **Reset**, **Max**, and the estimated number of tokens you will receive.
+Once your purchase transaction succeeds, the purchased tokens are transferred to your wallet and your contribution becomes part of the sale's raised funds.
 
-# Before You Buy
+# Before You Start
 
-Before purchasing, make sure:
+Before buying tokens, make sure you understand the sale you are participating in and have enough SOL in your wallet to complete the purchase transaction.
 
-- Your compatible Solana wallet is connected.
-- You have enough SOL available for the purchase and applicable transaction costs.
-- The sale is still **Live** and has available purchase capacity.
-- You have completed the required RugFreePump consent process.
+## Review the Sale Carefully
+
+Before purchasing, review the information displayed on the sale page.
+
+Pay particular attention to:
+
+* **Coin Name and Ticker:** Confirm that you are buying the coin you intended to purchase.
+* **Pool Address:** Verify the on-chain bonding curve pool associated with the sale.
+* **Sale Progress:** Check how much of the hard cap has already been reached.
+* **Raised Amount:** Review the current SOL and USD amounts raised.
+* **Hard Cap:** Check the maximum amount the sale can raise.
+* **Countdown Timer:** Check how much time remains before the sale lifetime expires.
+* **Sale Status:** Make sure the sale is currently **Live** before attempting to purchase.
+* **Tokens Sold:** Review how much of the bonding curve token allocation has already been purchased.
+* **Total Buyers:** Review the number of wallets that have participated in the sale.
+
+The sale page also provides contribution and holder information to help you evaluate the activity surrounding the sale.
+
+## Prerequisites Checklist
+
+Before buying tokens, make sure you have the following:
+
+* **Supported Solana Wallet:** An active, funded wallet using [Phantom](https://phantom.com) or [Solflare](https://solflare.com/).
+* **Adequate SOL Balance:** Enough SOL to cover your purchase amount, the applicable Buy Fee, Solana network fees, and any selected transaction priority fee.
+* **Active Sale:** The bonding curve sale must still be in the **Live** state.
+* **Completed Consent:** You must complete the required consent process before performing the purchase.
+
+# Keep Enough SOL in Your Wallet
+
+Buying tokens requires more SOL than the amount that ultimately becomes your net bonding-curve contribution.
+
+Your wallet must have enough SOL to cover the purchase amount and the fees required to process the transaction.
+
+### Total Wallet Balance Breakdown
+
+Before buying, make sure your wallet can cover the following:
+
+### 1. Purchase Amount
+
+The amount you enter in the purchase panel is the amount of SOL you are attempting to spend on the purchase.
+
+The purchase amount is subject to the current limits of the sale and your available wallet balance.
+
+### 2. Buy Fee
+
+A **Buy Fee** is deducted from each bonding curve purchase.
+
+The remaining amount is used as the net bonding-curve contribution for calculating the tokens you receive.
+
+For the current **Buy Fee** and its authorized update range, see [Protocol Fees](/protocol-fees).
+
+### 3. Solana Network Transaction Fees
+
+Your wallet also needs enough SOL to pay the Solana network fees required to process the transaction.
+
+These are separate from RugFreePump protocol fees.
+
+### 4. Transaction Priority Fee
+
+If you select a transaction priority level, an additional Solana priority fee is included with your transaction.
+
+The priority fee is a network fee and is separate from the RugFreePump Buy Fee.
+
+<Callout type="warning" title="Keep a SOL Buffer">
+Make sure your wallet contains enough SOL to cover your purchase amount, the applicable Buy Fee, Solana network fees, and your selected priority fee.
+
+Keeping a small additional SOL buffer can help avoid transaction failures caused by the total transaction cost exceeding your available balance. </Callout>
+
+# Open the Sale Page
+
+You can discover bonding curve sales through RugFreePump and open the sale page for the coin you want to purchase.
+
+Each sale has its own dedicated sale page.
+
+The sale page displays the current state of the bonding curve and provides the interface for purchasing tokens.
+
+Before purchasing, confirm that the sale is **Live**.
+
+# Sign In and Connect Your Wallet
+
+You can explore sale pages without connecting your wallet.
+
+However, you must connect and authenticate your wallet before buying tokens.
 
 RugFreePump currently supports:
 
-- [Phantom](https://phantom.com)
-- [Solflare](https://solflare.com/)
+* [Phantom](https://phantom.com)
+* [Solflare](https://solflare.com)
 
-See [Protocol Fees](/overview/protocol-fees) for the current **Buy Fee** and its authorized update range.
+## Connect Your Wallet
+
+When connecting for the first time, your wallet extension or mobile wallet will request permission to connect.
+
+Approve the connection request to continue.
+
+Connecting allows RugFreePump to identify your public wallet address. It does not give RugFreePump access to your private keys.
+
+## Sign the Login Message
+
+After connecting your wallet, you may be asked to sign a login message.
+
+* **Purpose:** The signature proves that you control the connected wallet.
+* **Safety:** The login signature is used for authentication and **does not transfer SOL or tokens**.
+
+Once authentication is complete, the purchase controls become available when the sale is eligible for purchases.
 
 # Complete the Consent Process
 
 RugFreePump allows users to explore the platform without completing consent. However, consent is required before performing financial operations such as buying tokens.
 
-When consent is required, RugFreePump displays a consent card containing:
+When consent is required, RugFreePump displays a consent card containing the required documents:
 
 1. **Terms of Service**
 2. **Privacy Policy**
@@ -50,318 +144,420 @@ Your consent remains valid for the current versions of the required documents.
 
 If RugFreePump publishes a new version of the Terms of Service, Privacy Policy, or Risk Disclosure, you may be asked to review and sign the updated documents before performing another financial operation.
 
-For more information, see the [RugFreePump Consent Documentation](/user-guides/rugfreepump-consent).
-</Callout>
+For more information, see the [RugFreePump Consent Documentation](https://rugfreepump.com/docs/user-guides/rugfreepump-consent). </Callout>
 
-# Understanding a Bonding Curve Sale
+# Understand the Bonding Curve Sale
 
-A bonding curve sale starts in the **Live** state and accepts purchases from participants.
+RugFreePump bonding curve sales use a pricing curve where the token price changes as the sale progresses.
 
-Each sale has a fixed lifetime determined when the sale is created. The protocol currently allows a sale lifetime between **24 and 48 hours**.
+As more tokens are purchased and the sale raises more funds, the purchase price generally increases.
 
-The sale page displays information that helps you understand the current state of the sale, including:
+This means the number of tokens you receive for a given amount of SOL can change as other users purchase tokens.
 
-- **Countdown Timer:** The remaining time until the sale lifetime expires.
-- **Sale Status:** The current state of the sale.
-- **Raised SOL:** The amount of SOL raised by the sale.
-- **Raised USD:** The USD value associated with the raised amount.
-- **Sale Progress:** The percentage of the hard cap reached.
-- **Tokens Sold:** The number of tokens purchased through the sale.
-- **Total Buyers:** The number of unique buyers who have participated in the sale.
-- **Contributions:** Purchase activity associated with the sale.
-- **Top Holders:** Wallets holding the largest portions of the token supply.
+The purchase calculation uses the applicable SOL/USD price when the transaction is processed.
 
-The sale's available purchase capacity can change as other users participate.
+## Fixed Token Supply
 
-# Sale States and Outcomes
+Every RugFreePump bonding curve sale has a total supply of **1 billion tokens**.
 
-The sale progresses according to its funding, lifetime, and liquidity migration status.
+The supply is divided between:
+
+* **800 million tokens:** Available through the bonding curve sale.
+* **200 million tokens:** Reserved for liquidity after a successful migration.
+
+These allocations are fixed by the protocol and are not configured separately for each sale.
+
+# Review Sale Information
+
+The sale page provides information that helps you understand the current state of the sale before purchasing.
+
+## Bonding Curve Pool Information
+
+The sale page displays information including:
+
+* **Pool Address:** The on-chain account associated with the bonding curve sale and its raised funds.
+* **Total Supply:** The total supply of the coin.
+* **Tokens For Sale:** The portion of the supply available through the bonding curve.
+* **Tokens For Liquidity:** The portion of the supply reserved for liquidity after a successful migration.
+* **Hard Cap:** The maximum amount the sale can raise.
+* **Start Time:** When the sale became Live.
+* **End Time:** When the sale lifetime expires.
+* **Listing On:** The DEX where liquidity will be created after a successful migration.
+* **LP Tokens:** Information about how liquidity-provider tokens are handled after migration.
+
+## Track Sale Progress
+
+While the sale is Live, the sale page displays its current progress.
+
+The sale information includes:
+
+* **Countdown Timer:** The remaining time until the sale lifetime expires.
+* **Sale Status:** The current state of the bonding curve sale.
+* **Raised SOL:** The amount of SOL raised by the sale.
+* **Raised USD:** The USD value associated with the raised amount.
+* **Sale Progress:** The percentage of the hard cap reached.
+* **Tokens Sold:** The number of tokens purchased through the sale.
+* **Total Buyers:** The number of unique buyers who participated in the sale.
+* **Contributions:** Purchases made during the sale, including the contributor, SOL amount, USD value, tokens received, time, and transaction.
+* **Top Holders:** Wallets holding the largest portions of the coin's token supply.
+
+# Understanding Sale Statuses
+
+The state of the sale determines whether you can purchase tokens and what happens to your contribution afterward.
 
 ## Live
 
-**Live** means the bonding curve sale is active and accepting purchases.
+A **Live** sale is active and accepting purchases.
 
-You can purchase tokens while the sale remains Live and has available capacity.
+While a sale is Live:
 
-The sale remains Live until it reaches its hard cap or its lifetime expires.
+* You can purchase tokens if you meet the purchase requirements.
+* The bonding curve continues to determine the token price.
+* The sale progress can increase as users purchase tokens.
+* The remaining sale lifetime continues to count down.
+* The sale can eventually become **Completed** or **Expired**.
 
 ## Completed
 
-**Completed** means the bonding curve has reached its hard cap.
+A **Completed** sale has reached its hard cap before its lifetime expired.
 
-Once the sale becomes Completed:
+A Completed sale no longer accepts bonding curve purchases.
 
-- No further bonding curve purchases can be made.
-- The creator can proceed with liquidity migration to **Raydium CPMM**.
-- The sale page displays that the pool has completed.
-- A migration countdown is shown for the creator's migration window.
+The sale then enters the liquidity migration stage.
 
 ### Liquidity Migration Pending
 
-After a sale becomes Completed, the creator is given a **60-minute window** to migrate the raised liquidity.
+After the sale becomes Completed, the pool creator has a **60-minute migration window** to initiate liquidity migration.
 
 During this period, it is normal for the liquidity to remain unmigrated.
 
-The sale page may display:
+The timer does **not** automatically migrate the liquidity, expire the sale, cancel the sale, or make your contribution withdrawable.
 
-> ⚠️ Liquidity Migration Pending
+If the creator completes migration, the sale becomes **Migrated**.
 
-The page also displays the remaining migration time.
-
-The 60-minute window gives the creator time to complete the migration and prepare the project for public trading on Raydium.
-
-The countdown itself does **not** automatically migrate or cancel the sale when it reaches zero.
-
-If the timer expires and the liquidity has not been migrated, you should not assume that the sale has been canceled or that your contribution has been lost.
-
-If you experience delays or have concerns about an unmigrated completed sale, contact RugFreePump support so the situation can be reviewed.
+If the timer expires without migration and you experience delays or concerns, contact support so the situation can be reviewed.
 
 ## Migrated
 
-**Migrated** means the completed bonding curve sale has successfully migrated its liquidity to **Raydium CPMM**.
+A **Migrated** sale has successfully completed liquidity migration to **Raydium CPMM**.
 
-After successful migration:
+The bonding curve sale is no longer active.
 
-- The bonding curve sale no longer accepts purchases.
-- The migrated liquidity becomes available for public trading.
-- The sale page provides access to view the project's market information.
+The liquidity pool has been created using the sale's raised funds and the tokens reserved for liquidity.
 
-A Migrated sale is not eligible for bonding-curve contribution withdrawal because the sale has successfully proceeded to liquidity migration.
+The liquidity-provider tokens are automatically burned as part of the migration process.
+
+After migration, the tokens are available for public trading through the created Raydium liquidity pool.
+
+Your purchased tokens remain in your wallet.
+
+A migrated sale does **not** become withdrawable through the bonding curve withdrawal process.
 
 ## Expired
 
-**Expired** means the sale lifetime ended before the bonding curve reached its hard cap.
+An **Expired** sale is a sale whose lifetime ended before reaching its hard cap.
 
 An Expired sale does not proceed to liquidity migration.
 
-Eligible contributors can withdraw their contributed SOL through the applicable withdrawal process.
+If you contributed SOL to an eligible Expired sale, you can use the withdrawal process to recover your eligible contributed SOL.
 
-See [Withdrawing Contributed SOL](/user-guides/for-token-buyers/withdrawing-contributed-sol) for the withdrawal process and requirements.
+For more information, see [**Withdrawing Contributed SOL**](https://rugfreepump.com/docs/user-guides/for-token-buyers/withdrawing-contributed-sol).
 
 ## Canceled
 
-**Canceled** is an exceptional sale outcome that may occur when the platform authority determines that cancellation is necessary.
+A **Canceled** sale is an exceptional state used when a sale is canceled through an authorized cancellation mechanism.
 
-A canceled sale does not proceed to liquidity migration.
+Canceled sales do not proceed to liquidity migration.
 
-Eligible contributors can withdraw their contributed SOL through the applicable withdrawal process.
+If you contributed SOL to an eligible Canceled sale, you can use the withdrawal process to recover your eligible contributed SOL.
 
-See [Withdrawing Contributed SOL](/user-guides/for-token-buyers/withdrawing-contributed-sol) for the withdrawal process and requirements.
+For more information, see [**Withdrawing Contributed SOL**](https://rugfreepump.com/docs/user-guides/for-token-buyers/withdrawing-contributed-sol).
 
-# Buy Settings
+<Callout type="info" title="Normal Sale Lifecycle">
+The normal lifecycle is:
 
-Before submitting a purchase, you can configure the purchase amount, maximum slippage, and transaction priority.
+**Live → Completed → Migrated**
 
-## Purchase Amount
+A sale can instead become:
+
+**Live → Expired**
+
+Cancellation is an exceptional outcome and is not part of the normal sale lifecycle. </Callout>
+
+# Configure Your Purchase
+
+Once your wallet is connected and the sale is Live, the purchase panel allows you to configure your transaction.
+
+The panel displays information such as:
+
+* Your current wallet balance
+* The SOL amount you want to spend
+* **Reset**
+* **Max**
+* **Max Slippage**
+* **Transaction Priority**
+* The estimated number of tokens you will receive
+
+# Purchase Amount
 
 Enter the amount of SOL you want to use for the purchase.
 
-The amount you enter is the total purchase amount submitted for the transaction.
+The amount you enter represents the purchase amount before the Buy Fee is deducted.
 
-The applicable **Buy Fee** is deducted from the purchase amount, and the remaining amount is used as the bonding curve contribution.
+The estimated token amount shown in the purchase panel is based on the current sale price and applicable SOL/USD price.
 
-The number of tokens you receive is calculated from the applicable contribution and the current state of the bonding curve.
+Because the bonding curve price can change as the sale progresses, the final token amount is determined when the transaction is processed.
 
 ## Reset
 
 Select **Reset** to clear the entered purchase amount.
 
+You can then enter a different amount.
+
 ## Max
 
-Select **Max** to automatically set the highest purchase amount currently available to you.
+Select **Max** to automatically set the purchase amount to the maximum amount currently permitted.
 
-The maximum is determined by both your wallet balance and the current maximum amount permitted by the sale:
+Max considers both your wallet balance and the current purchase limit imposed by the sale.
 
-- If the current maximum purchase amount is greater than your wallet balance, **Max** sets the purchase amount to your available wallet balance.
-- If your wallet balance is greater than the current maximum purchase amount, **Max** sets the purchase amount to the exact current maximum permitted by the sale.
+* If your wallet balance is lower than the current maximum permitted purchase amount, **Max** uses your available wallet balance.
+* If your wallet balance is greater than the current maximum permitted purchase amount, **Max** uses the exact maximum amount currently permitted by the sale.
 
-The maximum amount can change as the sale progresses or your wallet balance changes.
+The maximum permitted amount can change as the sale progresses or your wallet balance changes.
 
-You should still keep enough SOL available for applicable Solana network fees and your selected priority fee.
+You should still keep enough SOL available for the Buy Fee and Solana network fees.
 
-## Max Slippage
+# Set Max Slippage
 
-**Max Slippage** defines the maximum price movement you are willing to accept when the purchase is executed.
+**Max Slippage** controls how much the final purchase conditions are allowed to differ from the expected purchase conditions before the transaction is rejected.
 
-The available setting can be configured from **0% to 50%**.
+RugFreePump allows a slippage setting between **0% and 50%**.
 
-A **0%** slippage setting requires execution at the exact expected price and is generally not recommended.
+## 0% Slippage
 
-If the price moves beyond your selected slippage tolerance before execution, the transaction fails instead of allowing execution beyond your selected limit.
+A setting of **0%** requires the transaction to execute at the exact expected purchase conditions.
 
-A higher slippage setting allows more price movement, while a lower setting provides stricter protection against unfavorable execution.
+This provides the strictest protection against price movement but can cause the transaction to fail if the sale changes before the transaction is processed.
 
-## Transaction Priority
+## Higher Slippage
 
-The transaction priority setting controls the fixed additional priority fee paid to the Solana network.
+A higher slippage setting allows a greater difference between the expected and final purchase conditions.
 
-RugFreePump provides three fixed options:
+This can reduce failures caused by price movement, but it also means you accept a wider range of execution conditions.
 
-- **Fast — 0.000020 SOL**
-- **Turbo — 0.000100 SOL**
-- **Ultra — 0.000200 SOL**
+If the sale moves beyond your selected slippage tolerance, the transaction fails instead of executing outside the limit you specified.
 
-These are fixed priority tiers and are **not dynamically adjusted based on network conditions or network health**.
+<Callout type="warning" title="Choose Your Slippage Carefully">
+Higher slippage does not guarantee a successful transaction.
 
-Higher tiers are intended to give the transaction higher processing priority relative to transactions using lower priority fees.
+It only increases the amount of price movement your transaction is willing to accept. </Callout>
 
-The priority fee is a **Solana network transaction fee** and is separate from the RugFreePump **Buy Fee**.
+# Select Transaction Priority
 
-<Callout type="warning" title="Priority Fee Notice">
-If a transaction is processed by the Solana network but ultimately fails, the selected priority fee may still be paid to the network.
+RugFreePump provides three fixed transaction priority options.
+
+| Priority  |     Priority Fee |
+| --------- | ---------------: |
+| **Fast**  | **0.000020 SOL** |
+| **Turbo** | **0.000100 SOL** |
+| **Ultra** | **0.000200 SOL** |
+
+Higher priority levels are intended to give the transaction greater processing priority over transactions using lower priority levels.
+
+These priority tiers are fixed and are not dynamically adjusted based on network conditions.
+
+The priority fee is a **Solana network fee**, not a RugFreePump protocol fee.
+
+<Callout type="warning" title="Failed Transactions">
+If a transaction is processed by the network but ultimately fails, the selected priority fee may still be charged by the network.
+
 </Callout>
 
 # Buy Tokens
 
-Once the sale is **Live** and has available capacity, you can purchase its tokens.
+After configuring your purchase amount, slippage, and transaction priority, select **Buy** to begin the purchase.
 
-## Step 1: Enter Your Purchase Amount
+The purchase process proceeds through several stages.
 
-Enter the amount of SOL you want to use.
+## Step 1: Prepare the Transaction
 
-The Buy panel displays:
+After selecting **Buy**, RugFreePump prepares the purchase transaction using your selected purchase settings.
 
-- Your wallet balance
-- Purchase amount
-- **Max Slippage**
-- **Reset**
-- **Max**
-- Estimated tokens you will receive
-
-Review the displayed purchase amount and estimated token quantity before continuing.
-
-## Step 2: Review Your Settings
-
-Review your:
-
-- Purchase amount
-- **Max Slippage**
-- **Transaction Priority**
-
-Make sure your wallet contains enough SOL for the purchase and applicable Solana network fees.
-
-## Step 3: Select Buy
-
-Select **Buy** to begin the purchase.
-
-The transaction window displays:
+You will see a status such as:
 
 > Preparing The Transaction...
 
-RugFreePump prepares the transaction required to complete your purchase.
+Keep the sale page open while the transaction is being prepared.
 
-Keep the transaction window open while the transaction is being prepared.
+## Step 2: Approve the Transaction
 
-## Step 4: Approve the Transaction
+After the transaction is prepared, your wallet will request transaction approval.
 
-After the transaction is prepared, your wallet requests approval.
-
-The transaction window displays:
+The sale page will show:
 
 > Waiting For Transaction Approval...
 
-Review the transaction in your wallet and approve it if the details are correct.
+Review the transaction in your wallet and approve it if everything is correct.
 
-## Step 5: Wait for Confirmation
+Do not approve a transaction you do not understand or did not intentionally initiate.
 
-After approval, RugFreePump waits for confirmation from the Solana network.
+## Step 3: Wait for Transaction Confirmation
 
-The transaction window displays:
+After approving the transaction, RugFreePump waits for the transaction to be confirmed on Solana.
+
+The sale page will show:
 
 > Waiting For Transaction Confirmation...
 
-Keep the transaction window open until confirmation is complete.
+Keep the page open while confirmation is in progress.
 
-Once the transaction succeeds, your purchased tokens are transferred to your wallet.
+## Step 4: Purchase Completed
 
-# How Your Purchase Works
+Once the transaction is successfully confirmed, your purchase is complete.
 
-The amount you enter is the purchase amount.
+The purchased tokens are transferred to your wallet.
 
-The applicable **Buy Fee** is deducted from the purchase amount, and the remaining SOL becomes the bonding curve contribution.
+Your contribution is reflected in the sale's raised amount and contribution records.
 
-The bonding curve determines the token amount based on the applicable contribution and the current sale state.
+# If You Cancel the Transaction
 
-You do not need to calculate the bonding curve manually.
+If you reject the wallet request, the transaction does not complete.
 
-Your selected slippage tolerance is checked when the purchase is executed.
+Your intended purchase is not executed.
 
-See [Protocol Fees](/overview/protocol-fees) for the current **Buy Fee**.
+If the transaction fails during simulation or execution, the purchase may also not complete.
 
-# Purchase Limits
+Depending on when the transaction was processed, Solana network fees or selected priority fees may still be charged even when the purchase itself does not succeed.
 
-Each sale has a maximum remaining capacity.
+If the transaction fails, review the displayed error and make sure:
 
-Your purchase must satisfy the sale's current purchase limits and minimum purchase requirement.
+* Your wallet has enough SOL.
+* The sale is still **Live**.
+* Your purchase amount is within the current permitted limits.
+* Your selected slippage is appropriate for the current sale conditions.
+* Your transaction settings are correct.
 
-The available maximum can change while you are preparing a transaction because other users may purchase tokens at the same time.
+You can then try again if the sale is still eligible for purchases.
 
-If the available capacity changes before your transaction is processed, your transaction may fail rather than execute beyond the permitted sale capacity.
+# After Your Purchase
 
-# SOL Balance Requirements
+After a successful purchase, the purchased tokens belong to your connected wallet.
 
-Your wallet should contain enough SOL to cover:
+The sale page updates to reflect your contribution and the new sale progress.
 
-- The purchase amount.
-- The applicable **Buy Fee**.
-- The Solana network transaction fee.
-- The selected transaction priority fee.
+Your purchase may affect:
 
-The **Buy Fee** is a RugFreePump protocol fee.
+* The current bonding curve price
+* The remaining amount available before the hard cap
+* The sale progress
+* The total tokens sold
+* The total number of buyers
+* The contribution history
 
-The standard Solana transaction fee and selected priority fee are network fees and are separate from the Buy Fee.
+The token amount you receive is determined by the bonding curve and the applicable purchase conditions when the transaction is processed.
 
-# If Your Purchase Fails
+# What Happens When the Sale Completes
 
-A purchase may fail if, for example:
+A sale becomes **Completed** when it reaches its hard cap.
 
-- Your wallet does not have enough SOL.
-- The sale reaches its hard cap before your transaction is processed.
-- The requested purchase amount is no longer available.
-- The price moves beyond your selected slippage tolerance.
-- Your wallet connection fails.
-- The transaction cannot be prepared or executed.
-- Another protocol validation fails.
-- A Solana network or transaction issue occurs.
+At this point:
 
-If a purchase fails, review the message shown by RugFreePump and your wallet.
+* New bonding curve purchases are no longer accepted.
+* The sale enters the liquidity migration stage.
+* The creator has a 60-minute migration window.
+* Your purchased tokens remain in your wallet.
+* Your contribution is not automatically withdrawn.
 
-If you try again, check your wallet balance, available sale capacity, purchase amount, and transaction settings.
+During the migration window, it is normal for the sale page to display:
+
+> This pool has completed
+
+along with:
+
+> Liquidity Migration Pending
+
+The migration timer is only a reminder of the creator's migration window. It does not automatically change the sale's state when it expires.
+
+## After Successful Migration
+
+When liquidity migration succeeds:
+
+* The sale becomes **Migrated**.
+* Liquidity is created on **Raydium CPMM**.
+* The tokens reserved for liquidity are added to the liquidity pool.
+* Liquidity-provider tokens are automatically burned.
+* The purchased tokens in your wallet remain yours.
+* The token becomes available for public trading through the migrated liquidity pool.
+
+# What Happens If the Sale Expires
+
+If the sale lifetime expires before the hard cap is reached:
+
+* The sale becomes **Expired**.
+* New bonding curve purchases are no longer accepted.
+* The sale does not proceed to liquidity migration.
+* Eligible contributors can withdraw their eligible contributed SOL.
+
+Your purchased tokens and withdrawal eligibility are handled according to the protocol's on-chain rules.
+
+For the withdrawal process, see [**Withdrawing Contributed SOL**](https://rugfreepump.com/docs/user-guides/for-token-buyers/withdrawing-contributed-sol).
+
+# What Happens If a Sale Is Canceled
+
+A sale can be canceled only through an authorized exceptional cancellation mechanism.
+
+If a sale becomes **Canceled**:
+
+* New bonding curve purchases are no longer accepted.
+* The sale does not proceed to liquidity migration.
+* Eligible contributors can withdraw their eligible contributed SOL.
+
+For the withdrawal process, see [**Withdrawing Contributed SOL**](https://rugfreepump.com/docs/user-guides/for-token-buyers/withdrawing-contributed-sol).
 
 # Purchase Risks
 
-Purchasing tokens through a bonding curve sale involves financial and market risk.
+Buying tokens through a bonding curve sale involves financial and technical risks.
 
-Token prices can change as other users participate in the sale, and a token may have little or no secondary-market liquidity before migration.
+The purchase page explains how to use the interface, but it does not replace the broader risk documentation.
 
-A successful purchase does not guarantee that the token will increase in value or that you will later be able to sell it at a profit.
+Before purchasing, review the relevant sections of the **Security & Risk** documentation, including:
 
-Review project information carefully before contributing SOL.
+* [Transaction and wallet risks](https://rugfreepump.mintlify.site/security-and-risk/transaction-and-wallet-risks)
+* [Token and creator risks](https://rugfreepump.mintlify.site/security-and-risk/token-and-creator-risks)
+* [Launch and sale risks](https://rugfreepump.mintlify.site/security-and-risk/launch-and-sale-risks)
+* [Liquidity and migration risks](https://rugfreepump.mintlify.site/security-and-risk/liquidity-and-migration-risks)
+* [Smart contract risks](https://rugfreepump.mintlify.site/security-and-risk/smart-contract-risks)
 
-Do not rely solely on a project's name, ticker, image, description, social links, or creator claims when deciding whether to participate.
-
-For general safety guidance, see [Trust & Safety](/user-guides/trust-and-safety).
+You should understand the risks before committing SOL to any bonding curve sale.
 
 # Buying Summary
 
-The normal buying process is:
+The complete buying process is:
 
-1. Open an active **Live** bonding curve sale.
-2. Connect your compatible Solana wallet.
-3. Complete the required consent process if prompted.
-4. Review the sale's status, progress, remaining capacity, and lifetime.
-5. Enter the amount of SOL you want to use.
-6. Use **Reset** or **Max** as needed.
-7. Select your **Max Slippage**.
-8. Select your **Transaction Priority**.
-9. Review the estimated tokens you will receive.
-10. Select **Buy**.
-11. Review and approve the transaction in your wallet.
-12. Wait for Solana transaction confirmation.
-13. Receive the purchased tokens in your wallet after the transaction succeeds.
+1. **Review the Sale:** Confirm the coin, pool, sale progress, hard cap, countdown, and current status.
+2. **Connect Your Wallet:** Connect Phantom or Solflare and authenticate your wallet.
+3. **Complete Consent:** Review and sign the required consent documents.
+4. **Check Your SOL:** Make sure you have enough SOL for the purchase and associated fees.
+5. **Set Your Purchase:** Enter the SOL amount you want to spend.
+6. **Set Max Slippage:** Choose the amount of price movement you are willing to accept.
+7. **Select Priority:** Choose Fast, Turbo, or Ultra transaction priority if desired.
+8. **Buy:** Select **Buy** and approve the transaction in your wallet.
+9. **Confirm:** Wait for the transaction to be confirmed on Solana.
+10. **Receive Tokens:** After successful confirmation, the purchased tokens are transferred to your wallet.
+11. **Follow the Sale Outcome:** If the sale becomes Completed, wait for liquidity migration. If it becomes Migrated, the liquidity is available on Raydium. If it becomes Expired or Canceled, eligible contributors can use the withdrawal process.
 
-If the sale later becomes **Completed**, the creator receives a 60-minute migration window. If the sale becomes **Migrated**, the liquidity is available for public trading on Raydium. If the sale becomes **Expired** or **Canceled**, eligible contributors can use the withdrawal process.
+# What's Next?
 
-See [Withdrawing Contributed SOL](/user-guides/for-token-buyers/withdrawing-contributed-sol) for information about withdrawing contributed SOL.
+After purchasing, the outcome depends on how the sale progresses.
 
-See [Protocol Fees](/overview/protocol-fees) for the current **Buy Fee** and other RugFreePump protocol fees.
+If the sale reaches its hard cap, it becomes **Completed** and proceeds to the liquidity migration stage.
+
+If liquidity migration succeeds, the sale becomes **Migrated** and the liquidity becomes available for public trading on Raydium.
+
+If the sale expires before reaching its hard cap, or is canceled through an exceptional mechanism, eligible contributors can use the withdrawal process.
+
+Learn more:
+
+[**Withdrawing Contributed SOL**](https://rugfreepump.com/docs/user-guides/for-token-buyers/withdrawing-contributed-sol)
+
+## [**Migrating Raised Liquidity**](https://rugfreepump.com/docs/user-guides/for-token-creators/migrating-raised-liquidity)
