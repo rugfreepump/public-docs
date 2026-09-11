@@ -1,13 +1,13 @@
 ---
 title: "Buying Bonding Curve Sale Tokens"
-description: "Learn how to buy tokens from an active bonding curve sale."
+description: "Learn how to buy tokens from an active RugFreePump bonding curve sale."
 ---
 
 RugFreePump allows anyone with a compatible Solana wallet to participate in an active bonding curve sale.
 
 You can purchase tokens directly from the sale page using the **Buy** panel.
 
-The panel shows your wallet balance, purchase amount, slippage setting, **Reset**, **Max**, and the estimated number of tokens you will receive.
+The panel displays your wallet balance, purchase amount, **Max Slippage**, **Reset**, **Max**, and the estimated number of tokens you will receive.
 
 # Before You Buy
 
@@ -29,8 +29,6 @@ When consent is required, RugFreePump displays a consent card containing:
 1. **Terms of Service**
 2. **Privacy Policy**
 3. **Risk Disclosure**
-
-## Complete Consent
 
 To complete the consent process:
 
@@ -68,12 +66,12 @@ Select **Reset** to clear the entered purchase amount.
 
 Select **Max** to automatically set the highest purchase amount currently available to you.
 
-The Max button considers both your wallet balance and the maximum amount currently permitted by the sale:
+The maximum is determined by both your wallet balance and the current maximum amount permitted by the sale:
 
-- If the current maximum purchase amount is greater than your available wallet balance, **Max** sets the purchase amount to your available wallet balance.
-- If your wallet balance is greater than the current maximum purchase amount, **Max** sets the purchase amount to the exact current maximum permitted amount.
+- If the current maximum purchase amount is greater than your wallet balance, **Max** sets the purchase amount to your available wallet balance.
+- If your wallet balance is greater than the current maximum purchase amount, **Max** sets the purchase amount to the exact current maximum permitted by the sale.
 
-The maximum purchase amount can change as the sale progresses or as your wallet balance changes.
+The maximum amount can change as the sale progresses or your wallet balance changes.
 
 ## Max Slippage
 
@@ -115,30 +113,24 @@ Once the sale is **Live** and has available capacity, you can purchase its token
 
 Enter the amount of SOL you want to use.
 
-The Buy panel shows:
+Review the displayed:
 
-- Your current SOL balance.
-- The purchase amount.
-- **Max Slippage**.
-- **Reset**.
-- **Max**.
-- The estimated number of tokens you will receive.
-
-Review the displayed amount and estimated token quantity before continuing.
+- Wallet balance
+- Purchase amount
+- **Max Slippage**
+- **Reset**
+- **Max**
+- Estimated tokens you will receive
 
 ## Step 2: Review Your Settings
 
-Review:
-
-- Your purchase amount.
-- **Max Slippage**.
-- **Transaction Priority**.
+Review your purchase amount, **Max Slippage**, and **Transaction Priority**.
 
 Make sure your wallet contains enough SOL for the purchase and applicable Solana network fees.
 
 ## Step 3: Select Buy
 
-Select the **Buy** button to begin the purchase.
+Select **Buy** to begin the purchase.
 
 The transaction window displays:
 
@@ -180,7 +172,7 @@ The bonding curve determines the token amount based on the applicable contributi
 
 You do not need to calculate the bonding curve manually.
 
-The purchase transaction also checks your selected slippage tolerance before allowing the purchase to execute.
+Your selected slippage tolerance is also checked when the purchase is executed.
 
 See [Protocol Fees](/overview/protocol-fees) for the current **Buy Fee**.
 
@@ -209,15 +201,33 @@ The standard Solana transaction fee and selected priority fee are network fees a
 
 # When the Sale Reaches Its Hard Cap
 
-A bonding curve sale remains available for purchases while it is **Live** and has remaining capacity.
+When the bonding curve reaches its hard cap, no further purchases can be made through the bonding curve.
 
-When the sale reaches its hard cap:
+The sale becomes **Completed** and the sale page displays:
 
-- The sale status changes to **Completed**.
-- No further bonding curve purchases can be made.
-- The creator can proceed with liquidity migration to **Raydium CPMM**.
+> This pool has completed
 
-After successful migration, the sale becomes **Migrated** and the migrated liquidity becomes available for public trading.
+The creator is then given a **60-minute migration window** to migrate the raised liquidity to **Raydium CPMM**.
+
+During this period, it is normal for the liquidity to remain unmigrated.
+
+The buyer cannot perform additional bonding curve purchases while the sale is **Completed**.
+
+## Liquidity Migration Pending
+
+While the creator's migration window is active, the sale page may display:
+
+> ⚠️ Liquidity Migration Pending
+
+The page also displays a countdown showing the remaining migration time.
+
+The migration window is provided to the creator to complete the liquidity migration and prepare the project for public trading on Raydium.
+
+If the 60-minute timer expires without migration, the timer itself does **not** automatically migrate, cancel, or otherwise change the sale.
+
+If liquidity remains unmigrated after the migration window and you experience delays or concerns, contact RugFreePump support so the situation can be reviewed.
+
+Once migration succeeds, the sale becomes **Migrated** and the migrated liquidity becomes available for public trading.
 
 # Transaction States
 
@@ -281,7 +291,7 @@ The normal buying process is:
 5. Use **Reset** or **Max** as needed.
 6. Select your **Max Slippage**.
 7. Select your **Transaction Priority**.
-8. Review the estimated tokens you will receive and the available sale capacity.
+8. Review the estimated tokens you will receive and available sale capacity.
 9. Select **Buy**.
 10. Review and approve the transaction in your wallet.
 11. Wait for Solana transaction confirmation.
