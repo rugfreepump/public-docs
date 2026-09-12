@@ -1,142 +1,91 @@
 ---
 title: "How Rewards Are Earned"
-description: "Learn how buyers and creators earn eligibility for RugFreePump rewards."
+description: "Learn how buyer and creator activity qualifies for RugFreePump rewards."
 ---
 
-RugFreePump rewards users based on qualifying activity during each reward period.
+# How Rewards Are Earned
 
-There are two reward categories:
+The RugFreePump Reward Program has two reward categories:
 
-- **Buyer rewards**
-- **Creator rewards**
+- **Buyer Rewards**
+- **Creator Rewards**
 
-Each category uses its own qualification and ranking rules.
+Each category uses a different measure of qualifying activity.
 
-# Buyer Rewards
+## Buyer Rewards
 
-Buyers earn reward eligibility through qualifying bonding curve purchases.
+Buyer rewards are based on **qualifying purchase volume** during the reward period.
 
-Your qualifying purchase volume is tracked throughout the reward period and contributes to your buyer ranking.
+Every qualifying token purchase contributes to a buyer's ranking for that period.
 
-At the end of the period, the **top 100 buyers** by qualifying purchase volume are eligible for a share of the buyer reward pool.
+The more qualifying purchase volume a buyer accumulates during the period, the higher their potential ranking.
 
-Higher qualifying purchase volume places you higher in the ranking and can result in a larger reward.
+At the end of the 28-day reward period, the buyers are ranked according to their qualifying purchase volume.
 
-<Callout type="info" title="Buying More Does Not Guarantee a Reward">
-Only the top 100 buyers qualify for buyer rewards during a reward period. Your final ranking depends on your qualifying purchase volume relative to other buyers during the same period.
-</Callout>
+Only the **top 100 buyers** are eligible for buyer rewards.
 
-# Creator Rewards
+### Example
 
-Creators earn reward eligibility through successful bonding curve liquidity migrations.
+If a buyer makes several qualifying purchases during a reward period, the qualifying purchase volume from those purchases contributes toward that buyer's final ranking.
 
-A creator must complete at least one successful migration during the reward period to qualify.
+A buyer does not need to make one large purchase. Multiple qualifying purchases can contribute to the buyer's total qualifying volume.
 
-Creators are ranked primarily by their **total number of successful migrations** during the period.
+## Creator Rewards
 
-The **top 100 creators** are eligible for a share of the creator reward pool.
+Creator rewards are based on **successful bonding-curve liquidity migrations** during the reward period.
 
-When creators have the same number of successful migrations, qualifying buy volume is used as a ranking tie-breaker. If the relevant values remain tied, the protocol uses the applicable wallet-key ordering to determine the final ranking.
+Each successful migration contributes toward the creator's ranking.
 
-# What Counts Toward Your Rewards?
+Only creators who have completed at least one successful migration during the reward period can qualify for the creator ranking.
 
-The Reward Program uses qualifying activity recorded during the reward period.
+The **top 100 creators** by total successful migrations are eligible for creator rewards.
 
-For buyers, this means qualifying bonding curve purchase volume.
+### Example
 
-For creators, this means successful bonding curve migrations.
+If a creator successfully migrates liquidity for multiple eligible sales during the reward period, those successful migrations contribute to the creator's ranking.
 
-The final qualifying activity is recorded when the reward period is finalized.
+A creator with more successful migrations will generally rank higher than a creator with fewer successful migrations.
 
-# Your Ranking Can Change
+## Creator Ranking Tie-Breakers
 
-Rankings during an active reward period are not final.
+If multiple creators have the same number of successful migrations, additional ranking criteria are used to determine their order.
 
-For example, you may currently be ranked within the top 100 buyers, but another buyer can generate additional qualifying purchase volume and move ahead of you before the period ends.
+The tie-breakers are applied in this order:
 
-The same applies to creator rankings as additional migrations are completed.
+1. **Buy volume**
+2. **Wallet key ordering**
 
-Only the finalized ranking at the end of the reward period determines eligibility.
+This provides a deterministic ordering when creators have the same primary migration count.
 
-# Reward Eligibility Summary
+## Activity Must Occur During the Reward Period
 
-| Reward Type | How You Qualify | Eligible Participants |
-| --- | --- | ---: |
-| **Buyers** | Qualifying bonding curve purchase volume | Top 100 buyers |
-| **Creators** | Successful bonding curve migrations | Top 100 creators |
+Reward activity is evaluated within the specific 28-day reward period.
 
-For how these rankings are finalized, see [Reward Periods and Rankings](/reward-program/reward-periods-and-rankings).
-```
+Activity from a previous reward period does not carry over into a new period's rankings.
 
----
+Likewise, activity that occurs after a period has ended does not change that completed period's final ranking.
 
-```mdx
----
-title: "Reward Periods and Rankings"
-description: "Learn how RugFreePump reward periods, rankings, and final snapshots work."
----
+## Active Rankings Are Estimates
 
-The RugFreePump Reward Program operates in recurring **28-day reward periods**.
+During an active reward period, rankings and estimated rewards may change.
 
-Your qualifying activity is tracked throughout the period, while rankings can change as users generate additional qualifying activity.
+The displayed rankings are updated approximately every **60 seconds**.
 
-When the period ends, RugFreePump finalizes the rankings and records the results in a permanent reward snapshot.
+A user's current position can therefore move up or down as other eligible participants generate additional qualifying activity.
 
-# Reward Periods
+The active ranking should be treated as an estimate rather than a final result.
 
-Each reward period lasts **28 days**.
+## Final Eligibility
 
-During an active period:
+When the reward period ends, RugFreePump creates the final reward snapshot.
 
-- Buyer purchase volume is tracked.
-- Creator migrations are tracked.
-- Buyer rankings are updated as qualifying purchase volume changes.
-- Creator rankings are updated as successful migrations occur.
-- Estimated reward positions may change throughout the period.
+The final snapshot determines:
 
-The active ranking is not the final result.
+- Which buyers are eligible
+- Which creators are eligible
+- The final ranking of each participant
+- The reward allocated to each participant
 
-<Callout type="info" title="Your Final Rank Is Determined at Period End">
-A ranking shown during an active reward period can change before the period ends. Only the finalized ranking recorded in the period's reward snapshot determines reward eligibility.
-</Callout>
+The final snapshot is permanent once finalized.
 
-# Buyer Rankings
-
-Buyers are ranked by their qualifying bonding curve purchase volume during the reward period.
-
-The buyer ranking is ordered from the highest qualifying purchase volume to the lowest.
-
-The **top 100 buyers** at the end of the period qualify for buyer rewards.
-
-# Creator Rankings
-
-Creators are ranked primarily by the number of successful bonding curve migrations completed during the reward period.
-
-A creator must have at least one successful migration to qualify.
-
-When creators have the same number of successful migrations, qualifying buy volume is used as a tie-breaker.
-
-If the relevant values remain tied, the protocol uses the applicable wallet-key ordering to determine the final ranking.
-
-The **top 100 creators** in the finalized ranking qualify for creator rewards.
-
-# Final Reward Snapshot
-
-At the end of each 28-day period, RugFreePump creates a permanent snapshot containing the qualifying reward information for that period.
-
-The snapshot records the finalized participants, rankings, qualifying activity, and calculated reward amounts.
-
-Once finalized, the snapshot provides the permanent reference used for that reward period's distribution.
-
-Changes to activity in a later reward period do not change the previous period's finalized snapshot.
-
-# Ranking Summary
-
-| Category | Primary Ranking Metric | Eligibility |
-| --- | --- | ---: |
-| **Buyers** | Qualifying purchase volume | Top 100 |
-| **Creators** | Successful migrations | Top 100 |
-
-Creator rankings use qualifying buy volume as a tie-breaker when migration counts are equal.
-
-For how the reward amounts are calculated from the finalized rankings, see [Reward Calculation](/reward-program/reward-calculation).
+For the complete ranking process, see [Reward Periods & Rankings](/reward-program/reward-periods-and-rankings).
