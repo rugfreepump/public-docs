@@ -55,6 +55,16 @@
         ]
       },
       {
+        "group": "Reward Program",
+        "pages": [
+          "reward-program/overview",
+          "reward-program/how-rewards-are-earned",
+          "reward-program/reward-periods-and-rankings",
+          "reward-program/reward-calculation",
+          "reward-program/reward-distribution"
+        ]
+      },
+      {
         "group": "On-Chain Program",
         "pages": [
           "on-chain-program/overview",
@@ -108,16 +118,6 @@
           "security-and-risk/platform-and-infrastructure-risks",
           "security-and-risk/user-responsibilities",
           "security-and-risk/security-disclosure"
-        ]
-      },
-      {
-        "group": "Reward Program",
-        "pages": [
-          "reward-program/overview",
-          "reward-program/how-rewards-are-earned",
-          "reward-program/reward-periods-and-rankings",
-          "reward-program/reward-calculation",
-          "reward-program/reward-distribution"
         ]
       },
       {
