@@ -40,7 +40,7 @@ The sale page displays:
 - **Contributions:** Purchases made during the sale, including the contributor, SOL amount, USD value, tokens received, time, and transaction.
 - **Top Holders:** Wallets holding the largest portions of the coin's token supply.
 
-Review this information carefully before purchasing. The sale page can change as other users participate, and the current sale state determines whether purchases are still accepted.
+Review this information carefully before purchasing. The sale page data can change as other users participate, and the current sale state determines whether purchases are still accepted.
 
 ## Prerequisites Checklist
 
@@ -49,11 +49,10 @@ Before buying tokens, make sure you have the following:
 - **Supported Solana Wallet:** An active, funded wallet using [Phantom](https://phantom.com) or [Solflare](https://solflare.com/).
 - **Adequate SOL Balance:** Enough SOL to cover your purchase amount, the applicable Buy Fee, Solana network fees, and any selected transaction priority fee.
 - **Active Sale:** The bonding curve sale must still be in the **Live** state.
-- **Completed Consent:** You must complete the required consent process before performing the purchase.
 
 # Keep Enough SOL in Your Wallet
 
-Buying tokens requires more SOL than the amount that ultimately becomes your net bonding-curve contribution.
+Buying tokens requires more SOL than the amount that ultimately becomes your net bonding curve sale contribution.
 
 Your wallet must have enough SOL to cover the purchase amount and the fees required to process the transaction.
 
@@ -69,9 +68,9 @@ The purchase amount is subject to the current limits of the sale and your availa
 
 ### 2. Buy Fee
 
-A **Buy Fee** is deducted from each bonding curve purchase.
+A **Buy Fee** is deducted from each bonding curve sale purchase.
 
-The remaining amount is used as the net bonding-curve contribution for calculating the tokens you receive.
+The remaining amount is used as the net bonding curve sale contribution for calculating the tokens you receive.
 
 For the current **Buy Fee** and its authorized update range, see [Protocol Fees](/protocol-fees).
 
@@ -85,7 +84,7 @@ These are separate from RugFreePump protocol fees.
 
 If you select a transaction priority level, an additional Solana priority fee is included with your transaction.
 
-The priority fee is a network fee and is separate from the RugFreePump Buy Fee.
+The priority fee is a network fee and is separate from the RugFreePump **Buy Fee**.
 
 <Callout type="warning" title="Keep a SOL Buffer">
 Make sure your wallet contains enough SOL to cover your purchase amount, the applicable Buy Fee, Solana network fees, and your selected priority fee.
@@ -99,7 +98,7 @@ You can discover bonding curve sales through RugFreePump and open the sale page 
 
 Each sale has its own dedicated sale page.
 
-The sale page displays the current state of the bonding curve and provides the interface for purchasing tokens.
+The sale page displays the current state of the bonding curve sale and provides the interface for purchasing tokens.
 
 Before purchasing, confirm that the sale is **Live**.
 
@@ -180,40 +179,6 @@ The supply is divided between:
 
 These allocations are fixed by the protocol and are not configured separately for each sale.
 
-# Review Sale Information
-
-The sale page provides information that helps you understand the current state of the sale before purchasing.
-
-## Bonding Curve Pool Information
-
-The sale page displays information including:
-
-- **Pool Address:** The on-chain account associated with the bonding curve sale and its raised funds.
-- **Total Supply:** The total supply of the coin.
-- **Tokens For Sale:** The portion of the supply available through the bonding curve.
-- **Tokens For Liquidity:** The portion of the supply reserved for liquidity after a successful migration.
-- **Hard Cap:** The maximum amount the sale can raise.
-- **Start Time:** When the sale became Live.
-- **End Time:** When the sale lifetime expires.
-- **Listing On:** The DEX where liquidity will be created after a successful migration.
-- **LP Tokens:** Information about how liquidity-provider tokens are handled after migration.
-
-## Track Sale Progress
-
-While the sale is Live, the sale page displays its current progress.
-
-The sale information includes:
-
-- **Countdown Timer:** The remaining time until the sale lifetime expires.
-- **Sale Status:** The current state of the bonding curve sale.
-- **Raised SOL:** The amount of SOL raised by the sale.
-- **Raised USD:** The USD value associated with the raised amount.
-- **Sale Progress:** The percentage of the hard cap reached.
-- **Tokens Sold:** The number of tokens purchased through the sale.
-- **Total Buyers:** The number of unique buyers who participated in the sale.
-- **Contributions:** Purchases made during the sale, including the contributor, SOL amount, USD value, tokens received, time, and transaction.
-- **Top Holders:** Wallets holding the largest portions of the coin's token supply.
-
 # Understanding Sale Statuses
 
 The state of the sale determines whether you can purchase tokens and what happens to your contribution afterward.
@@ -225,7 +190,7 @@ A **Live** sale is active and accepting purchases.
 While a sale is Live:
 
 - You can purchase tokens if you meet the purchase requirements.
-- The bonding curve continues to determine the token price.
+- The bonding curve pricing model continues to determine the token price.
 - The sale progress can increase as users purchase tokens.
 - The remaining sale lifetime continues to count down.
 - The sale can eventually become **Completed** or **Expired**.
@@ -248,7 +213,7 @@ The timer does **not** automatically migrate the liquidity, expire the sale, can
 
 If the creator completes migration, the sale becomes **Migrated**.
 
-If the timer expires without migration and you experience delays or concerns, contact support so the situation can be reviewed.
+If the timer expires without migration and you experience delays or concerns, contact RugFreePump support so the situation can be reviewed.
 
 ## Migrated
 
@@ -272,7 +237,7 @@ An **Expired** sale is a sale whose lifetime ended before reaching its hard cap.
 
 An Expired sale does not proceed to liquidity migration.
 
-If you contributed SOL to an eligible Expired sale, you can use the withdrawal process to recover your eligible contributed SOL.
+If you contributed SOL to an Expired sale, you can use the withdrawal process to recover your contributed SOL.
 
 For more information, see [**Withdrawing Contributed SOL**](https://rugfreepump.com/docs/user-guides/for-token-buyers/withdrawing-contributed-sol).
 
@@ -282,7 +247,7 @@ A **Canceled** sale is an exceptional state used when a sale is canceled through
 
 Canceled sales do not proceed to liquidity migration.
 
-If you contributed SOL to an eligible Canceled sale, you can use the withdrawal process to recover your eligible contributed SOL.
+If you contributed SOL to a Canceled sale, you can use the withdrawal process to recover your contributed SOL.
 
 For more information, see [**Withdrawing Contributed SOL**](https://rugfreepump.com/docs/user-guides/for-token-buyers/withdrawing-contributed-sol).
 
@@ -316,7 +281,7 @@ The panel displays information such as:
 
 Enter the amount of SOL you want to use for the purchase.
 
-The amount you enter represents the purchase amount before the Buy Fee is deducted.
+The amount you enter represents the purchase amount before the **Buy Fee** is deducted.
 
 The estimated token amount shown in the purchase panel is based on the current sale price and applicable SOL/USD price.
 
@@ -339,7 +304,7 @@ Max considers both your wallet balance and the current purchase limit imposed by
 
 The maximum permitted amount can change as the sale progresses or your wallet balance changes.
 
-You should still keep enough SOL available for the Buy Fee and Solana network fees.
+You should still keep enough SOL available for the Solana network fees.
 
 # Set Max Slippage
 
