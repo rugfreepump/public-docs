@@ -1,144 +1,113 @@
 ---
 title: "Reward Calculation"
-description: "Learn how the RugFreePump reward pool and individual rewards are calculated."
+description: "Learn how the RugFreePump reward pool is calculated and allocated between buyers and creators."
 ---
 
-RugFreePump calculates rewards from applicable protocol revenue generated during each 28-day reward period.
+# Reward Calculation
 
-The resulting reward pool is divided between eligible buyers and creators according to the reward program allocation.
+RugFreePump calculates rewards from the platform revenue generated during each 28-day reward period.
 
-# How the Reward Pool Is Funded
+The resulting reward pool is divided between eligible buyers and creators according to the current reward allocation.
 
-The reward pool is based on applicable RugFreePump protocol revenue generated during the reward period.
+## Reward Pool
 
-The revenue included in the reward calculation comes from:
+The reward pool is based on qualifying RugFreePump platform revenue generated during the reward period.
 
-- **Bonding Curve Escrow Creation Fees**
-- **Buy Fees**
-- **Bonding Curve Escrow Completed Fees**
+The current included revenue sources are:
 
-The following protocol fees are not included in the reward pool:
+- **Bonding Curve Escrow Creation Fee**
+- **Buy Fee**
+- **Bonding Curve Escrow Completed Fee**
+
+These revenue sources contribute to the reward pool used for the corresponding reward period.
+
+## Revenue Excluded From the Reward Pool
+
+The following fees are currently excluded from the reward pool:
 
 - **Token Creator Incentive**
 - **Raydium Liquidity Pool Creation Fee**
 
-For the current protocol fee values, see [Protocol Fees](/overview/protocol-fees).
+These exclusions ensure that only the designated platform revenue sources contribute to the Reward Program pool.
 
-# Reward Pool Allocation
+For current protocol fee amounts and limits, see [Protocol Fees](/overview/protocol-fees).
 
-The current reward pool is divided as follows:
+## Buyer and Creator Allocation
+
+The reward pool is currently divided as follows:
 
 | Reward Category | Allocation |
 | --- | ---: |
-| **Buyers** | **60%** |
-| **Creators** | **40%** |
+| Buyer Rewards | 60% |
+| Creator Rewards | 40% |
 
-The buyer allocation is distributed among the eligible buyers recorded in the finalized reward snapshot.
+For example, if the finalized reward pool were $10,000:
 
-The creator allocation is distributed among the eligible creators recorded in the finalized reward snapshot.
+- $6,000 would be allocated to the buyer reward pool.
+- $4,000 would be allocated to the creator reward pool.
 
-# Buyer Reward Calculation
+The example above is illustrative only. Actual reward pools depend on the qualifying revenue generated during the relevant reward period.
 
-Buyer rewards are based on each eligible buyer's qualifying purchase volume during the reward period.
+## Buyer Rewards
 
-Eligible buyers are ranked by qualifying purchase volume.
+The buyer reward pool is distributed among the eligible buyers identified by the final reward snapshot.
 
-The final buyer reward is determined from the buyer reward pool and the qualifying activity recorded in the finalized snapshot.
+Eligibility is limited to the **top 100 buyers** ranked by qualifying purchase volume during the reward period.
 
-A higher qualifying purchase volume generally results in a larger share of the buyer reward pool.
+A buyer's reward is determined from their position and qualifying activity within the finalized buyer ranking.
 
-# Creator Reward Calculation
+The final reward amount is established when the reward period is finalized.
 
-Creator rewards are based on the finalized creator ranking and qualifying creator activity for the reward period.
+## Creator Rewards
 
-Creators are ranked primarily by successful migrations.
+The creator reward pool is distributed among the eligible creators identified by the final reward snapshot.
 
-The creator reward pool is allocated among the eligible creators recorded in the finalized snapshot.
+Eligibility is limited to the **top 100 creators** ranked by successful bonding-curve migrations during the reward period.
 
-# Finalized Snapshot
+A creator must have at least one successful migration during the period to qualify.
 
-Reward calculations use the permanent snapshot created when the 28-day reward period ends.
+Creator ranking tie-breakers are applied when necessary:
 
-This prevents later activity from changing the reward amounts for a completed period.
+1. Buy volume
+2. Wallet key ordering
 
-<Callout type="info" title="Reward Amounts Are Finalized Per Period">
-Your reward for a completed period is based on the qualifying activity and ranking recorded in that period's finalized reward snapshot.
-</Callout>
+The final reward amount is established from the finalized creator ranking.
 
-# Reward Calculation Summary
+## Finalized Reward Calculation
 
-1. Applicable protocol revenue is collected for the reward period.
-2. The reward pool is calculated from the applicable revenue.
-3. The reward pool is divided between buyers and creators.
-4. Final buyer and creator rankings are determined.
-5. Eligible participants are recorded in the permanent snapshot.
-6. Individual reward amounts are calculated from the finalized snapshot.
-7. The resulting rewards are prepared for distribution.
+The reward calculation uses the final reward snapshot rather than the continuously changing active ranking.
 
-For what happens after rewards are finalized, see [Reward Distribution](/reward-program/reward-distribution).
-```
+This means that the reward calculation is based on:
 
----
+- The finalized reward-period revenue
+- The final buyer ranking
+- The final creator ranking
+- The applicable reward allocation
+- The participants recorded in the final snapshot
 
-```mdx
----
-title: "Reward Distribution"
-description: "Learn how finalized RugFreePump rewards are distributed to eligible buyers and creators."
----
+Once the snapshot is finalized, the results for that reward period are permanent.
 
-After a 28-day reward period ends, RugFreePump finalizes the reward snapshot and determines the eligible buyers and creators for that period.
+## Estimated Rewards vs. Final Rewards
 
-The finalized reward amounts are then processed for distribution from the reward pool allocated to that period.
+During an active reward period, RugFreePump may display estimated rankings and rewards.
 
-# When Rewards Are Distributed
+These estimates can change because:
 
-Rewards are distributed after the reward period has been finalized.
+- New qualifying purchases can change buyer rankings.
+- New successful migrations can change creator rankings.
+- The reward pool continues to accumulate qualifying revenue.
+- Participants can move into or out of the top 100.
 
-The final snapshot determines:
+Therefore, an estimated reward shown during an active period is not a guaranteed final payout.
 
-- Which buyers are eligible.
-- Which creators are eligible.
-- Their final rankings.
-- Their qualifying activity.
-- Their calculated reward amounts.
+The final reward is determined only after the reward period is finalized.
 
-The distribution process uses this finalized information rather than the changing rankings from an active reward period.
+## Reward Period Independence
 
-# Distribution Process
+Each 28-day reward period is calculated independently.
 
-The distribution process is performed using the finalized reward snapshot.
+Activity from one period does not modify the finalized rewards of another period.
 
-Eligible rewards are processed in controlled batches so that the distribution can be completed safely and tracked accurately.
+Once a period has been finalized, later platform activity belongs to a subsequent reward period and does not change the completed period's reward calculation.
 
-For each batch, the distribution process records the relevant reward recipients and amounts and tracks the transaction used to distribute the rewards.
-
-This allows completed distributions to be verified against the finalized reward snapshot.
-
-# Reward Distribution Status
-
-A reward distribution may be processed across multiple batches.
-
-A batch can progress through the required distribution steps before it is permanently recorded as completed.
-
-The distribution records include the transaction signature associated with the completed reward transfer.
-
-This provides a verifiable record of the distribution for the participants included in that batch.
-
-# Your Reward
-
-If you qualify for a reward, your final reward amount is determined by the finalized reward snapshot for the relevant 28-day period.
-
-The amount is based on the reward program rules and the qualifying activity recorded for that period.
-
-Your reward does not change because rankings change in a later reward period.
-
-# Important Points
-
-- Rewards are based on finalized 28-day reward periods.
-- Only participants who qualify in the finalized snapshot receive rewards.
-- Buyer and creator rewards are distributed from their respective portions of the reward pool.
-- Distributions may be processed in multiple batches.
-- Completed distributions are recorded with their transaction signatures.
-- The finalized reward snapshot is the permanent reference for the reward period.
-
-For how reward amounts are determined before distribution, see [Reward Calculation](/reward-program/reward-calculation).
+For information about what happens after calculation, see [Reward Distribution](/reward-program/reward-distribution).
