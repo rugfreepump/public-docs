@@ -25,37 +25,39 @@ Users who did not contribute to the sale do not see the contributed amount or th
 
 Users who are not logged in also do not see the contributed amount or the **Withdraw** button.
 
-# Your Displayed Contributed Amount
+# Your Contributed Amount
 
 The contributed amount displayed on the sale page comes from RugFreePump's indexed transaction data.
 
-The RugFreePump indexer processes on-chain sale transactions and stores aggregated contribution data in the platform database so the sale page can display the contribution amount efficiently.
+The RugFreePump indexer processes sale transactions and stores the contribution information in the platform database so the sale page can display your contribution.
 
-The displayed amount is intended to reflect your actual contribution, but it is not the canonical source of truth.
+The displayed amount is normally accurate, but in rare cases an indexing problem can cause the amount shown on the sale page to be temporarily incomplete or inaccurate.
 
-In rare cases, an indexed transaction may be delayed, missed, or not correctly stored in the database. The actual contribution and withdrawal eligibility are determined by the protocol's on-chain state.
+The amount shown on the sale page does not determine how much you can actually withdraw.
 
-<Callout type="info" title="On-Chain State Is Canonical">
-If an indexing issue causes the displayed contribution amount to be temporarily incomplete or inaccurate, your on-chain contribution is not lost.
+When you withdraw, the protocol uses the contribution recorded on-chain to process the withdrawal.
 
-The withdrawal transaction uses the canonical on-chain state to determine the eligible withdrawal amount.
+<Callout type="info" title="Your Contribution Is Safe">
+If the RugFreePump indexer misses a transaction or fails to store it correctly, your contribution is not lost.
+
+The actual contribution is stored on-chain and remains available for withdrawal when you are eligible.
 </Callout>
 
 # Withdrawal Fees
 
-RugFreePump does not charge a protocol fee for withdrawing contributed SOL.
+RugFreePump does not charge any protocol fee for withdrawing contributed SOL.
 
 You only need enough SOL in your wallet to pay the required **Solana network transaction fee** for the withdrawal transaction.
 
-The Solana network transaction fee is separate from any RugFreePump protocol fee.
+The Solana network transaction fee is separate from RugFreePump protocol fees.
 
 # Withdraw Your Contributed SOL
 
-Once the sale is in an eligible withdrawal state and the **Withdraw** button is available, select **Withdraw** to begin.
+Once the sale is **Expired** or **Canceled** and the **Withdraw** button is available, select **Withdraw** to begin the withdrawal process.
 
 ## Step 1: Select Withdraw
 
-On the **Expired** or **Canceled** sale page, select the **Withdraw** button.
+On the Expired or Canceled sale page, select the **Withdraw** button.
 
 RugFreePump prepares the withdrawal transaction.
 
@@ -75,7 +77,7 @@ Review the transaction in your wallet and approve it to continue.
 
 ## Step 3: Wait for Transaction Confirmation
 
-After approval, RugFreePump waits for confirmation from the Solana network.
+After approving the transaction, RugFreePump waits for confirmation from the Solana network.
 
 The sale page displays:
 
@@ -83,19 +85,27 @@ The sale page displays:
 
 Once the transaction is successfully confirmed, the withdrawal is complete.
 
+# What Happens When You Withdraw?
+
+When your withdrawal is successfully processed:
+
+- Your eligible contributed SOL is returned to your wallet.
+- Any tokens you received from that contribution that are still in your wallet are burned.
+- You do not need to have those tokens in your wallet for the withdrawal to succeed.
+
+If you previously transferred the tokens to another wallet, the withdrawal can still be processed.
+
+The tokens from an Expired or Canceled sale have no value through the bonding curve because the sale did not proceed to successful liquidity migration.
+
+The withdrawal is therefore based on your eligible contributed SOL, not on whether you still hold the tokens you received.
+
 # After a Successful Withdrawal
 
-After the withdrawal transaction succeeds, your eligible contributed SOL is returned to your wallet according to the protocol's on-chain rules.
+After the withdrawal transaction is successfully confirmed, your contributed SOL is returned according to the protocol's on-chain rules.
 
 The sale page updates to reflect the completed withdrawal.
 
-# If You Reject the Transaction
-
-If you reject the withdrawal transaction in your wallet, the withdrawal does not complete.
-
-Your eligible on-chain contribution remains unchanged.
-
-You can try again while the sale remains eligible for withdrawal.
+If you reject the transaction or the transaction fails, the withdrawal does not complete, and your eligible contribution remains available.
 
 # If the Withdrawal Fails
 
@@ -106,7 +116,7 @@ Make sure:
 - Your wallet is connected.
 - You are using the wallet that made the contribution.
 - Your wallet has enough SOL to pay the Solana network transaction fee.
-- The sale remains in an eligible withdrawal state.
+- The sale is still in an eligible withdrawal state.
 
 If the problem continues, contact RugFreePump support.
 
@@ -121,5 +131,6 @@ The withdrawal process is:
 5. Approve the transaction in your wallet.
 6. Wait for Solana transaction confirmation.
 7. Your eligible contributed SOL is returned according to the protocol's on-chain rules.
+8. Any tokens from that contribution that remain in your wallet are burned.
 
-RugFreePump does not charge a protocol fee for withdrawals. The required Solana network transaction fee still applies.
+RugFreePump does not charge a protocol fee for withdrawals. Only the required Solana network transaction fee applies.
