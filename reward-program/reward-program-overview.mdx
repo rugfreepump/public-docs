@@ -1,91 +1,112 @@
 ---
-title: "Reward Program Overview"
-description: "Learn how the RugFreePump Reward Program rewards eligible token buyers and creators."
+title: "Reward Program"
+description: "Learn how the RugFreePump Reward Program works and how buyers and creators can earn rewards."
 ---
 
-The RugFreePump **Reward Program** distributes a portion of protocol revenue to users who contribute to the activity and growth of the platform.
+# Reward Program
 
-The program rewards two groups:
+The RugFreePump Reward Program rewards users who contribute meaningful activity to the platform as **buyers** and **token creators**.
 
-- **Buyers** — users who generate qualifying bonding curve purchase volume.
-- **Creators** — token creators who successfully migrate their bonding curve sales.
+The program operates in recurring **28-day reward periods**. At the end of each period, eligible users are ranked based on qualifying activity, and the available reward pool is distributed between the highest-ranked buyers and creators.
 
-Rewards are calculated for each reward period using the applicable reward program rules and are distributed from the reward pool allocated for that period.
+## How the Program Works
 
-# How the Reward Program Works
+Each reward period follows a simple process:
 
-The Reward Program operates in recurring **28-day reward periods**.
+1. Platform revenue generated during the reward period contributes to the reward pool.
+2. Buyer and creator activity is tracked throughout the period.
+3. Rankings are updated periodically while the reward period is active.
+4. The reward period ends after 28 days.
+5. Final rankings are permanently recorded.
+6. Rewards are calculated from the finalized rankings and reward pool.
+7. Rewards are distributed to eligible participants.
 
-During each period, RugFreePump tracks qualifying activity and maintains rankings for buyers and creators.
+The rankings shown while a reward period is active are estimates. The final reward amounts are determined from the permanent snapshot taken when the period ends.
 
-At the end of the period:
+## Reward Categories
 
-1. The reward period is finalized.
-2. Eligible buyers and creators are determined from the final rankings.
-3. A permanent reward snapshot is created.
-4. The reward pool for the period is allocated between buyers and creators.
-5. Individual rewards are calculated from the finalized snapshot.
-6. Eligible rewards are distributed from the allocated reward pool.
+There are two reward categories:
 
-<Callout type="info" title="Reward Periods">
-Each reward period covers 28 days. Rankings may change throughout the period as qualifying activity changes, but the final reward snapshot is fixed when the period ends.
-</Callout>
+- **Buyer Rewards** — for users who make qualifying token purchases.
+- **Creator Rewards** — for creators who successfully migrate bonding-curve liquidity.
 
-# Who Can Earn Rewards?
+Each category has its own ranking.
 
-## Buyers
+## Reward Pool Allocation
 
-Buyers can qualify for rewards based on their total qualifying bonding curve purchase volume during the reward period.
+The current reward pool is divided as follows:
 
-The **top 100 buyers** by qualifying purchase volume are eligible for buyer rewards.
+| Category | Allocation |
+| --- | ---: |
+| Buyers | 60% |
+| Creators | 40% |
 
-Higher qualifying purchase volume results in a higher buyer ranking and generally a larger share of the buyer reward pool.
+This means that 60% of the available reward pool is reserved for eligible buyers, while 40% is reserved for eligible creators.
 
-## Creators
+## Who Can Earn Rewards?
 
-Creators can qualify for rewards by successfully migrating bonding curve sales.
+### Buyers
 
-The **top 100 creators** based on successful migrations are eligible for creator rewards.
+Buyer rewards are based on qualifying purchase volume during the reward period.
 
-A creator must have at least one successful migration during the reward period to qualify.
+At the end of the period, the **top 100 buyers** by qualifying purchase volume are eligible for buyer rewards.
 
-# Reward Pool
+### Creators
 
-The reward pool is funded from applicable RugFreePump protocol revenue generated during the reward period.
+Creator rewards are based on successful bonding-curve migrations during the reward period.
 
-The current reward allocation is:
+At the end of the period, the **top 100 creators** by total successful migrations are eligible for creator rewards.
 
-- **60%** for eligible buyers
-- **40%** for eligible creators
+A creator must have at least one successful migration during the reward period to qualify for the creator ranking.
 
-The reward pool is calculated from applicable protocol revenue during the period.
+## 28-Day Reward Periods
 
-For the fees included in the reward calculation and the current reward allocation, see [Reward Calculation](/reward-program/reward-calculation).
+Each reward period lasts **28 days**.
 
-# Rewards Are Based on Finalized Activity
+Activity belongs to the reward period in which it occurs. When the period ends, the final rankings and qualifying activity are captured in a permanent snapshot.
 
-Reward rankings shown during an active period are not final.
+After the snapshot is finalized, later activity does not change the completed period's rankings or rewards.
 
-Your ranking can change as other users generate qualifying activity.
+## Rankings During an Active Period
 
-When the reward period ends, RugFreePump creates a permanent snapshot of the qualifying activity and rankings. Rewards are then calculated from that finalized snapshot.
+Rankings are updated periodically while a reward period is active.
 
-This means the final reward is determined by the activity recorded for the completed reward period, not by a later change to your ranking.
+The displayed rankings are intended to provide an estimate of the current standings. They can change as additional qualifying activity occurs.
 
-# Important Points
+The current estimated rankings and rewards are updated approximately every **60 seconds**.
 
-- Reward periods last **28 days**.
-- Buyer rewards are based on qualifying purchase volume.
-- Creator rewards are based primarily on successful migrations.
-- The top **100 buyers** and top **100 creators** qualify for rewards.
-- The reward pool is funded from applicable protocol revenue.
-- The current reward pool allocation is **60% to buyers** and **40% to creators**.
-- Final rankings are recorded in a permanent snapshot at the end of each period.
-- Rewards are distributed after the reward period has been finalized.
+The displayed values should therefore not be treated as final until the reward period has ended and its final snapshot has been established.
 
-For the detailed rules, see:
+## Final Reward Snapshot
+
+When a 28-day reward period ends, RugFreePump creates the final reward snapshot.
+
+The snapshot records the qualifying activity, final rankings, and reward allocation for that period.
+
+Once finalized, the snapshot is permanent.
+
+This ensures that rewards for a completed period are based on a fixed set of results rather than continuously changing platform activity.
+
+## Reward Calculation
+
+The reward pool is based on qualifying RugFreePump platform revenue generated during the reward period.
+
+The revenue included in the reward pool currently consists of:
+
+- Bonding Curve Escrow Creation Fees
+- Buy Fees
+- Bonding Curve Escrow Completed Fees
+
+Certain platform fees are excluded from the reward pool, including:
+
+- Token Creator Incentive
+- Raydium Liquidity Pool Creation Fee
+
+The resulting reward pool is then divided between the buyer and creator categories according to the current allocation.
+
+For more information, see:
 
 - [How Rewards Are Earned](/reward-program/how-rewards-are-earned)
-- [Reward Periods and Rankings](/reward-program/reward-periods-and-rankings)
+- [Reward Periods & Rankings](/reward-program/reward-periods-and-rankings)
 - [Reward Calculation](/reward-program/reward-calculation)
 - [Reward Distribution](/reward-program/reward-distribution)
