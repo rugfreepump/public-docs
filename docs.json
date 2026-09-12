@@ -1,3 +1,4 @@
+```json
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
@@ -57,7 +58,7 @@
       {
         "group": "Reward Program",
         "pages": [
-          "reward-program/overview",
+          "reward-program/reward-program-overview",
           "reward-program/how-rewards-are-earned",
           "reward-program/reward-periods-and-rankings",
           "reward-program/reward-calculation",
@@ -155,3 +156,4 @@
     ]
   }
 }
+```
