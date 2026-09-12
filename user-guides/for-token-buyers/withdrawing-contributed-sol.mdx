@@ -1,257 +1,125 @@
 ---
 title: "Withdrawing Contributed SOL"
-description: "Learn how to withdraw contributed SOL from an Expired or Canceled RugFreePump bonding curve sale."
+description: "Learn how to withdraw eligible contributed SOL from an Expired or Canceled RugFreePump bonding curve sale."
 ---
 
-Withdrawing contributed SOL allows eligible participants to recover their contributed SOL when a RugFreePump bonding curve sale does not proceed to a successful liquidity migration.
+When a bonding curve sale does not proceed to liquidity migration, eligible contributors can withdraw their contributed SOL.
 
-Withdrawal is available only when the sale reaches an eligible withdrawal state.
+Withdrawals are available when a sale becomes **Expired** or **Canceled** and are processed according to the protocol's on-chain rules.
 
-You can withdraw directly from the sale page using the **Withdraw** button.
+# When the Withdraw Button Appears
 
-# Before You Start
+When a sale becomes **Expired** or **Canceled**, the sale page transitions to the corresponding sale state.
 
-Before withdrawing, make sure you understand the current state of the sale and whether your wallet has an eligible contribution available for withdrawal.
+If you contributed to that sale and are logged in using the wallet that made the contribution, the sale page displays your contributed amount and the **Withdraw** button.
 
-## When Can You Withdraw?
+The contributed amount is displayed above the **Withdraw** button.
 
-Withdrawal is not available while any sale is active.
+The **Withdraw** button and contributed amount are only displayed when:
 
-The availability of withdrawal depends on the final state of the bonding curve sale.
+- You are logged in with the wallet that made the contribution.
+- The sale is in an eligible withdrawal state.
+- Your wallet has a contribution associated with that sale.
 
-### Live
+Users who did not contribute to the sale do not see the contributed amount or the **Withdraw** button.
 
-A **Live** sale is still active and accepting purchases.
+Users who are not logged in also do not see the contributed amount or the **Withdraw** button.
 
-You cannot withdraw contributed SOL while the sale is Live.
+# Your Displayed Contributed Amount
 
-The sale can eventually become **Completed** or **Expired**.
+The contributed amount displayed on the sale page comes from RugFreePump's indexed transaction data.
 
-### Completed
+The RugFreePump indexer processes on-chain sale transactions and stores aggregated contribution data in the platform database so the sale page can display the contribution amount efficiently.
 
-A **Completed** sale has reached its hard cap.
+The displayed amount is intended to reflect your actual contribution, but it is not the canonical source of truth.
 
-Completed sales do not allow contributors to withdraw their contributed SOL through the bonding curve withdrawal process.
+In rare cases, an indexed transaction may be delayed, missed, or not correctly stored in the database. The actual contribution and withdrawal eligibility are determined by the protocol's on-chain state.
 
-The sale proceeds to the liquidity migration stage.
+<Callout type="info" title="On-Chain State Is Canonical">
+If an indexing issue causes the displayed contribution amount to be temporarily incomplete or inaccurate, your on-chain contribution is not lost.
 
-If liquidity migration succeeds, the sale becomes **Migrated**.
-
-### Migrated
-
-A **Migrated** sale has successfully completed liquidity migration to **Raydium CPMM**.
-
-A Migrated sale does not allow contributed SOL to be withdrawn through the bonding curve withdrawal process.
-
-The sale's raised liquidity has been used for the completed liquidity migration.
-
-### Expired
-
-An **Expired** sale reached the end of its lifetime before reaching its hard cap.
-
-Expired sales do not proceed to liquidity migration.
-
-Eligible contributors can withdraw their contributed SOL.
-
-### Canceled
-
-A **Canceled** sale is an exceptional state resulting from an authorized cancellation mechanism.
-
-Canceled sales do not proceed to liquidity migration.
-
-Eligible contributors can withdraw their contributed SOL.
-
-<Callout type="info" title="Withdrawal Availability">
-The normal bonding curve sale lifecycle is:
-
-**Live → Completed → Migrated**
-
-A sale can instead become:
-
-**Live → Expired**
-
-Cancellation is an exceptional outcome and is not part of the normal sale lifecycle.
-
-Withdrawal is available only when the sale reaches an eligible withdrawal state.
+The withdrawal transaction uses the canonical on-chain state to determine the eligible withdrawal amount.
 </Callout>
 
-# Review the Sale
+# Withdrawal Fees
 
-Before withdrawing, review the information displayed on the sale page.
+RugFreePump does not charge a protocol fee for withdrawing contributed SOL.
 
-Pay particular attention to:
+You only need enough SOL in your wallet to pay the required **Solana network transaction fee** for the withdrawal transaction.
 
-- **Coin Name and Ticker:** Confirm that you are viewing the intended coin.
-- **Mint Key:** Verify the unique token mint address associated with the coin.
-- **Pool Address:** Verify the on-chain bonding curve pool associated with the sale.
-- **Sale Status:** Confirm that the sale is in an eligible withdrawal state.
-- **Your Contributed Amount:** Review the contribution amount displayed for your connected wallet.
-- **Raised SOL:** Review the total SOL raised by the sale.
-- **Raised USD:** Review the USD value associated with the raised amount.
-- **Sale Progress:** Review the percentage of the hard cap reached.
-- **Tokens Sold:** Review the number of tokens purchased through the sale.
-- **Contributions:** Review purchases and contributions made during the sale.
+The Solana network transaction fee is separate from any RugFreePump protocol fee.
 
-The **Mint Key** uniquely identifies the token and can be used to distinguish it from other tokens with similar or identical names and tickers.
+# Withdraw Your Contributed SOL
 
-# Connect Your Wallet
+Once the sale is in an eligible withdrawal state and the **Withdraw** button is available, select **Withdraw** to begin.
 
-You can explore sale pages without connecting your wallet.
+## Step 1: Select Withdraw
 
-However, you must connect and authenticate the wallet that made the contribution before withdrawing.
+On the **Expired** or **Canceled** sale page, select the **Withdraw** button.
 
-RugFreePump currently supports:
+RugFreePump prepares the withdrawal transaction.
 
-- [Phantom](https://phantom.com)
-- [Solflare](https://solflare.com)
+You will see:
 
-## Connect the Contributing Wallet
-
-Connect the same wallet that participated in the bonding curve sale.
-
-RugFreePump uses your connected wallet address to identify your contribution and determine whether you have an eligible amount available for withdrawal.
-
-Connecting allows RugFreePump to identify your public wallet address.
-
-It does not give RugFreePump access to your private keys.
-
-## Sign the Login Message
-
-After connecting your wallet, you may be asked to sign a login message.
-
-- **Purpose:** The signature proves that you control the connected wallet.
-- **Safety:** The login signature is used for authentication and **does not transfer SOL or tokens**.
-
-# Complete the Consent Process
-
-RugFreePump allows users to explore the platform without completing consent.
-
-However, consent is required before performing financial operations such as withdrawing contributed SOL.
-
-When consent is required, RugFreePump displays a consent card containing:
-
-1. **Terms of Service**
-2. **Privacy Policy**
-3. **Risk Disclosure**
-
-## Consent Steps
-
-To complete the consent process:
-
-1. Review all three documents using the links provided in the consent card.
-2. Select **Continue**.
-3. Sign the consent confirmation message in your wallet.
-
-The consent signature **does not transfer SOL or tokens**.
-
-<Callout type="info" title="Policy Updates">
-Your consent remains valid for the current versions of the required documents.
-
-If RugFreePump publishes a new version of the Terms of Service, Privacy Policy, or Risk Disclosure, you may be asked to review and sign the updated documents before performing another financial operation.
-
-For more information, see the [RugFreePump Consent Documentation](https://rugfreepump.com/docs/user-guides/rugfreepump-consent).
-</Callout>
-
-# Check Your Contributed Amount
-
-When a withdrawal is available, the sale page displays your contribution information.
-
-Your **contributed amount** is shown on the left side of the withdrawal area, above the **Withdraw** button.
-
-Review the displayed amount before starting the withdrawal.
-
-The available withdrawal amount is determined by the protocol's on-chain rules and the contribution associated with your connected wallet.
-
-<Callout type="info" title="Use the Correct Wallet">
-You must connect the wallet that contributed SOL.
-
-Connecting a different wallet will not give that wallet access to another contributor's withdrawal.
-</Callout>
-
-# Withdraw Contributed SOL
-
-Once the sale is in an eligible withdrawal state and your connected wallet has a contribution, the **Withdraw** button becomes available.
-
-Select **Withdraw** to begin the withdrawal process.
-
-The withdrawal process proceeds through several stages.
-
-## Step 1: Prepare the Transaction
-
-After selecting **Withdraw**, RugFreePump prepares the withdrawal transaction.
-
-Keep the sale page open while the transaction is being prepared.
+> Preparing The Transaction...
 
 ## Step 2: Approve the Transaction
 
-After the transaction is prepared, your wallet requests transaction approval.
+After the transaction is prepared, your wallet will request approval.
 
-Review the transaction in your wallet and approve it if the details are correct.
+The sale page displays:
 
-The withdrawal transaction is then submitted to Solana.
+> Waiting For Transaction Approval...
+
+Review the transaction in your wallet and approve it to continue.
 
 ## Step 3: Wait for Transaction Confirmation
 
-After approval, RugFreePump waits for the transaction to be confirmed on Solana.
+After approval, RugFreePump waits for confirmation from the Solana network.
 
-Keep the page open while confirmation is in progress.
+The sale page displays:
 
-## Step 4: Withdrawal Completed
+> Waiting For Transaction Confirmation...
 
-Once the transaction succeeds, the contributed SOL is returned to your connected wallet according to the protocol's on-chain withdrawal rules.
+Once the transaction is successfully confirmed, the withdrawal is complete.
+
+# After a Successful Withdrawal
+
+After the withdrawal transaction succeeds, your eligible contributed SOL is returned to your wallet according to the protocol's on-chain rules.
 
 The sale page updates to reflect the completed withdrawal.
 
-# SOL Balance Requirements
+# If You Reject the Transaction
 
-Your wallet should contain enough SOL to pay the Solana network fee required to process the withdrawal transaction.
+If you reject the withdrawal transaction in your wallet, the withdrawal does not complete.
 
-The network transaction fee is separate from your contributed amount.
+Your eligible on-chain contribution remains unchanged.
 
-Keeping a small SOL balance available can help ensure that the withdrawal transaction can be submitted successfully.
+You can try again while the sale remains eligible for withdrawal.
 
-# If Your Withdrawal Fails
+# If the Withdrawal Fails
 
-A withdrawal may fail if, for example:
+If the withdrawal transaction fails, your eligible contributed SOL is not automatically lost.
 
-- The sale is not in an eligible withdrawal state.
-- Your connected wallet did not make a contribution.
-- The withdrawal has already been completed.
-- Your wallet does not have enough SOL for the network transaction fee.
-- Your wallet connection failed.
-- The transaction cannot be prepared or executed.
-- Another protocol validation failed.
-- A Solana network or transaction issue occurs.
+Make sure:
 
-If the withdrawal fails, review the message shown by RugFreePump and your wallet.
+- Your wallet is connected.
+- You are using the wallet that made the contribution.
+- Your wallet has enough SOL to pay the Solana network transaction fee.
+- The sale remains in an eligible withdrawal state.
 
-Make sure you are connected to the correct wallet and confirm that the sale is in an eligible withdrawal state before trying again.
-
-# What Happens to Your Purchased Tokens?
-
-A withdrawal of eligible contributed SOL and ownership of tokens are separate matters.
-
-Your token balance remains associated with your wallet and is governed by the protocol's on-chain rules.
-
-Before participating in or withdrawing from a bonding curve sale, review the applicable **Security & Risk** documentation.
+If the problem continues, contact RugFreePump support.
 
 # Withdrawal Summary
 
-The normal withdrawal process is:
+The withdrawal process is:
 
-1. Open the bonding curve sale page.
-2. Review the coin, **Mint Key**, pool, sale status, and your contribution.
-3. Confirm that the sale is in an eligible withdrawal state.
-4. Connect the wallet that made the contribution.
-5. Complete the required consent process if prompted.
-6. Review your contributed amount displayed above the **Withdraw** button.
-7. Select **Withdraw**.
-8. Review and approve the transaction in your wallet.
-9. Wait for Solana transaction confirmation.
-10. Receive the eligible contributed SOL according to the protocol's on-chain withdrawal rules.
+1. The sale becomes **Expired** or **Canceled**.
+2. Log in using the wallet that contributed to the sale.
+3. Your contributed amount and the **Withdraw** button appear when applicable.
+4. Select **Withdraw**.
+5. Approve the transaction in your wallet.
+6. Wait for Solana transaction confirmation.
+7. Your eligible contributed SOL is returned according to the protocol's on-chain rules.
 
-# What's Next?
-
-If you are reviewing the full bonding curve sale process, see:
-
-[**Buying Bonding Curve Sale Tokens**](https://rugfreepump.com/docs/user-guides/for-token-buyers/buying-bonding-curve-sale-tokens)
+RugFreePump does not charge a protocol fee for withdrawals. The required Solana network transaction fee still applies.
