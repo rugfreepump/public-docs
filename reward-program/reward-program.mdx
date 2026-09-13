@@ -1,90 +1,589 @@
 ---
-title: "Reward Distribution"
-description: "Learn how finalized RugFreePump rewards are distributed to eligible buyers and creators."
+title: Reward Program
+description: Learn how the RugFreePump Reward Program works, how users qualify, how rewards are calculated, and how rewards are distributed.
 ---
 
-# Reward Distribution
+# Reward Program
 
-After a 28-day reward period ends, RugFreePump finalizes the reward snapshot and calculates the rewards owed to eligible participants.
+The RugFreePump Reward Program distributes a portion of eligible platform revenue to participants who contribute meaningful activity to the platform.
 
-Rewards are distributed based on the finalized results.
+The program has two independent reward categories:
 
-## When Rewards Are Distributed
+* **Buyers** who generate qualifying buy volume
+* **Creators** whose tokens successfully migrate liquidity
 
-Rewards are distributed **after the reward period has been finalized**.
+Rewards are calculated separately for each category and finalized at the end of each reward period.
 
-The final snapshot must be established before distribution can begin because the snapshot determines:
+<Note>
+Temporary leaderboard positions and estimated rewards are not final. Only the permanent reward snapshot determines final qualification and reward amounts.
+</Note>
 
-- Eligible buyers
-- Eligible creators
-- Final rankings
-- Final reward amounts
+## Reward categories
 
-This prevents later activity from changing rewards that have already been finalized.
+### Buyers
 
-## Distribution Process
+The **Buyers Reward Pool** rewards wallets with the highest qualifying buy volume during the current reward period.
 
-The general distribution process is:
+Up to **100 buyers** can qualify for each reward period.
 
-1. The 28-day reward period ends.
-2. The final reward snapshot is established.
-3. The reward pool and participant rewards are finalized.
-4. Eligible rewards are prepared for distribution.
-5. Rewards are distributed to eligible participants.
-6. Distribution transactions are recorded.
+Buyer ranking is based on:
 
-Distribution may be processed in multiple controlled batches.
+1. Higher qualifying buy volume
+2. Wallet address as a deterministic tie-breaker
 
-This allows reward distributions to be handled reliably even when many participants are eligible.
+A higher qualifying buy volume generally results in a larger share of the Buyers Reward Pool.
 
-## Buyer Rewards
+### Creators
 
-Eligible buyer rewards are distributed to participants included in the finalized buyer reward results.
+The **Creators Reward Pool** rewards creators who successfully migrate tokens during the current reward period.
 
-Eligibility is based on the final buyer ranking for the completed reward period.
+Up to **100 creators** can qualify for each reward period.
 
-Only the **top 100 buyers** are eligible for the buyer reward pool.
+Creator ranking is based on:
 
-## Creator Rewards
+1. Higher number of successful token migrations
+2. Higher qualifying buy volume
+3. Wallet address as a deterministic final tie-breaker
 
-Eligible creator rewards are distributed to participants included in the finalized creator reward results.
+A creator must complete at least one successful token migration during the reward period to qualify for the creator ranking.
 
-Eligibility is based on the final creator ranking for the completed reward period.
+<Note>
+Buy volume is used only as a creator ranking tie-breaker when creators have the same number of successful migrations. It does not determine the creator's reward amount.
+</Note>
 
-Only the **top 100 creators** are eligible for the creator reward pool.
+## Reward period
 
-A creator must have at least one successful migration during the reward period to qualify.
+Each reward period lasts:
 
-## Distribution Records
+**28 days**
 
-Reward distributions are recorded with the relevant transaction information.
+All qualifying activity is measured independently for each reward period.
 
-This provides a verifiable record of the distribution activity and allows completed reward payments to be associated with their on-chain transactions.
+When a reward period ends:
 
-Where applicable, users can use the recorded transaction information to verify the distribution on the Solana network.
+1. Final buyer rankings are determined
+2. Final creator rankings are determined
+3. Eligible reward-period revenue is finalized
+4. Reward pools are calculated
+5. Final rewards are calculated
+6. A permanent reward snapshot is created
+7. Reward distributions are prepared
+8. The next reward period begins
 
-## Finalized Rewards Are Independent of Later Activity
+Activity from one reward period does not carry forward into the next.
 
-Once a reward period has been finalized, later activity does not change the rewards belonging to that completed period.
+For example:
 
-For example, if a participant receives a finalized reward for one 28-day period, activity performed during the following period does not change that previously finalized reward.
+* Buy volume generated during Round 1 belongs to Round 1
+* Successful migrations completed during Round 1 belong to Round 1
+* Activity generated during Round 2 is measured independently
 
-Each reward period has its own independent final result.
+## Live leaderboard snapshots
 
-## Estimated vs. Final Rewards
+During an active reward period, RugFreePump periodically updates temporary reward snapshots.
 
-The reward information displayed during an active period may be estimated.
+These snapshots provide an estimate of the current:
 
-Active rankings can change before the period ends, and the reward pool can continue to change as qualifying platform revenue is generated.
+* Buyer rankings
+* Creator rankings
+* Qualifying buy volume
+* Qualifying migration counts
+* Reward pool sizes
+* Estimated individual rewards
 
-Only the finalized reward snapshot determines the actual reward entitlement.
+Temporary snapshots are refreshed approximately every:
 
-## Important
+**60 seconds**
 
-Participation in the Reward Program does not guarantee that a user will receive a reward.
+Because the reward period remains active, the information shown in these snapshots can change.
 
-To receive a reward, a participant must satisfy the applicable eligibility requirements and be included in the final reward results for the relevant period.
+## Estimated rewards are not final
 
-The Reward Program's allocations, qualifying revenue sources, eligibility rules, and other parameters may be updated by the protocol according to its current configuration.
+A temporary leaderboard position does not guarantee a final reward.
 
-For the calculation methodology, see [Reward Calculation](/reward-program/reward-calculation).
+During an active reward period, a wallet may:
+
+* Move higher in the rankings
+* Move lower in the rankings
+* Enter the top 100
+* Leave the top 100
+* Receive a higher estimated reward
+* Receive a lower estimated reward
+
+This happens because additional platform activity can change rankings, qualifying activity, and reward pool sizes.
+
+Estimated rewards should therefore be treated only as current estimates.
+
+The final reward is determined by the permanent reward snapshot created when the reward period is finalized.
+
+## Permanent reward snapshot
+
+At the end of each reward period, RugFreePump creates a permanent reward snapshot.
+
+The permanent snapshot records the finalized information for that reward period, including:
+
+* Reward period
+* Snapshot date
+* Reward period length
+* Eligible platform revenue
+* Reward pool amounts
+* Qualified participants
+* Final rankings
+* Qualifying activity
+* Final reward amounts
+* Distribution status
+* Distribution transaction information
+
+Once the permanent snapshot is created, the finalized reward amounts for that reward period are fixed.
+
+The permanent reward snapshot serves as the source of truth for the completed reward period.
+
+## Buyers leaderboard
+
+The Buyers leaderboard ranks wallets according to their qualifying buy volume during the current reward period.
+
+The ranking order is:
+
+1. Higher qualifying buy volume
+2. Wallet address as a deterministic tie-breaker
+
+Only wallets with qualifying buy activity during the reward period can appear in the buyer ranking.
+
+The program selects up to:
+
+**100 buyers**
+
+for the Buyers Reward Pool.
+
+If fewer than 100 wallets have qualifying activity, fewer than 100 buyers may be finalized.
+
+## What counts toward buyer volume
+
+Buyer qualification is based on the increase in a wallet's recorded buy volume during the current reward period.
+
+In simplified form:
+
+**Qualifying buy volume = Current total buy volume − Buy volume recorded at the start of the reward period**
+
+Only buy activity accumulated during the current reward period is used for that reward period.
+
+Previous reward periods do not contribute to the current period's qualifying buy volume.
+
+## Creators leaderboard
+
+The Creators leaderboard ranks wallets according to successful token migrations completed during the current reward period.
+
+The ranking order is:
+
+1. Higher number of successful migrations
+2. Higher qualifying buy volume
+3. Wallet address as a deterministic final tie-breaker
+
+The program selects up to:
+
+**100 creators**
+
+for the Creators Reward Pool.
+
+A creator must have at least one successful token migration during the reward period to appear in the creator ranking.
+
+## What counts toward creator migrations
+
+Creator qualification is based on the increase in a creator's successful migration count during the current reward period.
+
+In simplified form:
+
+**Qualifying migrations = Current total migrations − Migrations recorded at the start of the reward period**
+
+Only successful migrations completed during the current reward period count toward that period.
+
+## Creator ranking tie-breaker
+
+Creators are primarily ranked by the number of successful migrations.
+
+If two or more creators have the same migration count, qualifying buy volume is used as the next ranking factor.
+
+For example:
+
+| Creator   | Successful migrations | Qualifying buy volume | Result        |
+| --------- | --------------------: | --------------------: | ------------- |
+| Creator A |                     5 |                Higher | Ranked higher |
+| Creator B |                     5 |                 Lower | Ranked lower  |
+
+If both the migration count and qualifying buy volume are equal, the wallet address is used as the final deterministic tie-breaker.
+
+This ensures that the leaderboard has a consistent ordering even when participants have identical qualifying activity.
+
+## Platform revenue used for rewards
+
+Reward pools are calculated from eligible platform revenue generated during the current reward period.
+
+The eligible revenue categories are:
+
+* Bonding Curve Escrow Creation Fee
+* Buy Fee
+* Bonding Curve Escrow Completed Fee
+
+The following platform revenue categories are **not included** when calculating the Reward Program pools:
+
+* Token Creator Incentive
+* Raydium Liquidity Pool Creation Fee
+
+The eligible reward-period revenue is calculated from the increase in eligible platform revenue during the current reward period.
+
+In simplified form:
+
+**Eligible reward-period revenue = Current accumulated eligible platform revenue − Eligible platform revenue recorded at the start of the reward period**
+
+The resulting amount is used to calculate the Buyers and Creators Reward Pools.
+
+## Reward pool allocation
+
+The Reward Program currently allocates **10% of eligible reward-period platform revenue** to participants.
+
+The allocation is:
+
+| Reward category             | Allocation |
+| --------------------------- | ---------: |
+| Buyers Reward Pool          |         6% |
+| Creators Reward Pool        |         4% |
+| **Total Reward Allocation** |    **10%** |
+
+This means that, within the total 10% reward allocation, Buyers receive 60% and Creators receive 40%.
+
+The reward pools are calculated independently.
+
+<Note>
+The reward percentages are applied to eligible reward-period platform revenue, not to total platform revenue from categories excluded from the Reward Program.
+</Note>
+
+## Buyers reward calculation
+
+The Buyers Reward Pool is distributed proportionally according to each finalized buyer's qualifying buy volume.
+
+The calculation is:
+
+**Buyer Reward = Buyers Reward Pool × Buyer Qualifying Buy Volume ÷ Total Qualifying Buy Volume of All Finalized Buyers**
+
+### Example
+
+Assume:
+
+* Buyers Reward Pool: **10 SOL**
+* Total qualifying buy volume of all finalized buyers: **1,000 SOL**
+* Your qualifying buy volume: **100 SOL**
+
+Your calculated reward would be:
+
+**10 SOL × 100 SOL ÷ 1,000 SOL = 1 SOL**
+
+Your reward therefore depends on your qualifying buy volume relative to the combined qualifying buy volume of all finalized buyers.
+
+This means that leaderboard position alone does not determine the exact reward amount.
+
+## Creators reward calculation
+
+The Creators Reward Pool is distributed proportionally according to the number of qualifying successful migrations completed by each finalized creator.
+
+The calculation is:
+
+**Creator Reward = Creators Reward Pool × Creator Qualifying Migration Count ÷ Total Qualifying Migration Count of All Finalized Creators**
+
+### Example
+
+Assume:
+
+* Creators Reward Pool: **10 SOL**
+* Total qualifying migrations of all finalized creators: **100**
+* Your qualifying migrations: **10**
+
+Your calculated reward would be:
+
+**10 SOL × 10 ÷ 100 = 1 SOL**
+
+Your reward depends on your qualifying migration count relative to the combined qualifying migration count of all finalized creators.
+
+## Buy volume does not determine creator reward amounts
+
+Qualifying buy volume can affect creator ranking when multiple creators have the same migration count.
+
+However, the creator reward itself is calculated using:
+
+**Qualifying migration count**
+
+not qualifying buy volume.
+
+For example, if two creators both complete five successful migrations, the creator with higher qualifying buy volume is ranked higher.
+
+However, if both creators remain finalized with five qualifying migrations, their reward calculation is based on their migration count, not their buy volume.
+
+## Why estimated rewards change
+
+Estimated reward amounts can change throughout an active reward period.
+
+The main reasons include:
+
+### More eligible platform revenue
+
+As eligible platform revenue increases, the Buyers and Creators Reward Pools can increase.
+
+### More qualifying participants
+
+New wallets can enter the top 100 rankings.
+
+### Changes in buyer volume
+
+Existing buyers can increase their qualifying buy volume and change their ranking.
+
+### Additional creator migrations
+
+Creators can complete additional successful migrations and change their ranking.
+
+### Ranking changes
+
+Participants can move into or out of the top 100.
+
+Because of these changes, an estimated reward shown during an active reward period is not guaranteed.
+
+Only the permanent reward snapshot determines the final reward.
+
+## End of the reward period
+
+When a reward period reaches its scheduled finalization point, RugFreePump finalizes the completed period.
+
+During finalization:
+
+* Temporary leaderboard information is finalized
+* Final buyer rankings are determined
+* Final creator rankings are determined
+* Eligible reward-period revenue is calculated
+* The Buyers Reward Pool is calculated
+* The Creators Reward Pool is calculated
+* Final reward amounts are calculated
+* The permanent reward snapshot is created
+* Reward distribution records are prepared
+* The next reward period is initialized
+
+This separates the completed reward period from the new reward period.
+
+## Snapshot consistency
+
+RugFreePump ensures that the final reward calculations are based on a consistent state for the completed reward period.
+
+This means that the final:
+
+* Buyer rankings
+* Creator rankings
+* Qualifying activity
+* Eligible revenue
+* Reward pools
+* Reward amounts
+
+are finalized together as part of the permanent snapshot.
+
+After the completed period has been finalized and the next reward period begins, temporary leaderboard snapshots resume for the new period.
+
+## Reward distribution
+
+After a permanent reward snapshot has been created, rewards are distributed to finalized eligible participants.
+
+Rewards are distributed automatically.
+
+There is no separate reward claim process required from participants.
+
+Distribution information is recorded so completed rewards can be verified.
+
+RugFreePump does not promise an exact payout time after finalization, as distribution may be processed in multiple controlled batches.
+
+## Distribution batches
+
+Reward distributions are processed in batches.
+
+The current configuration supports up to:
+
+**17 reward transfers per batch**
+
+Buyer rewards and creator rewards are processed through separate distribution batches.
+
+Batching allows larger reward distributions to be processed in an organized and recoverable manner.
+
+## Reward distribution status
+
+Distribution information associated with finalized rewards includes:
+
+* Whether the reward has been distributed
+* Distribution timestamp
+* Distribution transaction signature
+
+This provides a record that can be used to verify completed distributions.
+
+## Verifying a reward
+
+After a reward has been distributed, its associated transaction signature can be used to verify the distribution on the Solana blockchain.
+
+The permanent reward snapshot provides the finalized record of:
+
+* The reward period
+* The participant's final ranking
+* Qualifying activity
+* The calculated reward amount
+* Distribution status
+* Distribution transaction information
+
+## If fewer than 100 users qualify
+
+The Reward Program can select up to 100 buyers and up to 100 creators.
+
+It does not require exactly 100 participants in either category.
+
+For example:
+
+* If only 70 wallets have qualifying buyer activity, up to 70 buyers may be finalized
+* If only 35 creators successfully migrate tokens, up to 35 creators may be finalized
+
+Only participants who meet the applicable qualification requirements can receive a reward.
+
+## Separate reward categories
+
+Buyer and creator rewards are independent.
+
+A wallet can potentially qualify in both categories.
+
+For example, the same wallet may:
+
+* Generate enough qualifying buy volume to enter the Buyers leaderboard
+* Successfully migrate one or more tokens and enter the Creators leaderboard
+
+If the wallet qualifies in both categories, its buyer and creator rewards are calculated independently.
+
+## Leaderboard position can change
+
+Being visible in a temporary leaderboard does not guarantee a permanent reward.
+
+Before the permanent snapshot:
+
+* Rankings can change
+* New participants can enter
+* Existing participants can leave the top 100
+* Estimated rewards can increase
+* Estimated rewards can decrease
+
+A wallet receives a finalized reward only if it qualifies in the permanent snapshot.
+
+<Warning>
+A temporary top-100 position should not be treated as a guaranteed reward.
+</Warning>
+
+## Estimated rewards are not guaranteed rewards
+
+Temporary reward amounts are estimates based on the current state of the reward period.
+
+They can change until the permanent snapshot is created.
+
+Participants should not make financial decisions based solely on:
+
+* Current ranking
+* Temporary leaderboard position
+* Estimated reward amount
+* Estimated reward pool size
+
+The permanent reward snapshot determines the final reward amount.
+
+## Reward amounts depend on platform activity
+
+Reward pool sizes are not fixed amounts.
+
+They depend on eligible platform revenue generated during the reward period.
+
+As a result:
+
+* Higher eligible platform activity can increase reward pools
+* Lower eligible platform activity can reduce reward pools
+* Changes in participant activity can change individual reward shares
+* Changes in the number of qualified participants can affect the distribution of the reward pools
+
+The final reward amount therefore cannot be known with certainty until the reward period is finalized.
+
+## No guaranteed reward amount
+
+RugFreePump does not guarantee a specific reward amount before the permanent reward snapshot is created.
+
+Even if a wallet is currently ranked in the top 100:
+
+* Its position can change
+* Its qualifying activity can change
+* The reward pool can change
+* Other participants can increase their activity
+
+Only finalized permanent snapshot data determines the reward amount for a completed reward period.
+
+<Warning>
+Participation in the Reward Program does not guarantee a reward. Eligibility and final reward amounts depend on qualifying activity, final rankings, eligible reward-period revenue, and the applicable reward calculation.
+</Warning>
+
+## Reward Program summary
+
+The RugFreePump Reward Program operates in repeating 28-day reward periods.
+
+### During the active reward period
+
+* Buyer volume is tracked
+* Creator migrations are tracked
+* Eligible platform revenue is tracked
+* Temporary leaderboard snapshots are updated approximately every 60 seconds
+* Estimated rewards are recalculated
+
+### At the permanent snapshot
+
+* Buyer rankings are finalized
+* Creator rankings are finalized
+* Eligible reward-period revenue is finalized
+* Reward pools are finalized
+* Reward amounts are calculated
+* Permanent reward data is stored
+* Distribution batches are prepared
+
+### After finalization
+
+* Rewards are distributed automatically
+* Distribution status is recorded
+* Transaction information is recorded
+* The next reward period begins
+
+## Current program configuration
+
+The current Reward Program configuration is:
+
+| Setting                         |            Current value |
+| ------------------------------- | -----------------------: |
+| Reward period                   |                  28 days |
+| Buyers Reward Pool allocation   |                       6% |
+| Creators Reward Pool allocation |                       4% |
+| Total reward allocation         |                      10% |
+| Maximum qualified buyers        |                      100 |
+| Maximum qualified creators      |                      100 |
+| Temporary snapshot interval     | Approximately 60 seconds |
+| Reward distribution batch size  |       Up to 17 transfers |
+
+## Transparency and verification
+
+The Reward Program is designed to maintain a clear record of each completed reward period.
+
+Permanent reward snapshots preserve the finalized information needed to understand:
+
+* Who qualified
+* How participants ranked
+* What activity qualified
+* How much eligible revenue was generated
+* How large each reward pool was
+* How individual rewards were calculated
+* Whether rewards were distributed
+* Which transactions were used for distribution
+
+Temporary leaderboard information provides visibility during an active reward period.
+
+Permanent reward snapshots provide the finalized record for completed reward periods.
+
+<Note>
+Temporary leaderboard positions and estimated rewards are not final. Only the permanent reward snapshot created at the end of a reward period determines final qualification and reward amounts.
+</Note>
