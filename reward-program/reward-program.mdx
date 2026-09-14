@@ -9,8 +9,8 @@ The RugFreePump Reward Program distributes a portion of eligible platform revenu
 
 The program has two independent reward categories:
 
-- **Buyers** who generate qualifying buy volume
-- **Creators** who successfully migrate raised liquidity to Raydium CPMM after reaching the bonding-curve hard cap
+* **Buyers** who accumulate qualifying SOL volume from buying tokens through RugFreePump bonding-curve sales
+* **Creators** who successfully migrate raised liquidity to Raydium CPMM after reaching the bonding-curve hard cap
 
 Buyer and creator rewards are calculated separately for each reward period.
 
@@ -26,11 +26,11 @@ This means you do **not** need to use the RugFreePump interface to have qualifyi
 
 For example, qualifying activity can originate from:
 
-- The RugFreePump interface
-- External trading interfaces
-- Sniping bots
-- Other third-party services
-- Direct interaction with the RugFreePump on-chain program
+* The RugFreePump interface
+* External trading interfaces
+* Sniping bots
+* Other third-party services
+* Direct interaction with the RugFreePump on-chain program
 
 As long as the relevant activity interacts with the RugFreePump on-chain program, the transaction data required for the Reward Program can be detected by the RugFreePump indexer and recorded for reward calculations.
 
@@ -44,14 +44,20 @@ Using an external service does not automatically exclude your activity from the 
 
 ### Buyers
 
-The **Buyers Reward Pool** rewards participants based on their qualifying buy volume during the reward period.
+The **Buyers Reward Pool** rewards participants according to the qualifying SOL volume they accumulate from buying tokens through RugFreePump bonding-curve sales during the reward period.
 
-Participants are ranked according to:
+The buyer ranking is based on:
 
-1. Higher qualifying buy volume
+1. Higher qualifying SOL purchase volume
 2. Wallet address as a deterministic tie-breaker
 
-Buyer rewards are calculated proportionally from the Buyers Reward Pool based on each finalized buyer's qualifying buy volume.
+Buyer rewards are calculated proportionally from the Buyers Reward Pool based on each finalized buyer's qualifying SOL purchase volume.
+
+In this context, **qualifying SOL purchase volume** means the total SOL value of qualifying token purchases made through RugFreePump bonding-curve sales during the applicable reward period.
+
+<Note>
+Creators are also eligible for the Buyers Reward Pool. A wallet being a token creator does not prevent it from qualifying for buyer rewards when it has qualifying SOL purchase volume from RugFreePump bonding-curve sales.
+</Note>
 
 ### Creators
 
@@ -62,13 +68,13 @@ A creator becomes eligible for the creator category when their bonding-curve sal
 Creators are ranked according to:
 
 1. Higher number of successful liquidity migrations
-2. Higher qualifying buy volume
+2. Higher qualifying SOL purchase volume
 3. Wallet address as a deterministic final tie-breaker
 
 A creator must complete at least one successful liquidity migration during the reward period to qualify.
 
 <Note>
-Qualifying buy volume is used only as a creator ranking tie-breaker when creators have the same number of successful liquidity migrations. It does not determine the creator reward amount.
+Qualifying SOL purchase volume is used only as a creator ranking tie-breaker when creators have the same number of successful liquidity migrations. It does not determine the creator reward amount.
 </Note>
 
 ## How the number of qualifiers is determined
@@ -77,11 +83,11 @@ RugFreePump does not permanently define a fixed number of qualifying buyers or c
 
 The number of participants selected for each reward category is determined for each reward period by the platform authority based on factors such as:
 
-- Current platform traffic
-- Participant activity
-- Expected reward pool size
-- Overall platform growth
-- The goal of maintaining meaningful rewards for qualified participants
+* Current platform traffic
+* Participant activity
+* Expected reward pool size
+* Overall platform growth
+* The goal of maintaining meaningful rewards for qualified participants
 
 The Reward Program is designed to balance two important goals:
 
@@ -121,9 +127,9 @@ Activity from one reward period does not carry forward into the next.
 
 For example:
 
-- Buy volume generated during one reward period belongs to that period
-- Successful liquidity migrations completed during that period belong to that period
-- Activity generated during the next reward period is measured independently
+* Qualifying SOL purchase volume generated during one reward period belongs to that period
+* Successful liquidity migrations completed during that period belong to that period
+* Activity generated during the next reward period is measured independently
 
 ## Live leaderboard
 
@@ -131,11 +137,11 @@ During an active reward period, RugFreePump periodically updates the reward lead
 
 The live leaderboard can show:
 
-- Current buyer rankings
-- Current creator rankings
-- Qualifying buy volume
-- Qualifying migration counts
-- Estimated reward amounts
+* Current buyer rankings
+* Current creator rankings
+* Qualifying SOL purchase volume
+* Qualifying migration counts
+* Estimated reward amounts
 
 Temporary leaderboard snapshots are refreshed approximately every:
 
@@ -151,12 +157,12 @@ A wallet appearing in the live leaderboard does not guarantee that it will recei
 
 During an active reward period:
 
-- Rankings can change
-- New participants can qualify
-- Existing participants can move down the ranking
-- Participants can move outside the qualifying range
-- Estimated reward amounts can increase or decrease
-- Reward pool sizes can change
+* Rankings can change
+* New participants can qualify
+* Existing participants can move down the ranking
+* Participants can move outside the qualifying range
+* Estimated reward amounts can increase or decrease
+* Reward pool sizes can change
 
 These changes occur because participant activity and eligible platform revenue continue to change throughout the reward period.
 
@@ -172,18 +178,18 @@ At the end of each reward period, RugFreePump creates a permanent reward snapsho
 
 The permanent snapshot records the finalized information for that reward period, including:
 
-- Reward period
-- Snapshot date
-- Reward period length
-- Eligible platform revenue
-- Buyers Reward Pool
-- Creators Reward Pool
-- Qualified participants
-- Final rankings
-- Qualifying activity
-- Final reward amounts
-- Distribution status
-- Distribution transaction information
+* Reward period
+* Snapshot date
+* Reward period length
+* Eligible platform revenue
+* Buyers Reward Pool
+* Creators Reward Pool
+* Qualified participants
+* Final rankings
+* Qualifying activity
+* Final reward amounts
+* Distribution status
+* Distribution transaction information
 
 Once the permanent reward snapshot is created, the finalized reward amounts for that period are fixed.
 
@@ -191,30 +197,30 @@ The permanent reward snapshot is the source of truth for the completed reward pe
 
 ## Buyers leaderboard
 
-The Buyers leaderboard ranks wallets according to their qualifying buy volume during the current reward period.
+The Buyers leaderboard ranks wallets according to their qualifying SOL purchase volume from RugFreePump bonding-curve sales during the current reward period.
 
 The ranking order is:
 
-1. Higher qualifying buy volume
+1. Higher qualifying SOL purchase volume
 2. Wallet address as a deterministic tie-breaker
 
-Only wallets with qualifying buy activity during the reward period can qualify for the Buyers Reward Pool.
+Only wallets with qualifying token purchase activity during the reward period can qualify for the Buyers Reward Pool.
 
 The number of buyers selected for a reward period is determined according to the qualification policy applicable to that period.
 
 ## What counts toward buyer volume
 
-Buyer qualification is based on buy activity generated during the current reward period.
+Buyer qualification is based on the total SOL volume of qualifying purchases made through RugFreePump bonding-curve sales during the current reward period.
 
 In simplified form:
 
-**Qualifying buy volume = Buy volume generated during the current reward period**
+**Qualifying SOL purchase volume = Total SOL value of qualifying bonding-curve token purchases during the current reward period**
 
-Only buy activity accumulated during the current reward period is used.
+Only qualifying purchase activity accumulated during the current reward period is used.
 
-Activity from previous reward periods does not contribute to the current period's qualifying buy volume.
+Activity from previous reward periods does not contribute to the current period's qualifying SOL purchase volume.
 
-Because qualifying activity is derived from the RugFreePump on-chain program, qualifying buy activity can be generated through the RugFreePump interface or through external services that interact with the program.
+Because qualifying activity is derived from the RugFreePump on-chain program, qualifying token purchases can be made through the RugFreePump interface or through external services that interact with the program.
 
 ## Creators leaderboard
 
@@ -228,7 +234,7 @@ A qualifying creator migration occurs when:
 The ranking order is:
 
 1. Higher number of successful liquidity migrations
-2. Higher qualifying buy volume
+2. Higher qualifying SOL purchase volume
 3. Wallet address as a deterministic final tie-breaker
 
 Only creators with at least one successful liquidity migration during the reward period can qualify for the Creators Reward Pool.
@@ -251,16 +257,16 @@ Successful migrations from previous reward periods do not contribute to the curr
 
 The number of successful liquidity migrations is the primary factor used to rank creators.
 
-If two or more creators have the same migration count, their qualifying buy volume is compared.
+If two or more creators have the same migration count, their qualifying SOL purchase volume is compared.
 
 For example:
 
-| Creator | Successful migrations | Qualifying buy volume | Result |
-| --- | ---: | ---: | --- |
-| Creator A | 5 | Higher | Ranked higher |
-| Creator B | 5 | Lower | Ranked lower |
+| Creator   | Successful migrations | Qualifying SOL purchase volume | Result        |
+| --------- | --------------------: | -----------------------------: | ------------- |
+| Creator A |                     5 |                         Higher | Ranked higher |
+| Creator B |                     5 |                          Lower | Ranked lower  |
 
-If both migration count and qualifying buy volume are equal, the wallet address is used as the final deterministic tie-breaker.
+If both migration count and qualifying SOL purchase volume are equal, the wallet address is used as the final deterministic tie-breaker.
 
 This ensures that creators with identical qualifying activity still have a consistent ranking order.
 
@@ -270,14 +276,14 @@ Reward pools are calculated from eligible platform revenue generated during the 
 
 The following revenue categories are included:
 
-- Bonding Curve Escrow Creation Fee
-- Buy Fee
-- Bonding Curve Escrow Completed Fee
+* Bonding Curve Escrow Creation Fee
+* Buy Fee
+* Bonding Curve Escrow Completed Fee
 
 The following revenue categories are not included in Reward Program calculations:
 
-- Token Creator Incentive
-- Raydium Liquidity Pool Creation Fee
+* Token Creator Incentive
+* Raydium Liquidity Pool Creation Fee
 
 Eligible reward-period revenue is the amount of eligible platform revenue generated during the current reward period.
 
@@ -297,40 +303,40 @@ The Reward Program currently allocates **10% of eligible reward-period platform 
 
 The allocation is:
 
-| Reward category | Allocation |
-| --- | ---: |
-| Buyers Reward Pool | 6% |
-| Creators Reward Pool | 4% |
-| **Total Reward Allocation** | **10%** |
+| Reward category             | Allocation |
+| --------------------------- | ---------: |
+| Buyers Reward Pool          |         6% |
+| Creators Reward Pool        |         4% |
+| **Total Reward Allocation** |    **10%** |
 
 Within the total 10% reward allocation:
 
-- Buyers receive 60%
-- Creators receive 40%
+* Buyers receive 60%
+* Creators receive 40%
 
 The two reward pools are calculated independently.
 
 ## Buyers reward calculation
 
-The Buyers Reward Pool is distributed proportionally according to each finalized buyer's qualifying buy volume.
+The Buyers Reward Pool is distributed proportionally according to each finalized buyer's qualifying SOL purchase volume.
 
 The calculation is:
 
-**Buyer Reward = Buyers Reward Pool × Buyer Qualifying Buy Volume ÷ Total Qualifying Buy Volume of All Finalized Buyers**
+**Buyer Reward = Buyers Reward Pool × Buyer Qualifying SOL Purchase Volume ÷ Total Qualifying SOL Purchase Volume of All Finalized Buyers**
 
 ### Example
 
 Assume:
 
-- Buyers Reward Pool: **10 SOL**
-- Total qualifying buy volume of all finalized buyers: **1,000 SOL**
-- Your qualifying buy volume: **100 SOL**
+* Buyers Reward Pool: **10 SOL**
+* Total qualifying SOL purchase volume of all finalized buyers: **1,000 SOL**
+* Your qualifying SOL purchase volume: **100 SOL**
 
 Your calculated reward would be:
 
 **10 SOL × 100 SOL ÷ 1,000 SOL = 1 SOL**
 
-Your reward depends on your qualifying buy volume relative to the combined qualifying buy volume of all finalized buyers.
+Your reward depends on your qualifying SOL purchase volume relative to the combined qualifying SOL purchase volume of all finalized buyers.
 
 Therefore, leaderboard position alone does not determine the exact reward amount.
 
@@ -346,9 +352,9 @@ The calculation is:
 
 Assume:
 
-- Creators Reward Pool: **10 SOL**
-- Total qualifying migrations of all finalized creators: **100**
-- Your qualifying migrations: **10**
+* Creators Reward Pool: **10 SOL**
+* Total qualifying migrations of all finalized creators: **100**
+* Your qualifying migrations: **10**
 
 Your calculated reward would be:
 
@@ -356,17 +362,17 @@ Your calculated reward would be:
 
 Your reward depends on your qualifying migration count relative to the combined qualifying migration count of all finalized creators.
 
-## Buy volume does not determine creator rewards
+## Purchase volume does not determine creator rewards
 
-Qualifying buy volume can affect creator ranking when multiple creators have the same number of successful liquidity migrations.
+Qualifying SOL purchase volume can affect creator ranking when multiple creators have the same number of successful liquidity migrations.
 
 However, creator reward amounts are calculated using:
 
 **Qualifying migration count**
 
-not qualifying buy volume.
+not qualifying SOL purchase volume.
 
-For example, if two creators each complete five successful liquidity migrations, the creator with higher qualifying buy volume is ranked higher.
+For example, if two creators each complete five successful liquidity migrations, the creator with higher qualifying SOL purchase volume is ranked higher.
 
 However, the reward amount for each creator is still calculated from their qualifying migration count.
 
@@ -376,17 +382,17 @@ RugFreePump's Reward Program is designed with a focus on meaningful rewards for 
 
 The platform aims to balance:
 
-- The number of participants who can qualify
-- The reward amount available to each qualified participant
-- Eligible platform revenue generated during the reward period
-- Overall platform traffic and activity
+* The number of participants who can qualify
+* The reward amount available to each qualified participant
+* Eligible platform revenue generated during the reward period
+* Overall platform traffic and activity
 
 As platform traffic and eligible revenue grow, larger reward pools can become available.
 
 The qualification count can also be adjusted between reward periods to maintain a balance between:
 
-- Reaching more participants
-- Maintaining meaningful rewards per qualified participant
+* Reaching more participants
+* Maintaining meaningful rewards per qualified participant
 
 The long-term objective is to build a reward system where successful participants can receive increasingly substantial rewards as the platform grows, rather than simply distributing small amounts across a very large number of participants.
 
@@ -404,7 +410,7 @@ As eligible platform revenue increases, the Buyers and Creators Reward Pools can
 
 ### Buyer activity changes
 
-Existing buyers can increase their qualifying buy volume and change their rankings.
+Existing buyers can increase their qualifying SOL purchase volume and change their rankings.
 
 New participants can also enter the qualifying range.
 
@@ -428,15 +434,15 @@ When a reward period reaches its scheduled finalization point, RugFreePump final
 
 During finalization:
 
-- Final buyer rankings are determined
-- Final creator rankings are determined
-- Eligible reward-period revenue is finalized
-- The Buyers Reward Pool is calculated
-- The Creators Reward Pool is calculated
-- Final reward amounts are calculated
-- The permanent reward snapshot is created
-- Distribution records are prepared
-- The next reward period begins
+* Final buyer rankings are determined
+* Final creator rankings are determined
+* Eligible reward-period revenue is finalized
+* The Buyers Reward Pool is calculated
+* The Creators Reward Pool is calculated
+* Final reward amounts are calculated
+* The permanent reward snapshot is created
+* Distribution records are prepared
+* The next reward period begins
 
 The completed period is thereby separated from the new reward period.
 
@@ -446,12 +452,12 @@ The final reward calculation is based on a consistent state for the completed re
 
 The following information is finalized together:
 
-- Buyer rankings
-- Creator rankings
-- Qualifying activity
-- Eligible reward-period revenue
-- Reward pools
-- Individual reward amounts
+* Buyer rankings
+* Creator rankings
+* Qualifying activity
+* Eligible reward-period revenue
+* Reward pools
+* Individual reward amounts
 
 This ensures that the permanent snapshot represents the completed reward period rather than a mixture of activity from different periods.
 
@@ -469,9 +475,9 @@ Distribution timing can vary depending on operational conditions.
 
 Rewards may be distributed:
 
-- On the same day as the permanent snapshot
-- On the following day
-- Within several days in rare cases
+* On the same day as the permanent snapshot
+* On the following day
+* Within several days in rare cases
 
 RugFreePump does not guarantee a specific payout time.
 
@@ -497,9 +503,9 @@ The reward history can show the distribution status of finalized rewards.
 
 For an individual participant, this can include:
 
-- Whether the reward has been distributed
-- Distribution timestamp
-- Distribution transaction signature
+* Whether the reward has been distributed
+* Distribution timestamp
+* Distribution transaction signature
 
 A reward that has not yet been distributed may show no distribution time or transaction signature.
 
@@ -513,11 +519,11 @@ A completed reward period may display whether its rewards are **Fully Rewarded**
 
 A category may therefore show that it is not yet fully rewarded even though:
 
-- The reward period has already been finalized
-- Participant rankings are final
-- Reward amounts are final
-- Some participants have already received their rewards
-- Other participants are still awaiting distribution
+* The reward period has already been finalized
+* Participant rankings are final
+* Reward amounts are final
+* Some participants have already received their rewards
+* Other participants are still awaiting distribution
 
 Buyer and creator reward categories are tracked independently.
 
@@ -529,24 +535,24 @@ After a reward period has been finalized, RugFreePump provides historical inform
 
 The historical reward information can include:
 
-- Reward period number
-- Snapshot date
-- Reward period length
-- Eligible revenue
-- Reward percentage
-- Reward pool amount
-- Number of qualified participants
-- Whether the reward category is fully rewarded
+* Reward period number
+* Snapshot date
+* Reward period length
+* Eligible revenue
+* Reward percentage
+* Reward pool amount
+* Number of qualified participants
+* Whether the reward category is fully rewarded
 
 The historical leaderboard can show each finalized participant's:
 
-- Rank
-- Wallet
-- Qualifying activity
-- Final reward
-- Distribution status
-- Distribution time
-- Distribution transaction
+* Rank
+* Wallet
+* Qualifying activity
+* Final reward
+* Distribution status
+* Distribution time
+* Distribution transaction
 
 This allows completed reward periods to remain transparent and independently verifiable.
 
@@ -566,8 +572,8 @@ A wallet can potentially qualify in both categories during the same reward perio
 
 For example, the same wallet may:
 
-- Generate qualifying buy volume and qualify for the Buyers Reward Pool
-- Create a token and successfully migrate its raised liquidity to Raydium CPMM after the bonding curve reaches its hard cap
+* Accumulate qualifying SOL purchase volume from RugFreePump bonding-curve sales and qualify for the Buyers Reward Pool
+* Create a token and successfully migrate its raised liquidity to Raydium CPMM after the bonding curve reaches its hard cap
 
 If a wallet qualifies in both categories, its buyer and creator rewards are calculated independently from their respective reward pools.
 
@@ -579,12 +585,12 @@ After a reward has been distributed, its associated transaction signature can be
 
 The permanent reward snapshot provides the finalized record of:
 
-- The reward period
-- The participant's final ranking
-- Qualifying activity
-- Final reward amount
-- Distribution status
-- Distribution transaction information
+* The reward period
+* The participant's final ranking
+* Qualifying activity
+* Final reward amount
+* Distribution status
+* Distribution transaction information
 
 This allows participants to independently verify completed reward distributions on-chain.
 
@@ -594,21 +600,21 @@ The RugFreePump Reward Program is designed to provide visibility throughout the 
 
 During an active reward period, participants can monitor:
 
-- Current leaderboard positions
-- Qualifying activity
-- Estimated rewards
-- Reward period progress
+* Current leaderboard positions
+* Qualifying activity
+* Estimated rewards
+* Reward period progress
 
 After finalization, participants can review:
 
-- Final rankings
-- Final qualifying activity
-- Eligible reward-period revenue
-- Reward pool amounts
-- Final reward amounts
-- Distribution status
-- Distribution timestamps
-- Distribution transaction signatures
+* Final rankings
+* Final qualifying activity
+* Eligible reward-period revenue
+* Reward pool amounts
+* Final reward amounts
+* Distribution status
+* Distribution timestamps
+* Distribution transaction signatures
 
 This provides a transparent record from active participation through final reward distribution.
 
@@ -618,10 +624,10 @@ Because the number of qualifying buyers and creators can vary between reward per
 
 The applicable qualification information may be available:
 
-- Through the live leaderboard after the round begins
-- Through the permanent snapshot after finalization
-- Through RugFreePump announcements
-- Through official RugFreePump social channels
+* Through the live leaderboard after the round begins
+* Through the permanent snapshot after finalization
+* Through RugFreePump announcements
+* Through official RugFreePump social channels
 
 The qualification count for one reward period should not be assumed to apply to another reward period.
 
@@ -631,70 +637,72 @@ The RugFreePump Reward Program operates in repeating **28-day reward periods**.
 
 ### During the active reward period
 
-- Buyer volume is tracked
-- Successful liquidity migrations are tracked
-- Eligible platform revenue is tracked
-- Temporary leaderboards are updated approximately every 60 seconds
-- Estimated reward amounts are recalculated
-- Participants can monitor the current state of the reward period
-- Qualifying activity can come from the RugFreePump interface or external services interacting with the on-chain program
+* Qualifying SOL purchase volume from RugFreePump bonding-curve sales is tracked
+* Successful liquidity migrations are tracked
+* Eligible platform revenue is tracked
+* Temporary leaderboards are updated approximately every 60 seconds
+* Estimated reward amounts are recalculated
+* Participants can monitor the current state of the reward period
+* Qualifying activity can come from the RugFreePump interface or external services interacting with the on-chain program
+* Creators can independently qualify for both buyer and creator rewards
 
 ### At finalization
 
-- Buyer rankings are finalized
-- Creator rankings are finalized
-- Eligible reward-period revenue is finalized
-- Reward pools are calculated
-- Final reward amounts are calculated
-- A permanent reward snapshot is created
-- Distribution records are prepared
+* Buyer rankings are finalized
+* Creator rankings are finalized
+* Eligible reward-period revenue is finalized
+* Reward pools are calculated
+* Final reward amounts are calculated
+* A permanent reward snapshot is created
+* Distribution records are prepared
 
 ### After finalization
 
-- Finalized rewards become available for manual distribution
-- Distribution is processed through controlled batches
-- Distribution status is recorded
-- Distribution timestamps are recorded
-- Transaction information is recorded
-- The completed reward period remains available as historical reward data
-- The next reward period begins
+* Finalized rewards become available for manual distribution
+* Distribution is processed through controlled batches
+* Distribution status is recorded
+* Distribution timestamps are recorded
+* Transaction information is recorded
+* The completed reward period remains available as historical reward data
+* The next reward period begins
 
 ## Current reward allocation
 
 The current Reward Program allocation is:
 
-| Setting | Current value |
-| --- | ---: |
-| Reward period | 28 days |
-| Buyers Reward Pool allocation | 6% |
-| Creators Reward Pool allocation | 4% |
-| Total reward allocation | 10% |
-| Temporary snapshot interval | Approximately 60 seconds |
-| Reward distribution batch size | Up to 17 transfers |
+| Setting                         |            Current value |
+| ------------------------------- | -----------------------: |
+| Reward period                   |                  28 days |
+| Buyers Reward Pool allocation   |                       6% |
+| Creators Reward Pool allocation |                       4% |
+| Total reward allocation         |                      10% |
+| Temporary snapshot interval     | Approximately 60 seconds |
+| Reward distribution batch size  |       Up to 17 transfers |
 
 The number of qualifying buyers and creators is **not fixed** and is determined for each reward period according to platform traffic, activity, eligible revenue, and the reward strategy applicable to that period.
 
 ## Important points to remember
 
-- Buyer and creator rewards are separate.
-- Buyer rewards are based on qualifying buy volume.
-- Creator rewards are based on successful liquidity migrations to Raydium CPMM after the bonding-curve sale reaches its hard cap.
-- Creator buy volume is only a ranking tie-breaker.
-- The number of qualifying buyers and creators can vary between reward periods.
-- The qualification count is determined according to the conditions of each reward period.
-- You do not need to use the RugFreePump interface to participate in the Reward Program.
-- Qualifying activity is based on data from the RugFreePump on-chain program.
-- Activity generated through external services, including sniping bots, can qualify when it interacts with the RugFreePump on-chain program.
-- Temporary leaderboard data is not final.
-- Estimated rewards are not guaranteed.
-- The permanent reward snapshot determines final qualification and reward amounts.
-- The Buyers Reward Pool receives 6% of eligible reward-period revenue.
-- The Creators Reward Pool receives 4% of eligible reward-period revenue.
-- Rewards are distributed manually through the RugFreePump distribution process.
-- Distribution may occur on the same day, the following day, or within several days in rare cases.
-- Distribution status and transaction information can be tracked.
-- Buyer and creator distribution statuses are independent.
-- Completed reward distributions can be verified on-chain.
+* Buyer and creator rewards are separate.
+* Buyer rewards are based on qualifying SOL purchase volume from RugFreePump bonding-curve sales.
+* Creator rewards are based on successful liquidity migrations to Raydium CPMM after the bonding-curve sale reaches its hard cap.
+* Creator qualifying SOL purchase volume is only a ranking tie-breaker in the Creators category.
+* A creator can qualify for both the Buyers and Creators Reward Pools independently.
+* The number of qualifying buyers and creators can vary between reward periods.
+* The qualification count is determined according to the conditions of each reward period.
+* You do not need to use the RugFreePump interface to participate in the Reward Program.
+* Qualifying activity is based on data from the RugFreePump on-chain program.
+* Activity generated through external services, including sniping bots, can qualify when it interacts with the RugFreePump on-chain program.
+* Temporary leaderboard data is not final.
+* Estimated rewards are not guaranteed.
+* The permanent reward snapshot determines final qualification and reward amounts.
+* The Buyers Reward Pool receives 6% of eligible reward-period revenue.
+* The Creators Reward Pool receives 4% of eligible reward-period revenue.
+* Rewards are distributed manually through the RugFreePump distribution process.
+* Distribution may occur on the same day, the following day, or within several days in rare cases.
+* Distribution status and transaction information can be tracked.
+* Buyer and creator distribution statuses are independent.
+* Completed reward distributions can be verified on-chain.
 
 <Warning>
 Participation in the Reward Program does not guarantee a reward or a specific reward amount. Final eligibility and rewards depend on qualifying activity, final rankings, eligible reward-period revenue, the qualification count applicable to the reward period, and the final reward calculation.
