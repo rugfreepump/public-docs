@@ -95,7 +95,7 @@ Buyers are ranked by higher purchase volume.
 
 The predetermined Buyers Qualified Participant Count determines how many of the highest-ranked buyer participants ultimately qualify for the Buyers Reward Pool.
 
-Buyer rewards are calculated proportionally from the Buyers Reward Pool based on each finalized buyer's purchase volume.
+Buyer rewards are calculated proportionally from the Buyers Reward Pool based on each qualified buyer's purchase volume.
 
 <Note>
 Creators are also eligible to participate in the Buyers category. Being a creator does not prevent a wallet from qualifying for buyer rewards when the wallet has SOL volume used to purchase tokens from RugFreePump bonding-curve sales.
@@ -291,49 +291,49 @@ The two reward pools are calculated independently.
 
 ### Buyers
 
-The Buyers Reward Pool is distributed proportionally according to each finalized buyer's SOL purchase volume.
+The Buyers Reward Pool is distributed proportionally according to each qualified buyer's SOL purchase volume.
 
 The calculation is:
 
-**Buyer Reward = Buyers Reward Pool × Buyer Purchase Volume ÷ Total Purchase Volume of All Finalized Buyers**
+**Buyer Reward = Buyers Reward Pool × Buyer Purchase Volume ÷ Total Purchase Volume of All qualified Buyers**
 
 #### Example
 
 Assume:
 
 * Buyers Reward Pool: **10 SOL**
-* Total purchase volume of all finalized buyers: **1,000 SOL**
+* Total purchase volume of all qualified buyers: **1,000 SOL**
 * Your purchase volume: **100 SOL**
 
 Your calculated reward would be:
 
 **10 SOL × 100 SOL ÷ 1,000 SOL = 1 SOL**
 
-Your reward depends on your purchase volume relative to the combined purchase volume of all finalized buyers.
+Your reward depends on your purchase volume relative to the combined purchase volume of all qualified buyers.
 
 Therefore, leaderboard position alone does not determine the exact reward amount.
 
 ### Creators
 
-The Creators Reward Pool is distributed proportionally according to each finalized creator's successful liquidity migration count.
+The Creators Reward Pool is distributed proportionally according to each qualified creator's successful liquidity migration count.
 
 The calculation is:
 
-**Creator Reward = Creators Reward Pool × Creator Migration Count ÷ Total Migration Count of All Finalized Creators**
+**Creator Reward = Creators Reward Pool × Creator Migration Count ÷ Total Migration Count of All qualified Creators**
 
 #### Example
 
 Assume:
 
 * Creators Reward Pool: **10 SOL**
-* Total migrations of all finalized creators: **100**
+* Total migrations of all qualified creators: **100**
 * Your migrations: **10**
 
 Your calculated reward would be:
 
 **10 SOL × 10 ÷ 100 = 1 SOL**
 
-Your reward depends on your migration count relative to the combined migration count of all finalized creators.
+Your reward depends on your migration count relative to the combined migration count of all qualified creators.
 
 Purchase volume can affect creator ranking when multiple creators have the same number of successful liquidity migrations.
 
@@ -419,13 +419,13 @@ The following information is finalized together:
 
 This ensures that the permanent snapshot represents the completed reward period rather than a mixture of activity from different periods.
 
-Once the permanent reward snapshot is created, the finalized reward amounts for that period are fixed.
+Once the permanent reward snapshot is created, the reward amounts for that period are fixed.
 
 The permanent reward snapshot is the source of truth for the completed reward period.
 
 ## Reward distribution
 
-After a permanent reward snapshot has been created, the finalized rewards become available for distribution.
+After a permanent reward snapshot is created, the finalized rewards become available for distribution.
 
 Reward distribution is performed manually through the RugFreePump distribution process.
 
@@ -469,7 +469,7 @@ Once a reward has been distributed, the associated transaction information can b
 
 A completed reward period may display whether its rewards are **Fully Rewarded**.
 
-**Fully Rewarded** means that all finalized rewards for that reward category have been distributed.
+**Fully Rewarded** means that all rewards for that reward category have been distributed.
 
 A category may therefore show that it is not yet fully rewarded even though:
 
