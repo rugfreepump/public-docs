@@ -77,7 +77,7 @@ For example, activity can originate from:
 
 As long as the relevant activity interacts with the RugFreePump on-chain program and generates the required on-chain data, that activity will be included in the Reward Program calculations.
 
-The Reward Program focuses strictly on on-chain participation, rather than requiring participants to utilize a specific frontend application.
+The Reward Program focuses strictly on RugFreePump on-chain interaction, rather than requiring participants to utilize a specific frontend application.
 
 <Note>
 Using an external service does not exclude your activity from the Reward Program. The determining factor is whether the transaction interacts with the RugFreePump on-chain program and produces the required on-chain data used by the system.
@@ -194,15 +194,13 @@ Only wallets with token purchase activity during the reward period become buyer 
 
 In simplified form:
 
-**Purchase volume = Total SOL volume used for bonding-curve token purchases during the current reward period**
+**Purchase volume = Total SOL volume used for bonding curve sales token purchases during the current reward period**
 
 Only purchase activity accumulated during the current reward period is used.
 
 Activity from previous reward periods does not contribute to the current period's purchase volume.
 
-The Reward Program measures this activity in SOL volume. It does not convert purchase activity into USD-equivalent volume for ranking or reward calculations.
-
-Because activity is derived from the RugFreePump on-chain program, token purchases can be made through the RugFreePump interface or through external services that interact with the program.
+The Reward Program measures this activity in SOL volume. It does not convert purchase activity into USD equivalent volume for ranking or reward calculations.
 
 The predetermined Buyers Qualified Participant Count determines how many of the highest-ranked buyer participants ultimately qualify for the Buyers Reward Pool.
 
@@ -210,7 +208,7 @@ The live leaderboard therefore represents the current ranking of participants ag
 
 ## Creator activity and ranking
 
-The Creators leaderboard ranks creator participants according to successful liquidity migrations completed during the current reward period.
+The Creators leaderboard ranks creator participants according to the number of successful liquidity migrations completed during the current reward period.
 
 A creator migration occurs when:
 
@@ -219,7 +217,7 @@ A creator migration occurs when:
 
 In simplified form:
 
-**Migrations = Successful liquidity migrations completed during the current reward period**
+**Migration count = Number of successful bonding curve sales liquidity migrations during the current reward period**
 
 Only successful migrations completed during the current reward period count toward that period.
 
@@ -228,11 +226,11 @@ Successful migrations from previous reward periods do not contribute to the curr
 The ranking order is:
 
 1. Higher number of successful liquidity migrations
-2. Higher purchase volume when migration counts are equal
+2. Higher purchase volume when migration counts are equal with other participants
 
 For example:
 
-| Creator   | Successful migrations | SOL purchase volume | Result        |
+| Creator   | migration count       | SOL purchase volume | Result        |
 | --------- | --------------------: | ------------------: | ------------- |
 | Creator A |                     5 |              Higher | Ranked higher |
 | Creator B |                     5 |               Lower | Ranked lower  |
@@ -247,7 +245,7 @@ The predetermined Creators Qualified Participant Count determines how many of th
 
 ## Platform revenue and reward pool allocation
 
-Reward pools are calculated from eligible platform revenue generated during the current reward period.
+Reward pools are calculated from the platform revenue generated during the current reward period.
 
 The following revenue categories are included:
 
@@ -262,15 +260,15 @@ The following revenue categories are not included in Reward Program calculations
 
 In simplified form:
 
-**Eligible reward-period revenue = Eligible platform revenue generated during the current reward period**
+**Reward-period revenue = The platform revenue generated during the current reward period**
 
 The resulting amount is used to calculate the Buyers and Creators Reward Pools.
 
 <Note>
-The Reward Program percentages apply only to eligible reward-period platform revenue. Revenue categories excluded above do not contribute to the reward pools.
+The Reward Program percentages apply only to the reward-period platform revenue. Revenue categories excluded above do not contribute to the reward pools.
 </Note>
 
-The Reward Program currently allocates **10% of eligible reward-period platform revenue** to rewards.
+The Reward Program currently allocates **10% of the reward-period platform revenue** as the total reward pool.
 
 The allocation is:
 
@@ -278,9 +276,9 @@ The allocation is:
 | --------------------------- | ---------: |
 | Buyers Reward Pool          |         6% |
 | Creators Reward Pool        |         4% |
-| **Total Reward Allocation** |    **10%** |
+| **Total Reward Pool** |    **10%** |
 
-Within the total 10% reward allocation:
+Within the total 10% reward pool:
 
 * Buyers receive 60%
 * Creators receive 40%
@@ -295,7 +293,7 @@ The Buyers Reward Pool is distributed proportionally according to each qualified
 
 The calculation is:
 
-**Buyer Reward = Buyers Reward Pool × Buyer Purchase Volume ÷ Total Purchase Volume of All qualified Buyers**
+**Buyer Reward = Buyers Reward Pool × Buyer Purchase Volume / Total Purchase Volume of All Qualified Buyers**
 
 #### Example
 
@@ -307,7 +305,7 @@ Assume:
 
 Your calculated reward would be:
 
-**10 SOL × 100 SOL ÷ 1,000 SOL = 1 SOL**
+**10 SOL × 100 SOL / 1,000 SOL = 1 SOL**
 
 Your reward depends on your purchase volume relative to the combined purchase volume of all qualified buyers.
 
@@ -319,19 +317,19 @@ The Creators Reward Pool is distributed proportionally according to each qualifi
 
 The calculation is:
 
-**Creator Reward = Creators Reward Pool × Creator Migration Count ÷ Total Migration Count of All qualified Creators**
+**Creator Reward = Creators Reward Pool × Creator Migration Count / Total Migration Count of All Qualified Creators**
 
 #### Example
 
 Assume:
 
 * Creators Reward Pool: **10 SOL**
-* Total migrations of all qualified creators: **100**
-* Your migrations: **10**
+* Total migration count of all qualified creators: **100**
+* Your migration count: **10**
 
 Your calculated reward would be:
 
-**10 SOL × 10 ÷ 100 = 1 SOL**
+**10 SOL × 10 / 100 = 1 SOL**
 
 Your reward depends on your migration count relative to the combined migration count of all qualified creators.
 
@@ -355,18 +353,18 @@ The program considers:
 
 * The number of participants who can qualify
 * The reward amount available to qualified participants
-* Eligible platform revenue generated during the reward period
+* The platform revenue generated during the reward period
 * Overall platform growth
 
-As eligible revenue grows, larger reward pools can become available.
+As platform revenue grows, larger reward pools can become available.
 
 The Qualified Participant Count can also differ between reward periods based on historical platform data and the reward strategy established for the upcoming period.
 
-The long-term objective is to build a reward system where successful participants can receive increasingly substantial rewards as the platform grows, rather than simply distributing small amounts across an unnecessarily large number of participants.
+The long-term objective is to build a reward system where qualified participants can receive increasingly substantial rewards as the platform grows, rather than simply distributing small amounts across an unnecessarily large number of participants.
 
 Estimated reward amounts during an active reward period can change because:
 
-* Eligible platform revenue continues to change
+* The platform revenue continues to change
 * Buyer purchase volume can change
 * New buyer participants can enter
 * Buyers can move into or outside the qualifying range
@@ -378,7 +376,7 @@ Estimated reward amounts during an active reward period can change because:
 The Qualified Participant Count remains fixed during the active reward period.
 
 <Note>
-RugFreePump aims to make rewards meaningful as the platform grows, but reward amounts are not guaranteed. Final rewards depend on actual eligible revenue, participant activity, final rankings, and the Qualified Participant Count established for the applicable reward period.
+RugFreePump aims to make rewards meaningful as the platform grows, but reward amounts are not guaranteed. Final rewards depend on actual platform revenue, participant activity, final rankings, and the Qualified Participant Count established for the applicable reward period.
 </Note>
 
 ## Permanent reward snapshot and finalization
@@ -393,8 +391,7 @@ The permanent snapshot records the finalized information for that reward period,
 
 * Reward period
 * Snapshot date
-* Reward period length
-* Eligible platform revenue
+* Reward period platform revenue
 * Buyers Reward Pool
 * Creators Reward Pool
 * Qualified Participant Count
@@ -407,16 +404,6 @@ The permanent snapshot records the finalized information for that reward period,
 
 The final reward calculation is based on a consistent state for the completed reward period.
 
-The following information is finalized together:
-
-* Buyer rankings
-* Creator rankings
-* Participant activity
-* Eligible reward-period revenue
-* Reward pools
-* Qualified Participant Count
-* Individual reward amounts
-
 This ensures that the permanent snapshot represents the completed reward period rather than a mixture of activity from different periods.
 
 Once the permanent reward snapshot is created, the reward amounts for that period are fixed.
@@ -427,9 +414,9 @@ The permanent reward snapshot is the source of truth for the completed reward pe
 
 After a permanent reward snapshot is created, the finalized rewards become available for distribution.
 
-Reward distribution is performed manually through the RugFreePump distribution process.
+Reward distribution is performed manually through the RugFreePump built-in distribution admin tool.
 
-Participants do not need to submit a separate reward claim transaction.
+The qualified participants do not need to submit a separate reward claim transaction.
 
 Distribution timing can vary depending on operational conditions.
 
@@ -451,7 +438,7 @@ The current distribution process supports up to:
 
 Buyer rewards and creator rewards are processed through separate distribution batches.
 
-Batching allows larger reward distributions to be processed in an organized manner while providing a clear record of each distribution.
+Batching streamlines large-scale reward distributions, ensuring organized processing and maintaining a transparent record of every transaction
 
 ## Reward distribution status
 
