@@ -5,11 +5,11 @@ description: Verify the RugFreePump on-chain program through its compilation, de
 
 # Proof of Execution
 
-RugFreePump's core token lifecycle is executed by a dedicated on-chain program on Solana.
+RugFreePump's core token lifecycle is driven by a dedicated on-chain program deployed natively on Solana.
 
-This page shows the program from compilation through deployment and initialization, followed by the execution of every public instruction used by the RugFreePump application.
+This page provides a transparent execution record of the program from compilation through deployment and initialization, followed by the execution of every public instruction exposed by the RugFreePump onchain program.
 
-The resulting Solana transactions are publicly accessible, allowing users to independently verify that the operations initiated through the RugFreePump interface are processed by the deployed on-chain program.
+The resulting Solana transactions and state changes are publicly inspectable, enabling users to independently verify that actions initiated through the RugFreePump dApp frontend are processed by the RugFreePump on-chain program.
 
 **Compile → Deploy → Initialize → Create Pool → Buy → Withdraw → Migrate Liquidity**
 
@@ -19,23 +19,23 @@ The resulting Solana transactions are publicly accessible, allowing users to ind
 
 ## The RugFreePump On-Chain Program
 
-The RugFreePump program contains the on-chain logic responsible for creating and operating bonding-curve pools.
+The RugFreePump program contains the core on-chain logic responsible for creating and operating algorithmic bonding-curve sales.
 
-The deployed program contains **53 instructions** in total:
+The deployed program contains **53 total instructions**:
 
 * **49 administrative instructions** — restricted to authorized platform administration.
-* **4 public instructions** — used by users through the RugFreePump application.
+* **4 public instructions** — user-facing entrypoints invoked through the RugFreePump dApp.
 
-The four public instructions define the user-facing token lifecycle:
+The four public instructions define the core token lifecycle on-chain:
 
-| Instruction         | Purpose                                                                 |
-| ------------------- | ----------------------------------------------------------------------- |
-| `create_pool`       | Creates a new RugFreePump token and its bonding-curve pool.             |
-| `buy`               | Purchases tokens from an active bonding-curve pool.                     |
-| `withdraw`          | Withdraws funds according to the bonding-curve pool's withdrawal rules. |
-| `migrate_liquidity` | Migrates completed bonding-curve liquidity to a Raydium CPMM pool.      |
+| Instruction         | Purpose                                                                              |
+| ------------------- | ------------------------------------------------------------------------------------ |
+| `create_pool`       | Creates a new SPL token mint and establishes its associated bonding curve sale pool. |
+| `buy`               | Allows users to purchase tokens from an active bonding curve sale pool using SOL.    |
+| `withdraw`          | Returns buyer's contributed SOL when a bonding curve sale expires or is canceled.    |
+| `migrate_liquidity` | Migrates the completed bonding curve sale liquidity into Raydium CPMM .              |
 
-The administrative instructions are separate from the public user execution flow demonstrated on this page.
+The restricted administrative instructions are separate from the public user execution flow demonstrated below.
 
 ## Program Compilation
 
@@ -46,7 +46,7 @@ The compilation shown below completes successfully with:
 * **0 errors**
 * **0 warnings**
 
-This establishes the compiled program that is subsequently deployed to Solana Devnet.
+This establishes the executable program build that is subsequently deployed to Solana Devnet.
 
 <video controls width="100%">
   <source src="/on-chain-program/media/RugFreePumpClip.webm" type="video/webm" />
@@ -56,13 +56,13 @@ This establishes the compiled program that is subsequently deployed to Solana De
 
 Following successful compilation, the RugFreePump program is deployed to **Solana Devnet**.
 
-The deployed program is identified by its Program ID:
+The deployed program is identified on-chain by its Program ID:
 
 ```text
 9hpBPEiywp7FPAq5uP253eAZzdJ1Cpd36L5RAYuc9xSw
 ```
 
-The Program ID is the public on-chain address that identifies the RugFreePump program on Solana.
+The Program ID is the public address used to identify the RugFreePump on-chain program on Solana.
 
 ### Deployment Transaction
 
@@ -74,17 +74,17 @@ The deployment transaction is publicly available for independent inspection:
 
 ## Program Initialization
 
-Once deployed, the program is initialized through the RugFreePump administrative interface.
+Following deployment, the program is initialized through the RugFreePump administrative interface.
 
-Initialization establishes the required on-chain state for the deployed program before public operations can be performed.
+Initialization establishes the required global on-chain state and protocol configuration before public operations can be performed.
 
-The demonstration below shows the initialization process through the RugFreePump admin interface.
+The demonstration below shows the initialization process being submitted through the RugFreePump administrative interface and confirmed on Solana Devnet.
 
 <video controls width="100%">
   <source src="/on-chain-program/media/RugFreePumpClip.webm" type="video/webm" />
 </video>
 
-After initialization, the program is ready to process the public instructions used by the RugFreePump application.
+Following initialization, the program is prepared to process the public instructions used by the RugFreePump application.
 
 ### Initialization Transaction
 
@@ -96,19 +96,19 @@ The initialization transaction is publicly available for independent inspection:
 
 # Public Instruction Execution
 
-The four public instructions can be executed through the RugFreePump application.
+The four public instructions can be invoked through the RugFreePump application.
 
-Each operation follows the same on-chain path:
+Each operation follows a directly inspectable on-chain execution path:
 
-**RugFreePump Application → RugFreePump On-Chain Program → Solana → Transaction Signature**
+**RugFreePump Application → RugFreePump On-Chain Program → Solana Transaction → Transaction Signature**
 
-The transaction signature provides a direct way to inspect the resulting operation independently of the application's interface.
+The transaction signature provides a direct way to inspect the resulting execution independently of the application's interface.
 
 ## 1. Create Pool
 
-The `create_pool` instruction creates a new RugFreePump token and establishes its associated bonding-curve pool on-chain.
+The `create_pool` instruction creates a new SPL token mint and establishes its associated bonding-curve sale pool on-chain.
 
-The demonstration below shows the operation initiated through the RugFreePump application and completed on Solana Devnet.
+The demonstration below shows the operation initiated through the RugFreePump application and confirmed on Solana Devnet.
 
 <video controls width="100%">
   <source src="/on-chain-program/media/RugFreePumpClip.webm" type="video/webm" />
@@ -122,9 +122,9 @@ The demonstration below shows the operation initiated through the RugFreePump ap
 
 ## 2. Buy
 
-The `buy` instruction allows users to purchase tokens from an active RugFreePump bonding-curve pool.
+The `buy` instruction allows users to purchase tokens from an active RugFreePump bonding-curve sale using SOL.
 
-The demonstration below shows a token purchase initiated through the RugFreePump application and executed on Solana Devnet.
+The demonstration below shows a token purchase initiated through the RugFreePump application, signed through the user's wallet, and confirmed on Solana Devnet.
 
 <video controls width="100%">
   <source src="/on-chain-program/media/RugFreePumpClip.webm" type="video/webm" />
@@ -138,9 +138,11 @@ The demonstration below shows a token purchase initiated through the RugFreePump
 
 ## 3. Withdraw
 
-The `withdraw` instruction allows the applicable participant to withdraw funds from a bonding-curve pool according to the program's withdrawal rules.
+The `withdraw` instruction handles the return of buyer's contributed SOL when a bonding curve sale expires or is canceled.
 
-The demonstration below shows the withdrawal operation initiated through the RugFreePump application and executed on Solana Devnet.
+The associated tokens from that contribution are burned if they remain in the contributor's wallet. Transferring those tokens to another wallet does not prevent the SOL withdrawal, because the contribution's on-chain state determines eligibility and the withdrawal amount.
+
+The demonstration below shows the withdrawal operation initiated through the RugFreePump application and confirmed on Solana Devnet.
 
 <video controls width="100%">
   <source src="/on-chain-program/media/RugFreePumpClip.webm" type="video/webm" />
@@ -154,11 +156,11 @@ The demonstration below shows the withdrawal operation initiated through the Rug
 
 ## 4. Migrate Liquidity
 
-When a bonding-curve pool reaches its completion conditions, the `migrate_liquidity` instruction migrates the completed pool's liquidity to a Raydium CPMM pool.
+When a bonding-curve sale reaches its completion conditions, the `migrate_liquidity` instruction transfers the completed sale liquidity into a Raydium CPMM pool.
 
 This represents the final stage of the documented public RugFreePump token lifecycle.
 
-The demonstration below shows the migration initiated through the RugFreePump application and executed on Solana Devnet.
+The demonstration below shows the migration initiated through the RugFreePump application and confirmed on Solana Devnet.
 
 <video controls width="100%">
   <source src="/on-chain-program/media/RugFreePumpClip.webm" type="video/webm" />
@@ -172,38 +174,27 @@ The demonstration below shows the migration initiated through the RugFreePump ap
 
 # Verify the Program on Solana
 
-RugFreePump does not require users to rely solely on what the application displays.
+RugFreePump is designed so that its core user-facing operations are executed directly by the on-chain program rather than being represented solely by application-level state.
 
-The program has a fixed public address on Solana, and operations performed through it produce publicly inspectable transactions. This allows the relationship between the RugFreePump application and its on-chain program to be verified independently.
+The program has a public Program ID, and the transactions generated by its public instructions are recorded directly on Solana and remain independently inspectable.
 
-For each operation demonstrated above, the verification path is:
+Every public operation demonstrated on this page includes its corresponding transaction signature, allowing users to inspect the actual on-chain execution independently of the RugFreePump frontend.
 
-```text
-RugFreePump Application
-        ↓
-RugFreePump On-Chain Program
-        ↓
-Solana Devnet
-        ↓
-Transaction Signature
-        ↓
-Solscan
-```
+Users can verify the Program ID, inspect the transaction details, and review the resulting on-chain state directly through Solscan.
 
-A user can take the Program ID or any transaction signature published on this page and inspect the corresponding Solana record independently.
+This provides a clear separation between the application interface and the underlying execution layer: the frontend provides the interface for constructing and submitting transactions, while Solana records the resulting execution as a publicly inspectable ledger record.
 
-This is particularly important when interacting with a blockchain application: the application provides the interface, while the blockchain provides the public record of the transaction that was actually submitted and confirmed.
 
-# About the Verification Environment
+## About the Verification Environment
 
-The demonstrations on this page were performed on **Solana Devnet**.
+The demonstrations on this page were performed exclusively on **Solana Devnet**.
 
 Devnet provides a public Solana environment for demonstrating the deployed program and its public operations without requiring real funds.
 
 The Program ID and transaction signatures shown above correspond to publicly accessible Devnet records and can be independently inspected through Solscan.
 
-This page demonstrates the deployment and execution of the RugFreePump program. It is not an independent security audit or formal verification of the program.
+This page demonstrates the deployment, initialization, and execution of the RugFreePump on-chain program. It is not an independent security audit, formal verification, or guarantee that the program is free from vulnerabilities.
 
-For production mainnet interactions, users should verify that the Program ID presented by the official RugFreePump application matches the officially published production address and review the transaction details presented by their wallet before approving a transaction.
+For production mainnet interactions, users should verify that the Program ID presented by the official RugFreePump application matches the officially published production Program ID and review the transaction details presented by their wallet before approving a transaction.
 
-The goal is straightforward: make the on-chain component of RugFreePump visible and independently verifiable, so users can inspect what the program is and what it actually executes rather than relying solely on application-level claims.
+The objective is straightforward: make the on-chain layer of RugFreePump transparent and independently inspectable, giving users the ability to verify the program identity and actual transaction execution rather than relying solely on application-level claims.
