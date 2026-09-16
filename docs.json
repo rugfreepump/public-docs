@@ -63,7 +63,6 @@
       {
         "group": "On-Chain Program",
         "pages": [
-          "on-chain-program/overview",
           "on-chain-program/proof-of-execution"
         ]
       },
