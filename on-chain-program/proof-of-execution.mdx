@@ -3,7 +3,7 @@ title: Proof of Execution
 description: Verify the RugFreePump on-chain program through its compilation, deployment, initialization, and execution of every public instruction on Solana.
 ---
 
-RugFreePump's core token lifecycle is driven by a dedicated on-chain program deployed natively on Solana.
+RugFreePump's core **bonding-curve sale lifecycle** is driven by a dedicated on-chain program deployed natively on Solana.
 
 This page provides a transparent execution record of the program from compilation through deployment and initialization, followed by the execution of every public instruction exposed by the RugFreePump onchain program.
 
@@ -24,7 +24,7 @@ The deployed program contains **53 total instructions**:
 * **49 administrative instructions** — restricted to authorized platform administration.
 * **4 public instructions** — user-facing entrypoints invoked through the RugFreePump dApp.
 
-The four public instructions define the core token lifecycle on-chain:
+The four public instructions define the core bonding-curve sale lifecycle on-chain:
 
 | Instruction         | Purpose                                                                              |
 | ------------------- | ------------------------------------------------------------------------------------ |
@@ -156,7 +156,7 @@ The demonstration below shows the withdrawal operation initiated through the Rug
 
 When a bonding-curve sale reaches its completion conditions, the `migrate_liquidity` instruction transfers the completed sale liquidity into a Raydium CPMM pool.
 
-This represents the final stage of the documented public RugFreePump token lifecycle.
+This represents the final stage of the documented public RugFreePump bonding-curve sale lifecycle.
 
 The demonstration below shows the migration initiated through the RugFreePump application and confirmed on Solana Devnet.
 
