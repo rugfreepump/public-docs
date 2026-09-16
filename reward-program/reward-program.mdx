@@ -474,21 +474,6 @@ The permanent reward snapshot provides the finalized record of:
 
 This allows participants to independently verify completed reward distributions on-chain.
 
-## Independent reward categories
-
-Buyer and creator rewards are independent.
-
-A wallet can potentially participate in both categories during the same reward period.
-
-For example, the same wallet may:
-
-* Accumulate SOL volume used to purchase tokens from RugFreePump bonding curve sales
-* Create a token and successfully migrate its raised liquidity to Raydium CPMM after the bonding curve reaches its hard cap
-
-If the wallet becomes a qualified participant in both categories, its buyer and creator rewards are calculated independently from their respective reward pools.
-
-The distribution status of the two rewards can also differ.
-
 ## Transparency
 
 The Reward Program is designed to provide visibility throughout the reward lifecycle.
@@ -569,11 +554,3 @@ The Qualified Participant Count is determined separately for Buyers and Creators
 * Distribution status and transaction information can be tracked.
 * Buyer and creator distribution statuses are independent.
 * Completed reward distributions can be verified on-chain.
-
-<Warning>
-Participation in the Reward Program does not guarantee a reward or a specific reward amount. Final qualification and rewards depend on participant activity, final rankings, reward-period revenue, the Qualified Participant Count established for the reward period, and the final reward calculation.
-</Warning>
-
-<Note>
-RugFreePump aims to balance the number of qualified participants with meaningful rewards per participant. Qualified Participant Counts are established before each reward period based on the reward strategy for that round and may differ from previous or future periods.
-</Note>
