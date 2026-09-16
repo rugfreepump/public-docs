@@ -1,3 +1,4 @@
+```json
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
@@ -103,15 +104,14 @@
         "group": "Security & Risk",
         "pages": [
           "security-and-risk/security-model",
-          "security-and-risk/smart-contract-risks",
-          "security-and-risk/oracle-risks",
-          "security-and-risk/launch-and-sale-risks",
-          "security-and-risk/fees-and-refunds",
-          "security-and-risk/transaction-and-wallet-risks",
+          "security-and-risk/on-chain-program-risks",
+          "security-and-risk/oracle-and-pricing-risks",
+          "security-and-risk/bonding-curve-sale-risks",
           "security-and-risk/token-and-creator-risks",
           "security-and-risk/liquidity-and-migration-risks",
+          "security-and-risk/fees-and-refund-risks",
+          "security-and-risk/wallet-and-transaction-risks",
           "security-and-risk/platform-and-infrastructure-risks",
-          "security-and-risk/user-responsibilities",
           "security-and-risk/security-disclosure"
         ]
       },
@@ -150,3 +150,4 @@
     ]
   }
 }
+```
