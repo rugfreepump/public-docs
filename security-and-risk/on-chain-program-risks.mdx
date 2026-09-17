@@ -1,129 +1,202 @@
 ---
 title: On-Chain Program Risks
-description: Understand the risks associated with the RugFreePump on-chain program and blockchain execution.
+description: Understand the software, authority, upgradeability, and execution risks associated with the RugFreePump on-chain program.
 ---
 
-The RugFreePump on-chain program contains the core logic responsible for the protocol's bonding-curve sale operations.
+# On-Chain Program Risks
 
-Because this logic executes on Solana and controls protocol state and asset movements, defects or unexpected conditions in the program can have direct financial consequences.
+The RugFreePump on-chain program controls the core bonding-curve sale lifecycle. Because program logic directly determines how Solana accounts and assets are handled, defects, unexpected interactions, authority compromise, or configuration errors can result in financial loss.
+
+This page describes the principal risks and the controls currently implemented around them.
 
 ## Program software risk
 
-The on-chain program is software and may contain defects despite development, testing, review, and operational controls.
+Smart-contract software can contain implementation errors even when the intended behavior is well understood.
 
-Potential software risks include:
+A defect could potentially affect:
 
-- Incorrect state transitions.
-- Incorrect account validation.
-- Unexpected instruction behavior.
-- Arithmetic or precision errors.
-- Incorrect assumptions about external accounts.
-- Incorrect handling of exceptional states.
-- Integration failures with external Solana programs.
+- Sale accounting
+- Token calculations
+- SOL transfers
+- Fee calculations
+- Withdrawal processing
+- Sale finalization
+- Liquidity migration
+- Administrative operations
+- Account state transitions
 
-A successful transaction does not establish that every possible program state has been tested.
+RugFreePump uses explicit account validation, checked arithmetic, state checks, authority validation, and transaction-level constraints throughout the program.
 
-## Account and state risk
+These controls reduce risk but cannot establish that the program is free of vulnerabilities.
 
-Solana programs operate on explicitly supplied accounts.
+## Upgradeability risk
 
-The program relies on account relationships, ownership, addresses, and stored state being validated correctly.
+The RugFreePump program is currently upgradeable.
 
-Unexpected or invalid account configurations can cause a transaction to fail or, if an implementation defect exists, potentially produce an unintended state transition.
+The current upgrade authority is controlled by the founder/developer, who is presently the sole operator of the system.
 
-The protocol therefore treats account validation as part of the security boundary of each instruction.
+This means the deployed program can be upgraded without requiring approval from a separate multisig or independent governance body.
+
+An upgrade-authority compromise or unauthorized upgrade could therefore materially affect the behavior of the protocol.
+
+Users should consider this when evaluating the current trust model.
 
 ## Administrative authority risk
 
-RugFreePump contains administrative instructions that are separate from the public user-facing instructions.
+The program contains administrative controls for operational configuration and critical protocol behavior.
 
-Administrative authority is necessary for protocol configuration and operational management, but privileged access also creates a security boundary.
+At present, the relevant administrative authority is controlled by the same single operator.
 
-A compromise or misuse of an administrative authority could have consequences beyond those available to an ordinary user.
+Depending on the operation, administrative controls can affect areas such as:
 
-Production administrative keys and authorities should therefore be protected using appropriate operational security controls.
+- Platform maintenance mode
+- Feature availability
+- Fee configuration
+- Sale configuration
+- Migration configuration
+- Recovery configuration
+- Authorized migration operations
+- Other protocol-wide settings
 
-> **TODO — REPLACE BEFORE PUBLICATION:** Document the final production authority model, key-management model, multisignature configuration, and any upgrade authority policy once those decisions are finalized.
+Administrative authority is therefore a material part of the current RugFreePump trust model.
 
-## Program upgrade risk
+## Maintenance mode
 
-If a deployed program can be upgraded, the upgrade authority represents an important trust assumption.
+RugFreePump can place relevant protocol operations into maintenance mode.
 
-Users should be able to determine whether the production program is upgradeable and, if so, which governance or operational controls protect the upgrade authority.
+Maintenance controls are intended to allow the platform operator to restrict protocol activity during operational events, maintenance, or other circumstances where continuing normal operations may not be appropriate.
 
-> **TODO — REPLACE BEFORE PUBLICATION:** Document the final mainnet upgradeability policy, including whether the program is immutable, upgradeable, governed by a multisignature, or subject to another control mechanism.
+Maintenance mode can affect availability.
 
-Until the final policy is published, users should not assume that deployment alone means the program can never change.
+A user may therefore encounter a situation where the dApp is operational but a particular on-chain action is temporarily unavailable because the program's operational conditions do not permit it.
 
-## Transaction failure
+## Global configuration risk
 
-A transaction may fail because of:
+Several aspects of sale behavior depend on protocol configuration.
 
-- Invalid arguments.
-- Invalid accounts.
-- Insufficient balances.
-- Program state conditions.
-- Stale or unavailable external data.
-- Solana network conditions.
-- Compute or transaction constraints.
-- External program failures.
+Examples include:
 
-A failed transaction does not necessarily indicate a security incident.
+- Buy fee configuration
+- Sale duration
+- Feature enablement
+- Migration enablement
+- Creator incentive configuration
+- DEX-related configuration
+- Other administrative settings
 
-Users should inspect the transaction result and error information before retrying repeatedly.
+Configuration changes can affect how future transactions behave.
 
-## Irreversible execution
+Users should review the current published protocol configuration and transaction details rather than assuming that a historical configuration will remain unchanged indefinitely.
 
-Confirmed blockchain transactions should be treated as potentially irreversible.
+The current intended production configuration remains aligned with the configuration documented for RugFreePump.
 
-RugFreePump cannot generally reverse a transaction simply because:
+## Account and state validation
 
-- A user changed their mind.
-- The token price changed.
-- A user sent assets to the wrong address.
-- A user approved an unintended transaction.
-- A third-party wallet was compromised.
+The program uses Solana account constraints, PDA derivation, signer requirements, and explicit state validation to limit which accounts and states can participate in each instruction.
 
-Users should review transactions carefully before signing.
+Public operations are rejected when required conditions are not satisfied.
+
+Examples include preventing operations against:
+
+- Expired sales where purchases are no longer permitted
+- Finalized sales where additional purchases are not permitted
+- Canceled sales
+- Already migrated sales
+- Invalid authorities
+- Incorrect external program addresses
+- Invalid oracle data
+- Invalid account relationships
+
+These checks are important controls, but their effectiveness depends on the correctness of the program implementation.
+
+## Transaction failure risk
+
+Solana transactions can fail because of:
+
+- Invalid arguments
+- Insufficient wallet balance
+- Invalid account state
+- Stale oracle data
+- Slippage limits
+- Network conditions
+- Compute or account requirements
+- External program behavior
+
+A failed transaction should not be interpreted as successful merely because the dApp displayed an intended action.
+
+Users should verify the final transaction status in their wallet or a Solana explorer.
+
+## Transaction atomicity
+
+The RugFreePump instructions execute within Solana transaction semantics.
+
+For example, purchase processing involves token and SOL movements together with state updates. If the transaction fails, Solana transaction execution does not leave a partially completed successful instruction sequence merely because an earlier operation within the transaction was reached.
+
+Users should nevertheless distinguish a failed transaction from a confirmed transaction and verify the final on-chain result.
+
+## Emergency and recovery operations
+
+The program contains administrative paths for exceptional finalized-sale situations.
+
+These include:
+
+- Finalized-sale liquidity recovery
+- Emergency cancellation of a finalized sale
+
+These paths are subject to explicit state and authority checks.
+
+They exist to handle situations where the normal liquidity-migration path should not proceed.
+
+Because these operations are administrative and can affect the terminal handling of finalized-sale assets, they represent an important trust assumption.
+
+## Finalized-sale recovery
+
+Under the configured recovery conditions, the authorized migration/recovery authority can execute the finalized-sale recovery path.
+
+The recovery process can handle finalized-sale liquidity and tokens through the designated administrative recovery mechanism rather than normal Raydium migration.
+
+Users should therefore understand that finalized liquidity does not necessarily have only one possible terminal path.
+
+## Emergency cancellation
+
+A finalized sale can also enter an emergency cancellation state through the authorized administrative path when the required conditions are met.
+
+This is distinct from ordinary sale expiration.
+
+The cancellation state permits eligible contributors to use the withdrawal mechanism under the program's cancellation rules.
+
+This operation remains subject to the current administrative trust model.
 
 ## External program interaction
 
-Some RugFreePump operations interact with external Solana programs or infrastructure.
+The RugFreePump program interacts with external Solana programs where required.
 
-External program behavior is outside the complete control of RugFreePump.
+The most significant example is Raydium CPMM during liquidity migration.
 
-In particular, liquidity migration involves the Raydium CPMM environment.
+External CPI execution introduces additional software and integration risk.
 
-An issue in an external program, an incompatible integration, or a change to an external protocol can affect the corresponding operation.
+RugFreePump validates the expected Raydium CPMM program address before performing the migration CPI, but it cannot eliminate risks originating from an external protocol.
 
-## Program execution versus economic outcome
+## Irreversibility
 
-Correct program execution does not guarantee a favorable economic outcome.
+Confirmed Solana transactions and their resulting state changes should generally be treated as irreversible unless the program explicitly provides a later state transition.
 
-A transaction can execute exactly according to protocol rules while the user experiences a financial loss because of:
+Users should not assume that an accidental transaction, incorrect token address, incorrect wallet address, or mistaken purchase can be manually reversed by RugFreePump.
 
-- Token price movement.
-- Bonding-curve price movement.
-- Market conditions.
-- Liquidity conditions.
-- Slippage.
-- Creator behavior.
-- Post-migration market activity.
+## Audit status
 
-The protocol determines how the transaction is processed; it does not guarantee the financial result of the transaction.
+RugFreePump has not undergone a formal independent security audit at this time.
 
-## Verification and audit status
+A future third-party audit is planned.
 
-RugFreePump may publish deployment information, transaction records, source code, and other verification material to improve transparency.
+Until such an audit is completed and publicly released, users should treat the program as unaudited software and evaluate the associated smart-contract risk accordingly.
 
-These materials should not be interpreted as an independent security audit unless an actual independent audit has been completed and published.
+## Future governance controls
 
-> **TODO — REPLACE BEFORE PUBLICATION:** Add the final independent audit information, auditor name, report date, report URL, scope, and remediation status if an external audit is completed.
+RugFreePump plans to introduce multisig authorization for critical operations.
 
-## Responsible disclosure
+The on-chain architecture has been designed with this future direction in mind, and a third-party multisig service such as Squads may be used.
 
-Potential vulnerabilities should be reported through the official security disclosure process rather than publicly disclosed before the project has an opportunity to investigate.
+This is not currently deployed.
 
-See the [Security Disclosure](./security-disclosure) page for the reporting process.
-
-> **Important:** No software system can be represented as completely free of vulnerabilities. This page describes known security boundaries and categories of risk; it is not a guarantee of program security.
+The current program should therefore be evaluated according to its existing single-operator authority model rather than the planned future governance model.
