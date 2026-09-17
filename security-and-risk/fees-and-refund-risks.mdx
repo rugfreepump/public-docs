@@ -1,117 +1,169 @@
 ---
 title: Fees and Refund Risks
-description: Understand RugFreePump fees, transaction costs, withdrawal conditions, and the limits of refunds.
+description: Understand RugFreePump protocol fees, transaction costs, and what may or may not be recoverable after a sale expires or is canceled.
 ---
 
-RugFreePump transactions can involve multiple types of costs.
+# Fees and Refund Risks
 
-Users should distinguish between **protocol fees**, **Solana network transaction fees**, and funds that may become eligible for withdrawal under the bonding-curve cancellation or expiration rules.
+RugFreePump transactions can involve several different types of costs.
 
-A later sale expiration or cancellation does not automatically reverse fees that were already charged.
+A later sale expiration, cancellation, or withdrawal does not necessarily reverse costs that were already charged.
+
+Users should distinguish between contributed SOL, protocol fees, creator incentives, external liquidity costs, and Solana network fees.
 
 ## Protocol fees
 
-RugFreePump may charge fees for eligible protocol operations.
+RugFreePump currently applies protocol-defined fees to applicable operations.
 
-The applicable fee should be reviewed before approving a transaction.
+The current configuration includes a 1% buy fee.
 
-> **TODO — REPLACE BEFORE PUBLICATION:** Confirm and publish the final production fee schedule, including each applicable fee, calculation method, and any future fee-change policy.
+The protocol also uses configured fees for other lifecycle operations, including applicable creation and completed-sale processing.
 
-For the current documented purchase flow, the RugFreePump buy fee is applied to eligible purchases.
+The current production configuration is intended to remain aligned with the documented RugFreePump configuration.
 
-## Fees are not automatically refundable
+## Creation fee
 
-A fee already charged by the protocol is not automatically returned because a bonding-curve sale later:
+Creating a bonding-curve sale can involve a bonding-curve escrow creation fee.
 
-- Expires.
-- Is canceled.
-- Fails to reach completion.
-- Produces an unfavorable economic outcome.
+The current implementation calculates the applicable SOL amount from the configured USD-denominated fee and the current SOL/USD oracle price.
 
-Users should treat fees as incurred costs once the corresponding transaction has successfully charged them unless the published protocol rules explicitly provide otherwise.
+This means the SOL amount required for a USD-denominated fee can vary with the SOL/USD exchange rate.
 
-## Contributed SOL versus fees
+## Buy fee
 
-A user's contributed SOL and the fees associated with the transaction are separate concepts.
+Purchases are subject to the configured buy fee.
 
-If a sale expires or is canceled, an eligible contributor may be able to withdraw the contributed amount according to the on-chain withdrawal rules.
+The current buy fee is 1%.
 
-That does not mean that every amount previously paid during the sale is refundable.
+The fee is deducted as part of the purchase calculation before the net contribution is added to the bonding-curve sale.
 
-Previously charged protocol fees may remain non-refundable.
+Users should therefore distinguish between:
 
-## Withdrawal fee
+- Total SOL submitted
+- Applicable buy fee
+- Net SOL contributing to the sale
+- Resulting token amount
 
-RugFreePump does not currently charge a separate RugFreePump protocol withdrawal fee for eligible withdrawal operations.
+## Completed-sale fees
 
-The withdrawal transaction is nevertheless a Solana transaction and therefore may incur the applicable Solana network transaction fee.
+Finalized-sale processing can apply the configured completed-sale escrow fee.
 
-> **TODO — REPLACE BEFORE PUBLICATION:** Confirm the final production withdrawal-fee policy before publication.
+The applicable amount is calculated from the finalized sale's available funds according to the program's configured rules.
+
+This amount reduces the funds available for subsequent liquidity handling.
+
+## DEX pool creation costs
+
+Liquidity migration also requires the configured DEX pool creation cost.
+
+This is separate from the bonding-curve purchase fee.
+
+The migration process accounts for this cost when determining the amount available for external liquidity.
+
+## Creator incentive
+
+Where enabled by protocol configuration, an eligible creator incentive can be paid during the finalized-sale lifecycle.
+
+The creator incentive is calculated by the program from the configured rate and applicable finalized-sale funds.
+
+It should not be interpreted as an additional fee charged directly to the user at the time of withdrawal.
 
 ## Solana network fees
 
-Solana transaction fees are paid to the network rather than treated as RugFreePump protocol revenue.
+Solana transaction fees are separate from RugFreePump protocol fees.
 
-These costs may be incurred when:
+Users may also choose to use additional priority fees depending on their wallet or transaction configuration.
 
-- A transaction succeeds.
-- A transaction fails after being submitted.
-- A user retries a transaction.
-- A user performs another wallet operation.
+These network costs are paid according to Solana transaction rules and are not RugFreePump withdrawal refunds.
 
-Network transaction fees should therefore not be considered automatically refundable by RugFreePump.
+## Fees are not automatically refunded
 
-## Priority fees
+One of the most important distinctions is that withdrawing contributed SOL does not mean that all historical costs are refunded.
 
-Depending on the transaction and network conditions, a wallet or application may use a priority fee.
+For example, if a sale:
 
-Priority fees are separate from RugFreePump protocol fees.
+- Expires
+- Is canceled
+- Becomes otherwise eligible for withdrawal
 
-> **TODO — REPLACE BEFORE PUBLICATION:** Document whether RugFreePump sets, recommends, or allows users to configure priority fees in the production dApp.
+previously charged protocol fees and Solana network fees are not automatically reversed.
+
+Users should therefore not assume that an expired or canceled sale results in a full recovery of every SOL spent during participation.
+
+## Withdrawal fee
+
+The current RugFreePump withdrawal path does not charge a separate RugFreePump withdrawal fee.
+
+This does not eliminate the normal Solana transaction fee associated with submitting the withdrawal transaction.
+
+## Contribution versus fees
+
+The contributor's on-chain contribution amount is tracked separately from protocol fees.
+
+The withdrawal calculation is based on the contributor's recorded contribution rather than a retrospective reversal of every transaction cost associated with participation.
+
+## Available vault balance
+
+The withdrawal implementation includes a defensive check against the SOL actually available in the bonding-curve vault while preserving the required vault balance.
+
+As a result, documentation should not describe withdrawal as an unconditional promise to recover every historical cost or as a blanket guarantee independent of the on-chain vault state.
+
+The authoritative amount is determined by the program at execution time.
 
 ## Failed transactions
 
-A failed transaction can still result in network-level transaction costs depending on how the transaction was processed by Solana.
+A failed transaction should generally not be treated as a successful purchase, withdrawal, or migration.
 
-Users should inspect their wallet and transaction history rather than assuming that a failed transaction means no cost was incurred.
+However, Solana network transaction fees can still apply to transactions submitted to the network even when the requested instruction does not successfully complete.
 
-## Sale expiration and cancellation
+Users should distinguish protocol execution from network transaction costs.
 
-Expiration or cancellation affects the protocol's treatment of eligible contributed SOL.
+## Fee configuration risk
 
-It does not automatically create a general refund right for every cost associated with participating in the sale.
+Protocol fees and other economic parameters are configurable by the current administrative authority.
 
-Users should review the specific withdrawal conditions before committing funds.
+The current operator therefore has the ability to change applicable configuration within the permissions of the deployed program.
 
-## No guaranteed recovery of all costs
+Users should review the current published configuration before executing transactions.
 
-Users should not assume that an expired or canceled sale means they will recover:
+## Single-operator configuration risk
 
-- Protocol fees.
-- Solana transaction fees.
-- Priority fees.
-- Other third-party costs.
-- Opportunity costs.
-- Losses caused by token price movement.
+Current fee and protocol configuration authority is controlled by the same single operator that controls other administrative functions.
 
-Only amounts explicitly covered by the protocol's withdrawal rules are eligible for withdrawal.
+There is currently no multisig approval requirement for these configuration changes.
 
-## Fee changes
+This is part of the current RugFreePump trust model.
 
-Protocol fees may be changed through the applicable protocol administration and governance processes.
+## Future governance
 
-> **TODO — REPLACE BEFORE PUBLICATION:** Document the final fee-change authority, notice period, and whether historical transactions remain subject to their original fee parameters.
+RugFreePump intends to introduce stronger authorization controls for critical administrative operations in the future, including multisig-based approval.
 
-## Before approving a transaction
+These future controls are not currently active.
+
+## Before participating
 
 Users should review:
 
-1. The amount of SOL being spent.
-2. The expected token amount.
-3. The applicable protocol fee.
-4. The estimated network fee.
-5. Any priority fee.
-6. The transaction presented by the wallet.
-7. The conditions under which contributed SOL can later be withdrawn.
+- Current protocol fees
+- Expected transaction costs
+- Current SOL/USD conditions
+- Purchase amount
+- Slippage settings
+- Potential priority fees
+- Sale expiration conditions
+- Withdrawal conditions
 
-> **Important:** A withdrawal right is not the same as a general refund right. Users should assume that fees and blockchain transaction costs already incurred may not be recoverable.
+Users should only participate when they understand the costs that may remain non-refundable.
+
+## No guaranteed recovery of total expenditure
+
+A user who contributes SOL to a sale can potentially recover eligible contributed SOL through the withdrawal mechanism when the applicable conditions are met.
+
+That does not mean the user is guaranteed to recover:
+
+- Protocol fees
+- Solana network fees
+- Priority fees
+- Other transaction costs
+- Any external costs
+- Economic losses caused by token price changes
