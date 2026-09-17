@@ -1,132 +1,206 @@
 ---
 title: Liquidity and Migration Risks
-description: Understand the risks associated with bonding-curve completion, liquidity migration, Raydium CPMM, and post-migration trading.
+description: Understand the risks and controls involved when a completed bonding-curve sale transitions to external liquidity.
 ---
 
-When a RugFreePump bonding-curve sale reaches its completion conditions, the completed sale liquidity can be migrated into a Raydium CPMM pool.
+# Liquidity and Migration Risks
 
-Migration represents a transition from the RugFreePump bonding-curve environment to an external liquidity and trading environment.
+A completed RugFreePump bonding-curve sale can transition into a Raydium CPMM liquidity pool.
 
-That transition introduces additional risks.
+Migration is an important lifecycle boundary because control moves from the bonding-curve sale environment into an external trading environment.
 
-## Migration is a lifecycle transition
+Liquidity migration therefore introduces both protocol-level and market-level risks.
 
-Migration does not represent a guarantee of token value or future market activity.
+## Migration is not an automatic guarantee
 
-It changes the environment in which liquidity is available.
+A completed sale does not mean that a successful external market has been created.
 
-The documented lifecycle is:
+Migration is subject to protocol conditions and transaction execution.
 
-**Bonding-Curve Sale → Completion → Liquidity Migration → Raydium CPMM**
+The migration path requires, among other conditions:
 
-Each stage has different technical and economic conditions.
+- A finalized sale
+- Required migration feature enablement
+- Completion of the configured migration lock period
+- No conflicting recovery state
+- No prior migration
+- A valid authorized executor
+- Valid Raydium program configuration
+- Sufficient funds for required migration-related amounts
 
-## Completion conditions
+A sale can therefore be finalized without immediately becoming an externally traded market.
 
-A bonding-curve sale must satisfy the protocol's completion conditions before liquidity migration can occur.
+## Migration lock
 
-Users should not interpret a sale approaching completion as a guarantee that migration will succeed.
+The program applies a migration lock period after finalization.
 
-A transaction can fail because of program validation, account conditions, network conditions, or external dependency failures.
+The purpose of the lock is to prevent immediate migration before the configured delay has elapsed.
 
-## External protocol dependency
+The exact duration is determined by the current protocol configuration.
 
-Liquidity migration interacts with the Raydium CPMM environment.
+## Who can execute migration
 
-Raydium is an external protocol and is therefore outside the complete control of RugFreePump.
+The normal migration operation can be executed by:
 
-An external protocol outage, integration issue, network condition, or unexpected change can affect migration.
+- The token creator, or
+- The configured platform migration authority
 
-> **TODO — REPLACE BEFORE PUBLICATION:** Add the final production Raydium CPMM program address and any production integration documentation that users should verify.
+Both paths remain subject to the program's validation rules.
 
-## Migration transaction risk
+The existence of an authorized migration executor does not mean that either party can bypass the program's migration conditions.
 
-Migration requires a blockchain transaction.
+## Raydium dependency
 
-The transaction may fail because of:
+RugFreePump uses Raydium CPMM infrastructure for the external liquidity pool.
 
-- Invalid or unexpected account state.
-- Incorrect migration conditions.
-- Network congestion.
-- Insufficient transaction resources.
-- External program errors.
-- Changes in external protocol conditions.
+The program validates the expected Raydium CPMM program before invoking the external CPI.
 
-A failed migration transaction does not necessarily mean that the underlying bonding-curve state has been lost.
+Nevertheless, Raydium is an external protocol and remains outside RugFreePump's direct control.
 
-Users should inspect the actual transaction result before drawing conclusions.
+Users therefore assume additional risks associated with:
 
-## Post-migration liquidity
+- Raydium program behavior
+- External account requirements
+- Raydium availability
+- Pool initialization
+- External market activity
+- Future external protocol changes
 
-After migration, token trading takes place through the external liquidity environment.
+## Liquidity amount
 
-The existence of a liquidity pool does not guarantee:
+The amount of liquidity available for migration depends on the finalized sale state and the deductions required by the protocol.
 
-- High trading volume.
-- Stable pricing.
-- Low price impact.
-- Continued liquidity.
-- Future market demand.
+Applicable amounts can include:
 
-Liquidity can change over time.
+- Configured completed-sale fees
+- Creator incentive amounts where applicable
+- DEX pool creation costs
+- Required account rent
+- Other protocol-defined migration requirements
 
-## Price changes after migration
+The amount of liquidity ultimately placed into the external pool should therefore not be assumed to equal the total amount originally contributed to the bonding curve.
 
-The token's market price can change substantially after migration.
+## Creator incentive
 
-The post-migration market may price the token differently from the final bonding-curve conditions.
+Where the protocol configuration enables a creator incentive, the migration process can allocate the configured creator incentive from eligible finalized-sale funds.
 
-Users should not assume that the migration price represents a guaranteed market value.
+The creator incentive is calculated by the program according to the configured rules and is not an arbitrary amount selected during migration.
 
-## Slippage and price impact
+## Migration and external market price
 
-Trading in an external liquidity pool is subject to market conditions.
+Creating a Raydium pool does not guarantee a particular token price.
 
-A trade can move the effective market price depending on available liquidity and transaction size.
+Once liquidity becomes available externally, token price can change because of:
 
-Users should review applicable slippage settings and transaction details before signing.
+- Trading activity
+- Market demand
+- Arbitrage
+- Liquidity depth
+- Large trades
+- Market-wide conditions
+- Other external factors
 
-## Liquidity does not eliminate token risk
+A successful migration therefore does not guarantee that a token will retain its bonding-curve price.
 
-A migrated token can still lose value.
+## Post-migration liquidity risk
 
-Migration does not guarantee:
+External liquidity can be limited.
 
-- Project success.
-- Creator activity.
-- Market demand.
-- Trading volume.
-- Price appreciation.
-- Capital preservation.
-
-Liquidity is a market mechanism, not a guarantee of economic performance.
-
-## External market risk
-
-Once a token is trading in an external market, users are exposed to market participants and conditions outside RugFreePump.
-
-These may include:
-
-- Large trades.
-- Liquidity changes.
-- Market sentiment.
-- Arbitrage activity.
-- Broader cryptocurrency market conditions.
-
-## Migration and user expectations
+A token may experience significant price impact when trades are large relative to available liquidity.
 
 Users should distinguish between:
 
-**Sale completion**
+- The protocol's bonding-curve purchase calculation
+- The liquidity available in the external market
+- The market price after migration
 
-and
+These are different mechanisms.
 
-**Successful post-migration market performance.**
+## Migration transaction risk
 
-The first is a protocol lifecycle condition.
+Migration is an on-chain transaction involving multiple account relationships and an external CPI.
 
-The second depends on the external market.
+The transaction can fail if:
 
-These are not equivalent.
+- Required accounts are incorrect
+- Required funds are unavailable
+- Migration conditions are not satisfied
+- External program requirements are not satisfied
+- The transaction exceeds execution requirements
+- The sale has entered an incompatible state
 
-> **Important:** Liquidity migration does not guarantee a liquid market, stable price, profitable trading, or continued project activity.
+Users should verify the confirmed migration transaction rather than relying only on the dApp interface.
+
+## Reentrancy and migration state
+
+The migration path uses an explicit in-progress state to prevent conflicting migration operations from being processed simultaneously through the same sale.
+
+The program also prevents migration when incompatible recovery or cancellation states are active.
+
+These controls constrain the lifecycle transition but do not eliminate external protocol or market risk.
+
+## Emergency recovery
+
+The program includes a finalized-sale recovery path for configured emergency situations.
+
+When the required recovery mode and authority conditions are satisfied, finalized-sale liquidity can be handled through the administrative recovery path instead of normal Raydium migration.
+
+This is an important distinction from ordinary migration.
+
+Users should inspect the on-chain sale state when determining how a finalized sale was ultimately handled.
+
+## Emergency cancellation
+
+A finalized sale can also be canceled through the authorized emergency cancellation path when the required conditions are satisfied.
+
+Emergency cancellation and finalized-sale recovery are distinct states.
+
+The program prevents the two paths from being used simultaneously for the same sale under the relevant state checks.
+
+A canceled finalized sale can become eligible for contributor withdrawals under the program's withdrawal rules.
+
+## Terminal liquidity handling
+
+Not every finalized sale should be described as having successfully migrated to an external trading pool.
+
+The protocol records terminal handling of finalized-sale liquidity through its on-chain state.
+
+Depending on the circumstances, this can involve:
+
+- Normal Raydium migration
+- Finalized-sale recovery
+- Emergency cancellation followed by eligible withdrawals
+
+Users should verify the actual on-chain state and transaction history.
+
+## Post-migration token risk
+
+Migration does not remove token-specific risks.
+
+A migrated token can still:
+
+- Lose value
+- Become illiquid
+- Experience extreme volatility
+- Fail to attract trading activity
+- Be affected by creator or holder behavior
+
+Migration is a technical lifecycle transition, not a guarantee of project success.
+
+## Current configuration
+
+RugFreePump intends to retain the current protocol configuration for production unless the published configuration is explicitly changed.
+
+Users should rely on the current protocol documentation and on-chain state rather than historical assumptions.
+
+## User verification
+
+After a sale reaches its migration stage, users can independently inspect:
+
+- Sale state
+- Migration transaction
+- Raydium pool address
+- Amounts recorded by the RugFreePump program
+- External pool state
+
+The on-chain record should be treated as the authoritative record of what actually executed.
