@@ -1,1 +1,122 @@
+---
+title: Bonding-Curve Sale Risks
+description: Understand the economic and execution risks associated with participating in a RugFreePump bonding-curve sale.
+---
 
+A RugFreePump bonding-curve sale is a market mechanism in which the token purchase price changes as the sale progresses.
+
+The mechanism provides deterministic protocol rules for calculating purchases, but it does not guarantee that a token will increase in value or that a participant will recover the amount spent.
+
+## Price movement
+
+The bonding-curve price changes as the sale progresses.
+
+As additional SOL is contributed, subsequent purchases may execute at different prices from earlier purchases.
+
+Two users purchasing the same token at different points in the sale can therefore receive different effective prices.
+
+A later purchase is not entitled to the price available to an earlier purchaser.
+
+## Buying near the beginning or end of a sale
+
+The position of a purchase within the bonding curve can materially affect the price paid.
+
+Users should not assume that:
+
+- An early purchase will be profitable.
+- A later purchase will be more or less profitable.
+- Reaching the end of a sale guarantees a particular market value.
+- Sale completion guarantees a return of capital.
+
+The bonding curve defines the purchase mechanism; it does not predict future demand.
+
+## Price impact
+
+A user's purchase contributes to the progression of the bonding curve.
+
+This means that the transaction itself can affect the price conditions for subsequent purchases.
+
+The displayed token amount should therefore be considered in the context of the current sale state and the amount being purchased.
+
+## Sale completion
+
+A bonding-curve sale can reach its completion conditions.
+
+Completion does not mean that every participant has earned a profit.
+
+It means that the sale has reached the protocol conditions required for its next lifecycle stage.
+
+When the relevant completion conditions are reached, liquidity may become eligible for migration to the configured external liquidity environment.
+
+## Expiration and cancellation
+
+A bonding-curve sale may expire or be canceled according to protocol rules.
+
+When this occurs, eligible contributors may be able to withdraw their contributed SOL according to the on-chain withdrawal conditions.
+
+Withdrawal eligibility does not mean that every amount previously spent by the user is automatically recoverable.
+
+In particular, previously charged fees and Solana transaction fees are separate from the contribution amount subject to withdrawal.
+
+## No guaranteed return
+
+RugFreePump does not guarantee:
+
+- Profit.
+- Capital preservation.
+- A minimum token price.
+- A specific market capitalization.
+- A successful migration.
+- Post-migration liquidity.
+- Future trading volume.
+- Future demand for the token.
+
+A token can lose substantial or all of its market value after purchase.
+
+## Market and liquidity risk
+
+A bonding curve is not the same thing as a permanent market.
+
+After migration, trading takes place in an external liquidity environment.
+
+The existence of a bonding-curve sale does not guarantee sufficient liquidity or demand after migration.
+
+## Creator-related risk
+
+The protocol's bonding-curve mechanics do not determine the future behavior of the token creator.
+
+A creator may make decisions that affect the token's reputation, demand, or market value.
+
+Users should evaluate the token and creator independently rather than treating the existence of a RugFreePump sale as an endorsement.
+
+## Transaction execution risk
+
+A purchase may fail before confirmation because of:
+
+- Invalid transaction conditions.
+- Oracle conditions.
+- Insufficient balance.
+- Network congestion.
+- Slippage or sale-state changes.
+- Program validation.
+- External dependency failures.
+
+Users should inspect failed transactions before retrying.
+
+## Information displayed by the dApp
+
+The dApp may display estimated prices, token amounts, sale progress, and other information.
+
+Displayed information can become outdated as the sale changes.
+
+Where possible, users should verify important transaction details against the wallet confirmation and on-chain transaction result.
+
+## Risk of total loss
+
+Participation in a token launch can result in a complete loss of the amount committed to the purchase.
+
+This can occur through market value decline even when every protocol component operates correctly.
+
+Users should only participate with funds they can afford to lose.
+
+> **Important:** RugFreePump provides the bonding-curve mechanism and associated protocol infrastructure. It does not provide an assurance of token value, profitability, liquidity, or future project success.
