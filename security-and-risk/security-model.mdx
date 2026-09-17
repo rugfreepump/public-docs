@@ -60,9 +60,9 @@ The resulting on-chain state depends on the deployed program, transaction inputs
 
 ### Oracle infrastructure
 
-Certain bonding-curve operations require SOL/USD conversion.
+The RugFreePump bonding-curve mechanism depends on external SOL/USD price data.
 
-The current implementation uses Pyth price data and validates the supplied price before using it.
+The current implementation uses Pyth price data and validates the supplied price before it is accepted by the purchase path.
 
 Pyth therefore represents an external security boundary. RugFreePump can validate the oracle data it receives according to its program rules, but it does not control the underlying oracle infrastructure or broader market conditions.
 
@@ -156,7 +156,7 @@ Token supply controls are a protocol-level property and should not be interprete
 
 ## Oracle controls
 
-The current purchase path validates the Pyth price update before using it.
+The current purchase path validates the Pyth price update before accepting it for protocol execution.
 
 The implementation currently requires:
 
