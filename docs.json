@@ -102,8 +102,8 @@
       {
         "group": "Security & Risk",
         "pages": [
-          "security-and-risk/security-model",
-          "security-and-risk/risks",
+          "security-and-risk/security",
+          "security-and-risk/risk",
           "security-and-risk/security-disclosure"
         ]
       },
