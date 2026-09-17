@@ -1,43 +1,48 @@
 ---
-title: On-Chain Program Risks
-description: Understand the software, authority, upgradeability, and execution risks associated with the RugFreePump on-chain program.
----
 
 # On-Chain Program Risks
 
-The RugFreePump on-chain program controls the core bonding-curve sale lifecycle. Because program logic directly determines how Solana accounts and assets are handled, defects, unexpected interactions, authority compromise, or configuration errors can result in financial loss.
+The RugFreePump on-chain program controls the core token creation and bonding-curve sale lifecycle. Because program logic directly determines how Solana accounts, tokens, SOL, and protocol state are handled, defects, unexpected interactions, authority compromise, or configuration errors can result in financial loss or unexpected protocol behavior.
 
 This page describes the principal risks and the controls currently implemented around them.
 
+<Note>
+The controls described here reduce specific risks but do not guarantee that the deployed program is free of vulnerabilities or that losses are impossible.
+</Note>
+
 ## Program software risk
 
-Smart-contract software can contain implementation errors even when the intended behavior is well understood.
+On-chain program software can contain implementation errors even when the intended behavior is well understood.
 
 A defect could potentially affect:
 
-- Sale accounting
-- Token calculations
-- SOL transfers
-- Fee calculations
-- Withdrawal processing
-- Sale finalization
-- Liquidity migration
-- Administrative operations
-- Account state transitions
+* Token creation
+* Sale initialization
+* Sale accounting
+* Token calculations
+* SOL transfers
+* Fee calculations
+* Withdrawal processing
+* Sale finalization
+* Liquidity migration
+* Administrative operations
+* Account state transitions
 
-RugFreePump uses explicit account validation, checked arithmetic, state checks, authority validation, and transaction-level constraints throughout the program.
+RugFreePump uses Solana account constraints, PDA derivation, signer requirements, explicit state checks, authority validation, and checked arithmetic in relevant financial and accounting operations.
 
-These controls reduce risk but cannot establish that the program is free of vulnerabilities.
+The bonding-curve calculation also validates the resulting token amount before it is used for a purchase.
+
+These controls reduce specific implementation risks, but they cannot establish that the deployed program contains no undiscovered vulnerabilities.
 
 ## Upgradeability risk
 
-The RugFreePump program is currently upgradeable.
+The RugFreePump on-chain program is currently upgradeable.
 
 The current upgrade authority is controlled by the founder/developer, who is presently the sole operator of the system.
 
 This means the deployed program can be upgraded without requiring approval from a separate multisig or independent governance body.
 
-An upgrade-authority compromise or unauthorized upgrade could therefore materially affect the behavior of the protocol.
+A compromised, misused, or unauthorized upgrade authority could therefore materially affect the behavior of the protocol used by future transactions.
 
 Users should consider this when evaluating the current trust model.
 
@@ -49,154 +54,228 @@ At present, the relevant administrative authority is controlled by the same sing
 
 Depending on the operation, administrative controls can affect areas such as:
 
-- Platform maintenance mode
-- Feature availability
-- Fee configuration
-- Sale configuration
-- Migration configuration
-- Recovery configuration
-- Authorized migration operations
-- Other protocol-wide settings
+* Platform maintenance mode
+* Feature availability
+* Fee configuration
+* Sale configuration
+* Migration configuration
+* Recovery configuration
+* Authorized migration operations
+* Other protocol-wide settings
 
-Administrative authority is therefore a material part of the current RugFreePump trust model.
+Administrative authorization checks reduce the risk of unauthorized calls, but they do not eliminate the risk associated with compromise or misuse of the authorized keys.
 
-## Maintenance mode
+## Maintenance mode risk
 
-RugFreePump can place relevant protocol operations into maintenance mode.
+The RugFreePump protocol includes an administrative flag that can restrict or halt relevant protocol operations when maintenance mode is activated.
 
-Maintenance controls are intended to allow the platform operator to restrict protocol activity during operational events, maintenance, or other circumstances where continuing normal operations may not be appropriate.
+These controls allow authorized operators to restrict protocol activity during system upgrades, emergency incidents, or unexpected operational conditions.
 
-Maintenance mode can affect availability.
+Because bonding-curve token sales operate within a fixed expiration window, extended maintenance can reduce the effective time available for an active sale. This can result in:
 
-A user may therefore encounter a situation where the dApp is operational but a particular on-chain action is temporarily unavailable because the program's operational conditions do not permit it.
+* **Diminished contributor engagement:** Buyers have less time to participate in the bonding-curve sale.
+* **Reduced capital formation:** Creators have less operational time to attract demand and build sale contributions.
+* **Increased expiration risk:** A sale may fail to reach its hard cap before its fixed expiration deadline.
+* **Disrupted marketing timelines:** Maintenance interruptions can interfere with planned launches, community milestones, and promotional schedules.
+
+Protocol-level maintenance restrictions are separate from downstream infrastructure issues such as Solana network congestion or local wallet failures.
 
 ## Global configuration risk
 
-Several aspects of sale behavior depend on protocol configuration.
+Several aspects of protocol behavior depend on administrative configuration.
 
 Examples include:
 
-- Buy fee configuration
-- Sale duration
-- Feature enablement
-- Migration enablement
-- Creator incentive configuration
-- DEX-related configuration
-- Other administrative settings
+* Buy fee configuration
+* Sale duration
+* Feature enablement
+* Migration enablement
+* Creator incentive configuration
+* DEX-related configuration
+* Other protocol settings
 
-Configuration changes can affect how future transactions behave.
+Configuration changes can affect how future transactions behave even when the underlying program code is functioning as designed.
 
-Users should review the current published protocol configuration and transaction details rather than assuming that a historical configuration will remain unchanged indefinitely.
+Users should review the current published protocol configuration and relevant on-chain state rather than assuming that historical settings will remain unchanged indefinitely.
 
-The current intended production configuration remains aligned with the configuration documented for RugFreePump.
+## Token creation and initialization risks
+
+Token creation is a multi-step on-chain operation that initializes the token, metadata, bonding-curve sale, and the creator's initial purchase.
+
+The creation process includes:
+
+* Validating token and metadata parameters
+* Deriving and validating the expected mint authority
+* Deriving and validating the expected metadata account
+* Creating token metadata through the Metaplex Token Metadata program
+* Minting the initial token supply
+* Revoking the mint authority
+* Obtaining and validating the SOL/USD price
+* Calculating and transferring the configured creation fee
+* Funding the bonding-curve vault
+* Activating the sale and setting its lifecycle state
+* Executing the mandatory initial creator purchase
+
+Because multiple protocol components are initialized during creation, an implementation defect or unexpected external-program failure could prevent successful creation or affect the resulting initial state.
+
+### Metadata creation and immutability
+
+RugFreePump creates the token's Metaplex metadata as part of the creation transaction and initializes the metadata account as immutable.
+
+This means an incorrect value established during creation may not be correctable through the normal metadata update mechanism.
+
+The program validates the expected metadata account before invoking the metadata CPI, but the Metaplex Token Metadata program remains an external program dependency.
+
+Metadata immutability also does not establish that creator-supplied content is accurate, authorized, or legitimate. Content and creator-related risks are covered separately in [Token and Creator Risks](/security-and-risk/token-and-creator-risks).
+
+### Mint authority revocation
+
+The creation process mints the configured initial token supply and then revokes the mint authority.
+
+This limits the ability to create additional tokens through the revoked mint authority after initialization.
+
+It also means that an error in the initial token supply cannot be corrected by subsequently minting additional tokens into the same mint.
+
+### Initial creator purchase
+
+Token creation includes a mandatory initial creator purchase.
+
+The purchase is executed against the newly initialized bonding curve and therefore becomes part of the sale's actual contribution and token state.
+
+If the creator purchase cannot satisfy the program's purchase conditions, the creation transaction does not successfully complete.
+
+The economic effects of the initial purchase and subsequent bonding-curve activity are covered in [Bonding-Curve Sale Risks](/security-and-risk/bonding-curve-sale-risks).
+
+### Creation-time pricing dependency
+
+The creation process depends on validated SOL/USD price data.
+
+The accepted price is used when calculating the SOL-denominated creation fee and is also supplied to the initial creator purchase.
+
+Consequently, creation is subject to the same external price-data dependency that affects the bonding-curve purchase mechanism.
+
+Detailed oracle and pricing risks are covered in [Oracle and Pricing Risks](/security-and-risk/oracle-and-pricing-risks).
+
+### Creation state initialization
+
+The program initializes the bonding-curve sale state during token creation, including its active state and lifecycle timing.
+
+A defect in initialization logic could therefore affect the starting conditions of the sale before external buyers interact with it.
+
+The program performs explicit state and account validation during creation to constrain which accounts and initial conditions can be accepted.
 
 ## Account and state validation
 
 The program uses Solana account constraints, PDA derivation, signer requirements, and explicit state validation to limit which accounts and states can participate in each instruction.
 
-Public operations are rejected when required conditions are not satisfied.
+Operations are rejected when required conditions are not satisfied.
 
 Examples include preventing operations against:
 
-- Expired sales where purchases are no longer permitted
-- Finalized sales where additional purchases are not permitted
-- Canceled sales
-- Already migrated sales
-- Invalid authorities
-- Incorrect external program addresses
-- Invalid oracle data
-- Invalid account relationships
+* Inactive or finalized sales where purchases are no longer permitted
+* Canceled sales
+* Already migrated or recovered sales
+* Invalid authorities
+* Incorrect external program addresses
+* Invalid oracle data
+* Invalid account relationships
+* Invalid migration states
 
-These checks are important controls, but their effectiveness depends on the correctness of the program implementation.
+These checks are important controls, but their effectiveness depends on the correctness of the deployed implementation.
 
 ## Transaction failure risk
 
-Solana transactions can fail because of:
+A RugFreePump transaction can fail or remain unconfirmed for reasons including:
 
-- Invalid arguments
-- Insufficient wallet balance
-- Invalid account state
-- Stale oracle data
-- Slippage limits
-- Network conditions
-- Compute or account requirements
-- External program behavior
+* Invalid arguments
+* Insufficient wallet balance
+* Invalid account state
+* Unacceptable oracle data
+* Slippage limits
+* Compute or account requirements
+* External program requirements
+* Network conditions affecting submission or confirmation
 
-A failed transaction should not be interpreted as successful merely because the dApp displayed an intended action.
+A transaction displayed as an intended action by the dApp is not evidence that the operation succeeded.
 
-Users should verify the final transaction status in their wallet or a Solana explorer.
+Users should verify the resulting transaction status and signature through their wallet or a Solana-compatible explorer.
 
 ## Transaction atomicity
 
-The RugFreePump instructions execute within Solana transaction semantics.
+RugFreePump operations execute within Solana transaction semantics.
 
-For example, purchase processing involves token and SOL movements together with state updates. If the transaction fails, Solana transaction execution does not leave a partially completed successful instruction sequence merely because an earlier operation within the transaction was reached.
+For example, purchase processing involves token transfers, SOL transfers, fee handling, and protocol state updates within the same transaction.
 
-Users should nevertheless distinguish a failed transaction from a confirmed transaction and verify the final on-chain result.
+If the transaction fails, those changes are not left as independently committed partial operations merely because an earlier operation was reached during execution.
 
-## Emergency and recovery operations
+The same transaction semantics apply to multi-step creation and other supported program operations.
 
-The program contains administrative paths for exceptional finalized-sale situations.
+Users should nevertheless distinguish between a submitted transaction, a failed transaction, and a confirmed transaction when determining whether an operation actually occurred.
+
+## Finalized-sale recovery and cancellation risk
+
+The program contains privileged paths for exceptional finalized-sale situations.
 
 These include:
 
-- Finalized-sale liquidity recovery
-- Emergency cancellation of a finalized sale
+* Finalized-sale liquidity recovery
+* Emergency cancellation of a finalized sale
 
-These paths are subject to explicit state and authority checks.
+Both paths require specific authority and state conditions.
 
-They exist to handle situations where the normal liquidity-migration path should not proceed.
+They can change how a finalized sale is handled instead of following the normal liquidity-migration path.
 
-Because these operations are administrative and can affect the terminal handling of finalized-sale assets, they represent an important trust assumption.
+Because these operations can affect the terminal handling of finalized-sale assets, they represent an important administrative trust assumption.
 
-## Finalized-sale recovery
+### Finalized-sale recovery
 
 Under the configured recovery conditions, the authorized migration/recovery authority can execute the finalized-sale recovery path.
 
-The recovery process can handle finalized-sale liquidity and tokens through the designated administrative recovery mechanism rather than normal Raydium migration.
+The recovery path handles applicable finalized-sale liquidity and bonding-curve tokens through the program's designated administrative recovery mechanism rather than normal Raydium migration.
 
-Users should therefore understand that finalized liquidity does not necessarily have only one possible terminal path.
+Users should therefore not assume that every finalized sale necessarily ends with a Raydium liquidity pool.
 
-## Emergency cancellation
+The resulting on-chain state and transaction history determine how the finalized sale was ultimately handled.
 
-A finalized sale can also enter an emergency cancellation state through the authorized administrative path when the required conditions are met.
+### Emergency cancellation
 
-This is distinct from ordinary sale expiration.
+A finalized sale can enter an emergency cancellation state when the required administrative and state conditions are satisfied.
 
-The cancellation state permits eligible contributors to use the withdrawal mechanism under the program's cancellation rules.
+Emergency cancellation is distinct from ordinary sale expiration.
 
-This operation remains subject to the current administrative trust model.
+A canceled finalized sale can become eligible for contributor withdrawals under the program's cancellation rules.
 
-## External program interaction
+The availability of this administrative path means that finalized-sale handling is not limited to normal expiration or migration.
+
+## External program interaction risk
 
 The RugFreePump program interacts with external Solana programs where required.
 
-The most significant example is Raydium CPMM during liquidity migration.
+The most significant examples include:
 
-External CPI execution introduces additional software and integration risk.
+* Metaplex Token Metadata during token creation
+* Raydium CPMM during liquidity migration
 
-RugFreePump validates the expected Raydium CPMM program address before performing the migration CPI, but it cannot eliminate risks originating from an external protocol.
+An external CPI introduces additional software and integration dependencies. Unexpected external account state, external program failures, or behavior outside RugFreePump's control can cause an operation to fail.
+
+RugFreePump validates the expected external program and relevant accounts where required, but these checks do not eliminate risks originating from the external protocol.
+
+## Migration state protection
+
+The liquidity-migration path uses an explicit migration-in-progress state to prevent conflicting migration or recovery operations for the same sale.
+
+The program also checks relevant finalized, canceled, recovered, and migrated states before proceeding.
+
+These controls reduce the risk of conflicting lifecycle operations.
+
+They do not eliminate risks caused by incorrect program logic, authority compromise, external program behavior, or transaction failure.
 
 ## Irreversibility
 
-Confirmed Solana transactions and their resulting state changes should generally be treated as irreversible unless the program explicitly provides a later state transition.
+Confirmed Solana transactions and their resulting state changes should generally be treated as final unless the RugFreePump program explicitly provides a later state transition.
 
-Users should not assume that an accidental transaction, incorrect token address, incorrect wallet address, or mistaken purchase can be manually reversed by RugFreePump.
+RugFreePump cannot manually reverse an arbitrary confirmed transaction.
 
-## Audit status
+Users should therefore not assume that an accidental purchase, incorrect token address, incorrect wallet address, or other user-approved transaction can be reversed by platform support.
 
-RugFreePump has not undergone a formal independent security audit at this time.
-
-A future third-party audit is planned.
-
-Until such an audit is completed and publicly released, users should treat the program as unaudited software and evaluate the associated smart-contract risk accordingly.
-
-## Future governance controls
-
-RugFreePump plans to introduce multisig authorization for critical operations.
-
-The on-chain architecture has been designed with this future direction in mind, and a third-party multisig service such as Squads may be used.
-
-This is not currently deployed.
-
-The current program should therefore be evaluated according to its existing single-operator authority model rather than the planned future governance model.
+Where the program provides an explicit later state transition, such as an eligible withdrawal or recovery path, that transition remains subject to the program's defined conditions and authorities.
