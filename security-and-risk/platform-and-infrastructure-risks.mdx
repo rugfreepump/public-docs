@@ -1,178 +1,184 @@
 ---
 title: Platform and Infrastructure Risks
-description: Understand the risks associated with RugFreePump's dApp, off-chain services, infrastructure, and third-party dependencies.
+description: Understand the availability, indexing, infrastructure, and third-party service risks surrounding RugFreePump.
 ---
 
-RugFreePump uses off-chain infrastructure to provide the dApp interface and supporting services around the on-chain protocol.
+# Platform and Infrastructure Risks
 
-These systems improve usability and provide information that is not stored exclusively in the blockchain.
+The RugFreePump dApp relies on off-chain infrastructure to provide its user interface, indexing, metadata, analytics, realtime updates, and other supporting services.
 
-They also introduce a separate category of availability, integrity, and operational risk.
+These services are important for usability, but they are separate from the core Solana execution layer.
 
 ## On-chain versus off-chain systems
 
-The RugFreePump architecture contains an important distinction between:
+The RugFreePump architecture contains two broad categories of systems.
 
-**On-chain state**
+### On-chain
 
-and
+The Solana program controls protocol state and transaction execution.
 
-**Off-chain presentation and infrastructure.**
+Examples include:
 
-The on-chain program processes protocol instructions and maintains the relevant Solana state.
+- Token creation
+- Bonding-curve state
+- Purchase execution
+- Contribution accounting
+- Withdrawal eligibility
+- Liquidity migration
+- Emergency sale states
 
-Off-chain systems may provide:
+### Off-chain
 
-- Web application delivery.
-- Token metadata handling.
-- Indexed information.
-- Search and discovery.
-- Platform analytics.
-- Realtime updates.
-- Supporting APIs and services.
+Supporting services can provide:
 
-A problem with an off-chain service does not automatically mean that the underlying on-chain state has changed.
+- Website interfaces
+- Indexing
+- Search and discovery
+- Analytics
+- Realtime updates
+- Metadata retrieval
+- Notifications
+- Transaction preparation
+- Operational monitoring
 
-## dApp availability
+An off-chain service may become unavailable without meaning that the corresponding on-chain state has disappeared or changed.
 
-The RugFreePump website may become temporarily unavailable because of:
+## Website availability
 
-- Hosting problems.
-- DNS issues.
-- CDN problems.
-- Deployment failures.
-- Infrastructure outages.
-- Network connectivity problems.
-- Third-party service failures.
+The RugFreePump website can experience:
 
-A temporary dApp outage does not by itself invalidate transactions that have already been confirmed on Solana.
+- Downtime
+- Deployment issues
+- CDN problems
+- DNS problems
+- Browser compatibility issues
+- Infrastructure outages
 
-## Indexing and display delays
+Website availability should not be confused with the availability or finality of the underlying Solana network.
 
-Information displayed by the dApp may depend on off-chain indexing.
+## Indexing delays
 
-An indexing delay can cause the interface to temporarily display:
+RugFreePump uses off-chain indexing to make on-chain information easier to search and display.
 
-- Older sale information.
-- Delayed transaction activity.
-- Delayed statistics.
-- Delayed token metadata.
-- Delayed realtime updates.
+Indexers can temporarily lag behind the latest finalized blockchain state.
 
-When an important decision depends on current blockchain state, users should verify the underlying transaction or account state directly on Solana where practical.
+As a result, a transaction may appear:
+
+- Delayed
+- Missing temporarily
+- In an intermediate state
+- Different from the latest explorer result
+
+For important transactions, users should verify the underlying Solana transaction directly.
 
 ## Realtime service risk
 
-Realtime features may depend on WebSocket or other event-delivery infrastructure.
+RugFreePump uses realtime infrastructure to distribute updates to connected clients.
 
-A realtime outage can cause the interface to stop receiving updates even though the underlying blockchain continues operating.
+Realtime updates are a convenience layer.
 
-Users should distinguish between:
+A websocket disconnection or delayed realtime event does not itself determine the underlying on-chain state.
 
-**No realtime update**
+Clients may need to refresh or independently query the current state when a realtime service is unavailable.
 
-and
+## RPC dependency
 
-**No on-chain state change.**
-
-These are not necessarily the same condition.
-
-## RPC provider dependency
-
-The dApp and supporting services may use Solana RPC infrastructure to read or submit blockchain information.
+The dApp and supporting services depend on Solana RPC infrastructure for reading and submitting blockchain data.
 
 RPC providers can experience:
 
-- Outages.
-- Rate limits.
-- Latency.
-- Incomplete responses.
-- Temporary synchronization problems.
+- Outages
+- Rate limits
+- Latency
+- Temporary inconsistencies
+- Service degradation
 
-An RPC issue can make the dApp appear unavailable or cause a transaction to fail without indicating that Solana itself is unavailable.
+RPC problems can therefore affect the user experience even when Solana itself remains operational.
 
-> **TODO — REPLACE BEFORE PUBLICATION:** Publish the production RPC architecture and any relevant provider redundancy or failover policy if this information is intended to be public.
+## Metadata infrastructure
+
+Token metadata and associated media can depend on external storage and content-delivery infrastructure.
+
+If metadata or media infrastructure becomes unavailable, a token can temporarily display incomplete or missing information even though the underlying token and sale state remain on-chain.
+
+Users should distinguish metadata availability from token existence.
 
 ## Third-party services
 
-RugFreePump may rely on third-party services for specific functionality.
+RugFreePump may depend on external providers for infrastructure, storage, oracle data, blockchain access, analytics, and other operational services.
 
-Examples can include:
+A failure or change by a third-party provider can affect the platform.
 
-- Blockchain RPC.
-- Oracle data.
-- Metadata storage.
-- Content delivery.
-- Analytics.
-- Liquidity infrastructure.
+RugFreePump cannot guarantee continuous availability of an external service it does not control.
 
-Third-party service failures can affect specific platform functions.
+## Maintenance mode
 
-RugFreePump cannot guarantee the availability or behavior of every external service.
+The on-chain program includes maintenance controls that can restrict applicable protocol operations.
 
-## Metadata and content availability
+Maintenance may be used when operational intervention is required.
 
-Token metadata and media may be stored or delivered through systems outside the Solana ledger.
-
-A metadata provider or delivery service can become temporarily unavailable.
-
-This may affect how a token is displayed without necessarily changing the underlying token mint or on-chain ownership state.
+During maintenance, users may be unable to perform certain actions even when the website itself remains accessible.
 
 ## Infrastructure security
 
-Off-chain systems can be exposed to conventional security risks, including:
+Off-chain infrastructure is a separate security boundary from the Solana program.
 
-- Credential compromise.
-- Dependency vulnerabilities.
-- Unauthorized access.
-- Deployment mistakes.
-- Configuration errors.
-- DNS compromise.
-- Supply-chain attacks.
-- Denial-of-service attacks.
+A compromise of an off-chain service could potentially affect:
 
-These risks are distinct from vulnerabilities in the RugFreePump on-chain program.
+- Website content
+- Displayed information
+- Availability
+- Indexing
+- User experience
+- Transaction preparation
+
+It does not automatically grant control over Solana assets or on-chain state.
+
+Users should still verify critical transactions and addresses independently.
 
 ## Service availability is not asset custody
 
-RugFreePump's dApp infrastructure should not be treated as a substitute for the user's wallet.
+RugFreePump's off-chain infrastructure does not constitute custody of users' wallets.
 
-Temporary platform unavailability does not transfer ownership of assets to RugFreePump.
+A website outage does not itself transfer or confiscate wallet assets.
 
-The user's wallet and Solana account state remain the relevant systems for asset ownership and transaction authorization.
+Users retain control of their wallet keys and can interact with compatible Solana infrastructure independently where the relevant on-chain operation permits it.
 
 ## Operational incidents
 
-If a significant platform incident occurs, RugFreePump may publish an incident notice through its official communication channels.
+If a significant infrastructure incident occurs, RugFreePump may temporarily restrict affected functionality while investigating or recovering the affected service.
 
-> **TODO — REPLACE BEFORE PUBLICATION:** Add the official status page, incident communication channel, and official announcement channels.
+Users should avoid repeatedly submitting transactions when the final status of an earlier transaction is uncertain.
 
-Users should verify incident information through official channels rather than relying on unsolicited support messages.
+Instead, verify the transaction status before attempting another transaction.
 
 ## Dependency changes
 
-External services can change APIs, infrastructure, pricing, availability, or technical behavior.
+External providers can change:
 
-Such changes can require RugFreePump to modify its integration.
+- APIs
+- Network behavior
+- Pricing
+- Availability
+- Authentication requirements
+- Service limits
 
-A dependency change can temporarily affect a specific platform function without necessarily affecting the underlying on-chain protocol.
+RugFreePump may need to modify infrastructure in response.
 
-## Security versus availability
+These changes can affect availability without changing the underlying protocol rules.
 
-A service being unavailable does not necessarily mean that the system has been compromised.
+## Current operational model
 
-Likewise, a service being available does not prove that every component is free from vulnerabilities.
+RugFreePump is currently operated by a single founder/developer.
 
-Availability incidents and security incidents should therefore be evaluated separately.
+This includes responsibility for the platform's administrative and infrastructure operations.
 
-## User guidance during an outage
+This creates an operational concentration risk because a significant portion of platform management currently depends on one operator.
 
-If the dApp behaves unexpectedly:
+Future operational maturity is expected to introduce greater separation of responsibilities and stronger authorization controls.
 
-1. Do not repeatedly submit transactions without understanding the failure.
-2. Check the wallet transaction history.
-3. Check the official RugFreePump status or announcement channels.
-4. Verify confirmed transactions directly on Solana where appropriate.
-5. Avoid links supplied through unsolicited support messages.
+## User verification
 
-> **Important:** Off-chain infrastructure exists to provide the RugFreePump user experience and supporting services. The underlying blockchain state and the availability of the dApp are separate concerns.
+When an off-chain display conflicts with a confirmed on-chain transaction, users should rely on the underlying Solana transaction and account state for protocol execution.
+
+The dApp is an interface to the protocol, not a replacement for the blockchain's public record.
