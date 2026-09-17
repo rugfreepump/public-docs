@@ -76,7 +76,7 @@ The migration process therefore represents a separate execution boundary between
 
 ### Platform infrastructure
 
-The RugFreePump dApp and supporting off-chain infrastructure provide the interface and information used by participants.
+The RugFreePump dApp and supporting off-chain infrastructure provide the interface through which token creators launch tokens and buyers interact with bonding-curve sales.
 
 This includes services such as:
 
@@ -192,9 +192,9 @@ Detailed migration risks and migration behavior are covered separately in [Liqui
 
 ## Off-chain information versus on-chain state
 
-The RugFreePump dApp provides interfaces and information that help users interact with the protocol.
+The RugFreePump dApp is an interaction layer, not the authoritative source of protocol state.
 
-The website and supporting services should not, however, be treated as the ultimate authority for on-chain execution.
+Token creators and buyers use the dApp to initiate supported on-chain operations and view information about tokens, sales, and their current state. The authoritative result of those operations is determined by the deployed RugFreePump on-chain program and the resulting Solana account state.
 
 Users can independently inspect:
 
@@ -206,7 +206,7 @@ Users can independently inspect:
 * Liquidity migration transactions
 * Other publicly available Solana data
 
-For significant transactions, users should verify the wallet prompt and resulting transaction rather than relying only on information displayed by the website.
+For significant transactions, users should verify the wallet prompt and resulting transaction rather than relying only on information displayed by the dApp.
 
 ## User wallet boundary
 
@@ -230,17 +230,17 @@ Detailed wallet and transaction risks are covered separately in [Wallet and Tran
 
 ## Security model in practice
 
-RugFreePump's security model relies on separating protocol execution from the systems surrounding it.
+RugFreePump's security model relies on clearly separating protocol execution from the systems that provide external data, liquidity infrastructure, user interfaces, and wallet access.
 
-The on-chain program determines whether protocol operations satisfy the implemented rules and records the resulting state on Solana.
+The deployed RugFreePump on-chain program determines whether protocol operations satisfy its implemented rules and records the resulting state on Solana.
 
-The website and other off-chain services provide interfaces and supporting information, but they do not replace the on-chain execution layer.
+The dApp and supporting off-chain services provide the interface and supporting information required to interact with the platform, but they do not replace the on-chain execution layer.
 
-Solana provides the execution environment, Pyth provides external price data for applicable operations, and Raydium provides external liquidity infrastructure for migration.
+Solana provides the execution environment, Pyth provides external price data required by the bonding-curve purchase mechanism, and Raydium provides external liquidity infrastructure for migration.
 
 Users retain control of their own wallets and are responsible for approving transactions and protecting their wallet credentials.
 
-No individual component should therefore be treated as providing complete security for the entire system.
+The security of the overall system therefore depends on both the controls enforced by the RugFreePump program and the security of the external systems and authorities on which the platform depends.
 
 ## Current audit status
 
