@@ -1,1 +1,111 @@
+---
+title: Oracle and Pricing Risks
+description: Understand how SOL/USD pricing affects bonding-curve purchases and the risks associated with external price data.
+---
 
+RugFreePump uses SOL/USD price data as part of its bonding-curve purchase calculations.
+
+Because this price data comes from an external oracle system, oracle availability, freshness, and correctness are part of the purchase transaction's execution environment.
+
+## Why SOL/USD pricing is used
+
+The RugFreePump bonding curve operates with SOL contributions while the sale's pricing limits and progression are evaluated using USD-denominated values.
+
+The SOL/USD price allows the protocol to translate the SOL amount involved in a purchase into the corresponding USD-denominated value used by the bonding-curve logic.
+
+The oracle therefore affects whether a purchase can be executed and how the purchase is evaluated.
+
+## Oracle data is an external dependency
+
+The RugFreePump program does not independently create the market price of SOL.
+
+It relies on externally produced price data.
+
+This creates several possible failure conditions:
+
+- Price data may become stale.
+- The oracle may temporarily become unavailable.
+- The reported price may differ from a price displayed by another market or service.
+- Network conditions may prevent the transaction from obtaining acceptable oracle data.
+- Confidence or verification requirements may cause a transaction to fail.
+
+A failed purchase caused by unacceptable oracle conditions does not necessarily indicate a defect in the bonding curve.
+
+## Stale price data
+
+The program applies freshness requirements to price data used during purchases.
+
+If the supplied price update is outside the protocol's accepted freshness window, the transaction can be rejected.
+
+This protects the bonding-curve calculation from relying on an outdated SOL/USD value.
+
+Users may therefore encounter a failed purchase during an oracle availability or freshness issue even when their wallet has sufficient SOL.
+
+## Price movement
+
+SOL/USD can change between the time a user views a quoted purchase and the time the transaction is processed.
+
+As a result, the final transaction may be evaluated using different price data from what the user initially observed.
+
+Users should treat displayed values as information available at the time they are shown, not as a guaranteed future execution price.
+
+## Oracle price versus token price
+
+The SOL/USD oracle price should not be confused with the price of the token being launched.
+
+The oracle provides information about the value of SOL relative to USD.
+
+The bonding curve determines the token purchase calculation according to the current state of the RugFreePump sale.
+
+After migration, the token's market price is determined by the external liquidity and trading environment rather than by the SOL/USD oracle alone.
+
+## Confidence and verification
+
+The protocol applies validation to the price information supplied to a purchase instruction.
+
+This is intended to prevent clearly unsuitable price data from being used in the transaction.
+
+Oracle validation is nevertheless not a guarantee that the reported market price will exactly match every exchange, market, or user's expected price.
+
+## Oracle outages
+
+If the required price data is unavailable or fails the program's validation requirements, purchases may temporarily fail.
+
+Users should not repeatedly submit transactions solely because a purchase failed due to an oracle-related condition.
+
+Instead, users should inspect the transaction error and wait for the underlying dependency to recover where appropriate.
+
+## Economic risk remains
+
+An accurate and fresh SOL/USD price does not eliminate economic risk.
+
+Users remain exposed to:
+
+- SOL price movement.
+- Bonding-curve price movement.
+- Token market conditions.
+- Slippage.
+- Liquidity conditions.
+- Changes in the value of the token after purchase.
+
+Oracle correctness and investment outcome are separate concerns.
+
+## External oracle dependency
+
+The oracle is an external component of the transaction environment.
+
+A change, outage, implementation issue, or network problem affecting the oracle provider can affect the ability of RugFreePump purchases to execute.
+
+> **TODO — REPLACE BEFORE PUBLICATION:** Publish the production oracle provider, feed identifier, accepted freshness parameters, confidence requirements, and official documentation link.
+
+## User guidance
+
+Before approving a purchase, users should:
+
+1. Review the SOL amount being spent.
+2. Review the expected token amount.
+3. Review the applicable fee.
+4. Review the transaction in their wallet.
+5. Consider that SOL/USD and token prices can change before execution.
+
+A transaction should not be considered guaranteed merely because a quote was displayed by the dApp.
