@@ -17,12 +17,12 @@ A completed sale does not mean that a successful external market has been create
 
 Migration is subject to protocol conditions and transaction execution.
 
-The migration path requires, among other conditions:
+The normal migration path requires, among other conditions:
 
 - A finalized sale
 - Required migration feature enablement
 - Completion of the configured migration lock period
-- No conflicting recovery state
+- No conflicting recovery or cancellation state
 - No prior migration
 - A valid authorized executor
 - Valid Raydium program configuration
@@ -47,7 +47,7 @@ The normal migration operation can be executed by:
 
 Both paths remain subject to the program's validation rules.
 
-The existence of an authorized migration executor does not mean that either party can bypass the program's migration conditions.
+An authorized migration executor cannot bypass the program's migration conditions.
 
 ## Raydium dependency
 
@@ -85,6 +85,16 @@ The amount of liquidity ultimately placed into the external pool should therefor
 Where the protocol configuration enables a creator incentive, the migration process can allocate the configured creator incentive from eligible finalized-sale funds.
 
 The creator incentive is calculated by the program according to the configured rules and is not an arbitrary amount selected during migration.
+
+## LP token handling after migration
+
+During normal liquidity migration, Raydium CPMM pool initialization returns LP tokens representing the liquidity position created by the migration.
+
+The migration process burns those LP tokens and closes the associated LP token account.
+
+As a result, RugFreePump does not retain those LP tokens as an ongoing protocol-controlled liquidity position after normal migration.
+
+This describes the behavior of the current migration implementation. It does not eliminate market or liquidity risk and should not be interpreted as a guarantee about the future behavior of the external Raydium protocol.
 
 ## Migration and external market price
 
@@ -131,9 +141,9 @@ The transaction can fail if:
 
 Users should verify the confirmed migration transaction rather than relying only on the dApp interface.
 
-## Reentrancy and migration state
+## Migration state protection
 
-The migration path uses an explicit in-progress state to prevent conflicting migration operations from being processed simultaneously through the same sale.
+The migration path uses an explicit in-progress state to prevent conflicting migration operations from being processed simultaneously for the same sale.
 
 The program also prevents migration when incompatible recovery or cancellation states are active.
 
@@ -145,17 +155,17 @@ The program includes a finalized-sale recovery path for configured emergency sit
 
 When the required recovery mode and authority conditions are satisfied, finalized-sale liquidity can be handled through the administrative recovery path instead of normal Raydium migration.
 
-This is an important distinction from ordinary migration.
+Under this recovery path, the program transfers the applicable recovery funds and bonding-curve tokens to the authorized recovery authority according to the on-chain recovery rules.
 
-Users should inspect the on-chain sale state when determining how a finalized sale was ultimately handled.
+Emergency recovery is therefore materially different from normal liquidity migration and should not be treated as an ordinary Raydium pool creation.
+
+Users should inspect the on-chain sale state and transaction history when determining how a finalized sale was ultimately handled.
 
 ## Emergency cancellation
 
 A finalized sale can also be canceled through the authorized emergency cancellation path when the required conditions are satisfied.
 
-Emergency cancellation and finalized-sale recovery are distinct states.
-
-The program prevents the two paths from being used simultaneously for the same sale under the relevant state checks.
+Emergency cancellation and finalized-sale recovery are distinct states, and the program prevents the two paths from being used simultaneously for the same sale under the relevant state checks.
 
 A canceled finalized sale can become eligible for contributor withdrawals under the program's withdrawal rules.
 
@@ -163,15 +173,15 @@ A canceled finalized sale can become eligible for contributor withdrawals under 
 
 Not every finalized sale should be described as having successfully migrated to an external trading pool.
 
-The protocol records terminal handling of finalized-sale liquidity through its on-chain state.
+The protocol records the resulting lifecycle state on-chain.
 
-Depending on the circumstances, this can involve:
+Depending on the circumstances, a finalized sale can result in:
 
 - Normal Raydium migration
 - Finalized-sale recovery
 - Emergency cancellation followed by eligible withdrawals
 
-Users should verify the actual on-chain state and transaction history.
+Users should verify the actual on-chain state and transaction history rather than relying solely on the fact that the sale reached finalization.
 
 ## Post-migration token risk
 
