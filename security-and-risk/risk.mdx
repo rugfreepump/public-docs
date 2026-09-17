@@ -3,33 +3,649 @@ title: Risks
 description: Understand the technical, economic, operational, market, and user-related risks associated with creating, buying into, withdrawing from, and migrating bonding-curve sales through RugFreePump.
 ---
 
-Using RugFreePump involves significant technical, economic, and behavioral risks, where smart contract mechanics, volatile markets, and aggressive bot activity can lead to a permanent loss of funds. The overview below covers key system dynamics, though additional unforeseen vulnerabilities or external failures may arise.
+Using RugFreePump involves technical, economic, operational, market, and user-driven risks. These factors can lead to financial loss, reduced liquidity, service interruptions, irreversible transactions, or degraded platform functionality.
 
-***
+The risks outlined below are not exhaustive. Unforeseen vulnerabilities, market shifts, external failures, and unexpected interactions may introduce additional risks.
 
-## On-Chain Program Risks
+## On-chain program risks
 
-* **Code Vulnerabilities & Exploits:** The smart contract handles token creation, bonding-curve math, and migrations. Bugs or accounting errors can freeze funds without any manual rollback capability.
-* **Single-Key Team Controls:** Upgrade authority and parameter configurations are managed by a single developer wallet rather than a multisig governance model.
-* **Maintenance & Dependencies:** Maintenance freezes can reduce active token sale windows, while external dependencies like Metaplex create permanent metadata constraints upon launch.
-* **Execution & Lifecycle:** Bundled transaction atomicity on Solana means any instruction failure reverts the entire operation.
+### Program software risk
 
-## Bot & Market Dynamics
+The RugFreePump on-chain program directly processes token creation, bonding-curve purchases, withdrawals, sale finalization, and liquidity migration.
 
-* **Adversarial Bots:** Sniper and MEV/sandwich bots actively monitor curves to front-run user orders.
-* **Slippage & Limits:** High price impacts, dynamic per-block pricing, and minimum USD purchase requirements can cause transactions to fail or execute at unfavorable rates.
+Software defects, implementation errors, unexpected state combinations, or previously undiscovered vulnerabilities could cause:
 
-## Project & Quality Risks
+* Incorrect token or SOL accounting
+* Incorrect bonding-curve calculations
+* Incorrect fee calculations
+* Failed or unintended state transitions
+* Incorrect withdrawals
+* Failed or incorrect sale finalization
+* Failed or incorrect liquidity migration
+* Unexpected handling of administrative operations
+* Loss or unintended movement of assets
 
-* **Dev Dumps & Abandonment:** Creators can sell off their initial allocations to crash curves, and platform presence does not constitute a team endorsement.
-* **Impersonation:** Token metadata, social links, and tickers can be spoofed by malicious actors.
+The consequences of a software vulnerability can range from temporary loss of functionality to permanent financial loss.
 
-## Oracle & Migration Risks
+### Upgradeability risk
 
-* **Pyth Oracles:** USD-denominated curves rely on Pyth price feeds; stale prices or volatility spikes can freeze trading operations.
-* **Raydium Transition:** Hitting 100% on a curve triggers a Raydium migration via CPI, after which open-market volatility and external pool risks apply.
+The RugFreePump on-chain program is currently upgradeable.
 
-## Fees, Vaults, & Infrastructure
+The current upgrade authority is controlled by the founder/developer and is not protected by an independent multisig governance structure.
 
-* **Non-Refundable Costs:** Failed transactions still incur network gas fees, and unexpired vault balances are subject to rent-exemption and wallet-tracking constraints for refunds.
-* **Wallet Security:** Users are entirely responsible for private key safety, phishing awareness, and recognizing RPC or frontend display lags.
+A compromised, misused, or unauthorized upgrade authority could therefore alter the program logic used by future transactions.
+
+Users may consequently be exposed to behavior that differs from the behavior of an earlier version of the deployed program.
+
+### Administrative authority risk
+
+Certain protocol configuration, maintenance, migration, recovery, and other critical operations require administrative authority.
+
+Because the relevant authorities are currently controlled by a single operator, compromise, loss, misuse, or unauthorized use of those authorities could affect protocol behavior.
+
+Administrative actions can potentially affect:
+
+* Protocol availability
+* Feature availability
+* Fee configuration
+* Sale configuration
+* Migration configuration
+* Recovery behavior
+* Other protocol-wide settings
+
+### Maintenance mode risk
+
+The RugFreePump protocol can restrict or halt relevant protocol operations when maintenance mode is activated.
+
+Because bonding-curve token sales operate within a fixed expiration window, extended maintenance can reduce the effective time available for an active sale.
+
+This can result in:
+
+* Diminished contributor engagement
+* Reduced time for creators to attract demand and build sale contributions
+* Increased risk that a sale fails to reach its hard cap before expiration
+* Disrupted launch, community, and marketing schedules
+
+Protocol-level maintenance restrictions are separate from Solana network congestion or local wallet failures.
+
+### Configuration risk
+
+Protocol behavior depends in part on configurable parameters.
+
+Changes to fees, sale duration, feature availability, migration settings, creator incentives, DEX-related settings, or other configuration can affect future transactions and sale outcomes.
+
+Users should not assume that historical configuration remains unchanged.
+
+### Token creation and initialization risk
+
+Token creation involves multiple on-chain operations, including token mint creation, metadata initialization, initial supply minting, mint-authority revocation, creation-fee processing, bonding-curve initialization, and the mandatory creator purchase.
+
+A failure or unexpected interaction during creation can prevent the token or sale from being initialized as intended.
+
+### Metadata and external-program risk
+
+Token creation depends on the Metaplex Token Metadata program.
+
+An external-program failure, unexpected account state, incorrect metadata parameters, or other integration problem can prevent successful token creation.
+
+The token metadata is initialized as immutable. Incorrect information established during creation may therefore be difficult or impossible to correct through the normal metadata update mechanism.
+
+Metadata immutability does not establish that creator-supplied information is accurate, authorized, or legitimate.
+
+### Mint-authority revocation risk
+
+The initial token supply is minted during creation and the mint authority is subsequently revoked.
+
+This limits future supply creation through the revoked authority, but it also means that an error in the initial supply cannot later be corrected by minting additional tokens into the same mint.
+
+### Initial creator purchase risk
+
+Token creation includes a mandatory initial creator purchase.
+
+The creator's initial purchase becomes part of the bonding-curve sale state and can affect the starting contribution and token distribution experienced by subsequent buyers.
+
+If the initial purchase cannot satisfy the program's purchase conditions, the creation transaction does not successfully complete.
+
+### Creation-time oracle dependency
+
+Token creation depends on accepted SOL/USD price data.
+
+The price obtained during creation is used for creation-fee calculation and is also supplied to the initial creator purchase.
+
+An unavailable, stale, invalid, or otherwise unacceptable price update can therefore prevent or affect token creation in addition to affecting later purchases.
+
+### Account and state validation risk
+
+Incorrect account relationships, authorities, lifecycle states, or external program accounts can cause transactions to fail or, if a validation defect exists, potentially affect an unintended state or account.
+
+Lifecycle-sensitive operations include token creation, purchases, withdrawals, finalization, cancellation, recovery, and migration.
+
+### Transaction failure risk
+
+Transactions may fail, remain unconfirmed, or require resubmission because of:
+
+* Invalid arguments
+* Insufficient wallet balance
+* Invalid account state
+* Unacceptable oracle data
+* Slippage limits
+* Compute or account requirements
+* External program requirements
+* Network conditions affecting submission or confirmation
+
+A transaction displayed by the dApp as an intended action does not establish that the operation succeeded.
+
+### Transaction atomicity and execution risk
+
+RugFreePump operations can involve multiple transfers and state changes within a single Solana transaction.
+
+A failed transaction does not leave earlier instructions as independently committed successful operations. However, users may still misunderstand the outcome of a submitted, failed, unconfirmed, or confirmed transaction if they rely only on the dApp interface.
+
+### Finalized-sale recovery and cancellation risk
+
+Finalized sales can have exceptional administrative paths in addition to normal expiration and liquidity migration.
+
+Finalized-sale recovery can redirect the handling of finalized-sale assets through the designated recovery mechanism rather than normal Raydium migration.
+
+Emergency cancellation can change the finalized sale into a cancellation state under the applicable administrative conditions.
+
+These paths can therefore affect the terminal handling of a sale and the availability or timing of subsequent contributor withdrawals.
+
+### External program interaction risk
+
+RugFreePump depends on external Solana programs for certain operations.
+
+The principal integrations include Metaplex Token Metadata during token creation and Raydium CPMM during liquidity migration.
+
+Failures, unexpected state, vulnerabilities, upgrades, or behavior outside RugFreePump's control can cause dependent operations to fail or produce unexpected outcomes.
+
+### Migration-state risk
+
+Liquidity migration depends on multiple sale, migration, authority, account, and external-program conditions.
+
+An incorrect state transition, unexpected external-program behavior, or failed migration transaction can delay or prevent migration.
+
+A migration-in-progress state can also temporarily prevent competing migration or recovery operations for the same sale.
+
+### Irreversibility risk
+
+Confirmed Solana transactions and resulting state changes should generally be treated as final unless the RugFreePump program explicitly provides a later state transition.
+
+RugFreePump cannot manually reverse an arbitrary confirmed transaction.
+
+An accidental purchase, incorrect token address, incorrect wallet address, or other user-approved transaction may therefore be permanently irreversible.
+
+---
+
+## Oracle and pricing risks
+
+### Oracle dependency
+
+The RugFreePump bonding curve is denominated in USD while buyers contribute SOL.
+
+The program therefore depends on SOL/USD price data to determine the USD value used by the bonding-curve purchase mechanism.
+
+An oracle failure can affect both the ability to execute a transaction and the economic result of an accepted transaction.
+
+### Stale or unavailable price data
+
+A price update that is too old or otherwise fails the program's acceptance conditions can cause a purchase or creation transaction to fail.
+
+During prolonged oracle or infrastructure issues, users may be unable to participate even when the Solana network and RugFreePump interface remain available.
+
+### Oracle accuracy and deviation risk
+
+Oracle data may differ from prices available on individual exchanges or trading venues.
+
+A valid oracle update can therefore still represent a price that differs from a user's expected market price.
+
+This can affect:
+
+* SOL required for a target purchase
+* USD-denominated contribution calculations
+* Creation fees
+* Initial creator purchases
+* Token quantities received from the bonding curve
+
+### Oracle confidence risk
+
+The program applies a confidence requirement to accepted SOL/USD data.
+
+If oracle confidence deteriorates beyond the permitted threshold, transactions depending on the price can fail.
+
+This can temporarily prevent purchases or token creation rather than allowing execution against low-confidence pricing data.
+
+### Price movement risk
+
+SOL can move materially in USD value between the time a user prepares a transaction and the time the transaction executes.
+
+Consequently, the amount of SOL required to represent a particular USD contribution can change.
+
+The token's market value can also move independently of the SOL/USD price used by the bonding curve.
+
+### Quote and execution timing risk
+
+A quote or displayed amount represents information available at a particular point in time.
+
+Changes in SOL/USD price, bonding-curve state, fees, or transaction timing can cause the final executed result to differ from a previously displayed expectation.
+
+### Oracle infrastructure risk
+
+RugFreePump does not control the underlying Pyth oracle infrastructure.
+
+Oracle outages, delayed updates, incorrect external data, infrastructure failures, or other problems affecting the oracle service can therefore affect protocol availability or execution.
+
+---
+
+## Bonding-curve sale risks
+
+### Bonding-curve pricing risk
+
+The bonding curve determines token output based on the sale's current USD-denominated position.
+
+As the sale progresses, the price produced by the curve changes.
+
+Buyers therefore cannot assume that the price paid by one buyer will remain available to later buyers.
+
+### Price impact risk
+
+Larger purchases can move the bonding-curve position more significantly than smaller purchases.
+
+A buyer may therefore receive a different effective price from a previously observed quote or from the price paid by another buyer.
+
+### Slippage risk
+
+Bonding-curve state can change between the time a user prepares a transaction and the time it executes.
+
+If the resulting execution exceeds the user's permitted slippage, the transaction can fail.
+
+If a user permits higher slippage, the transaction may execute at a materially different effective price than initially expected.
+
+### Minimum purchase risk
+
+The protocol applies a minimum USD-denominated purchase requirement.
+
+A purchase that falls below the required threshold after applicable fees may fail.
+
+Changes in SOL/USD pricing can also affect the amount of SOL required to satisfy the minimum.
+
+### Hard-cap risk
+
+Each sale has a defined maximum USD raise.
+
+A sale may therefore reach its hard cap and stop accepting additional purchases even when additional buyers remain willing to participate.
+
+### Fixed expiration risk
+
+Bonding-curve sales operate within a fixed expiration window.
+
+A sale may expire before reaching its hard cap.
+
+If this occurs, the sale does not necessarily proceed through the normal finalized-sale and liquidity-migration path.
+
+### Demand and capital-formation risk
+
+There is no guarantee that a newly created token will attract sufficient buyers or contributions to reach its hard cap.
+
+Low demand can result in:
+
+* A sale expiring below its hard cap
+* Lower-than-expected capital formation
+* Reduced liquidity available for subsequent stages
+* A creator's planned launch failing to achieve its intended funding objective
+
+### Maintenance-related sale-time risk
+
+Extended protocol maintenance can reduce the effective time available for contributors to participate before a sale's fixed expiration.
+
+This can reduce contributor activity and increase the possibility that a sale expires without reaching its hard cap.
+
+### Initial creator position risk
+
+The mandatory initial creator purchase affects the initial state of the bonding curve.
+
+Subsequent buyers therefore enter a sale after the creator's initial position has already been established.
+
+### Market-value risk
+
+The bonding curve determines execution pricing during the sale but does not guarantee a token's future market value.
+
+A token can decline substantially in value after purchase, including after liquidity migration.
+
+### Market transition risk
+
+A token's transition from the bonding curve to external liquidity introduces a change in trading environment.
+
+The price, liquidity, spread, volatility, and available trading activity after migration can differ materially from conditions during the bonding-curve sale.
+
+---
+
+## Token and creator risks
+
+### Creator risk
+
+Creating a token through RugFreePump does not establish that the creator is reputable, qualified, trustworthy, or capable of operating a successful project.
+
+A creator may abandon a project, stop communicating, fail to deliver promised utility, or otherwise fail to meet expectations.
+
+### No endorsement risk
+
+The presence of a token on RugFreePump does not establish that RugFreePump endorses, verifies, sponsors, or guarantees the creator, token, project, claims, or future performance.
+
+### Identity and attribution risk
+
+A creator address associated with a token does not by itself establish the real-world identity of the person or organization controlling that address.
+
+Creator attribution should therefore not be interpreted as independent identity verification.
+
+### Impersonation risk
+
+Creators may use names, symbols, images, descriptions, or social links that resemble established projects, companies, individuals, or communities.
+
+Users may incorrectly assume that a token is affiliated with an entity that has no relationship with it.
+
+### Misleading-content risk
+
+Creator-supplied metadata and promotional information may be inaccurate, incomplete, exaggerated, misleading, or intentionally deceptive.
+
+Users may rely on descriptions, social links, images, or other project information when deciding whether to interact with a token.
+
+### Copyright and trademark risk
+
+Creators are responsible for having the necessary rights, permissions, or licenses to use names, symbols, descriptions, images, artwork, logos, and other submitted content.
+
+RugFreePump does not establish ownership or licensing rights merely because content was successfully submitted.
+
+A rights holder may later dispute the use of submitted content.
+
+### Immutable metadata risk
+
+Incorrect or unauthorized information established in immutable token metadata may remain associated with the token even if the creator later changes their position or the information is shown to be inaccurate.
+
+### Token quality and project risk
+
+RugFreePump does not guarantee that a token has meaningful utility, sustainable economics, legitimate development activity, or long-term viability.
+
+A token may lose most or all of its market value regardless of whether its on-chain creation and sale mechanics function correctly.
+
+### Creator-controlled external activity
+
+Creators may operate websites, social-media accounts, communities, bots, trading strategies, or other systems outside RugFreePump.
+
+Activity associated with those external systems may not be controlled, verified, or operated by RugFreePump.
+
+### Platform content-removal limitation
+
+RugFreePump may restrict, remove, or disable affected content from its own platform where applicable.
+
+Removing content from RugFreePump does not remove blockchain transactions, token accounts, immutable on-chain records, or content that may already exist on decentralized or third-party infrastructure.
+
+### Creator timing risk
+
+Creators may plan launches around community announcements, promotional campaigns, partnerships, or other external events.
+
+Maintenance, technical failures, transaction delays, or sale expiration can disrupt those plans and reduce the effectiveness of planned promotion.
+
+---
+
+## Liquidity and migration risks
+
+### Migration dependency risk
+
+A completed sale may depend on the liquidity-migration process before external liquidity becomes available through the designated DEX integration.
+
+A migration failure or interruption can delay this transition.
+
+### Raydium dependency
+
+Normal liquidity migration interacts with Raydium CPMM through an on-chain CPI.
+
+RugFreePump does not control Raydium's software, accounts, liquidity environment, network conditions, or future changes.
+
+A failure or unexpected condition at Raydium can therefore affect migration.
+
+### Migration timing risk
+
+Liquidity migration occurs only after the applicable sale, timing, authority, and state conditions are satisfied.
+
+Users should not assume that reaching the sale's economic threshold means external liquidity becomes available immediately.
+
+### External liquidity risk
+
+Liquidity available after migration depends on the resulting pool and subsequent market activity.
+
+Low liquidity can increase:
+
+* Price impact
+* Spread
+* Execution difficulty
+* Volatility
+* Difficulty exiting a position
+
+### Post-migration market risk
+
+After migration, token trading is subject to external market conditions.
+
+The token's price can move independently of its bonding-curve history and may decline substantially after migration.
+
+### Liquidity-pool risk
+
+A liquidity pool does not guarantee a stable market, sufficient trading volume, or a particular token price.
+
+External traders can remove or add liquidity where permitted by the external protocol, and market conditions can change rapidly.
+
+### Migration failure risk
+
+A failed migration transaction does not necessarily mean that the underlying sale state has been lost.
+
+However, repeated failures, external protocol issues, incorrect account state, or administrative restrictions can delay migration and affect the expected transition to external liquidity.
+
+### Recovery-path risk
+
+Finalized-sale recovery is an administrative alternative to normal liquidity migration.
+
+Where recovery is invoked under the applicable conditions, the resulting asset handling can differ materially from normal Raydium migration.
+
+### Liquidity irreversibility risk
+
+Once assets have been transferred through the migration process and the corresponding terminal state has been established, users should not assume that the resulting liquidity arrangement can be reversed by RugFreePump.
+
+---
+
+## Fees and refund risks
+
+### Creation-fee risk
+
+Token creation requires payment of the applicable creation costs.
+
+The SOL amount required for a USD-denominated creation fee can change with the accepted SOL/USD price.
+
+Users must also account for Solana transaction costs and other required account funding.
+
+### Buy-fee risk
+
+Bonding-curve purchases include the configured protocol buy fee.
+
+The fee reduces the net USD contribution used by the purchase calculation and therefore affects the relationship between the amount of SOL spent and the token amount received.
+
+### Fee-configuration risk
+
+Applicable fees depend on the current protocol configuration.
+
+Users should not assume that a fee observed on an earlier transaction will remain unchanged for future transactions.
+
+### Transaction-cost risk
+
+A transaction can require additional SOL for network fees, account creation, rent-related costs, or other transaction requirements.
+
+The total SOL required to complete an operation can therefore exceed the nominal purchase or creation amount.
+
+### Failed-transaction cost risk
+
+A failed or unconfirmed transaction can require additional attempts and therefore additional transaction costs.
+
+Users should distinguish transaction fees from protocol fees and from amounts actually contributed to a sale.
+
+### Withdrawal and refund risk
+
+Withdrawal availability and refund amounts depend on the program's withdrawal conditions and the sale's final state.
+
+An eligible contributor should not assume that the full historical contribution will always be immediately recoverable.
+
+### Available-vault-liquidity limitation
+
+The withdrawal mechanism can be limited by the amount of lamports available in the bonding-curve vault above the required rent-exempt balance.
+
+Consequently, the refundable amount may be lower than the recorded contribution when the available vault balance is insufficient.
+
+### Token-balance risk during withdrawal
+
+Withdrawal processing can involve the current token balance in the relevant buyer token account.
+
+Users should not assume that the withdrawal mechanism only considers tokens that remain in the account as proof of the original purchase history.
+
+Moving tokens between accounts can therefore affect the practical outcome of a withdrawal.
+
+### Withdrawal irreversibility
+
+Where a withdrawal burns tokens and transfers SOL, the resulting token and SOL state should be treated as final unless another program-defined state transition is available.
+
+---
+
+## Wallet and transaction risks
+
+### Private-key and wallet-compromise risk
+
+RugFreePump does not control user private keys or seed phrases.
+
+A compromised wallet can therefore result in loss of SOL, tokens, or other assets independently of the security of the RugFreePump protocol.
+
+### Transaction-approval risk
+
+Wallet transactions require user approval.
+
+A user may approve an unintended transaction after failing to review the recipient, token, amount, account, or transaction details.
+
+Blockchain confirmation does not provide a general mechanism for reversing such approval.
+
+### Incorrect-address risk
+
+Sending assets to an incorrect wallet, token account, mint address, or other destination can result in permanent loss.
+
+RugFreePump cannot generally reverse an arbitrary confirmed transaction.
+
+### Phishing and impersonation risk
+
+Attackers may create websites, domains, social accounts, messages, or applications that imitate RugFreePump or a legitimate token project.
+
+Connecting a wallet or signing a transaction through an impersonating interface can result in unauthorized asset transfers or other losses.
+
+### Frontend-display risk
+
+Information displayed by a dApp, wallet, explorer, or third-party application can be delayed, incomplete, or incorrect.
+
+Users who rely solely on interface displays may misunderstand the actual on-chain state or transaction result.
+
+### Unconfirmed-transaction risk
+
+A submitted transaction may remain pending, fail, expire, or require resubmission.
+
+Users should not treat submission as proof that the intended state change occurred.
+
+### Slippage-setting risk
+
+A low slippage setting can cause a transaction to fail when sale conditions change.
+
+A high slippage setting can allow execution at a materially different price than expected.
+
+### Wallet-balance risk
+
+Insufficient SOL can prevent a transaction from executing or completing required account operations.
+
+A wallet balance that appears sufficient for the nominal purchase amount may not be sufficient after transaction fees and required account costs.
+
+### User-device risk
+
+Malware, browser compromise, malicious extensions, remote-access software, or other device-level compromises can interfere with wallet interactions or expose sensitive credentials.
+
+These risks exist independently of the RugFreePump on-chain program.
+
+---
+
+## Platform and infrastructure risks
+
+### Frontend availability risk
+
+The RugFreePump website can become temporarily unavailable because of hosting failures, deployments, DNS issues, network problems, attacks, or other infrastructure events.
+
+Frontend unavailability does not necessarily mean that the underlying Solana state has changed.
+
+### API and backend risk
+
+RugFreePump relies on off-chain backend services for application functionality and supporting data.
+
+Backend failures, software defects, capacity limitations, or incorrect responses can prevent users from viewing information or initiating supported operations through the dApp.
+
+### Indexing and synchronization risk
+
+Off-chain indexers may temporarily lag behind finalized Solana state.
+
+As a result, a token, sale, transaction, balance, or status displayed by the platform may temporarily differ from the latest on-chain state.
+
+### Sale-page mapping risk
+
+A successful on-chain token creation may depend on subsequent off-chain processing before the corresponding sale page is fully available through the dApp.
+
+A delay or failure in this mapping process can make a successfully created sale temporarily difficult to locate or display.
+
+### Metadata infrastructure risk
+
+Token metadata may depend on off-chain storage and supporting infrastructure.
+
+Storage failures, gateway outages, incorrect metadata, unavailable images, CDN failures, or other infrastructure problems can prevent metadata or images from being displayed even when the corresponding on-chain metadata reference remains valid.
+
+### RPC dependency risk
+
+RugFreePump relies on Solana RPC infrastructure to submit transactions and retrieve blockchain data.
+
+RPC outages, rate limits, degraded performance, incorrect responses, or connectivity failures can affect both transaction submission and information displayed by the platform.
+
+### WebSocket and real-time data risk
+
+Real-time platform features depend on off-chain WebSocket and event-delivery infrastructure.
+
+Connection failures, delayed events, dropped messages, service outages, or synchronization problems can cause displayed activity and statistics to lag behind current on-chain state.
+
+### Database and service-state risk
+
+Off-chain databases store indexed and application-level information used by the platform.
+
+Database failures, corruption, synchronization problems, or incorrect application state can affect displayed information and platform functionality even when the underlying Solana state remains intact.
+
+### Infrastructure dependency risk
+
+RugFreePump depends on third-party infrastructure providers for components such as RPC access, cloud infrastructure, content delivery, metadata services, and other supporting systems.
+
+A failure, outage, policy change, network restriction, or service degradation at an external provider can affect platform availability or functionality.
+
+### Off-chain and on-chain state divergence
+
+The platform's off-chain systems are not the authoritative source of Solana account state.
+
+Temporary differences can occur between indexed or displayed information and the latest on-chain state because of indexing delays, service failures, or data-processing errors.
+
+Users should therefore not treat a platform display as conclusive proof of an on-chain state change.
+
+### Platform availability versus protocol availability
+
+An unavailable RugFreePump frontend does not necessarily prevent direct interaction with the deployed on-chain program where technically possible.
+
+Conversely, an available frontend does not guarantee that the underlying on-chain transaction will succeed.
+
+Users should distinguish platform availability from protocol execution availability.
+
+### External-service failure risk
+
+Failures in third-party services used by RugFreePump can occur independently of the RugFreePump on-chain program.
+
+Such failures can delay creation, metadata processing, transaction submission, indexing, sale-page availability, or real-time updates without necessarily changing the underlying blockchain state.
