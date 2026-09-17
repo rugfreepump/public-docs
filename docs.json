@@ -67,6 +67,14 @@
         ]
       },
       {
+        "group": "Security & Risk",
+        "pages": [
+          "security-and-risk/security",
+          "security-and-risk/risk",
+          "security-and-risk/security-disclosure"
+        ]
+      },
+      {
         "group": "Developer Guide",
         "pages": [
           "developer-guide/building-on-rugfreepump",
@@ -97,14 +105,6 @@
               "developer-guide/api-integration/realtime-websocket"
             ]
           }
-        ]
-      },
-      {
-        "group": "Security & Risk",
-        "pages": [
-          "security-and-risk/security",
-          "security-and-risk/risk",
-          "security-and-risk/security-disclosure"
         ]
       },
       {
