@@ -1,1 +1,117 @@
+---
+title: Fees and Refund Risks
+description: Understand RugFreePump fees, transaction costs, withdrawal conditions, and the limits of refunds.
+---
 
+RugFreePump transactions can involve multiple types of costs.
+
+Users should distinguish between **protocol fees**, **Solana network transaction fees**, and funds that may become eligible for withdrawal under the bonding-curve cancellation or expiration rules.
+
+A later sale expiration or cancellation does not automatically reverse fees that were already charged.
+
+## Protocol fees
+
+RugFreePump may charge fees for eligible protocol operations.
+
+The applicable fee should be reviewed before approving a transaction.
+
+> **TODO — REPLACE BEFORE PUBLICATION:** Confirm and publish the final production fee schedule, including each applicable fee, calculation method, and any future fee-change policy.
+
+For the current documented purchase flow, the RugFreePump buy fee is applied to eligible purchases.
+
+## Fees are not automatically refundable
+
+A fee already charged by the protocol is not automatically returned because a bonding-curve sale later:
+
+- Expires.
+- Is canceled.
+- Fails to reach completion.
+- Produces an unfavorable economic outcome.
+
+Users should treat fees as incurred costs once the corresponding transaction has successfully charged them unless the published protocol rules explicitly provide otherwise.
+
+## Contributed SOL versus fees
+
+A user's contributed SOL and the fees associated with the transaction are separate concepts.
+
+If a sale expires or is canceled, an eligible contributor may be able to withdraw the contributed amount according to the on-chain withdrawal rules.
+
+That does not mean that every amount previously paid during the sale is refundable.
+
+Previously charged protocol fees may remain non-refundable.
+
+## Withdrawal fee
+
+RugFreePump does not currently charge a separate RugFreePump protocol withdrawal fee for eligible withdrawal operations.
+
+The withdrawal transaction is nevertheless a Solana transaction and therefore may incur the applicable Solana network transaction fee.
+
+> **TODO — REPLACE BEFORE PUBLICATION:** Confirm the final production withdrawal-fee policy before publication.
+
+## Solana network fees
+
+Solana transaction fees are paid to the network rather than treated as RugFreePump protocol revenue.
+
+These costs may be incurred when:
+
+- A transaction succeeds.
+- A transaction fails after being submitted.
+- A user retries a transaction.
+- A user performs another wallet operation.
+
+Network transaction fees should therefore not be considered automatically refundable by RugFreePump.
+
+## Priority fees
+
+Depending on the transaction and network conditions, a wallet or application may use a priority fee.
+
+Priority fees are separate from RugFreePump protocol fees.
+
+> **TODO — REPLACE BEFORE PUBLICATION:** Document whether RugFreePump sets, recommends, or allows users to configure priority fees in the production dApp.
+
+## Failed transactions
+
+A failed transaction can still result in network-level transaction costs depending on how the transaction was processed by Solana.
+
+Users should inspect their wallet and transaction history rather than assuming that a failed transaction means no cost was incurred.
+
+## Sale expiration and cancellation
+
+Expiration or cancellation affects the protocol's treatment of eligible contributed SOL.
+
+It does not automatically create a general refund right for every cost associated with participating in the sale.
+
+Users should review the specific withdrawal conditions before committing funds.
+
+## No guaranteed recovery of all costs
+
+Users should not assume that an expired or canceled sale means they will recover:
+
+- Protocol fees.
+- Solana transaction fees.
+- Priority fees.
+- Other third-party costs.
+- Opportunity costs.
+- Losses caused by token price movement.
+
+Only amounts explicitly covered by the protocol's withdrawal rules are eligible for withdrawal.
+
+## Fee changes
+
+Protocol fees may be changed through the applicable protocol administration and governance processes.
+
+> **TODO — REPLACE BEFORE PUBLICATION:** Document the final fee-change authority, notice period, and whether historical transactions remain subject to their original fee parameters.
+
+## Before approving a transaction
+
+Users should review:
+
+1. The amount of SOL being spent.
+2. The expected token amount.
+3. The applicable protocol fee.
+4. The estimated network fee.
+5. Any priority fee.
+6. The transaction presented by the wallet.
+7. The conditions under which contributed SOL can later be withdrawn.
+
+> **Important:** A withdrawal right is not the same as a general refund right. Users should assume that fees and blockchain transaction costs already incurred may not be recoverable.
