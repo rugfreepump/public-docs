@@ -103,14 +103,7 @@
         "group": "Security & Risk",
         "pages": [
           "security-and-risk/security-model",
-          "security-and-risk/on-chain-program-risks",
-          "security-and-risk/oracle-and-pricing-risks",
-          "security-and-risk/bonding-curve-sale-risks",
-          "security-and-risk/token-and-creator-risks",
-          "security-and-risk/liquidity-and-migration-risks",
-          "security-and-risk/fees-and-refund-risks",
-          "security-and-risk/wallet-and-transaction-risks",
-          "security-and-risk/platform-and-infrastructure-risks",
+          "security-and-risk/risks",
           "security-and-risk/security-disclosure"
         ]
       },
