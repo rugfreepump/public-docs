@@ -1,1 +1,132 @@
+---
+title: Liquidity and Migration Risks
+description: Understand the risks associated with bonding-curve completion, liquidity migration, Raydium CPMM, and post-migration trading.
+---
 
+When a RugFreePump bonding-curve sale reaches its completion conditions, the completed sale liquidity can be migrated into a Raydium CPMM pool.
+
+Migration represents a transition from the RugFreePump bonding-curve environment to an external liquidity and trading environment.
+
+That transition introduces additional risks.
+
+## Migration is a lifecycle transition
+
+Migration does not represent a guarantee of token value or future market activity.
+
+It changes the environment in which liquidity is available.
+
+The documented lifecycle is:
+
+**Bonding-Curve Sale → Completion → Liquidity Migration → Raydium CPMM**
+
+Each stage has different technical and economic conditions.
+
+## Completion conditions
+
+A bonding-curve sale must satisfy the protocol's completion conditions before liquidity migration can occur.
+
+Users should not interpret a sale approaching completion as a guarantee that migration will succeed.
+
+A transaction can fail because of program validation, account conditions, network conditions, or external dependency failures.
+
+## External protocol dependency
+
+Liquidity migration interacts with the Raydium CPMM environment.
+
+Raydium is an external protocol and is therefore outside the complete control of RugFreePump.
+
+An external protocol outage, integration issue, network condition, or unexpected change can affect migration.
+
+> **TODO — REPLACE BEFORE PUBLICATION:** Add the final production Raydium CPMM program address and any production integration documentation that users should verify.
+
+## Migration transaction risk
+
+Migration requires a blockchain transaction.
+
+The transaction may fail because of:
+
+- Invalid or unexpected account state.
+- Incorrect migration conditions.
+- Network congestion.
+- Insufficient transaction resources.
+- External program errors.
+- Changes in external protocol conditions.
+
+A failed migration transaction does not necessarily mean that the underlying bonding-curve state has been lost.
+
+Users should inspect the actual transaction result before drawing conclusions.
+
+## Post-migration liquidity
+
+After migration, token trading takes place through the external liquidity environment.
+
+The existence of a liquidity pool does not guarantee:
+
+- High trading volume.
+- Stable pricing.
+- Low price impact.
+- Continued liquidity.
+- Future market demand.
+
+Liquidity can change over time.
+
+## Price changes after migration
+
+The token's market price can change substantially after migration.
+
+The post-migration market may price the token differently from the final bonding-curve conditions.
+
+Users should not assume that the migration price represents a guaranteed market value.
+
+## Slippage and price impact
+
+Trading in an external liquidity pool is subject to market conditions.
+
+A trade can move the effective market price depending on available liquidity and transaction size.
+
+Users should review applicable slippage settings and transaction details before signing.
+
+## Liquidity does not eliminate token risk
+
+A migrated token can still lose value.
+
+Migration does not guarantee:
+
+- Project success.
+- Creator activity.
+- Market demand.
+- Trading volume.
+- Price appreciation.
+- Capital preservation.
+
+Liquidity is a market mechanism, not a guarantee of economic performance.
+
+## External market risk
+
+Once a token is trading in an external market, users are exposed to market participants and conditions outside RugFreePump.
+
+These may include:
+
+- Large trades.
+- Liquidity changes.
+- Market sentiment.
+- Arbitrage activity.
+- Broader cryptocurrency market conditions.
+
+## Migration and user expectations
+
+Users should distinguish between:
+
+**Sale completion**
+
+and
+
+**Successful post-migration market performance.**
+
+The first is a protocol lifecycle condition.
+
+The second depends on the external market.
+
+These are not equivalent.
+
+> **Important:** Liquidity migration does not guarantee a liquid market, stable price, profitable trading, or continued project activity.
