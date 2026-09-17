@@ -11,11 +11,11 @@ To reduce attack surface and establish clear security responsibilities, the prot
 
 This model establishes explicit trust and security boundaries across the platform:
 
-- **Core Execution Layer:** The **RugFreePump on-chain program** is the primary protocol execution layer. It enforces the rules implemented in the deployed program, performs the required on-chain calculations, validates state transitions and authorities, and records resulting protocol state directly on the Solana ledger.
+* **Core Execution Layer:** The **RugFreePump on-chain program** is the primary protocol execution layer. It enforces the rules implemented in the deployed program, performs the required on-chain calculations, validates state transitions and authorities, and records resulting protocol state directly on the Solana ledger.
 
-- **External Security Boundaries:** The **Solana runtime**, oracle infrastructure, integrated third-party protocols, off-chain platform infrastructure, and end-user wallets operate as separate security domains with their own trust assumptions, failure modes, and operational responsibilities. RugFreePump validates external inputs and program interactions where applicable, but does not control these external systems.
+* **External Security Boundaries:** The **Solana runtime**, oracle infrastructure, integrated third-party protocols, off-chain platform infrastructure, and end-user wallets operate as separate security domains with their own trust assumptions, failure modes, and operational responsibilities. RugFreePump validates external inputs and program interactions where applicable, but does not control these external systems.
 
-This page explains how those boundaries work, what each component controls, and what trust assumptions remain.
+This page explains how these boundaries work, what each component controls, and what trust assumptions remain.
 
 <Note>
 Security information describes the current RugFreePump architecture and operational model. It is not a guarantee that losses are impossible or that every component is free of vulnerabilities.
@@ -31,16 +31,16 @@ The RugFreePump on-chain program is the primary protocol execution layer.
 
 It is responsible for enforcing the rules governing the core bonding-curve lifecycle, including:
 
-- Creating token mints and bonding-curve sale state
-- Maintaining sale state and contribution accounting
-- Calculating bonding-curve purchases
-- Applying configured protocol fees
-- Enforcing purchase limits and sale conditions
-- Processing eligible withdrawals
-- Handling sale expiration, finalization, and cancellation states
-- Enforcing liquidity migration conditions
-- Validating relevant authorities and accounts
-- Interacting with external on-chain programs where required
+* Creating token mints and bonding-curve sale state
+* Maintaining sale state and contribution accounting
+* Calculating bonding-curve purchases
+* Applying configured protocol fees
+* Enforcing purchase limits and sale conditions
+* Processing eligible withdrawals
+* Handling sale expiration, finalization, and cancellation states
+* Enforcing liquidity migration conditions
+* Validating relevant authorities and accounts
+* Interacting with external on-chain programs where required
 
 The program determines whether protocol operations satisfy the rules implemented in the deployed program and records the resulting state on Solana.
 
@@ -50,11 +50,11 @@ Solana provides the blockchain execution environment in which RugFreePump transa
 
 RugFreePump does not control:
 
-- Solana network availability
-- Transaction ordering
-- Validator behavior
-- Network fees
-- Network-level failures or congestion
+* Solana network availability
+* Transaction ordering
+* Validator behavior
+* Network fees
+* Network-level failures or congestion
 
 The resulting on-chain state depends on the deployed program, transaction inputs, account state, and Solana execution.
 
@@ -80,14 +80,14 @@ The RugFreePump website and supporting off-chain infrastructure provide the inte
 
 This includes services such as:
 
-- Website infrastructure
-- APIs and application services
-- Indexing services
-- Databases
-- Real-time infrastructure
-- Metadata infrastructure
-- RPC providers
-- Other supporting services
+* Website infrastructure
+* APIs and application services
+* Indexing services
+* Databases
+* Real-time infrastructure
+* Metadata infrastructure
+* RPC providers
+* Other supporting services
 
 These services can affect availability or the information displayed to users, but they do not replace the on-chain program as the protocol execution layer.
 
@@ -99,12 +99,12 @@ RugFreePump is currently operated by a single authorized operator.
 
 At the current stage of the project:
 
-- The on-chain program is upgradeable.
-- The founder/developer currently controls the program upgrade authority.
-- Administrative and configuration authorities are currently controlled by the same operator.
-- Maintenance controls are currently operated by the same authority.
-- Critical administrative operations do not currently require multisig approval.
-- There is no independent multisig governance layer currently deployed.
+* The on-chain program is upgradeable.
+* The founder/developer currently controls the program upgrade authority.
+* Administrative and configuration authorities are currently controlled by the same operator.
+* Maintenance controls are currently operated by the same authority.
+* Critical administrative operations do not currently require multisig approval.
+* There is no independent multisig governance layer currently deployed.
 
 This is a fundamental part of the current security model.
 
@@ -122,18 +122,18 @@ The program contains state, account, and authority checks intended to constrain 
 
 Examples include:
 
-- PDA derivation and account validation
-- Sale-state validation
-- Authority checks
-- Maintenance-mode checks
-- Sale expiration and finalization checks
-- Migration lock periods
-- Migration-state protection
-- Validation of the expected Raydium CPMM program
-- Oracle verification and freshness checks
-- Purchase slippage checks
-- Hard contribution limits
-- Token supply and mint-authority controls
+* PDA derivation and account validation
+* Sale-state validation
+* Authority checks
+* Maintenance-mode checks
+* Sale expiration and finalization checks
+* Migration lock periods
+* Migration-state protection
+* Validation of the expected Raydium CPMM program
+* Oracle verification and freshness checks
+* Purchase slippage checks
+* Hard contribution limits
+* Token supply and mint-authority controls
 
 These controls define which state transitions the deployed program will accept.
 
@@ -143,10 +143,10 @@ They reduce the set of valid protocol operations but do not eliminate software, 
 
 When a token is created through RugFreePump, the current implementation creates a total supply of:
 
-- 1,000,000,000 tokens
-- 6 decimal places
-- 800,000,000 tokens allocated to the bonding-curve sale
-- 200,000,000 tokens allocated for liquidity
+* 1,000,000,000 tokens
+* 6 decimal places
+* 800,000,000 tokens allocated to the bonding-curve sale
+* 200,000,000 tokens allocated for liquidity
 
 The mint authority is revoked after the initial token supply is minted.
 
@@ -160,11 +160,11 @@ The current purchase path validates the Pyth price update before using it.
 
 The implementation currently requires:
 
-- Full Pyth verification
-- The expected SOL/USD feed
-- A positive price
-- A price update no older than 60 seconds
-- Oracle confidence within the configured 2% threshold
+* Full Pyth verification
+* The expected SOL/USD feed
+* A positive price
+* A price update no older than 60 seconds
+* Oracle confidence within the configured 2% threshold
 
 These checks constrain the oracle data that can be accepted by the purchase path.
 
@@ -180,11 +180,11 @@ RugFreePump validates the expected Raydium program before performing this intera
 
 Consequently, matters such as:
 
-- Raydium program behavior
-- External pool state
-- Market liquidity
-- Post-migration trading
-- External market conditions
+* Raydium program behavior
+* External pool state
+* Market liquidity
+* Post-migration trading
+* External market conditions
 
 remain outside the RugFreePump security boundary.
 
@@ -198,13 +198,13 @@ The website and supporting services should not, however, be treated as the ultim
 
 Users can independently inspect:
 
-- Token addresses
-- Program addresses
-- Transaction signatures
-- Account state
-- Sale state
-- Liquidity migration transactions
-- Other publicly available Solana data
+* Token addresses
+* Program addresses
+* Transaction signatures
+* Account state
+* Sale state
+* Liquidity migration transactions
+* Other publicly available Solana data
 
 For significant transactions, users should verify the wallet prompt and resulting transaction rather than relying only on information displayed by the website.
 
@@ -218,13 +218,13 @@ A compromised wallet can result in loss independently of the security of the Rug
 
 Users are responsible for:
 
-- Protecting wallet credentials
-- Using the official RugFreePump domain
-- Verifying transaction details
-- Avoiding phishing websites
-- Reviewing wallet prompts
-- Keeping devices and browsers secure
-- Confirming token and transaction addresses when appropriate
+* Protecting wallet credentials
+* Using the official RugFreePump domain
+* Verifying transaction details
+* Avoiding phishing websites
+* Reviewing wallet prompts
+* Keeping devices and browsers secure
+* Confirming token and transaction addresses when appropriate
 
 Detailed wallet and transaction risks are covered separately in [Wallet and Transaction Risks](/security-and-risk/wallet-and-transaction-risks).
 
@@ -256,11 +256,11 @@ RugFreePump intends to strengthen the security model over time.
 
 Planned improvements include:
 
-- Multisig authorization for critical operations
-- Additional separation of administrative responsibilities
-- Third-party security review
-- Formal security audit
-- Additional operational security controls
+* Multisig authorization for critical operations
+* Additional separation of administrative responsibilities
+* Third-party security review
+* Formal security audit
+* Additional operational security controls
 
 These are future improvements and are not represented as active protections today.
 
