@@ -1,1 +1,175 @@
+---
+title: Security Disclosure
+description: Learn how to responsibly report suspected security vulnerabilities affecting RugFreePump.
+---
 
+RugFreePump encourages responsible disclosure of security vulnerabilities.
+
+If you believe you have identified a security issue affecting the RugFreePump on-chain program, dApp, infrastructure, or another security-sensitive component, please report it privately so that the issue can be investigated and addressed before public disclosure.
+
+## What should be reported
+
+Security reports may include suspected vulnerabilities involving:
+
+- The RugFreePump on-chain program.
+- Privileged administrative controls.
+- Transaction construction or signing flows.
+- Wallet integration.
+- Authentication or authorization.
+- Sensitive information exposure.
+- Frontend security.
+- Backend services.
+- Infrastructure.
+- Deployment systems.
+- Dependency or supply-chain vulnerabilities.
+- Domain or DNS security.
+- Security-sensitive third-party integrations.
+
+## What is generally not a security vulnerability
+
+The following may represent product issues, economic risks, or expected protocol behavior rather than security vulnerabilities:
+
+- Token price decreases.
+- Bonding-curve price movement.
+- Normal slippage.
+- Market losses.
+- Creator behavior.
+- Token performance.
+- Sale expiration according to published rules.
+- Non-refundable protocol fees according to published rules.
+- Solana network fees.
+- A transaction failing because published protocol conditions were not satisfied.
+
+If you are uncertain whether an issue is security-related, report it anyway and provide enough information for the team to evaluate it.
+
+## Responsible disclosure process
+
+Please provide enough information for the RugFreePump security team to reproduce and understand the issue.
+
+A useful report should include:
+
+- A clear description of the vulnerability.
+- The affected component.
+- The affected environment.
+- Steps required to reproduce the issue.
+- Relevant transaction signatures.
+- Relevant wallet or program addresses where safe to disclose.
+- Screenshots or recordings where useful.
+- Expected behavior.
+- Actual behavior.
+- Potential impact.
+- A proposed mitigation, if known.
+
+Do not include private keys, seed phrases, passwords, or other secrets in a security report.
+
+## Security contact
+
+**Security email:** `security@rugfreepump.com`
+
+> **TODO — REPLACE BEFORE PUBLICATION:** Replace the placeholder security email with the final monitored security address.
+
+**PGP key:** `TODO — ADD SECURITY TEAM PGP PUBLIC KEY`
+
+> **TODO — REPLACE BEFORE PUBLICATION:** Publish the fingerprint and public key through an independently verifiable official location if encrypted reporting is supported.
+
+## Reporting channel
+
+Security reports should be submitted privately through the official security channel.
+
+**Primary reporting channel:** `security@rugfreepump.com`
+
+**Security reporting portal:** `TODO — ADD FINAL SECURITY REPORTING URL IF APPLICABLE`
+
+> **TODO — REPLACE BEFORE PUBLICATION:** If a dedicated vulnerability disclosure platform such as HackerOne, Bugcrowd, Immunefi, or another service is adopted, make that platform the canonical reporting channel and update this page accordingly.
+
+## What reporters should expect
+
+After receiving a valid security report, the RugFreePump security team should:
+
+1. Acknowledge receipt.
+2. Review and validate the report.
+3. Determine the affected components and severity.
+4. Coordinate remediation where appropriate.
+5. Communicate with the reporter when additional information is required.
+6. Determine an appropriate disclosure timeline.
+
+> **TODO — REPLACE BEFORE PUBLICATION:** Define the final acknowledgement target, communication process, severity classification, and disclosure timeline.
+
+## Coordinated disclosure
+
+Please do not publicly disclose a suspected vulnerability before giving RugFreePump a reasonable opportunity to investigate and mitigate the issue.
+
+Public disclosure before remediation can:
+
+- Increase the risk to users.
+- Make exploitation easier.
+- Prevent effective mitigation.
+- Expose affected infrastructure or accounts.
+
+If an issue is already publicly known or actively exploited, state that clearly in the initial report so that the report can be prioritized appropriately.
+
+## Active exploitation
+
+If you believe a vulnerability is actively being exploited or that user funds are currently at risk, clearly mark the report as **URGENT**.
+
+Include:
+
+- The affected component.
+- Known affected addresses.
+- Relevant transaction signatures.
+- Known attacker addresses, if available.
+- Approximate time of observed activity.
+- Any evidence that can help identify the attack.
+
+Do not attempt to exploit the issue against real users or move funds without explicit authorization.
+
+## Safe testing
+
+Security researchers should avoid:
+
+- Accessing data that does not belong to them.
+- Modifying another user's assets.
+- Destroying or altering production data.
+- Performing denial-of-service attacks.
+- Social-engineering users or team members.
+- Obtaining private credentials.
+- Testing against real user funds without authorization.
+
+Where possible, use Devnet, isolated environments, or test accounts.
+
+## Security rewards
+
+> **TODO — REPLACE BEFORE PUBLICATION:** Define whether RugFreePump operates a bug bounty or vulnerability reward program.
+
+If a reward program exists, this section should specify:
+
+- Eligibility.
+- Scope.
+- Severity classification.
+- Reward ranges.
+- Exclusions.
+- Safe-harbor terms.
+- Duplicate-report policy.
+- Disclosure requirements.
+
+## Recognition
+
+Subject to the reporter's consent and applicable disclosure requirements, RugFreePump may recognize security researchers who responsibly report valid vulnerabilities.
+
+> **TODO — REPLACE BEFORE PUBLICATION:** Define whether a public security researcher acknowledgements page will be maintained.
+
+## No safe harbor until published
+
+Researchers should rely on the final published security disclosure and bug-bounty policy for the applicable scope and authorization conditions.
+
+> **TODO — REPLACE BEFORE PUBLICATION:** Publish the final legal safe-harbor language after review by qualified legal counsel.
+
+## Security contact verification
+
+Security researchers should independently verify that they are communicating with an official RugFreePump security contact.
+
+Do not send sensitive vulnerability information to an address received through an unsolicited message or social-media account.
+
+The official security contact should be published through the official RugFreePump documentation and website.
+
+> **Important:** Never include private keys, seed phrases, recovery phrases, passwords, authentication secrets, or other credentials in a security report.
