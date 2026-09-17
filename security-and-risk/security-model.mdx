@@ -1,147 +1,241 @@
 ---
 title: Security Model
-description: Understand the security boundaries, trust assumptions, and responsibilities across the RugFreePump protocol.
+description: Understand the security boundaries, trust assumptions, and external dependencies of RugFreePump.
 ---
 
-RugFreePump operates across multiple technical layers, and security depends on the interaction between those layers.
+# Security Model
 
-The **RugFreePump dApp**, **RugFreePump on-chain program**, **Solana network**, **price oracle**, **external protocols**, and **user wallet** each have different responsibilities and different failure modes.
+RugFreePump is a Solana-based token launch platform built around on-chain bonding-curve sales. Security depends on multiple layers working together: the RugFreePump on-chain program, Solana, oracle infrastructure, external protocol integrations, platform infrastructure, and the wallets and users interacting with the system.
 
-Understanding these boundaries is essential when evaluating the risks of interacting with a bonding-curve sale.
+This page explains those layers, what each one controls, and where trust and operational risk remain.
+
+<Note>
+Security information describes the current RugFreePump architecture and operational model. It is not a guarantee that losses are impossible or that every component is free of vulnerabilities.
+</Note>
 
 ## Security boundaries
 
-The core execution path can be understood as:
+RugFreePump should be understood as several distinct security domains.
 
-**User Wallet → RugFreePump dApp → RugFreePump On-Chain Program → Solana**
+### RugFreePump on-chain program
 
-Additional services and external protocols may participate in specific operations, including:
+The on-chain program is responsible for enforcing the core bonding-curve sale lifecycle on Solana.
 
-- SOL/USD price data used by the bonding-curve purchase mechanism.
-- Off-chain infrastructure used to deliver the dApp, metadata, indexing, and realtime information.
-- Raydium CPMM for liquidity after a completed bonding-curve sale is migrated.
+This includes:
 
-Each layer introduces different assumptions.
+- Creating token mints and bonding-curve sale state
+- Maintaining sale state and contribution accounting
+- Calculating bonding-curve purchases
+- Applying configured protocol fees
+- Enforcing purchase limits and sale conditions
+- Processing eligible withdrawals
+- Handling sale expiration and cancellation states
+- Controlling liquidity migration conditions
+- Interacting with external on-chain programs where required
 
-## What the on-chain program controls
+The program is the authoritative execution layer for these operations.
 
-The RugFreePump on-chain program contains the core protocol logic governing the bonding-curve sale lifecycle.
+### Solana
 
-This includes the public instructions used to:
+Solana provides the blockchain execution environment in which RugFreePump transactions execute.
 
-- Create a bonding-curve sale.
-- Purchase tokens from an active sale.
-- Withdraw eligible contributed SOL when a sale expires or is canceled.
-- Migrate completed sale liquidity to a Raydium CPMM pool.
+Once a transaction is submitted, the resulting state changes are determined by Solana transaction execution and the accounts and programs involved.
 
-The program validates accounts, inputs, protocol state, and the conditions required for each instruction.
+RugFreePump does not control the Solana network, transaction ordering, network availability, validator behavior, or network fees.
 
-The on-chain program does not control every aspect of the environment surrounding a token.
+### Oracle infrastructure
 
-## What the dApp controls
+Bonding-curve operations that require SOL/USD conversion depend on an external price feed.
 
-The RugFreePump dApp provides the user interface through which users construct and submit transactions.
+The current implementation uses Pyth price data and validates the supplied price before using it.
 
-The dApp may also provide information obtained from off-chain services, such as:
+The oracle is therefore an external dependency and introduces risks such as stale data, unavailable data, unexpected market conditions, or incorrect external pricing.
 
-- Token metadata.
-- Sale display information.
-- Indexed activity.
-- Real-time updates.
-- Platform statistics.
+### External liquidity infrastructure
 
-The dApp should therefore not be treated as the authoritative source for on-chain state when the underlying blockchain state can be independently inspected.
+Completed sales can interact with Raydium CPMM infrastructure during liquidity migration.
 
-A dApp outage or display problem does not by itself mean that the underlying Solana state has changed.
+This introduces an additional trust and execution boundary because Raydium is an external on-chain protocol that RugFreePump does not control.
 
-## What Solana controls
+### Platform infrastructure
 
-Solana provides the underlying blockchain execution and ledger infrastructure.
+The RugFreePump website, APIs, indexing services, databases, real-time infrastructure, metadata infrastructure, RPC providers, and other off-chain services support the user experience.
 
-Once a transaction is submitted and confirmed, the resulting account state and transaction history are recorded on the Solana network.
+These services can affect availability and what information is displayed without changing the underlying authority of the Solana program.
 
-RugFreePump does not control:
+A platform outage or indexing delay does not necessarily mean that the underlying on-chain state has changed.
 
-- Solana network availability.
-- Network congestion.
-- Validator operation.
-- Solana transaction processing.
-- Network-level transaction fees.
+## Current administrative trust model
 
-Transactions may fail or be delayed because of conditions outside the RugFreePump program.
+RugFreePump is currently operated by a single authorized operator.
 
-## External dependencies
+At the current stage of the project:
 
-Some RugFreePump operations depend on systems outside the RugFreePump program.
+- The on-chain program is upgradeable.
+- The founder/developer currently controls the program upgrade authority.
+- Administrative and configuration authorities are currently controlled by the same operator.
+- Maintenance controls are currently operated by the same authority.
+- Critical administrative operations do not currently require multisig approval.
+- There is no independent multisig governance layer currently deployed.
 
-These may include:
+This is an important trust assumption.
 
-- SOL/USD price data.
-- Solana RPC infrastructure.
-- Metadata and content infrastructure.
-- Raydium CPMM for post-migration liquidity.
+A compromise or unauthorized use of the relevant administrative or upgrade keys could therefore have consequences beyond a normal user wallet compromise.
 
-An external dependency can fail, become unavailable, return stale information, or behave differently from expected conditions.
+RugFreePump intends to introduce stronger governance controls in the future, including multisig authorization for critical operations. The on-chain architecture has been designed with support for this direction, but future controls should not be treated as currently active.
 
-The existence of an external dependency does not mean that RugFreePump controls that dependency.
+<Warning>
+Do not assume that planned multisig governance, third-party custody, or future security controls are currently protecting the protocol. The current security model is based on the authorities presently controlling the deployed system.
+</Warning>
 
-## Wallet responsibility
+## On-chain controls
 
-A user's wallet is the final authorization layer for transactions initiated through the dApp.
+The program contains multiple state and account checks intended to constrain valid operations.
 
-The user is responsible for reviewing the transaction presented by their wallet before signing it.
+Examples include:
 
-RugFreePump cannot recover assets that are transferred or authorized through a compromised wallet, malicious software, phishing site, or incorrectly signed transaction.
+- PDA derivation and account validation
+- Sale-state validation
+- Authority checks
+- Maintenance-mode checks
+- Sale expiration and finalization checks
+- Migration lock periods
+- Reentrancy-state protection during liquidity handling
+- Validation of the expected Raydium CPMM program
+- Oracle verification and freshness checks
+- Purchase slippage checks
+- Hard contribution limits
+- Token supply and mint-authority controls
 
-Users should never provide a seed phrase, private key, wallet recovery phrase, or other wallet credentials to RugFreePump or anyone claiming to provide RugFreePump support.
+These controls reduce the set of transactions that the program will accept, but they do not eliminate software, configuration, key-management, economic, or external-dependency risk.
 
-## On-chain transparency
+## Token supply controls
 
-The core user-facing operations of RugFreePump are executed through the on-chain program rather than existing solely as off-chain database state.
+When a token is created through RugFreePump, the current implementation creates a total supply of:
 
-The program has a public Program ID, and transactions submitted to it are recorded on Solana.
+- 1,000,000,000 tokens
+- 6 decimal places
+- 800,000,000 tokens allocated to the bonding-curve sale
+- 200,000,000 tokens allocated for liquidity
+
+The mint authority is revoked after the initial token supply is minted.
+
+This means the program does not retain the mint authority for later arbitrary token creation through that authority.
+
+This is a protocol-level control, but it does not make the token itself safe or guarantee its future market value.
+
+## Oracle controls
+
+The current purchase path validates the Pyth price update before using it.
+
+The implementation currently requires:
+
+- Full Pyth verification
+- The expected SOL/USD feed
+- A positive price
+- A price update no older than 60 seconds
+- Oracle confidence within the configured 2% threshold
+
+These checks are designed to prevent obviously stale, invalid, or insufficiently reliable price data from being used for a purchase.
+
+They do not eliminate oracle dependency or protect users from legitimate SOL price movements.
+
+## External protocol boundaries
+
+Liquidity migration can interact with Raydium CPMM through an on-chain CPI.
+
+RugFreePump validates the expected Raydium program before performing this interaction, but Raydium remains an external protocol.
+
+Consequently, risks associated with:
+
+- Raydium program behavior
+- Raydium availability
+- External pool state
+- Market liquidity
+- Post-migration trading
+- External market conditions
+
+remain outside RugFreePump's direct control.
+
+## Off-chain information versus on-chain state
+
+The RugFreePump dApp provides interfaces and information that help users understand and interact with sales.
+
+However, the website should not be treated as the ultimate source of truth for on-chain execution.
 
 Users can independently inspect:
 
-- The Program ID.
-- Transaction signatures.
-- Instruction execution.
-- Account state.
-- On-chain transaction results.
+- Token addresses
+- Program addresses
+- Transaction signatures
+- Account state
+- Sale state
+- Liquidity migration transactions
+- Other publicly available Solana data
 
-This separation allows users to distinguish between information presented by the dApp and state actually recorded on-chain.
+For significant transactions, users should verify the wallet prompt and resulting transaction rather than relying only on information displayed by the website.
+
+## Wallet security
+
+RugFreePump does not control user private keys or seed phrases.
+
+A compromised wallet can result in loss independently of the security of the RugFreePump program.
+
+Users are responsible for:
+
+- Protecting wallet credentials
+- Using the official RugFreePump domain
+- Verifying transaction details
+- Avoiding phishing websites
+- Reviewing wallet prompts
+- Keeping devices and browsers secure
+- Confirming token and transaction addresses when appropriate
 
 ## Security is not a single guarantee
 
-No individual security layer eliminates every possible risk.
+The security of a decentralized application is the result of multiple independent components.
 
-A correctly functioning on-chain program does not protect a user from:
+A correctly executing smart contract does not protect against:
 
-- A compromised wallet.
-- A phishing site.
-- A malicious token creator.
-- Market losses.
-- An external protocol failure.
-- Network congestion.
-- An unavailable RPC provider.
-- Incorrect user-signed transactions.
+- A compromised administrative key
+- A compromised user wallet
+- A malicious token creator
+- Oracle failure
+- External protocol failure
+- Market losses
+- Phishing
+- Infrastructure compromise
+- Incorrect information displayed by an off-chain service
+- Loss caused by normal market activity
 
-Likewise, a functioning dApp does not guarantee that an asset will retain value.
+For this reason, users should evaluate the complete system rather than treating any single security control as a guarantee.
 
-Security should therefore be understood as a combination of protocol controls, infrastructure controls, external dependencies, and user-side precautions.
+## Current audit status
+
+RugFreePump has not completed a formal third-party security audit at this time.
+
+A professional security audit is planned for a future stage of the project.
+
+Until an audit is completed and publicly documented, users should not interpret the existence of the public on-chain program or its published source code as equivalent to an independent security audit.
+
+## Future security improvements
+
+RugFreePump intends to strengthen the security model over time.
+
+Planned improvements include:
+
+- Multisig authorization for critical operations
+- Additional separation of administrative responsibilities
+- Third-party security review
+- Formal security audit
+- Additional operational security controls
+
+These are future improvements and are not represented as active protections today.
 
 ## Independent verification
 
-Users should rely on independently verifiable information wherever practical.
+Users and developers can independently inspect RugFreePump transactions and on-chain state through Solana-compatible explorers and tools.
 
-For important transactions, users should:
+For the currently documented deployment and execution records, see the [Proof of Execution](/on-chain-program/proof-of-execution) page.
 
-1. Confirm that they are using the official RugFreePump domain.
-2. Confirm that the wallet is connected to the expected network.
-3. Review the transaction presented by the wallet.
-4. Confirm important addresses and transaction details.
-5. Review the resulting transaction on Solana when appropriate.
-
-For production mainnet interactions, users should also verify the officially published production Program ID before interacting with the program.
-
-> **Important:** RugFreePump documentation describes the protocol's intended behavior and security boundaries. It is not an independent security audit, formal verification, or guarantee that the protocol, dApp, infrastructure, token creators, or external services are free from vulnerabilities or risk.
+Security-related claims should always be interpreted according to the actual deployed program, authorities, configuration, and transaction history at the time of use.
