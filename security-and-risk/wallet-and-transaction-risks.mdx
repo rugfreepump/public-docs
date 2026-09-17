@@ -3,139 +3,186 @@ title: Wallet and Transaction Risks
 description: Protect your wallet and understand the risks associated with signing RugFreePump transactions.
 ---
 
-A user's wallet is the final authorization layer for transactions submitted through RugFreePump.
+# Wallet and Transaction Risks
 
-The security of a transaction therefore depends not only on the RugFreePump program, but also on the user's wallet, device, browser, network connection, and ability to identify the transaction being authorized.
+RugFreePump transactions require users to authorize actions through a Solana-compatible wallet.
 
-Web3 wallets manage private keys and sign transactions that can move digital assets. Wallet security and transaction-signing security are therefore critical parts of the overall security model.
+The security of the wallet, the device used to access it, and the transaction approved by the user are therefore critical parts of the overall security model.
 
-## Use the official RugFreePump domain
+## Your wallet controls your assets
 
-Always verify that you are using the official RugFreePump website before connecting a wallet or signing a transaction.
+RugFreePump does not control your wallet's private keys, seed phrase, or signing credentials.
 
-> **TODO — REPLACE BEFORE PUBLICATION:** Confirm and publish the official production domain and all officially authorized domains.
+Anyone who gains unauthorized control of your wallet may be able to transfer assets independently of RugFreePump.
 
-Do not assume that a search result, social-media link, advertisement, message, or support account is legitimate.
+Never provide your:
 
-Look-alike domains can be designed to resemble the official site.
+- Seed phrase
+- Private key
+- Wallet password
+- Hardware-wallet recovery information
+- Authentication credentials
 
-## Never share wallet credentials
+to another person or website.
 
-RugFreePump will never legitimately require a user to provide:
+RugFreePump support will never need your seed phrase or private key.
 
-- Seed phrase.
-- Private key.
-- Wallet recovery phrase.
-- Hardware-wallet recovery information.
-- Wallet password.
-- Secret signing material.
+## Verify the official website
 
-Anyone requesting these credentials while claiming to represent RugFreePump should be treated as suspicious.
+Only use the official RugFreePump domain:
 
-## Review every transaction
+`rugfreepump.com`
 
-Before approving a transaction, users should review the transaction presented by their wallet.
+Attackers can create websites that imitate legitimate interfaces.
 
-At minimum, verify:
+Always verify the domain before connecting a wallet or approving a transaction.
 
-- The intended action.
-- The amount of SOL being spent.
-- The token mint or destination where applicable.
-- Applicable fees.
-- The connected network.
-- Any other transaction details displayed by the wallet.
+## Review every wallet prompt
 
-Users should not approve a transaction solely because the dApp interface says that it is safe.
+A transaction displayed by the dApp should be reviewed again in the wallet before approval.
 
-## Blind signing risk
+Pay particular attention to:
 
-A wallet may display transaction information differently depending on the wallet and transaction type.
+- Wallet address
+- Token mint address
+- SOL amount
+- Transaction type
+- Program interactions
+- Expected destination accounts
+- Network
 
-If the wallet cannot clearly communicate what is being signed, users should avoid approving the transaction until they can independently verify its contents.
+Do not sign a transaction simply because the website claims it is required.
 
-The difference between what a user believes they are signing and what the blockchain actually executes is a recognized Web3 security risk.
+## Transaction irreversibility
+
+Confirmed Solana transactions should be treated as irreversible unless the RugFreePump program explicitly provides a subsequent operation that changes the relevant state.
+
+An incorrect token address, wallet address, or transaction parameter may therefore result in permanent loss.
 
 ## Phishing and impersonation
 
 Attackers may impersonate:
 
-- RugFreePump.
-- Token creators.
-- Community moderators.
-- Support personnel.
-- Wallet providers.
-- Security researchers.
+- RugFreePump
+- RugFreePump administrators
+- Token creators
+- Community moderators
+- Support personnel
+- Wallet providers
 
-Common attack methods include:
+Do not trust unsolicited messages requesting:
 
-- Fake websites.
-- Look-alike domains.
-- Fake social-media accounts.
-- Fake support messages.
-- Malicious browser extensions.
-- QR-code phishing.
-- Malicious transaction links.
+- Seed phrases
+- Private keys
+- Wallet connections
+- Emergency transfers
+- "Verification" payments
+- Remote-access software
 
-Users should independently verify security-sensitive requests through an established official channel.
+Verify important information through official RugFreePump channels.
 
-## Device and browser security
+## Fake tokens and contracts
 
-A compromised computer can undermine wallet security even when the blockchain program itself is functioning correctly.
+A token name or symbol is not a unique identifier.
 
-Users should:
+Users should verify the token mint address before interacting with a token.
 
-- Keep their operating system updated.
-- Keep wallet software updated.
-- Avoid installing unknown browser extensions.
-- Avoid downloading software from unsolicited links.
-- Use reputable security software.
-- Avoid signing transactions from compromised or shared devices.
+Two unrelated tokens can use similar or identical names and symbols.
 
-## Wallet connection risk
+## Transaction simulation and displayed information
 
-Connecting a wallet to a dApp does not by itself mean that the dApp can freely spend all assets in the wallet.
+The dApp can provide transaction previews, estimates, and interface information.
 
-However, users should still understand what they are authorizing when signing transactions.
+These values can change before a transaction is actually confirmed.
 
-A malicious site can attempt to use wallet interactions to trick a user into approving an unintended transaction.
+On-chain execution determines the final result.
 
-## Transaction irreversibility
+Users should therefore treat interface estimates as preparation information rather than a guarantee.
 
-Blockchain transactions should be treated as potentially irreversible.
+## Slippage
 
-If a user:
+Purchase transactions support user-configured slippage protection.
 
-- Sends assets to the wrong address.
-- Approves an unintended transaction.
-- Signs a malicious transaction.
-- Loses access to their wallet.
+Users should choose a tolerance that reflects their intended transaction.
 
-RugFreePump may not be able to reverse the resulting blockchain state.
+A tolerance that is too strict can cause transactions to fail.
+
+A tolerance that is too high can permit a larger state change than the user intended.
+
+Slippage protection does not guarantee future token price stability.
+
+## Wallet balance
+
+Users should maintain enough SOL for:
+
+- The intended protocol transaction
+- Applicable protocol amounts
+- Solana network fees
+- Any required priority fee
+- Required account creation or rent-related costs where applicable
+
+A transaction can fail when the wallet does not contain sufficient funds.
 
 ## Network and RPC conditions
 
-A transaction can fail, be delayed, or become outdated because of network or RPC conditions.
+Wallets and dApps generally depend on RPC infrastructure to prepare and submit Solana transactions.
 
-Users should inspect the actual transaction status rather than assuming that a wallet notification alone represents final on-chain confirmation.
+RPC outages, latency, or inconsistent network conditions can affect:
 
-## User responsibilities
+- Displayed balances
+- Transaction preparation
+- Transaction submission
+- Confirmation
+- Displayed transaction status
 
-Users are responsible for:
+Users should verify important transactions independently through a Solana explorer.
 
-- Protecting wallet credentials.
-- Verifying the official RugFreePump domain.
-- Reviewing transactions before signing.
-- Confirming token mint addresses.
-- Checking applicable fees.
-- Understanding the economic risks of the transaction.
-- Maintaining control of their wallet device and credentials.
+## Wallet connection security
 
-## Security incident response
+Only connect a wallet to websites you trust.
 
-If a user believes they have signed a malicious transaction or compromised their wallet, they should immediately follow their wallet provider's security procedures.
+Disconnecting a wallet from a website does not necessarily undo transactions that have already been signed or state changes that have already occurred.
 
-RugFreePump support cannot recover private keys or reverse arbitrary Solana transactions.
+Users should understand what they are approving before signing.
 
-For suspected vulnerabilities in RugFreePump itself, use the official security disclosure process.
+## Device and browser security
 
-> **Important:** The strongest protection against transaction-signing attacks is verifying what is being signed before authorization. Users should never sign a transaction they do not understand or cannot independently verify.
+Wallet security also depends on the device used to access it.
+
+Users should maintain appropriate security practices, including:
+
+- Current operating-system updates
+- Current browser versions
+- Trusted wallet extensions
+- Strong device authentication
+- Malware protection
+- Avoiding unknown software
+
+A compromised device can undermine otherwise secure wallet practices.
+
+## User responsibility
+
+Users are responsible for the transactions they authorize.
+
+Before signing, users should verify:
+
+1. The official website
+2. The connected wallet
+3. The token mint
+4. The transaction amount
+5. The transaction type
+6. The expected result
+7. The network
+8. The wallet's final transaction prompt
+
+## Security incidents
+
+If you believe your wallet has been compromised, do not continue signing transactions from the affected wallet.
+
+Move remaining assets to a secure wallet when appropriate and investigate the compromise independently.
+
+For a suspected RugFreePump security vulnerability, contact:
+
+`security@rugfreepump.com`
+
+Do not send seed phrases or private keys with a security report.
