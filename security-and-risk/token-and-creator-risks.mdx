@@ -1,139 +1,172 @@
 ---
 title: Token and Creator Risks
-description: Understand the risks associated with newly created tokens, token creators, and activity outside the RugFreePump protocol.
+description: Understand the risks associated with token creators, token projects, metadata, ownership, and market behavior.
 ---
 
-RugFreePump provides infrastructure for creating and launching tokens through bonding-curve sales.
+# Token and Creator Risks
 
-The protocol does not determine the legitimacy, quality, value, future development, or success of a token or its creator.
+RugFreePump provides infrastructure for creating and launching tokens through bonding-curve sales. The platform does not determine whether an individual token, creator, project, or external claim is legitimate or economically viable.
 
-Users should evaluate each token independently before purchasing.
+Participation in a sale therefore involves risks that exist independently of the RugFreePump protocol itself.
 
 ## Creator risk
 
-Token creators control decisions and activities outside the protocol.
+Token creators control the projects they launch and may make statements about:
 
-A creator may:
+- Project plans
+- Utility
+- Roadmaps
+- Partnerships
+- Development
+- Community activity
+- Future plans
 
-- Change project direction.
-- Stop developing a project.
-- Stop communicating with users.
-- Publish misleading information.
-- Promote the token in ways that create unrealistic expectations.
-- Make decisions that negatively affect the token's reputation or demand.
+RugFreePump does not guarantee the accuracy, completeness, or future execution of those claims.
 
-RugFreePump cannot guarantee a creator's future behavior.
+Users should independently evaluate information provided by creators.
 
-## Token value risk
+## Creator identity
 
-A token created through RugFreePump can lose value.
+A creator address is recorded as part of the token and sale state.
 
-The token's market value may be affected by:
+However, an on-chain wallet address does not by itself establish the real-world identity of its owner.
 
-- Supply and demand.
-- Market sentiment.
-- Creator activity.
-- Community activity.
-- Liquidity.
-- Broader market conditions.
-- Competition.
-- External trading activity.
+Users should not assume that a displayed creator name, social account, website, or other identity claim has been independently verified by RugFreePump.
 
-The fact that a token was successfully created or purchased through the protocol does not establish its future value.
+## Token metadata
 
-## Metadata risk
+RugFreePump creates token metadata as part of the token creation process.
 
-Token names, symbols, descriptions, images, and other metadata can influence how users identify an asset.
+The metadata includes information such as:
 
-Users should verify the token mint address rather than relying solely on:
+- Token name
+- Token symbol
+- Metadata URI
+- Creator information
 
-- Token name.
-- Token symbol.
-- Logo.
-- Description.
-- Social media identity.
+The program currently creates the metadata with the immutable metadata flag set to false for later mutation.
 
-Different tokens can have similar names or branding.
+Users should still treat displayed metadata as project information rather than as a guarantee of legitimacy or value.
 
-The token mint address is the authoritative identifier for the specific SPL token.
+## Creator metadata verification
 
-## Impersonation risk
+The creator entry associated with the token metadata is not treated as an independently verified identity.
 
-Attackers may create tokens using names, symbols, images, or descriptions that resemble an existing project.
+A creator address appearing in token metadata should therefore not be interpreted as proof that the person or organization behind a project has been verified by RugFreePump.
 
-Users should not assume that a familiar name or image means that a token is associated with the expected creator or project.
+## Token supply
 
-Always verify the token mint address through an official source before purchasing.
+The current RugFreePump token creation model uses:
+
+- 1,000,000,000 total tokens
+- 6 decimal places
+- 800,000,000 tokens for the bonding-curve sale
+- 200,000,000 tokens intended for liquidity
+
+The token mint authority is revoked after the initial supply is minted.
+
+This limits later token creation through that mint authority.
+
+It does not protect users from changes in market value, concentration of ownership, or behavior by token holders.
 
 ## Creator ownership and concentration
 
-Token ownership and distribution can affect market behavior.
+Creators receive tokens through the initial creator purchase associated with pool creation.
 
-Users should consider:
+Creators or other wallets may also hold substantial portions of a token's supply.
 
-- Creator-held tokens.
-- Concentrated ownership.
-- Large wallet balances.
-- Distribution patterns.
-- Future selling activity.
+Concentrated ownership can create significant market risk because a large holder may be able to sell a substantial amount of tokens.
 
-RugFreePump does not guarantee that token ownership will remain distributed in a particular way after launch.
+Users should inspect token distribution and wallet activity where relevant.
 
-## External claims
+## Token value
 
-Statements made by token creators, community members, social-media accounts, influencers, or third parties are not automatically statements made or endorsed by RugFreePump.
+A token created through RugFreePump does not have a guaranteed market value.
 
-Users should independently verify claims about:
+Token value can be affected by:
 
-- Partnerships.
-- Listings.
-- Future development.
-- Revenue.
-- Utility.
-- Market capitalization.
-- Exchange availability.
-- Future price targets.
+- Demand
+- Community activity
+- Creator behavior
+- Token distribution
+- Liquidity
+- Market conditions
+- External trading
+- Project execution
+- Speculation
 
-## Protocol versus project
+The bonding curve does not guarantee a future market price.
 
-RugFreePump is the infrastructure through which the bonding-curve sale operates.
+## Impersonation and phishing
 
-It should not be interpreted as:
+Attackers may impersonate legitimate RugFreePump projects, creators, communities, or administrators.
 
-- An endorsement of a token.
-- A guarantee of a creator.
-- A certification of a project.
-- A guarantee of token value.
-- A guarantee of future liquidity.
+Common techniques include:
 
-The successful use of the protocol only demonstrates that the relevant protocol operation was processed according to its rules.
+- Fake social-media accounts
+- Fake Telegram groups
+- Fake Discord servers
+- Fake websites
+- Fake token addresses
+- Fake support accounts
+- Malicious wallet links
+
+Users should verify information through the official RugFreePump channels and independently confirm token addresses before interacting.
+
+## External project claims
+
+Statements made by token creators or community members are not automatically statements made by RugFreePump.
+
+Users should distinguish between:
+
+- Protocol documentation
+- RugFreePump announcements
+- Creator statements
+- Community discussions
+- Third-party claims
+
+The existence of a token on RugFreePump does not constitute an endorsement of its creator or project.
+
+## Creator migration authority
+
+Under the current program design, the token creator can be an authorized executor of the normal liquidity-migration operation when all required migration conditions are satisfied.
+
+This does not mean the creator can arbitrarily withdraw funds from the bonding curve.
+
+Migration remains subject to the program's state checks, migration lock, configured controls, and account validation.
 
 ## Creator security
 
-Creators are responsible for protecting their own wallets and credentials.
+A creator's wallet can be compromised independently of RugFreePump.
 
-A compromised creator wallet can create risks independent of a defect in the RugFreePump protocol.
+A compromised creator wallet can affect the associated project and may result in:
 
-Creators should never share:
+- Unauthorized project communication
+- Unauthorized transactions
+- Loss of creator-controlled assets
+- Malicious community activity
+- Impersonation
 
-- Seed phrases.
-- Private keys.
-- Hardware-wallet recovery information.
-- Wallet passwords.
-- Authentication secrets.
+Users should not treat creator wallet ownership as a guarantee of project security.
 
 ## User diligence
 
-Before purchasing a token, users should independently review:
+Before purchasing a token, users should consider reviewing:
 
-1. The token mint address.
-2. The creator identity and public history.
-3. Available token information.
-4. Sale conditions.
-5. Current bonding-curve state.
-6. Transaction details.
-7. Relevant community and project information.
+- Creator wallet
+- Token mint address
+- Token distribution
+- Project information
+- Official project channels
+- Community activity
+- Sale progress
+- Liquidity status
+- Transaction history
 
-Users should make decisions based on independently verified information rather than assuming protocol participation represents approval.
+No amount of platform-level security can remove project-specific risk.
 
-> **Important:** RugFreePump provides launch infrastructure. It does not certify, endorse, or guarantee the legitimacy, quality, value, behavior, or future success of individual tokens or creators.
+## No investment endorsement
+
+The presence of a token on RugFreePump does not mean that RugFreePump considers the token a safe investment, recommends the token, or guarantees the creator's conduct.
+
+Users make their own decisions and assume the risks associated with those decisions.
