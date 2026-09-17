@@ -1,1 +1,129 @@
+---
+title: On-Chain Program Risks
+description: Understand the risks associated with the RugFreePump on-chain program and blockchain execution.
+---
 
+The RugFreePump on-chain program contains the core logic responsible for the protocol's bonding-curve sale operations.
+
+Because this logic executes on Solana and controls protocol state and asset movements, defects or unexpected conditions in the program can have direct financial consequences.
+
+## Program software risk
+
+The on-chain program is software and may contain defects despite development, testing, review, and operational controls.
+
+Potential software risks include:
+
+- Incorrect state transitions.
+- Incorrect account validation.
+- Unexpected instruction behavior.
+- Arithmetic or precision errors.
+- Incorrect assumptions about external accounts.
+- Incorrect handling of exceptional states.
+- Integration failures with external Solana programs.
+
+A successful transaction does not establish that every possible program state has been tested.
+
+## Account and state risk
+
+Solana programs operate on explicitly supplied accounts.
+
+The program relies on account relationships, ownership, addresses, and stored state being validated correctly.
+
+Unexpected or invalid account configurations can cause a transaction to fail or, if an implementation defect exists, potentially produce an unintended state transition.
+
+The protocol therefore treats account validation as part of the security boundary of each instruction.
+
+## Administrative authority risk
+
+RugFreePump contains administrative instructions that are separate from the public user-facing instructions.
+
+Administrative authority is necessary for protocol configuration and operational management, but privileged access also creates a security boundary.
+
+A compromise or misuse of an administrative authority could have consequences beyond those available to an ordinary user.
+
+Production administrative keys and authorities should therefore be protected using appropriate operational security controls.
+
+> **TODO — REPLACE BEFORE PUBLICATION:** Document the final production authority model, key-management model, multisignature configuration, and any upgrade authority policy once those decisions are finalized.
+
+## Program upgrade risk
+
+If a deployed program can be upgraded, the upgrade authority represents an important trust assumption.
+
+Users should be able to determine whether the production program is upgradeable and, if so, which governance or operational controls protect the upgrade authority.
+
+> **TODO — REPLACE BEFORE PUBLICATION:** Document the final mainnet upgradeability policy, including whether the program is immutable, upgradeable, governed by a multisignature, or subject to another control mechanism.
+
+Until the final policy is published, users should not assume that deployment alone means the program can never change.
+
+## Transaction failure
+
+A transaction may fail because of:
+
+- Invalid arguments.
+- Invalid accounts.
+- Insufficient balances.
+- Program state conditions.
+- Stale or unavailable external data.
+- Solana network conditions.
+- Compute or transaction constraints.
+- External program failures.
+
+A failed transaction does not necessarily indicate a security incident.
+
+Users should inspect the transaction result and error information before retrying repeatedly.
+
+## Irreversible execution
+
+Confirmed blockchain transactions should be treated as potentially irreversible.
+
+RugFreePump cannot generally reverse a transaction simply because:
+
+- A user changed their mind.
+- The token price changed.
+- A user sent assets to the wrong address.
+- A user approved an unintended transaction.
+- A third-party wallet was compromised.
+
+Users should review transactions carefully before signing.
+
+## External program interaction
+
+Some RugFreePump operations interact with external Solana programs or infrastructure.
+
+External program behavior is outside the complete control of RugFreePump.
+
+In particular, liquidity migration involves the Raydium CPMM environment.
+
+An issue in an external program, an incompatible integration, or a change to an external protocol can affect the corresponding operation.
+
+## Program execution versus economic outcome
+
+Correct program execution does not guarantee a favorable economic outcome.
+
+A transaction can execute exactly according to protocol rules while the user experiences a financial loss because of:
+
+- Token price movement.
+- Bonding-curve price movement.
+- Market conditions.
+- Liquidity conditions.
+- Slippage.
+- Creator behavior.
+- Post-migration market activity.
+
+The protocol determines how the transaction is processed; it does not guarantee the financial result of the transaction.
+
+## Verification and audit status
+
+RugFreePump may publish deployment information, transaction records, source code, and other verification material to improve transparency.
+
+These materials should not be interpreted as an independent security audit unless an actual independent audit has been completed and published.
+
+> **TODO — REPLACE BEFORE PUBLICATION:** Add the final independent audit information, auditor name, report date, report URL, scope, and remediation status if an external audit is completed.
+
+## Responsible disclosure
+
+Potential vulnerabilities should be reported through the official security disclosure process rather than publicly disclosed before the project has an opportunity to investigate.
+
+See the [Security Disclosure](./security-disclosure) page for the reporting process.
+
+> **Important:** No software system can be represented as completely free of vulnerabilities. This page describes known security boundaries and categories of risk; it is not a guarantee of program security.
