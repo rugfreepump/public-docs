@@ -1,1 +1,147 @@
+---
+title: Security Model
+description: Understand the security boundaries, trust assumptions, and responsibilities across the RugFreePump protocol.
+---
 
+RugFreePump operates across multiple technical layers, and security depends on the interaction between those layers.
+
+The **RugFreePump dApp**, **RugFreePump on-chain program**, **Solana network**, **price oracle**, **external protocols**, and **user wallet** each have different responsibilities and different failure modes.
+
+Understanding these boundaries is essential when evaluating the risks of interacting with a bonding-curve sale.
+
+## Security boundaries
+
+The core execution path can be understood as:
+
+**User Wallet → RugFreePump dApp → RugFreePump On-Chain Program → Solana**
+
+Additional services and external protocols may participate in specific operations, including:
+
+- SOL/USD price data used by the bonding-curve purchase mechanism.
+- Off-chain infrastructure used to deliver the dApp, metadata, indexing, and realtime information.
+- Raydium CPMM for liquidity after a completed bonding-curve sale is migrated.
+
+Each layer introduces different assumptions.
+
+## What the on-chain program controls
+
+The RugFreePump on-chain program contains the core protocol logic governing the bonding-curve sale lifecycle.
+
+This includes the public instructions used to:
+
+- Create a bonding-curve sale.
+- Purchase tokens from an active sale.
+- Withdraw eligible contributed SOL when a sale expires or is canceled.
+- Migrate completed sale liquidity to a Raydium CPMM pool.
+
+The program validates accounts, inputs, protocol state, and the conditions required for each instruction.
+
+The on-chain program does not control every aspect of the environment surrounding a token.
+
+## What the dApp controls
+
+The RugFreePump dApp provides the user interface through which users construct and submit transactions.
+
+The dApp may also provide information obtained from off-chain services, such as:
+
+- Token metadata.
+- Sale display information.
+- Indexed activity.
+- Real-time updates.
+- Platform statistics.
+
+The dApp should therefore not be treated as the authoritative source for on-chain state when the underlying blockchain state can be independently inspected.
+
+A dApp outage or display problem does not by itself mean that the underlying Solana state has changed.
+
+## What Solana controls
+
+Solana provides the underlying blockchain execution and ledger infrastructure.
+
+Once a transaction is submitted and confirmed, the resulting account state and transaction history are recorded on the Solana network.
+
+RugFreePump does not control:
+
+- Solana network availability.
+- Network congestion.
+- Validator operation.
+- Solana transaction processing.
+- Network-level transaction fees.
+
+Transactions may fail or be delayed because of conditions outside the RugFreePump program.
+
+## External dependencies
+
+Some RugFreePump operations depend on systems outside the RugFreePump program.
+
+These may include:
+
+- SOL/USD price data.
+- Solana RPC infrastructure.
+- Metadata and content infrastructure.
+- Raydium CPMM for post-migration liquidity.
+
+An external dependency can fail, become unavailable, return stale information, or behave differently from expected conditions.
+
+The existence of an external dependency does not mean that RugFreePump controls that dependency.
+
+## Wallet responsibility
+
+A user's wallet is the final authorization layer for transactions initiated through the dApp.
+
+The user is responsible for reviewing the transaction presented by their wallet before signing it.
+
+RugFreePump cannot recover assets that are transferred or authorized through a compromised wallet, malicious software, phishing site, or incorrectly signed transaction.
+
+Users should never provide a seed phrase, private key, wallet recovery phrase, or other wallet credentials to RugFreePump or anyone claiming to provide RugFreePump support.
+
+## On-chain transparency
+
+The core user-facing operations of RugFreePump are executed through the on-chain program rather than existing solely as off-chain database state.
+
+The program has a public Program ID, and transactions submitted to it are recorded on Solana.
+
+Users can independently inspect:
+
+- The Program ID.
+- Transaction signatures.
+- Instruction execution.
+- Account state.
+- On-chain transaction results.
+
+This separation allows users to distinguish between information presented by the dApp and state actually recorded on-chain.
+
+## Security is not a single guarantee
+
+No individual security layer eliminates every possible risk.
+
+A correctly functioning on-chain program does not protect a user from:
+
+- A compromised wallet.
+- A phishing site.
+- A malicious token creator.
+- Market losses.
+- An external protocol failure.
+- Network congestion.
+- An unavailable RPC provider.
+- Incorrect user-signed transactions.
+
+Likewise, a functioning dApp does not guarantee that an asset will retain value.
+
+Security should therefore be understood as a combination of protocol controls, infrastructure controls, external dependencies, and user-side precautions.
+
+## Independent verification
+
+Users should rely on independently verifiable information wherever practical.
+
+For important transactions, users should:
+
+1. Confirm that they are using the official RugFreePump domain.
+2. Confirm that the wallet is connected to the expected network.
+3. Review the transaction presented by the wallet.
+4. Confirm important addresses and transaction details.
+5. Review the resulting transaction on Solana when appropriate.
+
+For production mainnet interactions, users should also verify the officially published production Program ID before interacting with the program.
+
+> **Important:** RugFreePump documentation describes the protocol's intended behavior and security boundaries. It is not an independent security audit, formal verification, or guarantee that the protocol, dApp, infrastructure, token creators, or external services are free from vulnerabilities or risk.
