@@ -3,6 +3,8 @@ title: Security Disclosure
 description: Learn how to report potential security vulnerabilities to the RugFreePump security team.
 ---
 
+# Security Disclosure
+
 RugFreePump welcomes responsible reports of potential security vulnerabilities affecting the RugFreePump protocol, application, or supporting infrastructure.
 
 If you believe you have identified a security vulnerability, please report it privately to the RugFreePump security team before publicly disclosing the issue.
@@ -17,7 +19,7 @@ Please provide enough technical information for the issue to be understood and, 
 
 ## Scope
 
-Security reports may concern vulnerabilities affecting any RugFreePump-controlled component, including:
+Security reports may concern vulnerabilities affecting RugFreePump-controlled components, including:
 
 * The RugFreePump on-chain program
 * Bonding-curve calculations and accounting
@@ -35,7 +37,7 @@ Security reports may concern vulnerabilities affecting any RugFreePump-controlle
 * Platform authentication and authorization
 * Supporting RugFreePump infrastructure
 
-A vulnerability may also be reported when a weakness occurs in the way RugFreePump integrates with an external system.
+A vulnerability may also be reported when a security weakness results from the way RugFreePump integrates with an external system.
 
 ### Third-party systems
 
@@ -43,7 +45,7 @@ RugFreePump depends on external systems and protocols, including Solana, Pyth, R
 
 Vulnerabilities originating entirely within a third-party system should generally be reported to the respective provider.
 
-However, if the issue results from RugFreePump's implementation or integration of that external system, it should be reported to RugFreePump.
+However, vulnerabilities in RugFreePump's implementation or integration of an external system are within the scope of this disclosure process.
 
 ## What to include
 
@@ -64,11 +66,31 @@ A proof of concept or other reproducible demonstration is strongly encouraged wh
 
 Do not include private keys, seed phrases, passwords, API credentials, or other sensitive authentication information in a report.
 
+## Security impact
+
+When reporting a vulnerability, describe what an attacker could potentially accomplish.
+
+Examples of security impact include:
+
+* Unauthorized movement of SOL or tokens
+* Unauthorized access to privileged protocol functionality
+* Bypassing protocol authority or permission checks
+* Manipulation of bonding-curve accounting or calculations
+* Bypassing purchase, withdrawal, or lifecycle restrictions
+* Unauthorized changes to protocol state
+* Incorrect or unauthorized liquidity migration
+* Permanent or temporary loss of access to funds
+* Compromise of user transaction or wallet interactions
+* Unauthorized access to sensitive platform information
+* Compromise of RugFreePump-controlled infrastructure
+
+Reports should distinguish between a theoretical possibility and an impact that can be demonstrated or reproduced.
+
 ## Responsible testing
 
 Security testing should be limited to systems, accounts, wallets, assets, and environments that you are authorized to use.
 
-Please avoid actions that could cause unnecessary harm or disruption.
+Please avoid actions that could cause unnecessary harm, financial loss, or disruption.
 
 Do not:
 
@@ -84,26 +106,6 @@ Do not:
 * Publicly disclose sensitive information obtained during testing
 
 Whenever possible, demonstrate the vulnerability using the minimum level of access and activity necessary to establish its existence and potential impact.
-
-## Security impact
-
-When reporting a vulnerability, describe what an attacker could potentially accomplish.
-
-Examples of security impact include:
-
-* Unauthorized movement of SOL or tokens
-* Unauthorized access to privileged protocol functionality
-* Bypassing protocol authority or permission checks
-* Manipulation of bonding-curve accounting or calculations
-* Bypassing purchase, withdrawal, or lifecycle restrictions
-* Unauthorized changes to protocol state
-* Incorrect or unauthorized liquidity migration
-* Permanent or temporary loss of access to funds
-* Compromise of user transactions or wallet interactions
-* Unauthorized access to sensitive platform information
-* Compromise of RugFreePump-controlled infrastructure
-
-Reports should distinguish between a theoretical possibility and an impact that can be demonstrated or reproduced.
 
 ## Public disclosure
 
