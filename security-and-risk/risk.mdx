@@ -3,80 +3,96 @@ title: Risks
 description: Understand the technical, economic, operational, market, and user-related risks associated with creating, buying into, withdrawing from, and migrating bonding-curve sales through RugFreePump.
 ---
 
-RugFreePump involves risks that can affect your funds, token purchases, withdrawals, sale participation, liquidity, and access to the platform.
+RugFreePump involves risks that can affect your funds, token sales, purchases, withdrawals, liquidity, transactions, and access to the platform.
 
-Some risks come from the RugFreePump on-chain program. Others come from SOL price changes, bonding-curve pricing, token creators, wallets, Solana, Raydium, or the infrastructure used by the platform.
+Some risks come from the RugFreePump on-chain program. Others can come from SOL price changes, bonding-curve pricing, token creators, wallets, Solana, Raydium, or the infrastructure used by the platform.
 
-The risks below explain the main ways things can go wrong and how they may affect you. This list cannot cover every possible failure, vulnerability, market event, or unexpected situation.
+The sections below explain the main things that can go wrong and how they may affect you. They cannot cover every possible software bug, security issue, market event, service failure, or other unexpected situation.
 
 ## On-chain program risks
 
 ### Program software risk
 
-The RugFreePump on-chain program handles token creation, bonding-curve purchases, withdrawals, sale finalization, and liquidity migration.
+The RugFreePump on-chain program handles SPL token creation and bonding-curve sales, including sale status and lifecycle management, purchases, withdrawals, liquidity migration, administrative operations, and other protocol functions.
 
 A software bug or previously unknown vulnerability could cause:
 
-* Incorrect token or SOL amounts
-* Incorrect bonding-curve pricing or calculations
-* Incorrect fees
-* Failed transactions or unexpected state changes
-* Incorrect withdrawals
-* Failed or incorrect sale finalization
-* Failed or incorrect liquidity migration
-* Unexpected administrative behavior
-* Loss or unintended movement of assets
+* Tokens or SOL to be calculated or transferred incorrectly
+* Bonding-curve purchases to produce an unexpected token amount or price
+* Fees to be charged incorrectly
+* Transactions to fail or sale states to change unexpectedly
+* Eligible withdrawals to fail or become unavailable
+* Sales to fail to finalize when expected
+* Liquidity migration to fail, be delayed, or produce an unexpected result
+* Administrative operations to behave unexpectedly
+* Tokens or SOL to be lost or moved without the intended result
 
-A serious vulnerability could cause anything from temporary loss of functionality to permanent financial loss.
+A serious software vulnerability could cause anything from temporary loss of functionality to permanent financial loss.
 
 ### Upgradeability risk
 
-The RugFreePump on-chain program can currently be upgraded.
+On Solana, deployed programs can be upgraded by an upgrade authority. This allows developers to patch vulnerabilities, fix bugs, improve existing functionality, and deploy new features, but it also introduces a risk that the program's behavior can change over time.
 
-The upgrade authority is controlled by the founder/developer and is not currently protected by an independent multisig.
+The RugFreePump program currently has a single upgrade authority, meaning its underlying code can be changed through a future upgrade.
 
-If this authority were compromised, misused, or accessed without authorization, the program could be changed and future transactions could behave differently from previous versions.
+If the upgrade authority were compromised, misused, or accessed without authorization, an unauthorized upgrade could change core functionality or protocol behavior. This could make the program behave differently in the future.
 
 ### Administrative authority risk
 
-Some protocol settings and critical operations are controlled by administrative authority.
+Some important RugFreePump functions require administrative authority. These include maintenance controls, protocol configuration, recovery operations, and other protocol-level functions.
 
-These include areas such as maintenance, configuration, migration, recovery, and other protocol-level operations.
+The RugFreePump protocol currently relies on a single administrative authority for these functions.
 
-Because the relevant authorities are currently controlled by a single operator, a compromised, lost, or misused authority could affect:
+If this authority were compromised, lost, misused, or accessed without authorization, it could:
 
-* Protocol availability
-* Available features
-* Fees
-* Sale settings
-* Migration behavior
-* Recovery operations
-* Other protocol-wide settings
+* Temporarily stop or restrict parts of the platform
+* Change protocol fees or other settings used by future sales
+* Disable or restrict certain protocol features
+* Affect how liquidity migration or recovery is handled
+* Interfere with the normal operation of active or finalized sales
+
+This could result in unexpected changes, restricted functionality, or disruption to users and active sales.
 
 ### Maintenance mode risk
 
-RugFreePump can temporarily restrict or stop relevant protocol operations during maintenance.
+RugFreePump can enter a maintenance state that temporarily restricts most on-chain protocol operations while maintenance work is being performed.
 
-This can be especially important for active bonding-curve sales because each sale has a fixed expiration window.
+The protocol is designed to avoid enabling maintenance mode while active bonding-curve sales are still within their active lifecycle. Once maintenance mode is enabled, the maintenance state restricts most on-chain protocol operations.
 
-If maintenance lasts for a significant part of that window, creators have less time to attract buyers and build the sale.
+This can temporarily affect:
 
-This can lead to:
+* Creating new token sales
+* Liquidity migration
+* Available withdrawals
+* Other on-chain protocol operations
 
-* Lower contributor activity
-* Less time to build the sale
-* A greater chance of the sale expiring before reaching its hard cap
-* Disruption to planned launches, community activity, or marketing
+Once maintenance is enabled, most protocol operations are unavailable until maintenance is completed.
 
-Maintenance of RugFreePump is separate from problems such as Solana congestion or a user's wallet connection.
+Maintenance can therefore temporarily reduce platform functionality and delay planned launches, migrations, withdrawals, or other activities.
+
+This is separate from outages or delays caused by Solana, wallets, RPC providers, or other external services.
 
 ### Configuration risk
 
-RugFreePump uses configurable settings that can affect how future transactions and sales work.
+RugFreePump uses protocol settings that can affect how new token sales and other on-chain operations work.
 
-Changes to fees, sale duration, feature availability, migration settings, creator incentives, DEX settings, or other configuration can change future outcomes.
+Changes to these settings can affect things such as:
 
-A setting or fee seen on an earlier sale may therefore not remain the same later.
+* Fees charged for creating or buying into a sale
+* How long new sales remain active
+* Creator incentives
+* Whether certain protocol features are available
+* Liquidity migration settings
+* DEX-related settings
+
+These settings can change over time, so the terms, fees, or behavior of a new sale may differ from those of an earlier sale.
+
+
+
+
+
+
+
 
 ### Token creation and initialization risk
 
