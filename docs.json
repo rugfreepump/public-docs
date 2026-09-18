@@ -67,10 +67,10 @@
         ]
       },
       {
-        "group": "Security & Risk",
+        "group": "Security & Risks",
         "pages": [
           "security-and-risk/security",
-          "security-and-risk/risk",
+          "security-and-risk/risks",
           "security-and-risk/security-disclosure"
         ]
       },
