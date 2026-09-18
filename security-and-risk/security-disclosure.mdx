@@ -5,190 +5,77 @@ description: Learn how to report potential security vulnerabilities to the RugFr
 
 # Security Disclosure
 
-RugFreePump welcomes responsible reports from security researchers, developers, users, and community members who identify potential security vulnerabilities affecting the platform or its supporting infrastructure.
+RugFreePump welcomes responsible reports of potential security vulnerabilities affecting the RugFreePump protocol, application, or supporting infrastructure.
 
-There is currently no bug bounty program.
+If you believe you have identified a security vulnerability, please report it privately to the RugFreePump security team before publicly disclosing the issue.
 
-Security reports are nevertheless encouraged and can be submitted voluntarily through the security contact below.
+## Report a vulnerability
 
-## Report a security vulnerability
-
-Send security-related reports to:
+Security vulnerabilities can be reported to:
 
 `security@rugfreepump.com`
 
-Please use this address for suspected security vulnerabilities involving RugFreePump.
+Please provide enough information for the issue to be understood and reproduced.
 
-Do not include private keys, seed phrases, passwords, API credentials, or other sensitive wallet credentials in a report.
+### Include the following information
 
-## What should be reported
+Where applicable, include:
 
-Examples of issues that may be appropriate to report include:
+* A clear description of the vulnerability
+* The affected component or functionality
+* Steps required to reproduce the issue
+* Expected behavior
+* Actual behavior
+* Potential security impact
+* Relevant transaction signatures
+* Relevant public blockchain addresses
+* Proof-of-concept code or demonstrations
+* Any other technical information that may help with investigation
 
-- Vulnerabilities in the RugFreePump on-chain program
-- Unauthorized access to privileged protocol functionality
-- Incorrect authority or permission enforcement
-- Vulnerabilities affecting token or SOL handling
-- Security issues in liquidity migration
-- Vulnerabilities involving emergency or recovery operations
-- Oracle integration vulnerabilities
-- Authentication or authorization weaknesses
-- Critical website vulnerabilities
-- Server-side vulnerabilities
-- Infrastructure compromise
-- Credential exposure
-- Vulnerabilities that could result in unauthorized asset movement
-- Vulnerabilities that could materially compromise user security
+Do not include private keys, seed phrases, passwords, API credentials, or other sensitive authentication information in your report.
 
-When in doubt, report the issue and provide enough information for investigation.
+## Responsible testing
 
-## What is generally not a security vulnerability
+Security testing should be limited to systems, accounts, wallets, assets, and environments that you are authorized to test.
 
-The following are generally not security vulnerabilities by themselves:
+Please avoid actions that could cause unnecessary harm or disruption, including:
 
-- Token price decreases
-- Normal market volatility
-- Bonding-curve price movement
-- Losses caused by normal trading
-- Low market liquidity
-- Creator disputes
-- Project failure
-- Disagreement with protocol design
-- Feature requests
-- Documentation mistakes that do not create a security impact
-- Failed transactions caused by valid protocol conditions
-- Ordinary Solana network fees
-- General customer-support requests
+* Accessing or attempting to access another person's private credentials
+* Taking or retaining assets that do not belong to you
+* Modifying or destroying data unrelated to the vulnerability
+* Disrupting platform availability or other users
+* Conducting denial-of-service attacks
+* Social engineering users or personnel
+* Publicly exposing sensitive information obtained during testing
 
-These issues may still be relevant to other RugFreePump channels.
-
-## Responsible disclosure
-
-When reporting a vulnerability, please provide enough information to reproduce or understand the issue.
-
-Useful information includes:
-
-- Clear description
-- Affected component
-- Steps to reproduce
-- Relevant transaction signatures
-- Relevant public addresses
-- Expected behavior
-- Actual behavior
-- Potential impact
-- Proof of concept where appropriate
-
-Please avoid unnecessary access to data or assets that do not belong to you.
-
-## Safe testing
-
-Security researchers should limit testing to environments and assets they are authorized to use.
-
-Do not:
-
-- Steal assets
-- Access another person's wallet
-- Obtain private credentials
-- Destroy or alter unrelated data
-- Perform destructive attacks against production infrastructure
-- Disrupt users
-- Conduct denial-of-service attacks
-- Social-engineer users or staff
-
-When a vulnerability can be demonstrated safely without causing real-world harm, use the safest method available.
-
-## No bug bounty currently
-
-RugFreePump does not currently operate a formal bug bounty program.
-
-This means:
-
-- No monetary reward is currently promised
-- No bounty tiers currently exist
-- No researcher compensation is guaranteed
-- No third-party bounty platform is currently used
-
-Future security-reward programs may be introduced as the platform matures.
-
-Until then, researchers should not assume that a report qualifies for a financial reward.
-
-## Report handling
-
-Security reports sent to `security@rugfreepump.com` will be reviewed by the RugFreePump team.
-
-The response process may depend on:
-
-- Severity
-- Reproducibility
-- Potential user impact
-- Whether the issue affects production systems
-- Whether exploitation is active
-- The complexity of remediation
-
-No fixed response or remediation timeline is currently promised.
-
-## Active exploitation
-
-If you believe a vulnerability is actively being exploited, clearly identify that in the report subject and provide the strongest available evidence.
-
-For an actively exploited issue, avoid publicly disclosing technical details before RugFreePump has had a reasonable opportunity to investigate and respond.
+Whenever possible, demonstrate the vulnerability using the minimum level of access and activity necessary to establish its impact.
 
 ## Public disclosure
 
-Researchers are encouraged to coordinate disclosure of significant vulnerabilities with RugFreePump where practical.
+Please allow RugFreePump a reasonable opportunity to investigate a reported vulnerability before publicly disclosing technical details.
 
-Public disclosure of an unresolved vulnerability can increase risk to users.
+If a vulnerability involves active exploitation or presents an immediate risk to users, clearly indicate this in the report and provide any available evidence.
 
-RugFreePump may publish security information when appropriate, including remediation information or general security advisories.
+RugFreePump may coordinate public disclosure with the reporter when appropriate.
 
-## Security researchers
+## Bug bounty
 
-RugFreePump appreciates responsible contributions from independent researchers and community members.
+RugFreePump does not currently operate a formal bug bounty program.
 
-A valid security report can help identify weaknesses before they affect users, even when no bounty or monetary reward is currently offered.
+Submitting a vulnerability report does not create an entitlement to monetary compensation or any other reward.
 
-## Future security program
+Any future vulnerability-reward program will be announced separately if introduced.
 
-RugFreePump plans to strengthen its security program over time.
+## Report handling
 
-Potential future improvements include:
+Reports submitted to `security@rugfreepump.com` are reviewed by the RugFreePump team.
 
-- Formal third-party security audits
-- Multisig authorization for critical protocol operations
-- A formal vulnerability-reward program
-- More structured security response procedures
-- Additional security monitoring
+Investigation and remediation may depend on the nature, severity, reproducibility, and potential impact of the reported issue.
 
-These are future plans and should not be interpreted as currently deployed controls.
+RugFreePump does not currently provide a guaranteed response, remediation, or resolution timeline.
 
-## General support
+## Security contact
 
-For ordinary account, platform, or usage questions, contact:
+For security vulnerabilities only:
 
-`support@rugfreepump.com`
-
-Do not use the security address for routine support requests unless the issue involves a potential security vulnerability.
-
-## Legal and copyright matters
-
-Copyright infringement and other legal matters should be directed to:
-
-`legal@rugfreepump.com`
-
-Do not use the legal address for security vulnerability reports unless the matter is specifically legal in nature.
-
-## Official channels
-
-Use only verified RugFreePump channels when communicating with the project.
-
-Official channels:
-
-- Website: `rugfreepump.com`
-- Telegram Channel: `TODO — REPLACE WITH OFFICIAL TELEGRAM CHANNEL`
-- Telegram Community: `TODO — REPLACE WITH OFFICIAL TELEGRAM COMMUNITY`
-- Discord: `TODO — REPLACE WITH OFFICIAL DISCORD`
-- Twitter/X: `TODO — REPLACE WITH OFFICIAL TWITTER/X`
-
-Attackers may impersonate RugFreePump security personnel or community administrators.
-
-A legitimate security representative will not request your seed phrase or private key.
+`security@rugfreepump.com`
