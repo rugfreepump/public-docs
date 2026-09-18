@@ -3,6 +3,8 @@ title: Security Disclosure
 description: Learn how to report potential security vulnerabilities to the RugFreePump security team.
 ---
 
+# Security Disclosure
+
 RugFreePump welcomes responsible reports of potential security vulnerabilities affecting the RugFreePump protocol, application, or supporting infrastructure.
 
 If you believe you have identified a security vulnerability, please report it privately to the RugFreePump security team before publicly disclosing the issue.
@@ -13,9 +15,39 @@ Security vulnerabilities can be reported to:
 
 `security@rugfreepump.com`
 
-Please provide enough information for the issue to be understood and reproduced.
+Please provide enough technical information for the issue to be understood and, where possible, reproduced.
 
-### Include the following information
+## Scope
+
+Security reports may concern vulnerabilities affecting any RugFreePump-controlled component, including:
+
+* The RugFreePump on-chain program
+* Bonding-curve calculations and accounting
+* SOL and token handling
+* Protocol authority and permission enforcement
+* Sale lifecycle and state transitions
+* Withdrawals
+* Liquidity migration
+* Recovery and cancellation operations
+* SOL/USD oracle integration
+* RugFreePump website and dApp
+* Backend and API services
+* Blockchain indexing and data services
+* WebSocket and real-time infrastructure
+* Platform authentication and authorization
+* Supporting RugFreePump infrastructure
+
+A vulnerability may also be reported when a weakness occurs in the way RugFreePump integrates with an external system.
+
+### Third-party systems
+
+RugFreePump depends on external systems and protocols, including Solana, Pyth, Raydium, wallet providers, RPC providers, and other third-party infrastructure.
+
+Vulnerabilities originating entirely within a third-party system should generally be reported to the respective provider.
+
+However, if the issue results from RugFreePump's implementation or integration of that external system, it should be reported to RugFreePump.
+
+## What to include
 
 Where applicable, include:
 
@@ -30,29 +62,58 @@ Where applicable, include:
 * Proof-of-concept code or demonstrations
 * Any other technical information that may help with investigation
 
-Do not include private keys, seed phrases, passwords, API credentials, or other sensitive authentication information in your report.
+A proof of concept or other reproducible demonstration is strongly encouraged where practical.
+
+Do not include private keys, seed phrases, passwords, API credentials, or other sensitive authentication information in a report.
 
 ## Responsible testing
 
-Security testing should be limited to systems, accounts, wallets, assets, and environments that you are authorized to test.
+Security testing should be limited to systems, accounts, wallets, assets, and environments that you are authorized to use.
 
-Please avoid actions that could cause unnecessary harm or disruption, including:
+Please avoid actions that could cause unnecessary harm or disruption.
 
-* Accessing or attempting to access another person's private credentials
-* Taking or retaining assets that do not belong to you
-* Modifying or destroying data unrelated to the vulnerability
-* Disrupting platform availability or other users
-* Conducting denial-of-service attacks
-* Social engineering users or personnel
-* Publicly exposing sensitive information obtained during testing
+Do not:
 
-Whenever possible, demonstrate the vulnerability using the minimum level of access and activity necessary to establish its impact.
+* Access or attempt to access another person's wallet or private credentials
+* Steal, transfer, or retain assets that do not belong to you
+* Obtain, expose, or publish private keys, seed phrases, passwords, or credentials
+* Modify or destroy unrelated data
+* Disrupt platform availability or other users
+* Conduct denial-of-service attacks
+* Conduct large-scale automated testing that could disrupt production systems
+* Social-engineer users or RugFreePump personnel
+* Attack third-party systems or services
+* Publicly disclose sensitive information obtained during testing
+
+Whenever possible, demonstrate the vulnerability using the minimum level of access and activity necessary to establish its existence and potential impact.
+
+## Security impact
+
+When reporting a vulnerability, describe what an attacker could potentially accomplish.
+
+Examples of security impact include:
+
+* Unauthorized movement of SOL or tokens
+* Unauthorized access to privileged protocol functionality
+* Bypassing protocol authority or permission checks
+* Manipulation of bonding-curve accounting or calculations
+* Bypassing purchase, withdrawal, or lifecycle restrictions
+* Unauthorized changes to protocol state
+* Incorrect or unauthorized liquidity migration
+* Permanent or temporary loss of access to funds
+* Compromise of user transactions or wallet interactions
+* Unauthorized access to sensitive platform information
+* Compromise of RugFreePump-controlled infrastructure
+
+Reports should distinguish between a theoretical possibility and an impact that can be demonstrated or reproduced.
 
 ## Public disclosure
 
 Please allow RugFreePump a reasonable opportunity to investigate a reported vulnerability before publicly disclosing technical details.
 
-If a vulnerability involves active exploitation or presents an immediate risk to users, clearly indicate this in the report and provide any available evidence.
+Do not publish exploit code, private report contents, or other information that could enable exploitation while the vulnerability remains unresolved.
+
+If you believe a vulnerability is actively being exploited or presents an immediate risk to users, clearly identify this in the report and provide any available evidence.
 
 RugFreePump may coordinate public disclosure with the reporter when appropriate.
 
@@ -68,12 +129,13 @@ Any future vulnerability-reward program will be announced separately if introduc
 
 Reports submitted to `security@rugfreepump.com` are reviewed by the RugFreePump team.
 
-Investigation and remediation may depend on the nature, severity, reproducibility, and potential impact of the reported issue.
+Investigation and remediation may depend on factors including:
+
+* Severity and potential impact
+* Reproducibility
+* Affected component
+* Whether the issue affects production systems
+* Whether exploitation is occurring
+* Complexity of remediation
 
 RugFreePump does not currently provide a guaranteed response, remediation, or resolution timeline.
-
-## Security contact
-
-For security vulnerabilities only:
-
-`security@rugfreepump.com`
