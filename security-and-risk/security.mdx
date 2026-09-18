@@ -62,11 +62,11 @@ The deployed RugFreePump on-chain program and the Solana runtime enforce the app
 
 ## On-chain security controls
 
-RugFreePump uses account, state, authority, input, and lifecycle validation to constrain which protocol operations the deployed program will accept.
+RugFreePump uses account, state, authority, input, and lifecycle validation to constrain which protocol operations the deployed on-chain program will accept.
 
 ### Account and authority validation
 
-The program validates the accounts and authorities required for each protocol operation.
+The on-chain program validates the accounts and authorities required for each protocol operation.
 
 Security-relevant controls include:
 
@@ -75,13 +75,13 @@ Security-relevant controls include:
 * Authority validation
 * Sale and account state validation
 * Validation of accounts associated with the expected token and bonding-curve state
-* Validation of required external program addresses
+* Validation of required external on-chain program addresses
 
 These checks prevent protocol instructions from simply operating against arbitrary accounts or unauthorized protocol state.
 
 ### Sale lifecycle controls
 
-The program enforces the state transitions associated with a bonding-curve sale.
+The on-chain program enforces the state transitions associated with a bonding-curve sale.
 
 These controls include:
 
@@ -95,13 +95,13 @@ These controls include:
 * Migration-state protection
 * Recovery and cancellation state validation
 
-The program therefore determines which lifecycle transition is valid for the current on-chain state.
+The on-chain program therefore determines which lifecycle transition is valid for the current on-chain state.
 
 ### Maintenance controls
 
 RugFreePump includes an on-chain maintenance state that can restrict protocol operations when maintenance controls are enabled.
 
-The program checks the maintenance state as part of operations that are restricted during maintenance.
+The on-chain program checks the maintenance state as part of operations that are restricted during maintenance.
 
 The protocol also uses lifecycle conditions intended to prevent maintenance controls from being enabled while active bonding-curve sales are within their protected active lifecycle.
 
@@ -135,7 +135,7 @@ The purchase path currently requires:
 * A price update no older than 60 seconds
 * Oracle confidence is within the configured 2% threshold
 
-These checks establish the conditions under which external price data can be accepted by the program.
+These checks establish the conditions under which external price data can be accepted by the on-chain program.
 
 RugFreePump controls the validation rules applied to the supplied oracle data but does not control the underlying Pyth infrastructure.
 
@@ -164,13 +164,13 @@ This establishes the protocol's fixed-supply behavior for tokens created through
 
 Liquidity migration represents a controlled transition from the RugFreePump bonding-curve environment to Raydium CPMM liquidity.
 
-The migration process is constrained by on-chain validation of the required sale state, timing, authorities, accounts, and external program.
+The migration process is constrained by on-chain validation of the required sale state, timing, authorities, accounts, and external on-chain program.
 
-### Raydium program validation
+### Raydium on-chain program validation
 
-The RugFreePump program validates the expected Raydium CPMM program before performing the external interaction.
+The RugFreePump on-chain program validates the expected Raydium CPMM on-chain program before performing the external interaction.
 
-The migration therefore does not simply accept an arbitrary external program address supplied by an off-chain service.
+The migration therefore does not simply accept an arbitrary external on-chain program address supplied by an off-chain service.
 
 The interaction with Raydium occurs through an on-chain CPI.
 
@@ -178,11 +178,11 @@ Raydium remains an external protocol and is outside RugFreePump's direct control
 
 ### Migration state protection
 
-The program tracks the migration state of a sale and validates whether migration is currently permitted.
+The on-chain program tracks the migration state of a sale and validates whether migration is currently permitted.
 
 Migration lock and state checks prevent conflicting migration-related operations from being accepted for the same sale.
 
-This keeps the migration process within the state transitions defined by the RugFreePump program.
+This keeps the migration process within the state transitions defined by the RugFreePump on-chain program.
 
 ### Recovery path
 
@@ -190,11 +190,11 @@ RugFreePump includes a controlled recovery path for finalized sales when the nor
 
 Recovery provides an alternative on-chain handling path for exceptional finalized-sale conditions rather than requiring the protocol to remain permanently dependent on an unsuccessful normal migration attempt.
 
-The recovery operation is restricted by the program's administrative authority and applicable on-chain state and account checks.
+The recovery operation is restricted by the on-chain program's administrative authority and applicable on-chain state and account checks.
 
 Recovery therefore acts as a protocol-level fallback mechanism for exceptional liquidity-migration conditions.
 
-It does not bypass the on-chain program. The recovery operation itself must satisfy the authorization and state-transition rules enforced by the deployed program.
+It does not bypass the on-chain program. The recovery operation itself must satisfy the authorization and state-transition rules enforced by the deployed on-chain program.
 
 ### Cancellation and contributor withdrawal
 
@@ -208,7 +208,7 @@ This provides a defined on-chain exit path for contributor funds when a finalize
 
 The cancellation mechanism is therefore a protocol-level safety mechanism that prevents a finalized sale from being dependent exclusively on successful completion of the normal migration path.
 
-Cancellation and withdrawal remain governed by the deployed program, the sale's recorded state, contributor accounting, and the available balance in the bonding-curve vault.
+Cancellation and withdrawal remain governed by the deployed on-chain program, the sale's recorded state, contributor accounting, and the available balance in the bonding-curve vault.
 
 ### LP token handling
 
@@ -220,11 +220,11 @@ This means the resulting LP position is not retained as an ongoing LP-token bala
 
 ## Administrative authority and upgrade security
 
-RugFreePump currently operates with a **single authorized authority** for the relevant program upgrade and administrative controls.
+RugFreePump currently operates with a **single authorized authority** for the relevant on-chain program upgrade and administrative controls.
 
 The current deployment includes:
 
-* A single program upgrade authority
+* A single on-chain program upgrade authority
 * A single authorized authority controlling the relevant administrative and configuration authorities
 * Administrative controls governed by that authority
 * No multisig requirement for critical administrative operations
@@ -232,19 +232,19 @@ The current deployment includes:
 
 This single-authority model is a fundamental security assumption of the current deployment.
 
-### Program upgradeability
+### on-chain program upgradeability
 
 The RugFreePump on-chain program is upgradeable.
 
-The current program upgrade authority is controlled by the authorized authority described above.
+The current on-chain program upgrade authority is controlled by the authorized authority described above.
 
-An authorized program upgrade can therefore change the code governing protocol execution.
+An authorized on-chain program upgrade can therefore change the code governing protocol execution.
 
-Program upgrade authority is consequently part of the protocol's security boundary and must be protected accordingly.
+On-chain program upgrade authority is consequently part of the protocol's security boundary and must be protected accordingly.
 
 ### Administrative controls
 
-The authorized administrative authority controls the protocol-level administrative functions implemented by the deployed program.
+The authorized administrative authority controls the protocol-level administrative functions implemented by the deployed on-chain program.
 
 These can include maintenance, configuration, recovery, cancellation, and other restricted protocol operations where applicable.
 
@@ -260,7 +260,7 @@ RugFreePump depends on external systems that are outside its direct control.
 
 ### Solana
 
-Solana provides the blockchain execution environment and account model in which the RugFreePump program operates.
+Solana provides the blockchain execution environment and account model in which the RugFreePump on-chain program operates.
 
 RugFreePump does not control:
 
@@ -270,19 +270,19 @@ RugFreePump does not control:
 * Network-level execution
 * The broader Solana network
 
-The RugFreePump program executes according to the Solana transaction, account, and program execution model.
+The RugFreePump on-chain program executes according to the Solana transaction, account, and on-chain program execution model.
 
 ### Pyth
 
 Pyth provides the external SOL/USD price data required by the bonding-curve mechanism.
 
-RugFreePump validates the supplied price according to its program rules but does not control the underlying oracle infrastructure.
+RugFreePump validates the supplied price according to its on-chain program rules but does not control the underlying oracle infrastructure.
 
 ### Raydium
 
 Raydium provides external liquidity infrastructure used during migration.
 
-RugFreePump validates the expected Raydium program before interacting with it, but Raydium remains an independent external protocol.
+RugFreePump validates the expected Raydium on-chain program before interacting with it, but Raydium remains an independent external protocol.
 
 ## Off-chain security boundary
 
@@ -330,11 +330,11 @@ RugFreePump protocol execution can be independently inspected through Solana-com
 
 Publicly verifiable information includes:
 
-* RugFreePump program addresses
+* RugFreePump on-chain program addresses
 * Token mint addresses
 * Solana account state
 * Transaction signatures
-* Program instructions
+* on-chain program instructions
 * Sale state
 * Protocol-controlled account activity
 * Liquidity migration transactions
@@ -374,16 +374,16 @@ RugFreePump's security model is built around a clear separation of authority and
 
 The **RugFreePump on-chain program** is the primary enforcement layer for protocol rules, state transitions, and protocol-controlled asset movements.
 
-**Solana accounts and the deployed program** provide the execution environment for those operations.
+**Solana accounts and the deployed on-chain program** provide the execution environment for those operations.
 
 **Off-chain infrastructure** provides application and information services but does not serve as the authoritative execution layer or as a custodian of users' SOL or tokens.
 
-**Pyth** provides externally sourced SOL/USD data that is validated by the program.
+**Pyth** provides externally sourced SOL/USD data that is validated by the on-chain program.
 
 **Raydium** provides external liquidity infrastructure that is validated and accessed through the on-chain migration flow.
 
 **User wallets** remain under user control and provide the signing authority for user-approved transactions.
 
-The current deployment also relies on a **single authorized authority** for program upgrades and relevant administrative controls.
+The current deployment also relies on a **single authorized authority** for on-chain program upgrades and relevant administrative controls.
 
 Together, these boundaries define the current security model of the deployed RugFreePump system.
