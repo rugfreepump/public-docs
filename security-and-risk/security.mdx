@@ -28,7 +28,7 @@ The deployed program is responsible for the core protocol lifecycle, including:
 * Protocol fee application
 * Purchase and contribution limits
 * Sale expiration and finalization
-* Eligible withdrawals
+* Available withdrawals
 * Liquidity migration
 * Recovery and cancellation operations
 * Required authority and account validation
@@ -49,16 +49,16 @@ The on-chain execution layer governs protocol-controlled asset operations includ
 * SOL contributions to bonding-curve sales
 * Token purchases
 * Protocol fee transfers
-* Eligible withdrawals
+* Available withdrawals
 * Bonding-curve vault balances
 * Liquidity migration
 * Related protocol-controlled SOL and token transfers
 
-The off-chain infrastructure including the dApp, APIs, databases, indexers, and metadata services does not directly execute these protocol-controlled asset movements.
+The off-chain infrastructure, including the dApp, APIs, databases, indexers, and metadata services, does not directly execute or control protocol-controlled asset movements.
 
-This means the off-chain application state is not the authority that determines whether a protocol-controlled asset transfer is permitted.
+Off-chain application state therefore does not determine whether a protocol-controlled asset transfer is permitted.
 
-The deployed on-chain program and the Solana runtime enforce the applicable rules during transaction execution.
+The deployed RugFreePump on-chain program and the Solana runtime enforce the applicable rules and authorization requirements during transaction execution.
 
 ## On-chain security controls
 
