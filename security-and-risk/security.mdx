@@ -3,244 +3,348 @@ title: Security
 description: Understand the security architecture, trust boundaries, and administrative assumptions of RugFreePump.
 ---
 
-# Security Model
-
 **RugFreePump** is a Solana-native token launch platform driven by an on-chain bonding-curve mechanism.
 
-To reduce attack surface and establish clear security responsibilities, the protocol uses a compartmentalized security architecture that separates **core protocol execution** from the external systems and infrastructure that support it.
+The protocol is designed around a clear separation between **on-chain execution and enforcement** and the external systems that provide application, data, and infrastructure services.
 
-This model establishes explicit trust and security boundaries across the platform:
+The most important security boundary is the RugFreePump on-chain program. Protocol rules, protocol state transitions, and protocol-controlled SOL and token movements are executed through the deployed program and Solana accounts rather than through the off-chain backend.
 
-* **Core Execution Layer:** The **RugFreePump on-chain program** is the primary protocol execution layer. It enforces the rules implemented in the deployed program, performs the required on-chain calculations, validates state transitions and authorities, and records resulting protocol state directly on the Solana ledger.
+The platform also depends on separate security domains, including Solana, Pyth, Raydium, off-chain infrastructure, and user-controlled wallets.
 
-* **External Security Boundaries:** The **Solana runtime**, oracle infrastructure, integrated third-party protocols, off-chain platform infrastructure, and end-user wallets operate as separate security domains with their own trust assumptions, failure modes, and operational responsibilities. RugFreePump validates external inputs and program interactions where applicable, but does not control these external systems.
+This page explains how these components interact, which controls are enforced on-chain, and which authorities and trust boundaries exist in the current deployment.
 
-This page explains how these boundaries work, what each component controls, and what trust assumptions remain.
+## Core security architecture
 
-<Note>
-Security information describes the current RugFreePump architecture and operational model. It is not a guarantee that losses are impossible or that every component is free of vulnerabilities.
-</Note>
+### On-chain protocol execution
 
-## Security architecture
+The RugFreePump on-chain program is the primary protocol execution and enforcement layer.
 
-RugFreePump can be understood as several interconnected security domains.
+The deployed program is responsible for the core protocol lifecycle, including:
 
-### RugFreePump on-chain program
+* Token mint creation
+* Bonding-curve sale creation and state management
+* Contribution accounting
+* Bonding-curve purchase calculations
+* Protocol fee application
+* Purchase and contribution limits
+* Sale expiration and finalization
+* Eligible withdrawals
+* Liquidity migration
+* Recovery and cancellation operations
+* Required authority and account validation
+* Interactions with required external Solana programs
 
-The RugFreePump on-chain program is the primary protocol execution layer.
+Protocol operations are accepted only when the accounts, authorities, state, inputs, and conditions satisfy the rules implemented by the deployed program.
 
-It is responsible for enforcing the rules governing the core bonding-curve lifecycle, including:
+The resulting protocol state is recorded in Solana accounts.
 
-* Creating token mints and bonding-curve sale state
-* Maintaining sale state and contribution accounting
-* Calculating bonding-curve purchases
-* Applying configured protocol fees
-* Enforcing purchase limits and sale conditions
-* Processing eligible withdrawals
-* Handling sale expiration, finalization, and cancellation states
-* Enforcing liquidity migration conditions
-* Validating relevant authorities and accounts
-* Interacting with external on-chain programs where required
+### On-chain asset control
 
-The program determines whether protocol operations satisfy the rules implemented in the deployed program and records the resulting state on Solana.
+Protocol-controlled SOL and token movements are executed through the RugFreePump on-chain program and Solana accounts.
 
-### Solana
+The off-chain RugFreePump infrastructure does not custody or directly control users' SOL or tokens.
 
-Solana provides the blockchain execution environment in which RugFreePump transactions execute.
+The on-chain execution layer governs protocol-controlled asset operations including:
 
-RugFreePump does not control:
+* SOL contributions to bonding-curve sales
+* Token purchases
+* Protocol fee transfers
+* Eligible withdrawals
+* Bonding-curve vault balances
+* Liquidity migration
+* Related protocol-controlled SOL and token transfers
 
-* Solana network availability
-* Transaction ordering
-* Validator behavior
-* Network fees
-* Network-level failures or congestion
+The dApp, APIs, databases, indexers, metadata services, and real-time infrastructure do not directly execute these protocol-controlled asset movements.
 
-The resulting on-chain state depends on the deployed program, transaction inputs, account state, and Solana execution.
+This means the off-chain application state is not the authority that determines whether a protocol-controlled asset transfer is permitted.
 
-### Oracle infrastructure
-
-The RugFreePump bonding-curve mechanism depends on external SOL/USD price data.
-
-The current implementation uses Pyth price data and validates the supplied price before it is accepted by the purchase path.
-
-Pyth therefore represents an external security boundary. RugFreePump can validate the oracle data it receives according to its program rules, but it does not control the underlying oracle infrastructure or broader market conditions.
-
-### External liquidity infrastructure
-
-Completed sales can interact with Raydium CPMM infrastructure during liquidity migration.
-
-Raydium is an external on-chain protocol that RugFreePump does not control.
-
-The migration process therefore represents a separate execution boundary between the RugFreePump program and external liquidity infrastructure.
-
-### Platform infrastructure
-
-The RugFreePump dApp and supporting off-chain infrastructure provide the interface through which token creators launch tokens and buyers interact with bonding-curve sales.
-
-This includes services such as:
-
-* Website infrastructure
-* APIs and application services
-* Indexing services
-* Databases
-* Real-time infrastructure
-* Metadata infrastructure
-* RPC providers
-* Other supporting services
-
-These services can affect availability or the information displayed to users, but they do not replace the on-chain program as the protocol execution layer.
-
-An outage, indexing delay, or incorrect off-chain display does not by itself mean that the underlying Solana state has changed.
-
-## Administrative trust model
-
-RugFreePump is currently operated by a single authorized operator.
-
-At the current stage of the project:
-
-* The on-chain program is upgradeable.
-* The founder/developer currently controls the program upgrade authority.
-* Administrative and configuration authorities are currently controlled by the same operator.
-* Maintenance controls are currently operated by the same authority.
-* Critical administrative operations do not currently require multisig approval.
-* There is no independent multisig governance layer currently deployed.
-
-This is a fundamental part of the current security model.
-
-A compromise or unauthorized use of the relevant administrative or upgrade authorities could therefore affect protocol behavior beyond the consequences of a normal user wallet compromise.
-
-RugFreePump intends to introduce stronger governance controls in the future, including multisig authorization for critical operations. The on-chain architecture has been designed with support for this direction, but these future controls should not be treated as active protections today.
-
-<Warning>
-Do not assume that planned multisig governance, third-party custody, or other future security controls are currently protecting the protocol. The current security model is based on the authorities presently controlling the deployed system.
-</Warning>
+The deployed on-chain program and the Solana runtime enforce the applicable rules during transaction execution.
 
 ## On-chain security controls
 
-The program contains state, account, and authority checks intended to constrain valid protocol operations.
+RugFreePump uses account, state, authority, input, and lifecycle validation to constrain which protocol operations the deployed program will accept.
 
-Examples include:
+### Account and authority validation
 
-* PDA derivation and account validation
+The program validates the accounts and authorities required for each protocol operation.
+
+Security-relevant controls include:
+
+* PDA derivation
+* Required account validation
+* Authority validation
+* Sale and account state validation
+* Validation of accounts associated with the expected token and bonding-curve state
+* Validation of required external program addresses
+
+These checks prevent protocol instructions from simply operating against arbitrary accounts or unauthorized protocol state.
+
+### Sale lifecycle controls
+
+The program enforces the state transitions associated with a bonding-curve sale.
+
+These controls include:
+
 * Sale-state validation
-* Authority checks
-* Maintenance-mode checks
-* Sale expiration and finalization checks
+* Purchase-condition validation
+* Contribution limits
+* Sale expiration checks
+* Finalization conditions
+* Migration eligibility checks
 * Migration lock periods
 * Migration-state protection
-* Validation of the expected Raydium CPMM program
-* Oracle verification and freshness checks
-* Purchase slippage checks
-* Hard contribution limits
-* Token supply and mint-authority controls
+* Recovery and cancellation state validation
 
-These controls define which state transitions the deployed program will accept.
+The program therefore determines which lifecycle transition is valid for the current on-chain state.
 
-They reduce the set of valid protocol operations but do not eliminate software, configuration, key-management, economic, or external-dependency risks.
+### Maintenance controls
 
-## Token supply controls
+RugFreePump includes an on-chain maintenance state that can restrict protocol operations when maintenance controls are enabled.
 
-When a token is created through RugFreePump, the current implementation creates a total supply of:
+The program checks the maintenance state as part of operations that are restricted during maintenance.
 
-* 1,000,000,000 tokens
-* 6 decimal places
-* 800,000,000 tokens allocated to the bonding-curve sale
-* 200,000,000 tokens allocated for liquidity
+The protocol also uses lifecycle conditions intended to prevent maintenance controls from being enabled while active bonding-curve sales are within their protected active lifecycle.
 
-The mint authority is revoked after the initial token supply is minted.
+These checks are enforced by the on-chain program rather than by the dApp.
 
-This prevents the revoked mint authority from being used for later arbitrary token creation.
+### Purchase protection
 
-Token supply controls are a protocol-level property and should not be interpreted as a guarantee of token value, project quality, or market behavior.
+The bonding-curve purchase path includes controls intended to constrain accepted purchases.
 
-## Oracle controls
+These include:
 
-The current purchase path validates the Pyth price update before accepting it for protocol execution.
+* Minimum purchase requirements
+* Contribution limits
+* Purchase slippage validation
+* Bonding-curve state validation
+* Required SOL/USD oracle validation
 
-The implementation currently requires:
+These conditions are evaluated during on-chain transaction execution.
+
+## Oracle security
+
+The bonding-curve mechanism uses external SOL/USD price data because the curve is denominated and calculated using USD-equivalent values while buyers contribute SOL.
+
+The current implementation uses Pyth price data and validates the supplied price before accepting it for protocol execution.
+
+The purchase path currently requires:
 
 * Full Pyth verification
-* The expected SOL/USD feed
+* The expected SOL/USD price feed
 * A positive price
 * A price update no older than 60 seconds
 * Oracle confidence within the configured 2% threshold
 
-These checks constrain the oracle data that can be accepted by the purchase path.
+These checks establish the conditions under which external price data can be accepted by the program.
 
-They do not eliminate the dependency on external oracle infrastructure or protect users from legitimate SOL price movements.
+RugFreePump controls the validation rules applied to the supplied oracle data but does not control the underlying Pyth infrastructure.
 
-Detailed oracle-related risks are covered separately in [Oracle and Pricing Risks](/security-and-risk/oracle-and-pricing-risks).
+Pyth therefore remains an external security boundary.
 
-## External protocol boundaries
+## Token supply security
 
-Liquidity migration can interact with Raydium CPMM through an on-chain CPI.
+RugFreePump establishes a defined token supply during token creation.
 
-RugFreePump validates the expected Raydium program before performing this interaction, but Raydium remains an external protocol outside RugFreePump's direct control.
+The current implementation uses:
 
-Consequently, matters such as:
+* Total supply: 1,000,000,000 tokens
+* Decimals: 6
+* Bonding-curve allocation: 800,000,000 tokens
+* Liquidity allocation: 200,000,000 tokens
 
-* Raydium program behavior
-* External pool state
-* Market liquidity
-* Post-migration trading
-* External market conditions
+The initial supply is minted during token creation.
 
-remain outside the RugFreePump security boundary.
+After the initial supply is created, the mint authority is revoked.
 
-Detailed migration risks and migration behavior are covered separately in [Liquidity and Migration Risks](/security-and-risk/liquidity-and-migration-risks).
+Once revoked, that authority cannot subsequently be used to create additional tokens.
 
-## Off-chain information versus on-chain state
+This establishes the protocol's fixed-supply behavior for tokens created through the current token-creation flow.
 
-The RugFreePump dApp is an interaction layer, not the authoritative source of protocol state.
+### Liquidity migration security
 
-Token creators and buyers use the dApp to initiate supported on-chain operations and view information about tokens, sales, and their current state. The authoritative result of those operations is determined by the deployed RugFreePump on-chain program and the resulting Solana account state.
+Liquidity migration represents a controlled transition from the RugFreePump bonding-curve environment to Raydium CPMM liquidity.
 
-Users can independently inspect:
+The migration process is constrained by on-chain validation of the required sale state, timing, authorities, accounts, and external program.
 
-* Token addresses
-* Program addresses
+### Raydium program validation
+
+The RugFreePump program validates the expected Raydium CPMM program before performing the external interaction.
+
+The migration therefore does not simply accept an arbitrary external program address supplied by an off-chain service.
+
+The interaction with Raydium occurs through an on-chain CPI.
+
+Raydium remains an external protocol and is outside RugFreePump's direct control.
+
+### Migration state protection
+
+The program tracks the migration state of a sale and validates whether migration is currently permitted.
+
+Migration lock and state checks prevent conflicting migration-related operations from being accepted for the same sale.
+
+This keeps the migration process within the state transitions defined by the RugFreePump program.
+
+### Recovery path
+
+RugFreePump includes a controlled recovery path for finalized sales when the normal liquidity-migration flow cannot safely complete.
+
+Recovery provides an alternative on-chain handling path for exceptional finalized-sale conditions rather than requiring the protocol to remain permanently dependent on an unsuccessful normal migration attempt.
+
+The recovery operation is restricted by the program's administrative authority and applicable on-chain state and account checks.
+
+Recovery therefore acts as a protocol-level fallback mechanism for exceptional liquidity-migration conditions.
+
+It does not bypass the on-chain program. The recovery operation itself must satisfy the authorization and state-transition rules enforced by the deployed program.
+
+### Cancellation and contributor withdrawal
+
+RugFreePump also provides a controlled cancellation path for finalized sales that cannot proceed through the normal liquidity-migration flow.
+
+Cancellation transitions the sale into the applicable cancellation state under the conditions enforced by the on-chain program.
+
+Once a finalized sale is placed into the cancellation state, contributors can use the protocol's withdrawal mechanism according to the applicable withdrawal rules.
+
+This provides a defined on-chain exit path for contributor funds when a finalized sale cannot proceed through normal liquidity migration.
+
+The cancellation mechanism is therefore a protocol-level safety mechanism that prevents a finalized sale from being dependent exclusively on successful completion of the normal migration path.
+
+Cancellation and withdrawal remain governed by the deployed program, the sale's recorded state, contributor accounting, and the available balance in the bonding-curve vault.
+
+### LP token handling
+
+During successful liquidity migration, the LP tokens generated by the migration are automatically burned by the protocol flow.
+
+The associated LP token account is then closed as part of the migration process.
+
+This means the resulting LP position is not retained as an ongoing LP-token balance under the normal RugFreePump migration flow.
+
+## Administrative authority and upgrade security
+
+RugFreePump currently operates with a **single authorized authority** for the relevant program upgrade and administrative controls.
+
+The current deployment includes:
+
+* A single program upgrade authority
+* A single authorized authority controlling the relevant administrative and configuration authorities
+* Administrative controls governed by that authority
+* No multisig requirement for critical administrative operations
+* No independent multisig governance layer currently deployed
+
+This single-authority model is a fundamental security assumption of the current deployment.
+
+### Program upgradeability
+
+The RugFreePump on-chain program is upgradeable.
+
+The current program upgrade authority is controlled by the authorized authority described above.
+
+An authorized program upgrade can therefore change the code governing protocol execution.
+
+Program upgrade authority is consequently part of the protocol's security boundary and must be protected accordingly.
+
+### Administrative controls
+
+The authorized administrative authority controls the protocol-level administrative functions implemented by the deployed program.
+
+These can include maintenance, configuration, recovery, cancellation, and other restricted protocol operations where applicable.
+
+Administrative authority does not come from the off-chain backend or database. It is enforced through the authorities and account checks implemented by the on-chain program.
+
+Future security improvements may introduce additional authorization layers, including multisig control.
+
+Such mechanisms are not considered active protections until they are actually deployed and used by the protocol.
+
+## External security boundaries
+
+RugFreePump depends on external systems that are outside its direct control.
+
+### Solana
+
+Solana provides the blockchain execution environment and account model in which the RugFreePump program operates.
+
+RugFreePump does not control:
+
+* Solana validators
+* Transaction ordering
+* The Solana runtime
+* Network-level execution
+* The broader Solana network
+
+The RugFreePump program executes according to the Solana transaction, account, and program execution model.
+
+### Pyth
+
+Pyth provides the external SOL/USD price data required by the bonding-curve mechanism.
+
+RugFreePump validates the supplied price according to its program rules but does not control the underlying oracle infrastructure.
+
+### Raydium
+
+Raydium provides external liquidity infrastructure used during migration.
+
+RugFreePump validates the expected Raydium program before interacting with it, but Raydium remains an independent external protocol.
+
+## Off-chain security boundary
+
+The RugFreePump dApp and supporting off-chain infrastructure provide application and information services.
+
+These systems include:
+
+* Website and dApp infrastructure
+* APIs and application services
+* Blockchain indexing
+* Databases
+* Real-time infrastructure
+* Metadata infrastructure
+* RPC providers
+* Other supporting platform services
+
+These systems can present information, retrieve indexed blockchain data, prepare supported transactions, provide metadata, and deliver real-time updates.
+
+They do not replace the RugFreePump on-chain program as the authority for protocol state transitions or protocol-controlled asset movements.
+
+The off-chain database is therefore not the authoritative ledger for protocol-controlled SOL, tokens, or on-chain protocol state.
+
+The resulting Solana account state and transaction execution remain authoritative for on-chain protocol operations.
+
+## User wallet security boundary
+
+User wallets are separate from the RugFreePump protocol.
+
+RugFreePump does not control:
+
+* User private keys
+* Seed phrases
+* Wallet signing authority
+* User wallet balances
+
+Transactions requiring user authorization must be approved by the user's wallet.
+
+Users therefore retain control over the signing authority associated with their wallets.
+
+The wallet boundary is separate from the administrative authority of the RugFreePump protocol.
+
+## Independent on-chain verification
+
+RugFreePump protocol execution can be independently inspected through Solana-compatible explorers and tools.
+
+Publicly verifiable information includes:
+
+* RugFreePump program addresses
+* Token mint addresses
+* Solana account state
 * Transaction signatures
-* Account state
+* Program instructions
 * Sale state
+* Protocol-controlled account activity
 * Liquidity migration transactions
-* Other publicly available Solana data
+* Resulting blockchain state
 
-For significant transactions, users should verify the wallet prompt and resulting transaction rather than relying only on information displayed by the dApp.
+The blockchain provides the authoritative record of executed protocol transactions and resulting on-chain state.
 
-## User wallet boundary
+The dApp therefore does not need to be treated as the sole source of truth for protocol execution.
 
-RugFreePump does not control user private keys or seed phrases.
-
-The security of a user's wallet therefore remains a separate security boundary from the RugFreePump protocol.
-
-A compromised wallet can result in loss independently of the security of the RugFreePump on-chain program.
-
-Users are responsible for:
-
-* Protecting wallet credentials
-* Using the official RugFreePump domain
-* Verifying transaction details
-* Avoiding phishing websites
-* Reviewing wallet prompts
-* Keeping devices and browsers secure
-* Confirming token and transaction addresses when appropriate
-
-Detailed wallet and transaction risks are covered separately in [Wallet and Transaction Risks](/security-and-risk/wallet-and-transaction-risks).
-
-## Security model in practice
-
-RugFreePump's security model relies on clearly separating protocol execution from the systems that provide external data, liquidity infrastructure, user interfaces, and wallet access.
-
-The deployed RugFreePump on-chain program determines whether protocol operations satisfy its implemented rules and records the resulting state on Solana.
-
-The dApp and supporting off-chain services provide the interface and supporting information required to interact with the platform, but they do not replace the on-chain execution layer.
-
-Solana provides the execution environment, Pyth provides external price data required by the bonding-curve purchase mechanism, and Raydium provides external liquidity infrastructure for migration.
-
-Users retain control of their own wallets and are responsible for approving transactions and protecting their wallet credentials.
-
-The security of the overall system therefore depends on both the controls enforced by the RugFreePump program and the security of the external systems and authorities on which the platform depends.
+For the currently documented deployment and execution records, see the [Proof of Execution](/on-chain-program/proof-of-execution) page.
 
 ## Current audit status
 
@@ -248,11 +352,11 @@ RugFreePump has not completed a formal third-party security audit at this time.
 
 A professional security audit is planned for a future stage of the project.
 
-Until an audit is completed and publicly documented, users should not interpret the existence of the public on-chain program or its published source code as equivalent to an independent security audit.
+The availability of the on-chain program or its published source code does not constitute an independent security audit.
 
 ## Future security improvements
 
-RugFreePump intends to strengthen the security model over time.
+RugFreePump intends to strengthen the security architecture over time.
 
 Planned improvements include:
 
@@ -262,12 +366,24 @@ Planned improvements include:
 * Formal security audit
 * Additional operational security controls
 
-These are future improvements and are not represented as active protections today.
+These are future improvements and are not represented as active protections in the current deployment.
 
-## Independent verification
+## Security model summary
 
-Users and developers can independently inspect RugFreePump transactions and on-chain state through Solana-compatible explorers and tools.
+RugFreePump's security model is built around a clear separation of authority and execution.
 
-For the currently documented deployment and execution records, see the [Proof of Execution](/on-chain-program/proof-of-execution) page.
+The **RugFreePump on-chain program** is the primary enforcement layer for protocol rules, state transitions, and protocol-controlled asset movements.
 
-Security-related claims should always be interpreted according to the actual deployed program, authorities, configuration, and transaction history at the time of use.
+**Solana accounts and the deployed program** provide the execution environment for those operations.
+
+**Off-chain infrastructure** provides application and information services but does not serve as the authoritative execution layer or as a custodian of users' SOL or tokens.
+
+**Pyth** provides externally sourced SOL/USD data that is validated by the program.
+
+**Raydium** provides external liquidity infrastructure that is validated and accessed through the on-chain migration flow.
+
+**User wallets** remain under user control and provide the signing authority for user-approved transactions.
+
+The current deployment also relies on a **single authorized authority** for program upgrades and relevant administrative controls.
+
+Together, these boundaries define the current security model of the deployed RugFreePump system.
