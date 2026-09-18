@@ -494,11 +494,9 @@ Whether and how much a contributor can withdraw depends on the sale's final stat
 
 A recorded contribution does not automatically mean that the full amount will always be immediately available for withdrawal.
 
-### Available-vault-liquidity risk
-
 The amount available for withdrawal can be limited by the SOL remaining in the bonding-curve vault above its required rent-exempt balance.
 
-If insufficient SOL is available, the amount available for withdrawal can be lower than the recorded contribution.
+The program tracks each buyer's accumulated SOL contribution separately. As a result, withdrawals normally correspond to the recorded contribution, but the final withdrawal can be slightly lower if the remaining vault balance must retain its required rent-exempt amount.
 
 ### Liquidity migration risk
 
