@@ -54,7 +54,7 @@ The on-chain execution layer governs protocol-controlled asset operations includ
 * Liquidity migration
 * Related protocol-controlled SOL and token transfers
 
-The dApp, APIs, databases, indexers, metadata services, and real-time infrastructure do not directly execute these protocol-controlled asset movements.
+The off-chain infrastructure including the dApp, APIs, databases, indexers, and metadata services does not directly execute these protocol-controlled asset movements.
 
 This means the off-chain application state is not the authority that determines whether a protocol-controlled asset transfer is permitted.
 
@@ -133,7 +133,7 @@ The purchase path currently requires:
 * The expected SOL/USD price feed
 * A positive price
 * A price update no older than 60 seconds
-* Oracle confidence within the configured 2% threshold
+* Oracle confidence is within the configured 2% threshold
 
 These checks establish the conditions under which external price data can be accepted by the program.
 
