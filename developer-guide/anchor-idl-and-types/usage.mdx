@@ -55,15 +55,6 @@ The Anchor IDL describes the deployed program interface, including:
 * Program metadata
 * Defined types
 
-The public protocol instructions include:
-
-```text
-create_pool(...)
-buy(...)
-withdraw(...)
-migrate_liquidity(...)
-```
-
 The detailed integration references currently available in this guide are:
 
 * [Buy](../on-chain-integration/buy)
@@ -106,11 +97,11 @@ const connection =
 
 const provider:
   Omit<AnchorProvider, "wallet"> = {
-    connection,
-    opts: {
-      commitment: "finalized",
-    },
-  };
+  connection,
+  opts: {
+    commitment: "finalized",
+  },
+};
 
 const program =
   new Program(
@@ -466,7 +457,7 @@ The published IDL and generated types make standard Anchor integrations easier, 
 
 ## CPI
 
-The public RugFreePump instructions are Anchor program instructions and can be invoked through Solana CPI.
+The documented RugFreePump instructions are Anchor program instructions and can be invoked through Solana CPI.
 
 A CPI integration must construct the invocation using the deployed instruction interface and satisfy its account and signer requirements.
 
@@ -496,16 +487,8 @@ Likewise, do not assume that an internal application change is required for an o
 
 ## Integration boundary
 
-The IDL and generated types describe the on-chain protocol interface.
+The public integration boundary is the RugFreePump on-chain program.
 
-They do not provide:
+RugFreePump's internal backend, database, transaction builders, HTTP services, and WebSocket infrastructure are not public developer interfaces.
 
-* A hosted RPC service
-* A public RugFreePump HTTP API
-* An official off-chain SDK
-* A managed transaction relay
-* Internal backend services
-* Internal database access
-* Internal WebSocket access
-
-Direct integrations are responsible for their own RPC, transaction construction, signing, submission, confirmation, and application infrastructure.
+Direct integrations should depend on the documented on-chain interface rather than undocumented application internals.
