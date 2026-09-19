@@ -1,1 +1,281 @@
+---
+title: "Developer limitations"
+description: "Understand the current scope of RugFreePump's public developer interface and supported integration model."
+---
 
+RugFreePump is primarily an on-chain token launch protocol rather than a hosted developer platform.
+
+Its public integration boundary is the RugFreePump Solana program and the accounts, instructions, events, and configuration exposed by that program.
+
+Developers can build directly against this interface without depending on a RugFreePump-hosted SDK or HTTP API.
+
+## Current developer interface
+
+The current public integration surface consists of:
+
+* RugFreePump's Solana program
+* Public program instructions
+* Program accounts
+* Program Derived Addresses
+* SPL Token accounts used by the protocol
+* Program events
+* Anchor IDL
+* Generated TypeScript types
+* Standard Solana RPC access
+
+The current public program exposes:
+
+```text
+create_pool
+buy
+withdraw
+migrate_liquidity
+```
+
+Developers can construct and submit these instructions using their own Solana tooling.
+
+## No public off-chain SDK
+
+RugFreePump does not currently provide an official off-chain SDK.
+
+This is not required to integrate with the protocol.
+
+A developer can use:
+
+* Anchor
+* Solana Web3.js
+* SPL Token libraries
+* Direct Solana instruction construction
+* Their own RPC infrastructure
+
+to interact with the public program.
+
+The published Anchor IDL and generated types provide the program interface needed for standard Anchor-based integrations.
+
+## No public developer HTTP API
+
+RugFreePump does not currently provide a dedicated public developer HTTP API.
+
+The hosted RugFreePump application may use backend services for its own:
+
+* User interface
+* Indexing
+* Metadata processing
+* Transaction preparation
+* Analytics
+* Real-time updates
+
+Those services are not required protocol interfaces.
+
+Developers building protocol integrations should read protocol state from Solana and submit protocol instructions directly.
+
+## No dedicated hosted developer service
+
+RugFreePump does not currently operate a separate hosted developer platform for:
+
+* Developer API keys
+* Hosted transaction relaying
+* Dedicated quote services
+* Hosted indexing APIs
+* Managed trading infrastructure
+
+Integrators are responsible for selecting and operating the infrastructure appropriate for their application.
+
+This includes, where applicable:
+
+* Solana RPC access
+* Wallet and signing infrastructure
+* Transaction construction
+* Transaction simulation
+* Transaction submission
+* Retry handling
+* Blockhash management
+* State refresh
+* Application-specific indexing
+* Monitoring
+
+## Direct integrations
+
+Developers integrating directly with the protocol should treat the on-chain program as the authoritative interface.
+
+A direct integration is responsible for correctly handling:
+
+* Program ID
+* PDA derivation
+* Account relationships
+* Instruction arguments
+* Integer units
+* Protocol configuration
+* Sale state
+* Slippage
+* Oracle requirements
+* Transaction fees
+* Account creation
+* Transaction confirmation
+
+The Developer Guide documents these requirements for the currently supported integration paths.
+
+## Internal RugFreePump infrastructure
+
+RugFreePump's internal backend and infrastructure may construct transactions or provide application functionality, but internal implementation details are not guaranteed developer interfaces.
+
+Developers should not build production integrations around undocumented:
+
+* Backend classes
+* Database schemas
+* Internal HTTP endpoints
+* Internal WebSocket topics
+* Internal transaction-builder functions
+* Internal RPC configuration
+* Internal metadata-processing behavior
+
+These systems can change independently of the public on-chain protocol.
+
+## RPC responsibility
+
+Direct integrations must provide their own Solana RPC access.
+
+An application may use any RPC infrastructure that supports the target Solana environment and provides the reliability and performance appropriate to its workload.
+
+RugFreePump does not require developers to use the platform's internal RPC infrastructure.
+
+## Wallet and signing responsibility
+
+Applications integrating directly with `buy` and `withdraw` must provide the appropriate buyer wallet and signing flow.
+
+For these instructions:
+
+```text
+buyer = transaction payer + required signer
+```
+
+RugFreePump does not take custody of the buyer's wallet keys.
+
+Applications are responsible for implementing wallet connection, transaction presentation, signing, and confirmation according to their own product and security requirements.
+
+## State and quote responsibility
+
+On-chain state can change between transactions.
+
+Applications that construct purchases are responsible for:
+
+* Fetching current bonding-curve state
+* Creating fresh quotes
+* Setting appropriate slippage
+* Rebuilding stale transactions
+* Handling slippage failures
+
+A previously calculated quote should not be assumed to remain valid indefinitely.
+
+## Protocol configuration
+
+Some protocol parameters are stored in on-chain configuration accounts.
+
+Integrations should read current values where appropriate rather than permanently hardcoding values that can be updated by the authorized protocol authority.
+
+For example:
+
+```text
+GlobalStatesPDA.buyFeeBps
+```
+
+is the authoritative buy-fee configuration used by the program.
+
+## Network and deployment responsibility
+
+The program ID and external protocol accounts depend on the deployment environment.
+
+Developers must verify that:
+
+* The RugFreePump program ID is correct.
+* The Solana cluster is correct.
+* The configured Pyth account is correct.
+* External program IDs match the intended environment.
+* The supplied IDL corresponds to the deployed program.
+
+Do not copy Devnet addresses into another environment without verification.
+
+## CPI support
+
+RugFreePump's public Anchor instructions can be invoked through Solana CPI.
+
+A separate CPI wrapper is not required for the underlying program to be CPI-compatible.
+
+However, RugFreePump does not currently provide a maintained official CPI wrapper or integration crate.
+
+A proper CPI wrapper and Rust crate are planned as future developer tooling.
+
+Until those artifacts are available, program-to-program integrations must construct the CPI invocation using the public on-chain instruction interface and satisfy its account and signer requirements directly.
+
+## Future developer tooling
+
+The planned official developer tooling is intentionally focused on on-chain integration:
+
+* CPI wrapper
+* Rust crate
+
+These tools are intended to reduce integration complexity without introducing a dependency on a hosted off-chain API.
+
+No commitment is made here to provide a separate off-chain SDK, developer API, or managed developer service.
+
+## Compatibility expectations
+
+The public on-chain program is the primary compatibility boundary.
+
+Developers should:
+
+* Pin or track the program version they integrate with.
+* Keep the corresponding IDL available.
+* Regenerate types when the program interface changes.
+* Validate account layouts and instruction requirements when upgrading.
+* Avoid undocumented application internals.
+* Test transactions against the intended Solana environment.
+
+An internal RugFreePump service changing does not necessarily imply an on-chain protocol change, and an on-chain program change should not be inferred from an internal application change.
+
+## Support scope
+
+RugFreePump's developer documentation describes the public protocol interface and its expected usage.
+
+Integrators remain responsible for their own application architecture and infrastructure.
+
+The documentation does not constitute a guarantee that RugFreePump will operate or maintain third-party:
+
+* RPC infrastructure
+* Wallet integrations
+* Bots
+* Analytics systems
+* Trading applications
+* Custom frontends
+* Indexers
+* Transaction relayers
+
+The public on-chain interface remains the foundation for these integrations.
+
+## Recommended integration boundary
+
+For long-term integrations, use:
+
+```text
+Your Application
+       |
+       v
+Solana RPC
+       |
+       v
+RugFreePump On-Chain Program
+       |
+       +--> Protocol Accounts
+       +--> SPL Token Accounts
+       +--> Pyth
+       +--> DEX integration
+```
+
+Avoid making internal RugFreePump application infrastructure a mandatory dependency unless a future official developer product explicitly documents it as such.
+
+## Related documentation
+
+* [Building on RugFreePump](./building-on-rugfreepump)
+* [Buy](./on-chain-integration/buy)
+* [Withdraw](./on-chain-integration/withdraw)
+* [Anchor IDL & Types](./anchor-idl-and-types/usage)
