@@ -1,1 +1,831 @@
+---
+title: "Buy"
+description: "Integrate directly with the RugFreePump buy instruction to purchase tokens from an active bonding-curve sale."
+---
 
+The `buy` instruction purchases tokens from an active RugFreePump bonding-curve sale using SOL.
+
+The instruction accepts a gross SOL amount, applies the current protocol buy fee, converts the remaining SOL to USD-equivalent value using the verified Pyth SOL/USD price, calculates the token amount from the bonding curve, and transfers the resulting tokens to the buyer.
+
+The instruction is executed entirely on-chain.
+
+## Instruction
+
+```rust
+pub fn buy(
+    ctx: Context<Buy>,
+    lamports_amount: u64,
+    expected_total_raised_usd_e2: u64,
+    expected_total_sold_tokens_e6: u64,
+    slippage_bps: u16,
+) -> Result<()>
+```
+
+### Arguments
+
+| Argument                        | Type  | Unit         | Description                                                                                     |
+| ------------------------------- | ----- | ------------ | ----------------------------------------------------------------------------------------------- |
+| `lamports_amount`               | `u64` | Lamports     | Gross SOL amount submitted by the buyer before the buy fee.                                     |
+| `expected_total_raised_usd_e2`  | `u64` | USD e2       | Expected current total USD-equivalent amount raised before this buy.                            |
+| `expected_total_sold_tokens_e6` | `u64` | Token e6     | Expected current total number of tokens sold before this buy.                                   |
+| `slippage_bps`                  | `u16` | Basis points | Maximum permitted increase in the curve's average price relative to the expected average price. |
+
+## Units
+
+RugFreePump uses integer-scaled values on-chain.
+
+### SOL
+
+```text
+1 SOL = 1,000,000,000 lamports
+```
+
+For example:
+
+```text
+0.5 SOL = 500,000,000 lamports
+```
+
+### Tokens
+
+The current token configuration uses six decimals.
+
+```text
+1 token = 1,000,000 token units
+```
+
+For example:
+
+```text
+250 tokens = 250,000,000 token units
+```
+
+### USD e2
+
+USD values use two decimal places.
+
+```text
+$1.00 = 100
+$10.50 = 1050
+$123.45 = 12345
+```
+
+### Basis points
+
+```text
+100 bps = 1%
+500 bps = 5%
+10,000 bps = 100%
+```
+
+## Accounts
+
+The `buy` instruction requires the following accounts.
+
+| Account                       | Mutability | Signer | Derivation / requirement                                                                 |
+| ----------------------------- | ---------- | ------ | ---------------------------------------------------------------------------------------- |
+| `buyer`                       | Mutable    | Yes    | Wallet submitting the purchase.                                                          |
+| `mint`                        | Mutable    | No     | Token mint being sold. Must match `bondingCurvePda.tokenMintAddress`.                    |
+| `adminStatesPda`              | Read-only  | No     | PDA derived from `["admin-states"]`.                                                     |
+| `globalStatesPda`             | Read-only  | No     | PDA derived from `["global-states"]`.                                                    |
+| `bondingCurvePda`             | Mutable    | No     | PDA derived from `["bonding-curve", mint]`.                                              |
+| `bondingCurveVault`           | Mutable    | No     | PDA derived from `["bonding-curve-vault", mint]`.                                        |
+| `associatedBondingCurveAta`   | Mutable    | No     | ATA for `mint` owned by `bondingCurveVault`.                                             |
+| `buyerAccumulationPda`        | Mutable    | No     | PDA derived from `["buyer-accumulation", bondingCurvePda, buyer]`. Created if necessary. |
+| `buyerAssociatedTokenAccount` | Mutable    | No     | Buyer's ATA for `mint`. Created if necessary.                                            |
+| `platformFeeVault`            | Mutable    | No     | PDA derived from `["platform-fee-vault"]`.                                               |
+| `solUsdPriceFeed`             | Read-only  | No     | Pyth `PriceUpdateV2` account for the configured SOL/USD feed.                            |
+| `tokenProgram`                | Read-only  | No     | SPL Token program.                                                                       |
+| `associatedTokenProgram`      | Read-only  | No     | Associated Token program.                                                                |
+| `systemProgram`               | Read-only  | No     | Solana System Program.                                                                   |
+
+## PDA derivation
+
+All RugFreePump PDAs are derived using the RugFreePump program ID.
+
+### Admin states
+
+```text
+["admin-states"]
+```
+
+### Global states
+
+```text
+["global-states"]
+```
+
+### Bonding curve
+
+```text
+["bonding-curve", mint]
+```
+
+### Bonding-curve SOL vault
+
+```text
+["bonding-curve-vault", mint]
+```
+
+### Buyer accumulation
+
+```text
+["buyer-accumulation", bondingCurvePda, buyer]
+```
+
+The buyer accumulation PDA is therefore tied to both:
+
+* The specific bonding curve
+* The specific buyer
+
+### Platform fee vault
+
+```text
+["platform-fee-vault"]
+```
+
+### Bonding-curve token ATA
+
+The sale inventory ATA is the Associated Token Account for:
+
+```text
+mint = token mint
+owner = bondingCurveVault
+```
+
+Because the owner is a PDA, the ATA must be derived with off-curve ownership enabled.
+
+### Buyer token ATA
+
+The buyer ATA is:
+
+```text
+mint = token mint
+owner = buyer
+```
+
+## Deriving accounts in TypeScript
+
+```ts
+import { PublicKey } from "@solana/web3.js";
+import {
+  getAssociatedTokenAddressSync,
+  TOKEN_PROGRAM_ID,
+  ASSOCIATED_TOKEN_PROGRAM_ID,
+} from "@solana/spl-token";
+
+const [adminStatesPda] = PublicKey.findProgramAddressSync(
+  [Buffer.from("admin-states")],
+  PROGRAM_ID,
+);
+
+const [globalStatesPda] = PublicKey.findProgramAddressSync(
+  [Buffer.from("global-states")],
+  PROGRAM_ID,
+);
+
+const [bondingCurvePda] = PublicKey.findProgramAddressSync(
+  [
+    Buffer.from("bonding-curve"),
+    mint.toBuffer(),
+  ],
+  PROGRAM_ID,
+);
+
+const [bondingCurveVault] = PublicKey.findProgramAddressSync(
+  [
+    Buffer.from("bonding-curve-vault"),
+    mint.toBuffer(),
+  ],
+  PROGRAM_ID,
+);
+
+const associatedBondingCurveAta = getAssociatedTokenAddressSync(
+  mint,
+  bondingCurveVault,
+  true,
+  TOKEN_PROGRAM_ID,
+  ASSOCIATED_TOKEN_PROGRAM_ID,
+);
+
+const [buyerAccumulationPda] = PublicKey.findProgramAddressSync(
+  [
+    Buffer.from("buyer-accumulation"),
+    bondingCurvePda.toBuffer(),
+    buyer.toBuffer(),
+  ],
+  PROGRAM_ID,
+);
+
+const buyerAssociatedTokenAccount = getAssociatedTokenAddressSync(
+  mint,
+  buyer,
+);
+
+const [platformFeeVault] = PublicKey.findProgramAddressSync(
+  [Buffer.from("platform-fee-vault")],
+  PROGRAM_ID,
+);
+```
+
+## Sale-state requirements
+
+A buy can only execute while the sale is active.
+
+The program checks:
+
+* Platform maintenance is disabled.
+* The sale is active.
+* The sale has not been finalized.
+* The finalized sale has not been canceled.
+* The submitted SOL amount is non-zero.
+* The buyer has enough SOL.
+
+The program also checks the sale expiration timestamp.
+
+If the current timestamp has reached `saleExpiresAt`, the program marks the sale inactive and rejects the purchase.
+
+## Platform maintenance
+
+When platform maintenance mode is enabled, `buy` is rejected.
+
+The relevant state is:
+
+```text
+AdminStatesPDA.isPlatformMaintenanceModeEnabled
+```
+
+A client can check this state before constructing the transaction, but the on-chain check remains authoritative.
+
+## Buy fee
+
+The gross SOL amount is supplied as `lamportsAmount`.
+
+The protocol reads:
+
+```text
+GlobalStatesPDA.buyFeeBps
+```
+
+The current configuration is:
+
+```text
+100 bps = 1%
+```
+
+The fee is calculated as:
+
+```text
+buyFeeLamports =
+    lamportsAmount × buyFeeBps / 10,000
+```
+
+The buyer's net contribution is:
+
+```text
+netLamports =
+    lamportsAmount - buyFeeLamports
+```
+
+The net amount, not the gross amount, is used for the USD-equivalent purchase calculation.
+
+### Example
+
+With a 1% buy fee:
+
+```text
+Gross:       1.000000000 SOL
+Buy fee:     0.010000000 SOL
+Net:         0.990000000 SOL
+```
+
+The protocol records the net amount as the buyer's contribution.
+
+## Minimum buy amount
+
+The current minimum buy amount is:
+
+```text
+$1.00
+```
+
+The minimum is checked against the **net USD-equivalent amount after the buy fee**.
+
+The calculation is conceptually:
+
+```text
+netUsdE2 =
+    netLamports × solUsdPriceE2 / 1,000,000,000
+```
+
+The result must be at least:
+
+```text
+100
+```
+
+which represents `$1.00`.
+
+A gross purchase that appears large enough before the fee can therefore fail the minimum requirement if its net USD-equivalent amount is below the minimum.
+
+## Sale hard cap
+
+The current hard raise cap is:
+
+```text
+$16,150.00
+```
+
+represented as:
+
+```text
+1,615,000 USD e2
+```
+
+The program calculates:
+
+```text
+remainingCap =
+    1,615,000 - currentTotalRaisedUsdE2
+```
+
+The buyer's net USD-equivalent contribution must fit entirely within the remaining cap.
+
+A purchase that would exceed the cap is rejected.
+
+The client should therefore obtain current bonding-curve state before constructing a purchase.
+
+## Finalization buffer
+
+The current finalization buffer is:
+
+```text
+$50.00
+```
+
+represented as:
+
+```text
+5,000 USD e2
+```
+
+After a successful buy, the program checks the remaining sale capacity.
+
+If the remaining capacity is less than `$50.00`, the sale is finalized:
+
+```text
+isSaleFinalized = true
+isSaleActive = false
+saleFinalizedAt = current Unix timestamp
+```
+
+This means the final transaction does not necessarily need to land at exactly `$16,150.00`. The sale finalizes once the remaining capacity falls below the configured finalization buffer.
+
+## SOL/USD oracle
+
+The buy instruction requires a Pyth `PriceUpdateV2` account.
+
+The protocol validates the oracle before using its value.
+
+The current production requirement is a maximum age of:
+
+```text
+60 seconds
+```
+
+The oracle validation requires:
+
+1. Full Pyth verification.
+2. The expected SOL/USD feed ID.
+3. A positive price.
+4. Confidence no greater than 2% of the reported price.
+5. The price update to be no older than 60 seconds.
+
+The resulting price is converted to USD e2.
+
+### Important
+
+The `solUsdPriceFeed` account supplied by the client must correspond to the configured RugFreePump SOL/USD feed.
+
+The program does not blindly trust an arbitrary `PriceUpdateV2` account.
+
+## Slippage protection
+
+RugFreePump's buy instruction uses the expected pre-trade bonding-curve state to protect against curve movement.
+
+The client supplies:
+
+```text
+expectedTotalRaisedUsdE2
+expectedTotalSoldTokensE6
+slippageBps
+```
+
+The protocol calculates the expected average curve price:
+
+```text
+expectedPriceE2 =
+    expectedTotalRaisedUsdE2 × 10^15
+    / expectedTotalSoldTokensE6
+```
+
+It then calculates the current executed average curve price from the current on-chain state:
+
+```text
+executedPriceE2 =
+    currentTotalRaisedUsdE2 × 10^15
+    / currentTotalSoldTokensE6
+```
+
+Only an increase in price is treated as adverse slippage:
+
+```text
+priceDiff =
+    max(executedPriceE2 - expectedPriceE2, 0)
+```
+
+The actual slippage is:
+
+```text
+actualSlippageBps =
+    priceDiff × 10,000 / expectedPriceE2
+```
+
+The transaction is accepted only when:
+
+```text
+actualSlippageBps <= slippageBps
+```
+
+### Client requirement
+
+Immediately before building a buy transaction, fetch the latest:
+
+```text
+BondingCurvePDA.totalRaisedUsdE2
+BondingCurvePDA.totalSoldTokensE6
+```
+
+and use those values as:
+
+```text
+expectedTotalRaisedUsdE2
+expectedTotalSoldTokensE6
+```
+
+Do not use stale values from a cached quote.
+
+## Bonding-curve pricing
+
+The token amount is calculated by a degree-4 polynomial.
+
+The protocol evaluates the cumulative token position at:
+
+```text
+startUsd = currentTotalRaisedUsdE2
+```
+
+and:
+
+```text
+endUsd =
+    currentTotalRaisedUsdE2 + netUsdAfterFeeE2
+```
+
+The token amount purchased is the difference between those two cumulative positions.
+
+The on-chain implementation is authoritative.
+
+The current polynomial uses:
+
+```text
+[-24,915,010,041,
+ 109,143,626,050,000,000,
+ -186,781,912,610,000,000,000,000,
+ 171,088,246,150,000,000,000,000,000,000,
+ 66,288,552,083,000,000,000,000,000,000,000]
+```
+
+with a scale factor of:
+
+```text
+10^20
+```
+
+The polynomial is evaluated using Horner's method with signed 128-bit integer arithmetic.
+
+Conceptually:
+
+```text
+F(x) = polynomial(x) / 10^20
+```
+
+and:
+
+```text
+tokensBought =
+    max(F(endUsd) - F(startUsd), 0)
+```
+
+The resulting value is expressed in token e6 units.
+
+Integrations that reproduce quotes off-chain must reproduce the integer arithmetic exactly. Floating-point approximations should not be treated as authoritative.
+
+## Token inventory
+
+Before transferring tokens, the program verifies that the bonding-curve token ATA contains at least the calculated token amount.
+
+The token inventory account must therefore:
+
+* Exist
+* Use the correct token mint
+* Be owned by the bonding-curve vault PDA
+* Contain sufficient token balance
+
+## Transaction execution order
+
+The successful buy performs these operations:
+
+1. Validate protocol and sale state.
+2. Validate buyer balance.
+3. Validate slippage.
+4. Validate Pyth price.
+5. Calculate the buy fee.
+6. Calculate the net USD-equivalent contribution.
+7. Validate minimum buy.
+8. Validate sale hard cap.
+9. Calculate tokens.
+10. Validate sale token inventory.
+11. Transfer tokens from the bonding-curve token ATA to the buyer ATA.
+12. Transfer net SOL from the buyer to the bonding-curve vault.
+13. Transfer the buy fee from the buyer to the platform fee vault.
+14. Update bonding-curve and buyer accounting.
+15. Finalize the sale when the remaining cap falls below the finalization buffer.
+16. Emit events.
+
+The transaction is atomic under Solana transaction semantics. A failure in a later instruction causes the transaction to fail rather than leaving the successful earlier operations permanently committed.
+
+## Buyer accounting
+
+Each buyer has a `BuyerAccumulationPDA`.
+
+```rust
+pub struct BuyerAccumulationPDA {
+    pub total_lamports_contributed: u64,
+}
+```
+
+The account contains:
+
+```text
+8-byte Anchor discriminator
+8-byte total_lamports_contributed
+```
+
+for a total allocated size of 16 bytes.
+
+The value records the buyer's **net SOL contribution after buy fees**.
+
+For example, if a buyer sends:
+
+```text
+1 SOL
+```
+
+with a 1% fee, the recorded contribution increases by:
+
+```text
+0.99 SOL
+```
+
+not 1 SOL.
+
+This accounting is later used by `withdraw`.
+
+## Account creation and rent
+
+`buyerAccumulationPda` uses:
+
+```text
+init_if_needed
+```
+
+and is therefore created automatically when required.
+
+The buyer is its payer.
+
+The buyer token ATA also uses:
+
+```text
+init_if_needed
+```
+
+so the first purchase can create the ATA automatically.
+
+The buyer therefore may pay:
+
+* Transaction fee
+* Priority fee, if used by the client
+* Rent for newly created accounts
+
+Later purchases reuse the existing accounts.
+
+Exact rent should be queried from the target Solana cluster rather than hardcoded.
+
+## Example with Anchor
+
+The following example illustrates direct use of the public program interface.
+
+```ts
+import { BN, Program, AnchorProvider, Idl } from "@coral-xyz/anchor";
+import { PublicKey } from "@solana/web3.js";
+
+const PROGRAM_ID = new PublicKey(
+  "9hpBPEiywp7FPAq5uP253eAZzdJ1Cpd36L5RAYuc9xSw",
+);
+
+// The provider must be configured with the buyer's wallet
+// when the transaction is sent.
+const provider = new AnchorProvider(connection, wallet, {
+  commitment: "confirmed",
+});
+
+const program = new Program(idl as Idl, provider);
+
+const mint = new PublicKey(MINT_ADDRESS);
+const buyer = provider.wallet.publicKey;
+
+const [adminStatesPda] = PublicKey.findProgramAddressSync(
+  [Buffer.from("admin-states")],
+  PROGRAM_ID,
+);
+
+const [globalStatesPda] = PublicKey.findProgramAddressSync(
+  [Buffer.from("global-states")],
+  PROGRAM_ID,
+);
+
+const [bondingCurvePda] = PublicKey.findProgramAddressSync(
+  [Buffer.from("bonding-curve"), mint.toBuffer()],
+  PROGRAM_ID,
+);
+
+const [bondingCurveVault] = PublicKey.findProgramAddressSync(
+  [Buffer.from("bonding-curve-vault"), mint.toBuffer()],
+  PROGRAM_ID,
+);
+
+const [buyerAccumulationPda] = PublicKey.findProgramAddressSync(
+  [
+    Buffer.from("buyer-accumulation"),
+    bondingCurvePda.toBuffer(),
+    buyer.toBuffer(),
+  ],
+  PROGRAM_ID,
+);
+
+const [platformFeeVault] = PublicKey.findProgramAddressSync(
+  [Buffer.from("platform-fee-vault")],
+  PROGRAM_ID,
+);
+
+// Derive the ATAs using the SPL Associated Token program.
+const associatedBondingCurveAta = getAssociatedTokenAddressSync(
+  mint,
+  bondingCurveVault,
+  true,
+);
+
+const buyerAssociatedTokenAccount = getAssociatedTokenAddressSync(
+  mint,
+  buyer,
+);
+
+// Read fresh bonding-curve state immediately before building the transaction.
+const bondingCurve =
+  await program.account.bondingCurvePda.fetch(bondingCurvePda);
+
+const expectedTotalRaisedUsdE2 =
+  new BN(bondingCurve.totalRaisedUsdE2.toString());
+
+const expectedTotalSoldTokensE6 =
+  new BN(bondingCurve.totalSoldTokensE6.toString());
+
+const lamportsAmount = new BN("100000000"); // 0.1 SOL
+const slippageBps = new BN("200"); // 2%
+
+const signature = await program.methods
+  .buy(
+    lamportsAmount,
+    expectedTotalRaisedUsdE2,
+    expectedTotalSoldTokensE6,
+    slippageBps,
+  )
+  .accounts({
+    buyer,
+    mint,
+    adminStatesPda,
+    globalStatesPda,
+    bondingCurvePda,
+    bondingCurveVault,
+    associatedBondingCurveAta,
+    buyerAccumulationPda,
+    buyerAssociatedTokenAccount,
+    platformFeeVault,
+    solUsdPriceFeed: SOL_USD_PRICE_FEED_PDA,
+    tokenProgram: TOKEN_PROGRAM_ID,
+    associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
+    systemProgram: SystemProgram.programId,
+  })
+  .rpc();
+
+console.log("Buy transaction:", signature);
+```
+
+The example assumes that the imported program ID, IDL, connection, wallet, token-program constants, and oracle PDA correspond to the deployment being used.
+
+## Events
+
+A successful buy emits `BuyCompleted`.
+
+```rust
+pub struct BuyCompleted {
+    pub token_mint_address: Pubkey,
+    pub token_buyer_address: Pubkey,
+    pub buy_amount_in_lamports: u64,
+    pub buy_amount_in_usd_e2: u64,
+    pub buy_amount_in_tokens_e6: u64,
+    pub buy_fee_in_lamports: u64,
+    pub last_sol_usd_price_e2: u64,
+    pub total_sold_tokens_e6: u64,
+    pub total_raised_lamports: u64,
+    pub total_raised_usd_e2: u64,
+    pub total_buy_count: u64,
+    pub sale_finalized_at: i64,
+    pub is_sale_active: bool,
+    pub is_sale_finalized: bool,
+    pub is_sale_expired: bool,
+    pub buy_completed_at: i64,
+}
+```
+
+If the purchase finalizes the sale, the program additionally emits `BondingCurveSaleFinalized`.
+
+```rust
+pub struct BondingCurveSaleFinalized {
+    pub token_mint_address: Pubkey,
+    pub token_creator_address: Pubkey,
+    pub total_sold_tokens_e6: u64,
+    pub total_raised_usd_e2: u64,
+    pub total_collected_buy_fee_in_lamports: u64,
+    pub count_of_collected_buy_fee_in_lamports: u64,
+    pub total_raised_lamports: u64,
+    pub total_buy_count: u64,
+    pub sale_finalized_at: i64,
+}
+```
+
+For indexing and analytics, events are useful signals, but integrations that require authoritative current state should also read the corresponding on-chain accounts.
+
+## Important failure conditions
+
+The instruction can fail for conditions including:
+
+* `PlatformMaintenanceEnabled`
+* `SaleNotActive`
+* `SaleFinalized`
+* `FinalizedSaleAlreadyCanceled`
+* `InvalidBuyAmount`
+* `InsufficientWalletBalance`
+* `IntegerOverflow`
+* `SlippageExceeded`
+* `UnverifiedPythPriceFeed`
+* `InvalidSOLUSDFeedId`
+* `OutdatedPriceFeed`
+* `InvalidPriceFeed`
+* `UnreliablePriceFeed`
+* `InvalidBuyFeeRange`
+* `BuyAmountTooSmall`
+* `SaleCapHasExceeded`
+* `ZeroBuyTokenAmount`
+* `InsufficientTokenBalance`
+* `InvalidBondingCurveVault`
+* `InvalidPlatformFeeVault`
+
+Clients should treat these as normal protocol rejection conditions rather than assuming every transaction failure represents an RPC or wallet problem.
+
+## Client-side recommendations
+
+A production integration should:
+
+* Fetch fresh bonding-curve state before each buy.
+* Use integer arithmetic for protocol values.
+* Read the current buy fee from protocol state.
+* Use the correct Pyth price account.
+* Provide realistic slippage tolerance.
+* Ensure the buyer has enough SOL for both the purchase and transaction/account costs.
+* Simulate where appropriate.
+* Handle stale blockhashes and transaction retries.
+* Re-fetch state after confirmation.
+* Never assume that an off-chain quote remains valid indefinitely.
+* Never rely on internal RugFreePump backend endpoints as the protocol interface.
