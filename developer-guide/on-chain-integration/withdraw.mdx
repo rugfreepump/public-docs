@@ -89,65 +89,6 @@ mint  = token mint
 owner = buyer
 ```
 
-## Deriving accounts in TypeScript
-
-```ts
-import { PublicKey } from "@solana/web3.js";
-import {
-  getAssociatedTokenAddressSync,
-  TOKEN_PROGRAM_ID,
-} from "@solana/spl-token";
-
-const PROGRAM_ID = new PublicKey(
-  process.env.RUG_FREE_PUMP_PROGRAM_ID!,
-);
-
-const buyer = wallet.publicKey;
-const mint = new PublicKey(MINT_ADDRESS);
-
-const [adminStatesPda] =
-  PublicKey.findProgramAddressSync(
-    [Buffer.from("admin-states")],
-    PROGRAM_ID,
-  );
-
-const [bondingCurvePda] =
-  PublicKey.findProgramAddressSync(
-    [
-      Buffer.from("bonding-curve"),
-      mint.toBuffer(),
-    ],
-    PROGRAM_ID,
-  );
-
-const [bondingCurveVault] =
-  PublicKey.findProgramAddressSync(
-    [
-      Buffer.from("bonding-curve-vault"),
-      mint.toBuffer(),
-    ],
-    PROGRAM_ID,
-  );
-
-const [buyerAccumulationPda] =
-  PublicKey.findProgramAddressSync(
-    [
-      Buffer.from("buyer-accumulation"),
-      bondingCurvePda.toBuffer(),
-      buyer.toBuffer(),
-    ],
-    PROGRAM_ID,
-  );
-
-const buyerAssociatedTokenAccount =
-  getAssociatedTokenAddressSync(
-    mint,
-    buyer,
-    false,
-    TOKEN_PROGRAM_ID,
-  );
-```
-
 ## Withdrawal eligibility
 
 A buyer cannot withdraw while:
@@ -176,9 +117,9 @@ saleExpiredAt = saleExpiresAt
 
 If `saleExpiredAt` has not already been set, the protocol records the configured expiration timestamp rather than the later transaction execution time.
 
-This means a separate expiration transaction is not required for an expired sale.
+A separate expiration transaction is therefore not required for an expired sale.
 
-## Two withdrawal paths
+## Withdrawal paths
 
 There are two protocol states that allow withdrawal.
 
@@ -208,7 +149,7 @@ isSaleExpired = false
 
 The buyer can then withdraw.
 
-A canceled finalized sale is therefore distinct from a normal expired sale.
+A canceled finalized sale is distinct from a normal expired sale.
 
 The exact on-chain state is authoritative.
 
@@ -271,23 +212,18 @@ This prevents the client from requesting an arbitrary refund amount.
 
 The bonding-curve vault must retain its required rent-exempt balance.
 
-The protocol calculates:
+The protocol calculates the safely available vault balance after the required rent reserve.
+
+The actual refund is limited by both:
 
 ```text
-vaultAvailable =
-    vaultLamports - rentExemptMinimum
+recorded contribution
 ```
 
-using saturating subtraction.
-
-The actual refund is:
+and:
 
 ```text
-refund =
-    min(
-        recordedContribution,
-        vaultAvailable
-    )
+available vault balance
 ```
 
 Therefore:
@@ -296,9 +232,7 @@ Therefore:
 withdrawAmountInLamports
 ```
 
-is the actual SOL amount transferred to the buyer.
-
-It can be lower than:
+can be lower than:
 
 ```text
 totalLamportsContributed
@@ -321,7 +255,7 @@ If the ATA contains tokens:
 
 A successful withdrawal therefore consumes the buyer's remaining RugFreePump sale-token balance.
 
-A custom application must not expect those tokens to remain in the buyer wallet after successful withdrawal.
+A custom application must not expect those tokens to remain in the buyer wallet after a successful withdrawal.
 
 ## Token ATA closure
 
@@ -354,12 +288,12 @@ The buyer pays:
 * Normal Solana transaction fee
 * Any optional priority fee selected by the application
 
-A successful withdrawal may also return rent from:
+A successful withdrawal may also return recoverable rent from:
 
 * `BuyerAccumulationPDA`
 * Buyer token ATA
 
-The exact amounts depend on the account balances and current network conditions.
+The exact amounts depend on account balances and current network conditions.
 
 There is no additional RugFreePump buy fee charged by `withdraw`.
 
@@ -488,35 +422,25 @@ console.log(
 );
 ```
 
-## Building without immediately sending
+The application should read the current sale and buyer state before constructing the transaction and should verify the resulting state after confirmation.
 
-The instruction can also be constructed without submitting it:
+## Event
 
-```ts
-const instruction =
-  await program.methods
-    .withdraw()
-    .accounts({
-      buyer,
-      adminStatesPda,
-      mint,
-      bondingCurvePda,
-      bondingCurveVault,
-      buyerAccumulationPda,
-      buyerAssociatedTokenAccount,
-      tokenProgram: TOKEN_PROGRAM_ID,
-      systemProgram: SystemProgram.programId,
-    })
-    .instruction();
+A successful withdrawal emits:
+
+```rust
+pub struct WithdrawCompleted {
+    pub token_mint_address: Pubkey,
+    pub withdrawer_address: Pubkey,
+    pub withdraw_amount_in_lamports: u64,
+    pub is_sale_active: bool,
+    pub is_sale_expired: bool,
+    pub sale_expired_at: i64,
+    pub withdraw_completed_at: i64,
+}
 ```
 
-This allows the application to add its own compute-budget, priority-fee, or other transaction instructions.
-
-## Events
-
-### `BondingCurveSaleExpired`
-
-Emitted when `withdraw` performs the lazy expiration transition.
+When `withdraw` performs a lazy expiration transition, the transaction can also emit:
 
 ```rust
 pub struct BondingCurveSaleExpired {
@@ -532,82 +456,46 @@ pub struct BondingCurveSaleExpired {
 }
 ```
 
-### `WithdrawCompleted`
-
-Emitted after the SOL transfer succeeds.
-
-```rust
-pub struct WithdrawCompleted {
-    pub token_mint_address: Pubkey,
-    pub withdrawer_address: Pubkey,
-    pub withdraw_amount_in_lamports: u64,
-    pub is_sale_active: bool,
-    pub is_sale_expired: bool,
-    pub sale_expired_at: i64,
-    pub withdraw_completed_at: i64,
-}
-```
-
-The authoritative refund field is:
-
-```text
-withdrawAmountInLamports
-```
-
-It represents the actual SOL amount transferred to the buyer.
+Events are useful for indexing and transaction interpretation, but current account state remains authoritative.
 
 ## Important failure conditions
 
-Withdrawal can fail for conditions including:
+Withdrawal can fail when:
 
-```text
-PlatformMaintenanceEnabled
-SaleStillActive
-FinalizedSaleNotCanceled
-SaleNotExpired
-NothingToWithdraw
-MissingBuyerSignature
-InsufficientBalance
-InvalidBondingCurveVault
-IntegerOverflow
-```
+* Platform maintenance mode is enabled.
+* The sale is still active.
+* The sale is not in a valid expired or finalized-cancellation state.
+* The buyer accumulation account is missing or contains no contribution.
+* The buyer token ATA does not satisfy the required account constraints.
+* Required PDA relationships are invalid.
+* Required account ownership or token relationships are invalid.
+* The vault does not have sufficient safely available SOL.
+* An arithmetic or program validation error occurs.
 
-Account validation can also reject the transaction when:
-
-* The mint does not match the bonding curve.
-* The bonding-curve PDA is incorrect.
-* The bonding-curve vault PDA is incorrect.
-* The buyer accumulation PDA does not correspond to the buyer and sale.
-* The buyer token ATA does not belong to the buyer or correct mint.
-* Required program accounts are incorrect.
+The exact program error returned by the deployed program is authoritative.
 
 ## CPI
 
 `withdraw` is an Anchor program instruction and can be invoked through Solana CPI.
 
-A CPI caller must satisfy the same account, signer, state, token-account, and validation requirements enforced by the program.
+A CPI caller must provide the required accounts and satisfy the same on-chain validation rules.
 
-RugFreePump does not currently provide a maintained CPI wrapper or Rust integration crate.
+RugFreePump does not currently provide a maintained CPI wrapper or Rust crate.
 
 A dedicated CPI wrapper and Rust crate are planned as future developer tooling.
 
 ## Production integration checklist
 
-Before submitting a production withdrawal:
+Before submitting a production `withdraw` transaction:
 
 * [ ] Use the correct deployment program ID.
 * [ ] Use the matching RugFreePump IDL.
-* [ ] Read the current `BondingCurvePDA`.
+* [ ] Derive all required PDAs from the documented seeds.
+* [ ] Read current `BondingCurvePDA` state.
 * [ ] Read the buyer's `BuyerAccumulationPDA`.
-* [ ] Verify withdrawal eligibility from current on-chain state.
-* [ ] Derive all PDAs from the documented seeds.
-* [ ] Ensure the buyer token ATA exists.
-* [ ] Ensure the buyer has enough SOL for transaction costs.
-* [ ] Allow `withdraw` to perform lazy expiration when applicable.
-* [ ] Expect the buyer's sale tokens to be burned.
-* [ ] Expect the buyer token ATA to be closed.
-* [ ] Expect the buyer accumulation PDA to be closed.
-* [ ] Treat `withdrawAmountInLamports` as the actual refund amount.
-* [ ] Do not assume the refund equals the recorded contribution.
+* [ ] Verify the sale is in a withdrawable state.
+* [ ] Derive the buyer's token ATA.
+* [ ] Use exact integer handling.
+* [ ] Sign as the buyer.
 * [ ] Confirm the transaction.
-* [ ] Refresh on-chain state after confirmation.
+* [ ] Verify the resulting account and token state.
