@@ -1,1 +1,426 @@
+---
+title: "Usage"
+description: "Use the RugFreePump Anchor IDL and generated TypeScript types to integrate directly with the on-chain program."
+---
 
+RugFreePump exposes its on-chain interface through an Anchor program.
+
+Developers can use the published Anchor IDL to construct instructions, derive account interfaces, fetch protocol accounts, and interact with the program through standard Anchor tooling.
+
+Generated TypeScript types are available alongside the IDL for projects using TypeScript.
+
+## Resources
+
+The Developer Guide repository contains the published artifacts:
+
+```text
+developer-guide/anchor-idl-and-types/resources/rug_free_pump.json
+developer-guide/anchor-idl-and-types/resources/rug_free_pump.ts
+```
+
+Use the IDL and generated types that correspond to the program deployment you are integrating with.
+
+## Program ID
+
+The currently documented deployment uses:
+
+```text
+9hpBPEiywp7FPAq5uP253eAZzdJ1Cpd36L5RAYuc9xSw
+```
+
+Always verify the program ID for the target environment.
+
+## What the IDL provides
+
+The Anchor IDL describes the public program interface, including:
+
+* Instructions
+* Instruction arguments
+* Account structures
+* Account relationships
+* Events
+* Program metadata
+* Types used by the program
+
+For example, the public `buy` instruction is represented by the IDL with its four arguments:
+
+```text
+buy(
+    lamportsAmount,
+    expectedTotalRaisedUsdE2,
+    expectedTotalSoldTokensE6,
+    slippageBps
+)
+```
+
+The IDL is therefore the machine-readable representation of the program interface.
+
+## Installing Anchor client dependencies
+
+A TypeScript integration can use the standard Anchor client together with Solana Web3.js and SPL Token utilities.
+
+```bash
+npm install @coral-xyz/anchor @solana/web3.js @solana/spl-token bn.js
+```
+
+The exact dependency versions should be selected to remain compatible with the Anchor version used by the integration.
+
+## Loading the IDL
+
+```ts
+import { AnchorProvider, Idl, Program } from "@coral-xyz/anchor";
+import { Connection } from "@solana/web3.js";
+import rugFreePumpIdl from "./rug_free_pump.json";
+
+const connection = new Connection(
+  RPC_URL,
+  "finalized",
+);
+
+const provider: Omit<AnchorProvider, "wallet"> = {
+  connection,
+  opts: {
+    commitment: "finalized",
+  },
+};
+
+const program = new Program(
+  rugFreePumpIdl as Idl,
+  provider,
+);
+```
+
+This creates a read-only Anchor program client.
+
+A transaction-signing application should instead configure an `AnchorProvider` with the appropriate wallet.
+
+## Read-only integration
+
+A developer does not need a wallet simply to inspect RugFreePump state.
+
+For example:
+
+```ts
+const [bondingCurvePda] =
+  PublicKey.findProgramAddressSync(
+    [
+      Buffer.from("bonding-curve"),
+      mint.toBuffer(),
+    ],
+    PROGRAM_ID,
+  );
+
+const bondingCurve =
+  await program.account.bondingCurvePda.fetch(
+    bondingCurvePda,
+  );
+
+console.log({
+  active: bondingCurve.isSaleActive,
+  finalized: bondingCurve.isSaleFinalized,
+  expired: bondingCurve.isSaleExpired,
+  totalRaisedUsdE2:
+    bondingCurve.totalRaisedUsdE2.toString(),
+  totalSoldTokensE6:
+    bondingCurve.totalSoldTokensE6.toString(),
+});
+```
+
+The exact generated account accessor names are determined by the IDL.
+
+## Reading global configuration
+
+The global configuration account is:
+
+```text
+["global-states"]
+```
+
+Example:
+
+```ts
+const [globalStatesPda] =
+  PublicKey.findProgramAddressSync(
+    [Buffer.from("global-states")],
+    PROGRAM_ID,
+  );
+
+const globalStates =
+  await program.account.globalStatesPda.fetch(
+    globalStatesPda,
+  );
+
+console.log({
+  buyFeeBps:
+    globalStates.buyFeeBps.toString(),
+  minimumBuyUsdE2:
+    globalStates.minBuyAmountInUsdE2.toString(),
+  maximumRaiseUsdE2:
+    globalStates.maxUsdRaiseCapInUsdE2.toString(),
+});
+```
+
+Protocol configuration should be read from on-chain state when the corresponding value is exposed there.
+
+## Using generated types
+
+The generated TypeScript file provides types corresponding to the Anchor program.
+
+Use the generated types where they improve compile-time safety for:
+
+* Account data
+* Instruction clients
+* Events
+* Program structures
+
+Do not treat generated types as a replacement for the deployed program's actual on-chain state.
+
+The program ID, IDL version, and deployed program must correspond to one another.
+
+## Building a transaction
+
+Anchor can construct an instruction without immediately submitting it.
+
+For example:
+
+```ts
+const instruction =
+  await program.methods
+    .withdraw()
+    .accounts({
+      buyer,
+      adminStatesPda,
+      mint,
+      bondingCurvePda,
+      bondingCurveVault,
+      buyerAccumulationPda,
+      buyerAssociatedTokenAccount,
+      tokenProgram: TOKEN_PROGRAM_ID,
+      systemProgram: SystemProgram.programId,
+    })
+    .instruction();
+```
+
+The resulting instruction can then be placed into a transaction constructed by the integrating application.
+
+This is useful when the application needs to:
+
+* Add other instructions
+* Add compute-budget instructions
+* Build a versioned transaction
+* Combine multiple operations
+* Submit through a custom transaction pipeline
+
+## Building and sending a transaction
+
+For applications using an Anchor wallet provider, an instruction can also be submitted directly:
+
+```ts
+const signature = await program.methods
+  .withdraw()
+  .accounts({
+    buyer,
+    adminStatesPda,
+    mint,
+    bondingCurvePda,
+    bondingCurveVault,
+    buyerAccumulationPda,
+    buyerAssociatedTokenAccount,
+    tokenProgram: TOKEN_PROGRAM_ID,
+    systemProgram: SystemProgram.programId,
+  })
+  .rpc();
+```
+
+For `buy`, always obtain fresh bonding-curve state before constructing the instruction because the expected state values are part of the protocol's slippage protection.
+
+## Integer handling
+
+Protocol amounts should be handled as integers.
+
+Use `BN`, `bigint`, or another exact integer representation rather than JavaScript floating-point arithmetic for values such as:
+
+* Lamports
+* Token base units
+* USD e2
+* Large counters
+* Basis points
+
+For example:
+
+```ts
+const lamportsAmount = new BN("100000000");
+```
+
+represents:
+
+```text
+0.1 SOL
+```
+
+without floating-point conversion.
+
+## Reading account values
+
+Anchor account values representing large integers may be returned in a representation that should be explicitly converted before arithmetic.
+
+A safe pattern is:
+
+```ts
+const totalRaisedUsdE2 =
+  BigInt(bondingCurve.totalRaisedUsdE2.toString());
+
+const totalSoldTokensE6 =
+  BigInt(bondingCurve.totalSoldTokensE6.toString());
+```
+
+This prevents accidental precision loss when values become too large for JavaScript's safe integer range.
+
+## Deriving PDAs
+
+PDAs must use the exact seeds defined by the on-chain program.
+
+For the bonding curve:
+
+```ts
+const [bondingCurvePda] =
+  PublicKey.findProgramAddressSync(
+    [
+      Buffer.from("bonding-curve"),
+      mint.toBuffer(),
+    ],
+    PROGRAM_ID,
+  );
+```
+
+For a buyer accumulation account:
+
+```ts
+const [buyerAccumulationPda] =
+  PublicKey.findProgramAddressSync(
+    [
+      Buffer.from("buyer-accumulation"),
+      bondingCurvePda.toBuffer(),
+      buyer.toBuffer(),
+    ],
+    PROGRAM_ID,
+  );
+```
+
+Do not substitute the mint for the bonding-curve PDA in the buyer accumulation seed.
+
+## Events
+
+Anchor can also be used to decode or subscribe to program events.
+
+RugFreePump currently emits events including:
+
+* `BuyCompleted`
+* `BondingCurveSaleFinalized`
+* `BondingCurveSaleExpired`
+* `WithdrawCompleted`
+
+Events are useful for:
+
+* Analytics
+* Indexing
+* Activity feeds
+* Transaction interpretation
+
+However, events should not be treated as a substitute for reading current account state when an integration needs authoritative current protocol state.
+
+## Buy integration
+
+The complete buy instruction reference is available in:
+
+[Buy](../on-chain-integration/buy)
+
+The essential sequence is:
+
+```text
+1. Derive accounts.
+2. Fetch current bonding-curve state.
+3. Read expected total raised and sold values.
+4. Select the gross SOL amount.
+5. Select slippage tolerance.
+6. Supply the correct Pyth SOL/USD account.
+7. Build the instruction.
+8. Sign as the buyer.
+9. Submit and confirm.
+```
+
+## Withdraw integration
+
+The complete withdrawal reference is available in:
+
+[Withdraw](../on-chain-integration/withdraw)
+
+The essential sequence is:
+
+```text
+1. Derive accounts.
+2. Read current bonding-curve state.
+3. Read the buyer accumulation account.
+4. Derive the buyer token ATA.
+5. Build the instruction.
+6. Sign as the buyer.
+7. Submit and confirm.
+8. Read the resulting transaction/event/state.
+```
+
+## Versioning
+
+The IDL is version-specific.
+
+When updating an integration:
+
+1. Confirm the target program ID.
+2. Obtain the IDL corresponding to that deployment.
+3. Update generated types when required.
+4. Re-test account derivation.
+5. Re-test instruction construction.
+6. Re-test event decoding.
+7. Verify protocol configuration assumptions.
+
+Do not assume that an internal RugFreePump application implementation defines the public compatibility contract.
+
+## Direct Solana integration
+
+Anchor is not mandatory.
+
+A developer may construct Solana instructions directly if they implement the required:
+
+* Instruction discriminator
+* Argument serialization
+* Account metas
+* PDA derivation
+* Program IDs
+* Account layouts
+
+Anchor IDL and generated types are provided to make standard Anchor integrations easier, but the underlying protocol remains a Solana program.
+
+## Public integration boundary
+
+The published on-chain program, its accounts, instructions, events, and documented PDAs form the public developer integration surface.
+
+RugFreePump's internal:
+
+* Backend
+* Database
+* HTTP endpoints
+* WebSocket infrastructure
+* Transaction builder classes
+* Metadata services
+
+are application infrastructure rather than required protocol dependencies.
+
+## Future developer tooling
+
+RugFreePump plans to provide:
+
+* A maintained CPI wrapper
+* A Rust integration crate
+
+These tools are intended to simplify integrations, particularly program-to-program integrations, while preserving the underlying on-chain protocol interface.
+
+No public off-chain SDK or hosted developer API is currently part of the RugFreePump developer surface.
