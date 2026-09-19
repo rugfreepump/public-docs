@@ -9,13 +9,11 @@ The protocol does not require developers to depend on the RugFreePump hosted app
 
 ## Current developer interface
 
-The public on-chain interface includes:
+The currently documented public developer interface includes:
 
 * RugFreePump Solana program
-* `create_pool`
 * `buy`
 * `withdraw`
-* `migrate_liquidity`
 * Protocol accounts
 * Program Derived Addresses
 * SPL Token accounts
@@ -208,7 +206,7 @@ RugFreePump's internal RPC infrastructure is not a required dependency.
 
 ## CPI support
 
-RugFreePump's public Anchor instructions can be invoked through Solana CPI.
+The documented RugFreePump Anchor instructions can be invoked through Solana CPI.
 
 A separate CPI wrapper is not required for the underlying program to be CPI-compatible.
 
@@ -216,7 +214,7 @@ However, RugFreePump does not currently provide a maintained official CPI wrappe
 
 A dedicated CPI wrapper and Rust crate are planned as future developer tooling.
 
-Until those artifacts are available, program-to-program integrations must construct the CPI invocation against the public on-chain instruction interface and satisfy its account and signer requirements directly.
+Until those artifacts are available, program-to-program integrations must construct the CPI invocation against the documented on-chain instruction interface and satisfy its account and signer requirements directly.
 
 ## Future developer tooling
 
