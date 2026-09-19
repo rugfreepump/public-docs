@@ -1,1 +1,505 @@
+---
+title: "Withdraw"
+description: "Integrate directly with the RugFreePump withdraw instruction to redeem a buyer's recorded contribution after a sale becomes withdrawable."
+---
 
+The `withdraw` instruction allows a buyer to exit a sale after the sale is no longer active and the protocol's withdrawal conditions have been satisfied.
+
+During withdrawal:
+
+1. The protocol performs a lazy expiration check when necessary.
+2. The buyer's recorded net contribution is read.
+3. Any remaining buyer tokens are burned.
+4. The buyer's token ATA is closed.
+5. The buyer receives a SOL refund from the bonding-curve vault.
+6. The buyer's accumulation PDA is closed and its rent is returned.
+7. A `WithdrawCompleted` event is emitted.
+
+The instruction is signed by the buyer.
+
+## Instruction
+
+```rust
+pub fn withdraw(
+    ctx: Context<Withdraw>,
+) -> Result<()>
+```
+
+The instruction has no arguments.
+
+All information required to determine the withdrawal amount is stored in the protocol's on-chain accounts.
+
+## Accounts
+
+| Account                       | Mutability | Signer | Derivation / requirement                                                                               |
+| ----------------------------- | ---------- | ------ | ------------------------------------------------------------------------------------------------------ |
+| `buyer`                       | Mutable    | Yes    | Buyer receiving the refund.                                                                            |
+| `adminStatesPda`              | Read-only  | No     | PDA derived from `["admin-states"]`.                                                                   |
+| `mint`                        | Mutable    | No     | Token mint being withdrawn. Must match the bonding curve's mint.                                       |
+| `bondingCurvePda`             | Mutable    | No     | PDA derived from `["bonding-curve", mint]`.                                                            |
+| `bondingCurveVault`           | Mutable    | No     | PDA derived from `["bonding-curve-vault", mint]`.                                                      |
+| `buyerAccumulationPda`        | Mutable    | No     | PDA derived from `["buyer-accumulation", bondingCurvePda, buyer]`. Closed after successful withdrawal. |
+| `buyerAssociatedTokenAccount` | Mutable    | No     | Buyer's ATA for the token mint. Tokens are burned and the ATA is closed.                               |
+| `tokenProgram`                | Read-only  | No     | SPL Token program.                                                                                     |
+| `systemProgram`               | Read-only  | No     | Solana System Program.                                                                                 |
+
+Unlike `buy`, `withdraw` does **not** require:
+
+* `globalStatesPda`
+* `platformFeeVault`
+* `associatedTokenProgram`
+* `solUsdPriceFeed`
+
+## PDA derivation
+
+### Admin states
+
+```text
+["admin-states"]
+```
+
+### Bonding curve
+
+```text
+["bonding-curve", mint]
+```
+
+### Bonding-curve SOL vault
+
+```text
+["bonding-curve-vault", mint]
+```
+
+### Buyer accumulation
+
+```text
+["buyer-accumulation", bondingCurvePda, buyer]
+```
+
+The buyer accumulation PDA is specific to both the sale and the buyer.
+
+### Buyer token ATA
+
+The buyer token account is the standard ATA:
+
+```text
+mint = token mint
+owner = buyer
+```
+
+## Deriving accounts in TypeScript
+
+```ts
+import { PublicKey } from "@solana/web3.js";
+import { getAssociatedTokenAddressSync } from "@solana/spl-token";
+
+const PROGRAM_ID = new PublicKey(
+  "9hpBPEiywp7FPAq5uP253eAZzdJ1Cpd36L5RAYuc9xSw",
+);
+
+const buyer = wallet.publicKey;
+const mint = new PublicKey(MINT_ADDRESS);
+
+const [adminStatesPda] = PublicKey.findProgramAddressSync(
+  [Buffer.from("admin-states")],
+  PROGRAM_ID,
+);
+
+const [bondingCurvePda] = PublicKey.findProgramAddressSync(
+  [Buffer.from("bonding-curve"), mint.toBuffer()],
+  PROGRAM_ID,
+);
+
+const [bondingCurveVault] = PublicKey.findProgramAddressSync(
+  [Buffer.from("bonding-curve-vault"), mint.toBuffer()],
+  PROGRAM_ID,
+);
+
+const [buyerAccumulationPda] = PublicKey.findProgramAddressSync(
+  [
+    Buffer.from("buyer-accumulation"),
+    bondingCurvePda.toBuffer(),
+    buyer.toBuffer(),
+  ],
+  PROGRAM_ID,
+);
+
+const buyerAssociatedTokenAccount =
+  getAssociatedTokenAddressSync(mint, buyer);
+```
+
+## When withdrawal is allowed
+
+A buyer cannot withdraw while the sale is active.
+
+The program first performs a lazy expiration check.
+
+If:
+
+```text
+isSaleActive == true
+isSaleExpired == false
+currentTime >= saleExpiresAt
+```
+
+the instruction changes the bonding-curve state to:
+
+```text
+isSaleActive = false
+isSaleExpired = true
+saleExpiredAt = saleExpiresAt
+```
+
+If `saleExpiredAt` has not previously been set, the protocol uses the sale's configured expiration timestamp rather than the later transaction execution timestamp.
+
+This makes the recorded expiration timestamp deterministic.
+
+## Two withdrawal paths
+
+There are two protocol states that can make a buyer eligible to withdraw.
+
+### Expired sale
+
+For a normal sale:
+
+```text
+isSaleActive = false
+isSaleExpired = true
+```
+
+The buyer can withdraw.
+
+### Canceled finalized sale
+
+A finalized sale can also enter the protocol's finalized-sale cancellation state.
+
+When:
+
+```text
+isFinalizedSaleCanceled = true
+isSaleExpired = false
+```
+
+the buyer can withdraw through the cancellation path.
+
+A canceled finalized sale is therefore not treated as an ordinary expired sale.
+
+## Withdrawal state logic
+
+The protocol first requires:
+
+```text
+isSaleActive == false
+```
+
+Then:
+
+```text
+if isFinalizedSaleCanceled:
+    require isSaleExpired == false
+else:
+    require isSaleExpired == true
+```
+
+Integrations should therefore read the current bonding-curve state instead of implementing their own simplified interpretation of withdrawal eligibility.
+
+## Buyer accumulation
+
+The buyer's refundable contribution is stored in:
+
+```rust
+pub struct BuyerAccumulationPDA {
+    pub total_lamports_contributed: u64,
+}
+```
+
+This amount represents the buyer's **net SOL contribution after buy fees**.
+
+For example, with a 1% buy fee:
+
+```text
+Gross buy:      1.000000000 SOL
+Buy fee:        0.010000000 SOL
+Recorded:       0.990000000 SOL
+```
+
+The buy fee is not included in the buyer's recorded refundable contribution.
+
+## No withdrawal amount argument
+
+The buyer does not specify a refund amount.
+
+The protocol determines the refund from:
+
+```text
+BuyerAccumulationPDA.totalLamportsContributed
+```
+
+and the currently available SOL in the bonding-curve vault.
+
+This prevents the client from selecting an arbitrary refund amount.
+
+## Vault rent reserve
+
+The bonding-curve vault is a PDA account and must retain its required rent-exempt balance.
+
+The program calculates:
+
+```text
+vaultAvailable =
+    vaultLamports - rentExemptMinimum
+```
+
+using saturating subtraction.
+
+The actual refund is:
+
+```text
+refund =
+    min(
+        recordedContribution,
+        vaultAvailable
+    )
+```
+
+Therefore, the `withdrawAmountInLamports` emitted by the transaction is the **actual amount transferred to the buyer**.
+
+It can be lower than the recorded contribution when the amount safely available from the vault is lower.
+
+The developer should not assume:
+
+```text
+withdrawAmount == totalLamportsContributed
+```
+
+in every possible state.
+
+## Token burning
+
+Before the SOL refund, the protocol checks the buyer's token ATA.
+
+If the account contains tokens:
+
+1. The buyer must sign.
+2. The entire token balance is burned.
+3. The token account is reloaded.
+4. The resulting balance is checked again.
+
+The withdrawal therefore represents redemption of the buyer's remaining sale tokens.
+
+A custom integration should not expect the buyer to retain the purchased token balance after a successful withdrawal.
+
+## Token ATA closure
+
+After the burn:
+
+```text
+tokenBalance == 0
+```
+
+the buyer token ATA is closed.
+
+The ATA's recoverable account balance is returned to the buyer.
+
+The buyer must sign the transaction.
+
+Because `withdraw` expects the buyer ATA to already exist, the client should derive and provide the buyer's ATA.
+
+## Buyer accumulation PDA closure
+
+The buyer accumulation account is declared with:
+
+```text
+close = buyer
+```
+
+After a successful withdrawal, the account is closed and its recoverable rent is returned to the buyer.
+
+This means a subsequent purchase in the same sale would not be possible because the sale is already in a non-active withdrawal state.
+
+## Transaction costs
+
+The buyer is the transaction payer.
+
+The buyer therefore pays the normal Solana transaction fee and any optional priority fee used by the client.
+
+However, successful withdrawal can return account rent from:
+
+* `BuyerAccumulationPDA`
+* The buyer token ATA
+
+The exact amount depends on the account's current rent-exempt balance and network conditions.
+
+## No protocol buy fee on withdrawal
+
+The withdrawal instruction does not apply another buy fee.
+
+The refund is based on the buyer's already-recorded net contribution and the available bonding-curve vault balance.
+
+## Example with Anchor
+
+```ts
+import { Program, AnchorProvider, Idl } from "@coral-xyz/anchor";
+import { PublicKey } from "@solana/web3.js";
+import { getAssociatedTokenAddressSync } from "@solana/spl-token";
+
+const PROGRAM_ID = new PublicKey(
+  "9hpBPEiywp7FPAq5uP253eAZzdJ1Cpd36L5RAYuc9xSw",
+);
+
+const provider = new AnchorProvider(connection, wallet, {
+  commitment: "confirmed",
+});
+
+const program = new Program(idl as Idl, provider);
+
+const buyer = provider.wallet.publicKey;
+const mint = new PublicKey(MINT_ADDRESS);
+
+const [adminStatesPda] = PublicKey.findProgramAddressSync(
+  [Buffer.from("admin-states")],
+  PROGRAM_ID,
+);
+
+const [bondingCurvePda] = PublicKey.findProgramAddressSync(
+  [Buffer.from("bonding-curve"), mint.toBuffer()],
+  PROGRAM_ID,
+);
+
+const [bondingCurveVault] = PublicKey.findProgramAddressSync(
+  [Buffer.from("bonding-curve-vault"), mint.toBuffer()],
+  PROGRAM_ID,
+);
+
+const [buyerAccumulationPda] = PublicKey.findProgramAddressSync(
+  [
+    Buffer.from("buyer-accumulation"),
+    bondingCurvePda.toBuffer(),
+    buyer.toBuffer(),
+  ],
+  PROGRAM_ID,
+);
+
+const buyerAssociatedTokenAccount =
+  getAssociatedTokenAddressSync(mint, buyer);
+
+const signature = await program.methods
+  .withdraw()
+  .accounts({
+    buyer,
+    adminStatesPda,
+    mint,
+    bondingCurvePda,
+    bondingCurveVault,
+    buyerAccumulationPda,
+    buyerAssociatedTokenAccount,
+    tokenProgram: TOKEN_PROGRAM_ID,
+    systemProgram: SystemProgram.programId,
+  })
+  .rpc();
+
+console.log("Withdrawal transaction:", signature);
+```
+
+## Lazy expiration
+
+A separate expiration transaction is not required for a buyer to withdraw after the configured sale expiration time.
+
+If the sale is still marked active on-chain but:
+
+```text
+currentTime >= saleExpiresAt
+```
+
+the `withdraw` instruction itself can perform the expiration transition.
+
+When this happens, the instruction emits `BondingCurveSaleExpired`.
+
+This is important for integrations because the absence of a previously written `isSaleExpired` state does not necessarily mean that an expired sale cannot be withdrawn.
+
+## Events
+
+### `BondingCurveSaleExpired`
+
+This event is emitted only when the withdrawal transaction performs the lazy expiration state transition.
+
+```rust
+pub struct BondingCurveSaleExpired {
+    pub token_mint_address: Pubkey,
+    pub token_creator_address: Pubkey,
+    pub total_sold_tokens_e6: u64,
+    pub total_raised_usd_e2: u64,
+    pub total_collected_buy_fee_in_lamports: u64,
+    pub count_of_collected_buy_fee_in_lamports: u64,
+    pub total_withdrawable_volume_in_lamports: u64,
+    pub is_sale_expired: bool,
+    pub sale_expired_at: i64,
+}
+```
+
+If another transaction has already marked the sale expired, a later withdrawal does not emit this expiration event again.
+
+### `WithdrawCompleted`
+
+A successful withdrawal emits:
+
+```rust
+pub struct WithdrawCompleted {
+    pub token_mint_address: Pubkey,
+    pub withdrawer_address: Pubkey,
+    pub withdraw_amount_in_lamports: u64,
+    pub is_sale_active: bool,
+    pub is_sale_expired: bool,
+    pub sale_expired_at: i64,
+    pub withdraw_completed_at: i64,
+}
+```
+
+The most important field for refund accounting is:
+
+```text
+withdrawAmountInLamports
+```
+
+This is the actual SOL amount transferred to the buyer.
+
+## Important failure conditions
+
+Withdrawal can fail for conditions including:
+
+* `PlatformMaintenanceEnabled`
+* `SaleStillActive`
+* `FinalizedSaleNotCanceled`
+* `SaleNotExpired`
+* `NothingToWithdraw`
+* `MissingBuyerSignature`
+* `InsufficientBalance`
+* `InvalidBondingCurveVault`
+* `IntegerOverflow`
+
+Account validation can also cause the transaction to fail if:
+
+* The mint does not match the bonding curve.
+* The bonding curve PDA is incorrect.
+* The bonding-curve vault PDA is incorrect.
+* The buyer accumulation PDA does not correspond to the buyer and sale.
+* The buyer token ATA does not belong to the buyer or the correct mint.
+* Required program accounts are incorrect.
+
+## Client-side recommendations
+
+A production withdrawal integration should:
+
+* Read the current `BondingCurvePDA`.
+* Read the buyer's `BuyerAccumulationPDA`.
+* Derive the PDAs from the documented seeds.
+* Ensure the buyer ATA exists.
+* Treat the on-chain state as authoritative for eligibility.
+* Allow the instruction itself to perform lazy expiration.
+* Expect the buyer's tokens to be burned.
+* Expect the buyer token ATA to be closed.
+* Expect the buyer accumulation PDA to be closed.
+* Use `withdrawAmountInLamports` as the authoritative refund amount.
+* Not assume the refund always equals the recorded contribution.
+* Account for transaction fees even though account rent may be returned.
+* Refresh on-chain state after confirmation.
