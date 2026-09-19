@@ -79,32 +79,19 @@
         "pages": [
           "developer-guide/building-on-rugfreepump",
           {
-            "group": "On-Chain Program",
+            "group": "On-Chain Integration",
             "pages": [
-              "developer-guide/on-chain-program/program-id-and-network",
-              "developer-guide/on-chain-program/public-instructions",
-              "developer-guide/on-chain-program/accounts-and-account-structures",
-              "developer-guide/on-chain-program/pda-derivation-and-seeds",
-              "developer-guide/on-chain-program/instruction-arguments",
-              "developer-guide/on-chain-program/transaction-requirements",
-              "developer-guide/on-chain-program/anchor-idl",
-              "developer-guide/on-chain-program/generated-types"
+              "developer-guide/on-chain-integration/buy",
+              "developer-guide/on-chain-integration/withdraw"
             ]
           },
           {
-            "group": "API Integration",
+            "group": "Anchor IDL & Types",
             "pages": [
-              "developer-guide/api-integration/overview",
-              "developer-guide/api-integration/create-sale",
-              "developer-guide/api-integration/buy",
-              "developer-guide/api-integration/withdraw",
-              "developer-guide/api-integration/migrate-liquidity",
-              "developer-guide/api-integration/request-and-response",
-              "developer-guide/api-integration/rate-limits-and-restrictions",
-              "developer-guide/api-integration/errors",
-              "developer-guide/api-integration/realtime-websocket"
+              "developer-guide/anchor-idl-and-types/usage"
             ]
-          }
+          },
+          "developer-guide/developer-limitations"
         ]
       },
       {
