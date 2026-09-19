@@ -5,9 +5,9 @@ description: "Integrate directly with the RugFreePump buy instruction to purchas
 
 The `buy` instruction purchases tokens from an active RugFreePump bonding-curve sale using SOL.
 
-The instruction accepts a gross SOL amount, deducts the current protocol buy fee, converts the remaining SOL to USD-equivalent value using the verified Pyth SOL/USD price, calculates the token amount from the bonding curve, and transfers the resulting tokens to the buyer.
+The instruction accepts a gross SOL amount, deducts the current protocol buy fee, converts the remaining SOL to USD-equivalent value using the validated Pyth SOL/USD price, and transfers the resulting token amount to the buyer.
 
-The transaction is executed entirely on-chain and is atomic under Solana transaction semantics.
+The transaction is atomic under Solana transaction semantics.
 
 ## Instruction
 
@@ -26,8 +26,8 @@ pub fn buy(
 | Argument                        | Type  | Unit         | Description                                                                                             |
 | ------------------------------- | ----- | ------------ | ------------------------------------------------------------------------------------------------------- |
 | `lamports_amount`               | `u64` | Lamports     | Gross SOL amount submitted by the buyer before the buy fee.                                             |
-| `expected_total_raised_usd_e2`  | `u64` | USD e2       | Expected current total USD-equivalent amount raised before the buy.                                     |
-| `expected_total_sold_tokens_e6` | `u64` | Token e6     | Expected current total number of tokens sold before the buy.                                            |
+| `expected_total_raised_usd_e2`  | `u64` | USD e2       | Expected current USD-equivalent amount raised before the buy.                                           |
+| `expected_total_sold_tokens_e6` | `u64` | Token e6     | Expected current number of tokens sold before the buy.                                                  |
 | `slippage_bps`                  | `u16` | Basis points | Maximum permitted increase in the bonding curve's average price relative to the expected average price. |
 
 ### Integer units
@@ -58,7 +58,7 @@ Do not use JavaScript `number` arithmetic for protocol amounts when precision ca
 | `globalStatesPda`             | No      | No     | PDA: `["global-states"]`.                                                      |
 | `bondingCurvePda`             | Yes     | No     | PDA: `["bonding-curve", mint]`.                                                |
 | `bondingCurveVault`           | Yes     | No     | PDA: `["bonding-curve-vault", mint]`.                                          |
-| `associatedBondingCurveAta`   | Yes     | No     | SPL ATA for `mint`, owned by `bondingCurveVault`. Must already exist.          |
+| `associatedBondingCurveAta`   | Yes     | No     | ATA for `mint`, owned by `bondingCurveVault`. Must already exist.              |
 | `buyerAccumulationPda`        | Yes     | No     | PDA: `["buyer-accumulation", bondingCurvePda, buyer]`. Created when necessary. |
 | `buyerAssociatedTokenAccount` | Yes     | No     | Buyer's ATA for `mint`. Created when necessary.                                |
 | `platformFeeVault`            | Yes     | No     | PDA: `["platform-fee-vault"]`.                                                 |
@@ -151,7 +151,7 @@ const buyerAssociatedTokenAccount =
   );
 ```
 
-The buyer ATA is automatically initialized by `buy` when it does not already exist.
+The buyer ATA is initialized by `buy` when it does not already exist.
 
 ## Sale-state requirements
 
@@ -168,9 +168,9 @@ The program requires:
 
 The program also checks the sale expiration timestamp.
 
-If the current timestamp has reached `saleExpiresAt`, the program marks the sale inactive and the purchase is rejected.
+If the current timestamp has reached `saleExpiresAt`, the program marks the sale inactive and rejects the purchase.
 
-The on-chain checks are authoritative even if the client performs the same checks before constructing the transaction.
+The on-chain checks are authoritative.
 
 ## Buy fee
 
@@ -206,9 +206,9 @@ netLamports =
     lamportsAmount - buyFeeLamports
 ```
 
-The net amount is what enters the bonding-curve purchase calculation.
+The net amount enters the bonding-curve purchase calculation.
 
-The current buy fee is configuration state and should be read from `GlobalStatesPDA` rather than permanently hardcoded by an integration.
+The current buy fee should be read from `GlobalStatesPDA` rather than permanently hardcoded by an integration.
 
 ### Example
 
@@ -236,7 +236,7 @@ which represents:
 $1.00
 ```
 
-The check is performed against the buyer's **net USD-equivalent contribution after the buy fee**.
+The minimum is evaluated against the buyer's **net USD-equivalent contribution after the buy fee**.
 
 Conceptually:
 
@@ -267,22 +267,15 @@ which represents:
 $16,150.00
 ```
 
-The program calculates:
-
-```text
-remainingCap =
-    1,615,000 - currentTotalRaisedUsdE2
-```
-
-The buyer's net USD-equivalent contribution must fit completely inside the remaining capacity.
+The buyer's net USD-equivalent contribution must fit completely within the remaining sale capacity.
 
 A purchase that would exceed the hard cap is rejected.
 
-Because the cap check is performed against current on-chain state, clients should refresh the bonding-curve account immediately before constructing the transaction.
+Because the check uses current on-chain state, clients should refresh the bonding-curve account immediately before constructing the transaction.
 
-## Finalization buffer
+## Finalization
 
-The current program constant is:
+The current finalization buffer is:
 
 ```text
 SALE_FINALIZATION_BUFFER_USD_E2 = 5,000
@@ -294,21 +287,9 @@ which represents:
 $50.00
 ```
 
-After a successful buy, the program checks the remaining sale capacity.
+After a successful purchase, the program checks the remaining sale capacity.
 
-If:
-
-```text
-remainingCap < 5,000
-```
-
-the sale is finalized:
-
-```text
-isSaleFinalized = true
-isSaleActive = false
-saleFinalizedAt = current Unix timestamp
-```
+If the remaining capacity is below the configured finalization buffer, the sale is finalized and marked inactive.
 
 The final sale total therefore does not necessarily equal exactly `$16,150.00`.
 
@@ -322,15 +303,13 @@ The current program validates:
 2. The expected SOL/USD feed ID.
 3. Positive reported price.
 4. Confidence no greater than 2% of the reported price.
-5. Price update age no greater than 60 seconds.
+5. Price update age no greater than **24 hours**.
 
-The current configured SOL/USD feed ID is:
+The configured SOL/USD feed ID is:
 
 ```text
 0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d
 ```
-
-The resulting price is converted to USD e2.
 
 The currently documented Devnet `PriceUpdateV2` account is:
 
@@ -338,147 +317,65 @@ The currently documented Devnet `PriceUpdateV2` account is:
 7UVimffxr9ow1uXYxsr4LHAcV58mLzhmwaeKvJ1pjLiE
 ```
 
-For Mainnet, replace the account with the actual Mainnet `PriceUpdateV2` account configured for the deployed RugFreePump program.
+For Mainnet, use the `PriceUpdateV2` account configured for the deployed RugFreePump program.
 
 The client must not substitute an arbitrary Pyth price account.
 
 ## Slippage protection
 
-RugFreePump's slippage mechanism protects against movement of the bonding curve between quote generation and transaction execution.
+The `buy` instruction includes state-based slippage protection.
 
 The client supplies:
 
 ```text
-expectedTotalRaisedUsdE2
-expectedTotalSoldTokensE6
-slippageBps
+expected_total_raised_usd_e2
+expected_total_sold_tokens_e6
+slippage_bps
 ```
 
-The expected average curve price is:
+The program compares the expected average curve price with the current average curve price at execution.
 
-```text
-expectedPriceE2 =
-    expectedTotalRaisedUsdE2 × 10^15
-    / expectedTotalSoldTokensE6
-```
+Only an increase in the average price is treated as adverse movement.
 
-The program calculates the current executed average price:
-
-```text
-executedPriceE2 =
-    currentTotalRaisedUsdE2 × 10^15
-    / currentTotalSoldTokensE6
-```
-
-Only an increase is treated as adverse movement:
-
-```text
-priceDiff =
-    max(executedPriceE2 - expectedPriceE2, 0)
-```
-
-Actual slippage is:
-
-```text
-actualSlippageBps =
-    priceDiff × 10,000 / expectedPriceE2
-```
-
-The transaction succeeds only when:
-
-```text
-actualSlippageBps <= slippageBps
-```
+The transaction succeeds only when the resulting slippage is within the supplied `slippage_bps`.
 
 ### Required client workflow
 
-Immediately before constructing a `buy` instruction:
+Immediately before constructing the `buy` instruction, read:
 
 ```text
 BondingCurvePDA.totalRaisedUsdE2
 BondingCurvePDA.totalSoldTokensE6
 ```
 
-must be read from current on-chain state.
-
-Use those values as:
+Use those current values as:
 
 ```text
 expectedTotalRaisedUsdE2
 expectedTotalSoldTokensE6
 ```
 
+Then construct and submit the transaction promptly.
+
 Do not use stale values from an old quote.
 
-If another transaction changes the curve before execution and the resulting price movement exceeds the supplied tolerance, the transaction fails with `SlippageExceeded`.
+If another transaction changes the curve before execution and the resulting movement exceeds the supplied tolerance, the transaction fails with `SlippageExceeded`.
 
-The initial curve state must also contain a non-zero sold-token value because the protocol's average-price calculation divides by `totalSoldTokensE6`.
+The on-chain program remains authoritative for the final token amount and transaction validity.
 
 ## Bonding-curve pricing
 
-The token amount is calculated by the RugFreePump degree-4 polynomial.
+The token amount is calculated by the RugFreePump bonding curve inside the on-chain program.
 
-The protocol evaluates the cumulative token position at:
+The protocol accepts the purchase amount and current curve state; the internal pricing function does not need to be reproduced to construct a valid `buy` instruction.
 
-```text
-startUsd = currentTotalRaisedUsdE2
-```
+Applications that display their own estimates should treat the on-chain execution result as authoritative.
 
-and:
-
-```text
-endUsd =
-    currentTotalRaisedUsdE2 + netUsdAfterFeeE2
-```
-
-The purchased token amount is the difference between those cumulative positions.
-
-The current polynomial coefficients are:
-
-```text
-[
-  -24,915,010,041,
-  109,143,626,050,000,000,
-  -186,781,912,610,000,000,000,000,
-  171,088,246,150,000,000,000,000,000,000,
-  66,288,552,083,000,000,000,000,000,000,000
-]
-```
-
-with:
-
-```text
-scaleFactor = 10^20
-```
-
-The implementation evaluates the polynomial using Horner's method and signed 128-bit integer arithmetic.
-
-Conceptually:
-
-```text
-F(x) = polynomial(x) / 10^20
-```
-
-and:
-
-```text
-tokensBought =
-    max(F(endUsd) - F(startUsd), 0)
-```
-
-The result is expressed in token e6 units.
-
-The on-chain implementation is authoritative.
-
-Integrations that reproduce quotes off-chain must reproduce the integer arithmetic exactly. Floating-point approximations should not be treated as authoritative.
+The public integration interface does not require access to the internal polynomial coefficients or implementation details.
 
 ## Token inventory
 
-Before transferring tokens, the program verifies that:
-
-```text
-associatedBondingCurveAta.amount >= tokensToBuyE6
-```
+Before transferring tokens, the program verifies that the bonding-curve token ATA contains sufficient inventory.
 
 The account must:
 
@@ -489,26 +386,26 @@ The account must:
 
 ## Transaction execution
 
-A successful buy performs the following logical sequence:
+A successful `buy` performs the following logical operations:
 
 1. Validate maintenance and sale state.
 2. Validate the buyer balance.
 3. Validate slippage.
 4. Validate the Pyth price.
 5. Calculate the buy fee.
-6. Calculate net USD-equivalent value.
+6. Calculate the net USD-equivalent contribution.
 7. Validate the minimum purchase.
 8. Validate the sale hard cap.
 9. Calculate the token amount.
 10. Validate token inventory.
-11. Transfer tokens from the bonding-curve token ATA to the buyer ATA.
-12. Transfer net SOL from the buyer to the bonding-curve vault.
-13. Transfer the buy fee from the buyer to the platform fee vault.
+11. Transfer tokens to the buyer.
+12. Transfer net SOL to the bonding-curve vault.
+13. Transfer the buy fee to the platform fee vault.
 14. Update sale and buyer accounting.
 15. Finalize the sale if the finalization condition is reached.
 16. Emit events.
 
-Although the token transfer occurs before the SOL transfers in the program, Solana transaction atomicity means a later failure does not leave the earlier successful operations permanently committed.
+The token transfer occurs before the SOL transfers in the instruction implementation, but Solana transaction atomicity means a later failure does not leave earlier successful operations permanently committed.
 
 ## Buyer accounting
 
@@ -518,21 +415,12 @@ Each buyer has a:
 BuyerAccumulationPDA
 ```
 
-with:
+containing:
 
 ```rust
 pub struct BuyerAccumulationPDA {
     pub total_lamports_contributed: u64,
 }
-```
-
-The account allocation is:
-
-```text
-8 bytes  Anchor discriminator
-8 bytes  total_lamports_contributed
------------------------------------
-16 bytes total
 ```
 
 The stored value is the buyer's cumulative **net SOL contribution after buy fees**.
@@ -541,26 +429,26 @@ Example:
 
 ```text
 Gross purchase: 1.000000000 SOL
-Buy fee:       0.010000000 SOL
-Recorded:      0.990000000 SOL
+Buy fee:        0.010000000 SOL
+Recorded:       0.990000000 SOL
 ```
 
 This recorded value is subsequently used by `withdraw`.
 
 ## Account creation and rent
 
-`buyerAccumulationPda` uses `init_if_needed`.
+`buyerAccumulationPda` is initialized when required.
 
 The buyer is the payer.
 
-The buyer token ATA also uses `init_if_needed`.
+The buyer token ATA is also initialized when required.
 
 Therefore, a first purchase may require the buyer to pay rent for:
 
 * `BuyerAccumulationPDA`
 * Buyer token ATA
 
-The buyer also pays the normal transaction fee and any priority fee included by the integrating application.
+The buyer also pays the normal transaction fee and any priority fee selected by the integrating application.
 
 Later purchases reuse existing accounts.
 
@@ -575,6 +463,7 @@ import { AnchorProvider, BN, Idl, Program } from "@coral-xyz/anchor";
 import {
   Connection,
   PublicKey,
+  SystemProgram,
 } from "@solana/web3.js";
 import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
@@ -670,12 +559,8 @@ const buyerAssociatedTokenAccount =
   getAssociatedTokenAddressSync(
     mint,
     buyer,
-    false,
-    TOKEN_PROGRAM_ID,
-    ASSOCIATED_TOKEN_PROGRAM_ID,
   );
 
-// Fetch current state immediately before building the transaction.
 const bondingCurve =
   await program.account.bondingCurvePda.fetch(
     bondingCurvePda,
@@ -729,13 +614,13 @@ const signature =
 console.log("Buy transaction:", signature);
 ```
 
-The example intentionally reads the bonding-curve state immediately before building the transaction.
+The example intentionally reads the bonding-curve state immediately before constructing the transaction.
 
-The application must provide the correct wallet, RPC endpoint, program ID, IDL, token program constants, and deployment-specific Pyth account.
+The integrating application must provide the correct wallet, RPC endpoint, program ID, matching IDL, token program constants, and deployment-specific Pyth account.
 
 ## Building without immediately sending
 
-Anchor can also construct the instruction without submitting it:
+Anchor can construct the instruction without submitting it:
 
 ```ts
 const instruction =
@@ -768,15 +653,7 @@ const instruction =
     .instruction();
 ```
 
-This allows the application to add its own:
-
-* Compute-budget instructions
-* Priority fee
-* Additional application instructions
-* Versioned transaction handling
-* Custom transaction submission logic
-
-Compute-budget and priority-fee instructions are not part of the RugFreePump `buy` instruction itself.
+The resulting instruction can be placed into a transaction constructed by the integrating application.
 
 ## Events
 
@@ -821,7 +698,7 @@ pub struct BondingCurveSaleFinalized {
 
 Events are useful for indexing and transaction interpretation.
 
-They should not replace current on-chain account reads when an integration needs authoritative state.
+They should not replace current on-chain account reads when authoritative state is required.
 
 ## Important failure conditions
 
@@ -852,13 +729,13 @@ InvalidPlatformFeeVault
 
 Account constraints can also reject the transaction when supplied accounts do not match the required mint, PDA, ownership, or program relationships.
 
-These errors should be treated as protocol-level transaction failures rather than automatically assuming an RPC or wallet failure.
+Treat these as protocol-level transaction failures rather than automatically assuming an RPC or wallet failure.
 
 ## CPI
 
 `buy` is an Anchor program instruction and can be invoked through Solana CPI.
 
-A CPI caller must provide the same required accounts and satisfy the same on-chain validation rules.
+A CPI caller must provide the required accounts and satisfy the same on-chain validation rules.
 
 RugFreePump does not currently provide a maintained CPI wrapper or Rust crate.
 
@@ -883,4 +760,3 @@ Before submitting a production `buy` transaction:
 * [ ] Handle stale blockhashes and transaction failures.
 * [ ] Confirm the transaction.
 * [ ] Refresh on-chain state after confirmation.
-* [ ] Use emitted events as transaction signals, not as a replacement for authoritative account state.
