@@ -1,294 +1,410 @@
 ---
 title: "Building on RugFreePump"
-description: "Build directly on the RugFreePump protocol using its deployed Solana program and documented on-chain interface."
+description: "Build applications and on-chain integrations directly on top of the RugFreePump protocol."
 ---
 
-The RugFreePump protocol's core functionality is exposed through its deployed Solana program. Developers can integrate directly with the program using Solana RPC, the RugFreePump Anchor IDL, generated types, and standard Solana and Anchor tooling.
+RugFreePump exposes its protocol through a Solana program and its on-chain accounts.
 
-The RugFreePump program is deployed and callable on Solana, while its underlying source code is not part of the public developer interface. The documented IDL, generated types, accounts, seeds, instruction interfaces, and protocol behavior provide the information required for direct integration.
+Developers can build applications, integrations, automation, analytics systems, trading tools, and other on-chain programs directly on top of the RugFreePump protocol using standard Solana tooling and the published Anchor interface.
 
-RugFreePump's hosted application and backend services support the platform itself, but they are not required interfaces for protocol integrations.
+The documented developer integration surface is intentionally on-chain first. RugFreePump's hosted application and internal backend infrastructure are application infrastructure and are not required dependencies for protocol integrations.
 
-## Integration model
+## Supported integration surface
 
-The primary integration surface is the RugFreePump on-chain program.
+The Developer Guide currently documents two public protocol instructions for direct developer integration:
 
-Developers can interact directly with the program's documented instructions and accounts using standard Solana tooling. This includes client applications, automated systems, analytics, wallets, and other Solana programs, without requiring access to RugFreePump's hosted application or backend services.
+| Instruction | Purpose                                                                     |
+| ----------- | --------------------------------------------------------------------------- |
+| `buy`       | Purchase tokens from an active bonding-curve sale using SOL.                |
+| `withdraw`  | Redeem a buyer's recorded contribution after the sale becomes withdrawable. |
 
-RugFreePump does not currently provide a public off-chain SDK or developer HTTP API. Direct integrations therefore interact with Solana and the deployed RugFreePump program directly.
+These instructions are Anchor program instructions and can be constructed using the published IDL and standard Solana tooling.
 
-The public program instructions can also be invoked by other Solana programs through cross-program invocation (CPI), subject to the accounts, signer requirements, state conditions, and validation enforced by each instruction.
+The protocol's on-chain program remains the authoritative source for account state, sale state, configuration used by each instruction, and transaction validation.
 
-A maintained CPI wrapper and Rust crate are planned as future developer tooling for program-to-program integrations.
+## Deployment configuration
 
-## Public program interface
+Always use the program ID and protocol accounts corresponding to the Solana environment being targeted.
 
-The current RugFreePump program exposes four public instructions:
+### Devnet
 
-| Instruction         | Purpose                                                                                    |
-| ------------------- | ------------------------------------------------------------------------------------------ |
-| `create_pool`       | Creates and initializes a token sale and its bonding-curve state.                          |
-| `buy`               | Purchases tokens from an active bonding-curve sale using SOL.                              |
-| `withdraw`          | Burns a buyer's purchased tokens and refunds the buyer when the sale becomes withdrawable. |
-| `migrate_liquidity` | Processes a finalized sale and migrates liquidity through the configured DEX integration.  |
-
-All four are Anchor program instructions.
-
-The current Developer Guide provides detailed integration references for `buy` and `withdraw`. The instruction reference pages document the accounts, PDA derivation, arguments, units, state requirements, transaction behavior, fees, events, and important validation rules required to construct those instructions correctly.
-
-## Program ID
-
-The currently documented deployment uses the following RugFreePump program ID:
+The currently documented Devnet deployment uses:
 
 ```text
+RugFreePump program:
 9hpBPEiywp7FPAq5uP253eAZzdJ1Cpd36L5RAYuc9xSw
+
+SOL/USD PriceUpdateV2 account:
+7UVimffxr9ow1uXYxsr4LHAcV58mLzhmwaeKvJ1pjLiE
 ```
 
-This identifier is for the documented deployment environment. Always use the program ID corresponding to the environment and deployment you are integrating with. Do not assume that a Devnet program ID is valid for another Solana cluster.
+### Mainnet
 
-## Protocol state
+Mainnet addresses must be replaced with the actual deployment values before production use:
 
-The RugFreePump on-chain program and its Solana accounts are the authoritative source of protocol state.
+```text
+RugFreePump program:
+REPLACE_WITH_MAINNET_RUG_FREE_PUMP_PROGRAM_ID
 
-The hosted RugFreePump application and supporting off-chain services may index, cache, transform, or display protocol information, but those services are not replacements for the underlying on-chain state.
+SOL/USD PriceUpdateV2 account:
+REPLACE_WITH_MAINNET_SOL_USD_PRICE_FEED_ACCOUNT
+```
 
-For protocol-critical operations, integrations should read the relevant on-chain accounts and construct transactions using current protocol state.
+Do not derive or reuse the RugFreePump Devnet program ID for Mainnet.
 
-This is particularly important for state that can change between transaction construction and execution, including bonding-curve state, sale lifecycle state, and protocol configuration.
+For production integrations, keep deployment-specific values in configuration rather than embedding them throughout application code.
+
+For example:
+
+```ts
+import { PublicKey } from "@solana/web3.js";
+
+export const RUG_FREE_PUMP_PROGRAM_ID = new PublicKey(
+  process.env.RUG_FREE_PUMP_PROGRAM_ID!,
+);
+
+export const SOL_USD_PRICE_FEED_ACCOUNT = new PublicKey(
+  process.env.RUG_FREE_PUMP_SOL_USD_PRICE_FEED_ACCOUNT!,
+);
+```
+
+The canonical Solana System Program, SPL Token Program, and Associated Token Program addresses are network-independent.
+
+## On-chain state is authoritative
+
+The RugFreePump program and its Solana accounts are the authoritative source of protocol state.
+
+Off-chain applications may index, cache, transform, or display protocol information, but those services do not replace the underlying on-chain state.
+
+For protocol-critical operations, integrations should:
+
+1. Read the relevant on-chain accounts.
+2. Derive required PDAs from the documented seeds.
+3. Construct instructions from current state.
+4. Sign using the required wallet.
+5. Submit and confirm the transaction.
+6. Read the resulting state or transaction data after confirmation.
+
+Do not treat a cached API response, previously calculated quote, or internal application state as authoritative when constructing a protocol transaction.
 
 ## Core units
 
-RugFreePump uses integer representations for protocol values rather than floating-point values.
+RugFreePump uses integer-scaled values for protocol accounting.
 
-| Value                  | Unit             | Scale                            |
-| ---------------------- | ---------------- | -------------------------------- |
-| SOL amounts            | Lamports         | `1 SOL = 1,000,000,000` lamports |
-| Token amounts          | Token base units | `1 token = 1,000,000` units      |
-| USD-equivalent amounts | USD e2           | `$1.00 = 100`                    |
-| Prices                 | USD e2           | `$123.45 = 12345`                |
-| Percentages and fees   | Basis points     | `10000 = 100%`                   |
-| Timestamps             | Unix seconds     | Integer seconds                  |
+| Value                 | Unit         | Scale                            |
+| --------------------- | ------------ | -------------------------------- |
+| SOL                   | Lamports     | `1 SOL = 1,000,000,000` lamports |
+| Token amounts         | Token e6     | `1 token = 1,000,000` units      |
+| USD-equivalent values | USD e2       | `$1.00 = 100`                    |
+| Prices                | USD e2       | `$123.45 = 12345`                |
+| Fees and percentages  | Basis points | `10,000 = 100%`                  |
+| Timestamps            | Unix seconds | Integer seconds                  |
 
-When constructing instructions or processing account data, preserve these integer representations. Avoid unnecessary conversion to JavaScript floating-point numbers, particularly for token amounts, SOL amounts, and protocol accounting values.
+Use exact integer arithmetic for these values.
+
+For TypeScript applications, prefer `BN`, `bigint`, or another exact integer representation instead of JavaScript floating-point arithmetic.
 
 ## Bonding-curve model
 
-RugFreePump uses SOL as the asset contributed by buyers while the bonding-curve calculation is denominated in USD-equivalent value.
+RugFreePump uses SOL as the asset contributed by buyers while the bonding-curve calculation uses USD-equivalent value.
 
-The `buy` instruction uses the current verified SOL/USD oracle price to convert the buyer's net SOL contribution into USD-equivalent value for the bonding-curve calculation.
+The `buy` instruction:
 
-At a high level, the buy flow is:
+1. Receives a gross SOL amount in lamports.
+2. Reads and validates the configured Pyth SOL/USD price.
+3. Calculates the protocol buy fee.
+4. Converts the remaining SOL to USD-equivalent value.
+5. Checks the minimum purchase and remaining sale capacity.
+6. Calculates the token amount using the on-chain bonding-curve function.
+7. Transfers tokens to the buyer.
+8. Transfers net SOL to the bonding-curve vault.
+9. Transfers the buy fee to the platform fee vault.
+10. Updates bonding-curve and buyer accounting.
 
-1. The buyer supplies a SOL amount in lamports.
-2. The program verifies the supplied SOL/USD Pyth price account.
-3. The configured buy fee is deducted.
-4. The remaining SOL is converted to USD-equivalent value.
-5. The net USD-equivalent amount is checked against the protocol's purchase limits.
-6. The bonding-curve pricing function determines the token amount.
-7. Tokens are transferred from the bonding-curve token account to the buyer.
-8. Net SOL is transferred to the bonding-curve vault.
-9. The buy fee is transferred to the platform fee vault.
-10. Bonding-curve accounting is updated.
+The buyer's recorded refundable contribution is the **net SOL contribution after the buy fee**, not the gross amount supplied to `buy`.
 
-The buyer's recorded refundable contribution is based on the **net SOL contribution after the buy fee**, not the gross SOL amount supplied to `buy`.
-
-The exact purchase calculation and its validation rules are documented on the [Buy](../on-chain-integration/buy) reference page.
+See [Buy](./on-chain-integration/buy) for the complete instruction reference.
 
 ## Protocol accounts and PDAs
 
-RugFreePump uses deterministic program-derived addresses (PDAs) for its protocol state and vault accounts.
+All RugFreePump PDAs are derived using the RugFreePump program ID.
 
-### Program-level PDAs
+### Admin states
 
-| Account                | Seeds                    |
-| ---------------------- | ------------------------ |
-| Mint authority         | `["mint-authority"]`     |
-| Admin states           | `["admin-states"]`       |
-| Global states          | `["global-states"]`      |
-| Platform fee vault PDA | `["platform-fee"]`       |
-| Platform fee vault     | `["platform-fee-vault"]` |
+```text
+["admin-states"]
+```
 
-The two platform-fee-related accounts are different accounts and use different seeds.
+Used by both supported instructions to validate platform maintenance state.
 
-### Per-token PDAs
+### Global states
 
-For a token mint `M`:
+```text
+["global-states"]
+```
 
-| Account                 | Seeds                        |
-| ----------------------- | ---------------------------- |
-| Bonding curve           | `["bonding-curve", M]`       |
-| Bonding-curve SOL vault | `["bonding-curve-vault", M]` |
+Contains protocol-wide state used by the `buy` instruction, including the current buy fee configuration.
 
-### Buyer accumulation PDA
+### Bonding curve
 
-For buyer `B` and bonding-curve PDA `C`:
+For token mint `M`:
+
+```text
+["bonding-curve", M]
+```
+
+The resulting account stores the sale's bonding-curve state and accounting.
+
+### Bonding-curve vault
+
+For token mint `M`:
+
+```text
+["bonding-curve-vault", M]
+```
+
+This PDA holds the SOL associated with the bonding-curve sale and is also the authority of the bonding-curve token ATA.
+
+### Buyer accumulation
+
+For bonding-curve PDA `C` and buyer wallet `B`:
 
 ```text
 ["buyer-accumulation", C, B]
 ```
 
-The bonding-curve PDA is used as a seed component rather than the token mint directly.
+The bonding-curve PDA is part of the seed.
 
-The buyer accumulation account records the buyer's cumulative net SOL contribution for that sale.
+Do not substitute the token mint directly for the bonding-curve PDA.
 
-### Associated token accounts
+The account stores the buyer's cumulative net SOL contribution for that sale.
 
-The protocol uses standard SPL Associated Token Accounts for token balances:
+### Platform fee vault
 
-* Buyer token account: `(mint, buyer)`
-* Bonding-curve token account: `(mint, bondingCurveVault)`
+The platform fee vault used by `buy` is derived from:
 
-Because the bonding-curve vault is a PDA, integrations deriving its associated token account must allow an off-curve owner.
+```text
+["platform-fee-vault"]
+```
 
-Instruction-specific account requirements take precedence over this general reference. See the individual instruction pages for the complete account lists.
+This is the account receiving the buy fee.
+
+Do not confuse this account with the separate platform-fee PDA derived from:
+
+```text
+["platform-fee"]
+```
+
+The two addresses have different seeds and serve different purposes.
+
+## Associated Token Accounts
+
+The supported instructions use standard SPL Associated Token Accounts.
+
+### Buyer token ATA
+
+```text
+mint  = token mint
+owner = buyer wallet
+```
+
+For `buy`, the ATA is initialized automatically if required.
+
+For `withdraw`, the ATA must already exist because the instruction operates on the buyer's existing token account.
+
+### Bonding-curve token ATA
+
+```text
+mint  = token mint
+owner = bonding-curve vault PDA
+```
+
+Because the owner is a PDA, clients deriving this ATA must allow an off-curve owner.
+
+Example:
+
+```ts
+import {
+  getAssociatedTokenAddressSync,
+  TOKEN_PROGRAM_ID,
+  ASSOCIATED_TOKEN_PROGRAM_ID,
+} from "@solana/spl-token";
+
+const bondingCurveTokenAta = getAssociatedTokenAddressSync(
+  mint,
+  bondingCurveVault,
+  true,
+  TOKEN_PROGRAM_ID,
+  ASSOCIATED_TOKEN_PROGRAM_ID,
+);
+```
 
 ## Direct integration workflow
 
-A direct integration generally follows these steps.
+A production integration should generally follow this sequence.
 
-### 1. Load the program interface
+### 1. Load the correct program interface
 
-Use the RugFreePump Anchor IDL and generated types corresponding to the deployed program version.
+Use the IDL corresponding to the exact RugFreePump deployment being integrated.
 
-See [Anchor IDL & Types](../anchor-idl-and-types/usage).
+See [Anchor IDL & Types](./anchor-idl-and-types/usage).
 
-### 2. Derive required accounts
+### 2. Configure the target environment
 
-Derive the PDAs and associated token accounts required by the instruction using their documented seeds and derivation rules.
+Verify:
 
-### 3. Read current on-chain state
+* Solana cluster
+* RugFreePump program ID
+* RugFreePump IDL version
+* Pyth SOL/USD account
+* SPL program addresses
+* Any other accounts required by the instruction
 
-Fetch the accounts required to understand the current protocol state.
+### 3. Derive protocol accounts
 
-Depending on the instruction, this can include:
+Derive the required PDAs using the exact seeds documented for the instruction.
 
-* `AdminStatesPDA`
-* `GlobalStatesPDA`
-* `BondingCurvePDA`
-* `BuyerAccumulationPDA`
-* SPL token accounts
-* The required oracle account
+### 4. Read current state
 
-### 4. Construct the instruction
+Read the relevant protocol accounts immediately before constructing state-sensitive transactions.
+
+For `buy`, this includes the current `BondingCurvePDA` because its state is used directly by the slippage mechanism.
+
+For `withdraw`, read the current `BondingCurvePDA` and the buyer's `BuyerAccumulationPDA`.
+
+### 5. Construct the instruction
 
 Build the instruction using:
 
-* The current account addresses
+* Correct program ID
+* Correct accounts
 * Correct PDA derivations
 * Correct integer units
 * Current protocol state
-* Instruction arguments
-* Required oracle accounts
-* Required slippage parameters where applicable
+* Required oracle account
+* Appropriate slippage values for `buy`
 
-### 5. Build and sign the transaction
+### 6. Build and sign the transaction
 
-Construct a Solana transaction containing the instruction and have the required signer authorize it.
+For both supported instructions:
 
-For `buy` and `withdraw`, the buyer is the required transaction signer and payer.
+```text
+buyer = transaction payer + required signer
+```
 
-### 6. Submit and confirm
+The RugFreePump program does not require custody of the buyer's private key.
 
-Submit the transaction through the Solana network and handle normal transaction conditions such as blockhash expiration, RPC errors, simulation failures, and on-chain validation failures.
+### 7. Simulate and submit
 
-### 7. Verify resulting state
+Where appropriate, simulate before submission and handle:
 
-After confirmation, read the relevant on-chain accounts or transaction data to verify the resulting protocol state.
+* Blockhash expiration
+* RPC failures
+* Account validation failures
+* Protocol validation failures
+* Slippage failures
+* Insufficient balance
+* Oracle failures
 
-Do not treat transaction submission alone as confirmation that an expected protocol state was established.
+### 8. Confirm and verify
 
-## State freshness and transaction construction
+After confirmation, read the relevant account state and/or transaction events.
 
-On-chain state can change between reading an account and executing a transaction.
+A submitted transaction should not be treated as proof of the expected protocol state until confirmation and verification have completed.
 
-This is particularly important for `buy`, where the instruction includes expected bonding-curve state values as part of its slippage protection.
+## State freshness
 
-A direct integration should therefore:
+Solana state can change between transaction construction and execution.
 
-1. Read the current bonding-curve state.
-2. Use the current state to construct the expected values required by `buy`.
-3. Construct and submit the transaction promptly.
-4. Handle slippage failures when the on-chain state has moved beyond the accepted tolerance.
+This is particularly important for `buy`.
 
-A transaction constructed from stale bonding-curve state may fail even when the underlying sale remains active.
+A production client should:
 
-The complete slippage calculation and required `buy` arguments are documented in the [Buy](../on-chain-integration/buy) reference.
+1. Fetch the current `BondingCurvePDA`.
+2. Read `totalRaisedUsdE2`.
+3. Read `totalSoldTokensE6`.
+4. Use those values as the expected state supplied to `buy`.
+5. Construct and submit the transaction promptly.
+6. Handle `SlippageExceeded` by refreshing state and rebuilding the transaction.
 
-## Transaction costs and account creation
+Do not reuse a stale quote indefinitely.
 
-RugFreePump transactions remain subject to normal Solana network costs.
+## Transaction costs and rent
 
-Depending on the instruction and account state, an integration may need to account for:
+RugFreePump transactions are subject to normal Solana network costs.
+
+Depending on the instruction and account state, the buyer may need to pay:
 
 * Solana transaction fees
 * Optional priority fees
-* Rent required when new accounts are created
+* Rent for accounts created by the transaction
 
-For `buy`, the buyer is the payer for accounts initialized by the instruction. This can include:
+For `buy`, the buyer pays for accounts initialized by the instruction when they do not already exist:
 
 * `BuyerAccumulationPDA`
-* The buyer's associated token account
+* Buyer's token ATA
 
-Exact transaction fees and account-rent requirements depend on the Solana cluster and current network state. Integrations should query current values rather than hardcode them.
+Exact rent and transaction fees depend on the target cluster and current network state. Query current values rather than hardcoding them.
+
+A successful `withdraw` may return rent from accounts that are closed during the instruction.
 
 ## Cross-program invocation
 
 The public RugFreePump instructions are Anchor program entry points and can be invoked by other Solana programs through CPI.
 
-A CPI caller must satisfy the same protocol requirements enforced by the target instruction, including the following:
+A CPI caller must satisfy the same validation rules enforced by the target instruction, including:
 
-* Accounts
+* Account relationships
 * PDA derivations
 * Signer requirements
-* Account ownership and constraints
-* Sale lifecycle state
+* Account ownership
+* Sale state
 * Maintenance state
 * Oracle validation
-* Slippage conditions
+* Slippage requirements
 * Token account requirements
 * Instruction-specific validation
 
-RugFreePump does not currently provide a maintained CPI wrapper or Rust crate.
+RugFreePump does not currently provide a maintained CPI wrapper or Rust integration crate.
 
-A dedicated CPI wrapper and Rust crate are planned as future developer tooling. Such tooling will simplify program-to-program integration but will not change the underlying on-chain program interface or its validation rules.
+A dedicated CPI wrapper and Rust crate are planned as future developer tooling.
 
-## Interface boundaries
+## Application boundary
 
-The deployed RugFreePump program is the protocol integration boundary.
+The public integration boundary is the RugFreePump on-chain program.
 
-RugFreePump's hosted application and backend infrastructure may provide application-level functionality such as transaction preparation, indexing, metadata processing, analytics, and real-time updates. These services are not required to interact with the protocol directly.
+The following internal application components are not required protocol interfaces:
 
-Developers should not depend on undocumented application internals as part of a protocol integration.
-
-The following are not part of the documented protocol interface:
-
-* Internal backend implementations
-* Internal transaction-building code
+* RugFreePump backend classes
+* Internal HTTP endpoints
 * Internal database schemas
-* Undocumented API routes
-* Internal WebSocket infrastructure
-* Internal metadata-processing implementation
+* Internal WebSocket topics
+* Internal transaction builders
+* Internal metadata-processing services
 * Internal RPC infrastructure
 
-These implementation details may change independently of the on-chain protocol interface.
+These systems may change independently of the on-chain protocol interface.
 
 ## Version compatibility
 
-The Anchor IDL describes a specific version of the RugFreePump program interface.
+The IDL, generated types, program ID, and deployed program must correspond to the same protocol version.
 
-When integrating:
+When upgrading an integration:
 
-* Use the IDL corresponding to the deployed program version.
-* Verify the program ID for the target environment.
-* Use the documented account and instruction definitions for that version.
-* Read protocol configuration from on-chain state where applicable rather than assuming that configuration values are permanent.
-* Revalidate account and instruction requirements when updating an integration.
+1. Confirm the target program ID.
+2. Obtain the corresponding IDL.
+3. Update generated types.
+4. Revalidate PDA derivation.
+5. Revalidate instruction accounts and arguments.
+6. Re-test transaction construction.
+7. Re-test event decoding.
+8. Revalidate configuration assumptions.
 
-The deployed on-chain program and its documented interface define the compatibility boundary for protocol integrations.
+The deployed on-chain program and its documented interface define the protocol compatibility boundary.
 
 ## Next steps
 
-* [Buy](../on-chain-integration/buy)
-* [Withdraw](../on-chain-integration/withdraw)
-* [Anchor IDL & Types](../anchor-idl-and-types/usage)
-* [Developer limitations](../developer-limitations)
+* [Buy](./on-chain-integration/buy)
+* [Withdraw](./on-chain-integration/withdraw)
+* [Anchor IDL & Types](./anchor-idl-and-types/usage)
+* [Developer limitations](./developer-limitations)
