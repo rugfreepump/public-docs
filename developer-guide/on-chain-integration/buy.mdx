@@ -44,22 +44,22 @@ $123.45 = 12,345 USD e2
 
 The following accounts must be supplied to `buy` in the order defined by the instruction.
 
-| #  | Account                          | Address / derivation                                                      | Initialization / requirement                                                |
-| -- | -------------------------------- | ------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| 1  | `buyer`                          | Buyer's wallet address.                                                   | Transaction signer and payer.                                               |
-| 2  | `mint`                           | Address of the token being purchased.                                     | Must match `bonding_curve_pda.token_mint_address`.                          |
-| 3  | `admin_states_pda`               | RugFreePump PDA: `[b"admin-states"]`.                                     | Must already exist.                                                         |
-| 4  | `global_states_pda`              | RugFreePump PDA: `[b"global-states"]`.                                    | Must already exist.                                                         |
-| 5  | `bonding_curve_pda`              | RugFreePump PDA: `[b"bonding-curve", mint]`.                              | Must already exist for the sale.                                            |
-| 6  | `bonding_curve_vault`            | RugFreePump PDA: `[b"bonding-curve-vault", mint]`.                        | Must already exist. Holds the sale's SOL.                                   |
-| 7  | `associated_bonding_curve_ata`   | ATA for `mint`, owned by `bonding_curve_vault`.                           | Must already exist and contain sufficient tokens for the purchase.          |
-| 8  | `buyer_accumulation_pda`         | RugFreePump PDA: `[b"buyer-accumulation", bonding_curve_pda, buyer]`.     | Created with `init_if_needed` when missing; `buyer` pays the required rent. |
-| 9  | `buyer_associated_token_account` | ATA for `mint`, owned by `buyer`.                                         | Created with `init_if_needed` when missing; `buyer` pays the required rent. |
-| 10 | `platform_fee_vault`             | RugFreePump PDA: `[b"platform-fee-vault"]`.                               | Must already exist. Receives the buy fee.                                   |
-| 11 | `sol_usd_price_feed`             | Configured Pyth `PriceUpdateV2` account for the RugFreePump SOL/USD feed. | Must contain a valid, accepted price update.                                |
-| 12 | `token_program`                  | SPL Token Program: `TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA`.         | Required program account.                                                   |
-| 13 | `associated_token_program`       | Associated Token Program: `ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL`. | Required program account.                                                   |
-| 14 | `system_program`                 | Solana System Program: `11111111111111111111111111111111`.                | Required program account.                                                   |
+| #  | Account                          | Address / derivation                                                       | Initialization / requirement                                                |
+| -- | -------------------------------- | -------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| 1  | `buyer`                          | Buyer's wallet address.                                                    | Transaction signer and payer.                                               |
+| 2  | `mint`                           | Address of the token being purchased.                                      | Must match `bonding_curve_pda.token_mint_address`.                          |
+| 3  | `admin_states_pda`               | RugFreePump PDA:seeds `[b"admin-states"]`.                                 | Must already exist.                                                         |
+| 4  | `global_states_pda`              | RugFreePump PDA:seeds `[b"global-states"]`.                                | Must already exist.                                                         |
+| 5  | `bonding_curve_pda`              | RugFreePump PDA:seeds `[b"bonding-curve", mint]`.                          | Must already exist for the sale.                                            |
+| 6  | `bonding_curve_vault`            | RugFreePump PDA:seeds `[b"bonding-curve-vault", mint]`.                    | Must already exist. Holds the sale's SOL.                                   |
+| 7  | `associated_bonding_curve_ata`   | ATA for `mint`, owned by `bonding_curve_vault`.                            | Must already exist and contain sufficient tokens for the purchase.          |
+| 8  | `buyer_accumulation_pda`         | RugFreePump PDA:seeds `[b"buyer-accumulation", bonding_curve_pda, buyer]`. | Created with `init_if_needed` when missing; `buyer` pays the required rent. |
+| 9  | `buyer_associated_token_account` | ATA for `mint`, owned by `buyer`.                                          | Created with `init_if_needed` when missing; `buyer` pays the required rent. |
+| 10 | `platform_fee_vault`             | RugFreePump PDA:seeds `[b"platform-fee-vault"]`.                           | Must already exist. Receives the buy fee.                                   |
+| 11 | `sol_usd_price_feed`             | Configured Pyth `PriceUpdateV2` account for the RugFreePump SOL/USD feed.  | Must contain a valid, accepted price update.                                |
+| 12 | `token_program`                  | SPL Token Program: `TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA`.          | Required program account.                                                   |
+| 13 | `associated_token_program`       | Associated Token Program: `ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL`.  | Required program account.                                                   |
+| 14 | `system_program`                 | Solana System Program: `11111111111111111111111111111111`.                 | Required program account.                                                   |
 
 `buyer_accumulation_pda` and `buyer_associated_token_account` are the only accounts created by `buy` when missing.
 
