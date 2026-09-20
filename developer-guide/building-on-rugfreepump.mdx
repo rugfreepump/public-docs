@@ -7,7 +7,6 @@ RugFreePump exposes its protocol through a native Solana program and its public 
 
 The RugFreePump web application and backend infrastructure are entirely decoupled from the core protocol and are not required for direct on-chain integration.
 
----
 
 ## Development Environments
 
@@ -21,7 +20,6 @@ RugFreePump provides separate Solana deployments for staging and production. Use
 | **Devnet**         | `devnet`                  | `9hpBPEiywp7FPAq5uP253eAZzdJ1Cpd36L5RAYuc9xSw` |
 | **Mainnet**        | `mainnet-beta`            | `9hpBPEiywp7FPAq5uP253eAZzdJ1Cpd36L5RAYuc9xSw` |
 
----
 
 ## Public Integration Surface
 
@@ -33,7 +31,6 @@ The complete deployed program interface remains available through the Anchor IDL
 
 The `buy` instruction can be invoked directly by off-chain Solana clients (e.g., TypeScript SDKs) or by external on-chain Solana programs through Cross-Program Invocation (CPI), subject to the account, signer, authority, and state constraints enforced by the runtime.
 
----
 
 ## Protocol Accounting Units
 
@@ -47,7 +44,6 @@ RugFreePump enforces deterministic integer-scaled values for all on-chain accoun
 | **Rates & Fees** | Integer basis points    | Basis point (bps)  | `100% = 10,000 bps` (`1% = 100 bps`)      |
 | **Time**         | 64-bit Integer (`i64`)  | Second             | `1 second = 1` (Raw Unix epoch timestamp) |
 
----
 
 ## On-Chain State & Integration Artifacts
 
@@ -63,7 +59,6 @@ To implement a direct integration, your client or program will consume the follo
 
 See the [Anchor IDL & Types](./anchor-idl-and-types/usage) reference for complete artifact downloads. For granular transaction construction data, see the [Buy](./on-chain-integration/buy) documentation.
 
----
 
 ## ⛓ CPI Compatibility
 
@@ -71,7 +66,6 @@ All public entry points are fully compatible with Cross-Program Invocation (CPI)
 
 ⚠️ **Note:** RugFreePump does not currently distribute a standalone CPI wrapper or Rust integration crate. A dedicated CPI utility crate is planned for a future developer tooling release. In the interim, programs should generate CPI helpers directly via the Anchor IDL.
 
----
 
 ## Next Steps
 
