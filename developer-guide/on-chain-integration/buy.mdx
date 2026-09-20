@@ -23,10 +23,10 @@ pub fn buy(
 
 | Argument                        | Type  | Required | Required format                                                                        | Description                                                                                                     |
 | ------------------------------- | ----- | -------- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| `lamports_amount`               | `u64` | Yes      | SOL amount must be passed in lamports.                                                 | Gross SOL amount submitted by the buyer before the buy fee. Must be greater than `0`.                           |
-| `expected_total_raised_usd_e2`  | `u64` | Yes      | USD value must be passed as a 2-decimal fixed-point integer (USD e2).                  | Expected `total_raised_usd_e2` from the bonding-curve account immediately before execution.                     |
-| `expected_total_sold_tokens_e6` | `u64` | Yes      | Token amount must be passed as a 6-decimal fixed-point integer (token e6).             | Expected `total_sold_tokens_e6` from the bonding-curve account immediately before execution.                    |
-| `slippage_bps`                  | `u16` | Yes      | Percentage must be converted to basis points before being passed. `100% = 10,000` bps. | Maximum permitted increase in the bonding curve's average price between the expected state and execution state. |
+| `lamports_amount`               | `u64` | Yes      | SOL amount must be passed in lamports.                                                 | Gross SOL amount submitted by the buyer before the buy fee. Must be greater than the `Min` and `Max`.                           |
+| `expected_total_raised_usd_e2`  | `u64` | Yes      | USD value must be passed as a 2-decimal fixed-point integer.                           | Expected `total_raised_usd_e2` from the bonding-curve account immediately before execution.                     |
+| `expected_total_sold_tokens_e6` | `u64` | Yes      | Token amount must be passed as a 6-decimal fixed-point integer.                        | Expected `total_sold_tokens_e6` from the bonding-curve account immediately before execution.                    |
+| `slippage_bps`                  | `u16` | Yes      | Percentage must be converted to basis points before being passed.                      | Maximum permitted increase in the bonding curve's average price between the expected state and execution state. |
 
 The `expected_total_raised_usd_e2` and `expected_total_sold_tokens_e6` values are state snapshots used by the buy instruction's slippage check logic. Read the current **`bonding_curve_pda`** account, derived with seeds `[b"bonding-curve", mint]`, immediately before constructing the transaction.
 
@@ -75,8 +75,6 @@ const txInstruction = await program.methods
   })
   .instruction();
 ```
-
-`PROGRAM_ID`, `connection`, `wallet`, `IDL`, `mint`, `lamportsAmount`, `slippageBps`, and `buyerWallet` are application-specific values supplied by the integrating application.
 
 ### Argument value formats
 
