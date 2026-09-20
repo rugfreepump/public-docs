@@ -29,10 +29,10 @@ Always use the program ID and external accounts corresponding to the Solana envi
 The currently documented Devnet deployment uses:
 
 ```text
-RugFreePump program ID:
+RUG_FREE_PUMP_PROGRAM_ID:
 9hpBPEiywp7FPAq5uP253eAZzdJ1Cpd36L5RAYuc9xSw
 
-SOL/USD PriceUpdateV2 account:
+SOL_USD_PRICE_FEED_PDA:
 7UVimffxr9ow1uXYxsr4LHAcV58mLzhmwaeKvJ1pjLiE
 ```
 
@@ -47,12 +47,8 @@ For production integrations, keep deployment-specific values in configuration ra
 ```ts
 import { PublicKey } from "@solana/web3.js";
 
-export const RUG_FREE_PUMP_PROGRAM_ID = new PublicKey(
-  process.env.RUG_FREE_PUMP_PROGRAM_ID!,
-);
-export const SOL_USD_PRICE_FEED_ACCOUNT = new PublicKey(
-  process.env.RUG_FREE_PUMP_SOL_USD_PRICE_FEED_ACCOUNT!,
-);
+export const RUG_FREE_PUMP_PROGRAM_ID = new PublicKey(process.env.RUG_FREE_PUMP_PROGRAM_ID!);
+export const SOL_USD_PRICE_FEED_PDA = new PublicKey(process.env.SOL_USD_PRICE_FEED_PDA!);
 ```
 
 The canonical Solana System Program, SPL Token Program, and Associated Token Program addresses are network-independent.
