@@ -33,43 +33,50 @@ The `expected_total_raised_usd_e2` and `expected_total_sold_tokens_e6` values ar
 ### TypeScript Example
 
 ```ts
-import { AnchorProvider, Program, BN } from "@coral-xyz/anchor";
+import { AnchorProvider, Program } from "@coral-xyz/anchor";
 import { PublicKey } from "@solana/web3.js";
 
 // Your configured Anchor provider and RugFreePump program instance
 const provider = new AnchorProvider(connection, wallet, {});
 const program = new Program(IDL, provider);
 
+const PROGRAM_ID = new PublicKey("RUGFREEPUMP_PROGRAM_ID");
 const mint = new PublicKey("TOKEN_MINT_ADDRESS");
 
-// Derive your bonding curve PDA using your project's derivation helper
-const [bondingCurvePda] = deriveBondingCurvePda(mint);
-
-// Fetch the current bonding curve state
-const bondingCurveAccount = await program.account.bondingCurvePda.fetch(
-  bondingCurvePda
+// Derive the bonding-curve PDA using the protocol's documented seeds
+const [bondingCurvePda] = PublicKey.findProgramAddressSync(
+  [
+    Buffer.from("bonding-curve"),
+    mint.toBuffer(),
+  ],
+  PROGRAM_ID,
 );
 
-// Extract the required protection states for the instruction arguments
+// Fetch the current bonding-curve state
+const bondingCurveAccount = await program.account.bondingCurvePda.fetch(bondingCurvePda);
+
+// Read the state values required by the buy instruction
 const expectedTotalRaisedUsdE2 = bondingCurveAccount.totalRaisedUsdE2;
 const expectedTotalSoldTokensE6 = bondingCurveAccount.totalSoldTokensE6;
 
-// Pass these fetched values along with your slippage configuration
+// Pass the fetched values to the buy instruction
 const txInstruction = await program.methods
   .buy(
-    lamportsAmount, 
-    expectedTotalRaisedUsdE2, 
-    expectedTotalSoldTokensE6, 
-    slippageBps
+    lamportsAmount,
+    expectedTotalRaisedUsdE2,
+    expectedTotalSoldTokensE6,
+    slippageBps,
   )
   .accounts({
     buyer: buyerWallet,
     mint,
     bondingCurvePda,
-    // ... complete remaining required accounts mapping
+    // ... remaining required accounts
   })
   .instruction();
 ```
+
+`PROGRAM_ID`, `connection`, `wallet`, `IDL`, `mint`, `lamportsAmount`, `slippageBps`, and `buyerWallet` are application-specific values supplied by the integrating application.
 
 ### Argument value formats
 
