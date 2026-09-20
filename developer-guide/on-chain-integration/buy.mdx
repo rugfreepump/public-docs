@@ -75,37 +75,6 @@ const txInstruction = await program.methods
   })
   .instruction();
 ```
-
-### Argument value formats
-
-Instruction arguments use integer fixed-point representations rather than decimal floating-point values:
-
-```text
-SOL:
-1 SOL = 1,000,000,000 lamports
-
-USD:
-$1.00   = 100 USD e2
-$123.45 = 12,345 USD e2
-
-Token:
-1 token = 1,000,000 token units
-1.000000 token = 1,000,000 token e6
-
-Percentage:
-1%   = 100 bps
-100% = 10,000 bps
-```
-
-For example:
-
-```text
-1.5 SOL     → 1,500,000,000 lamports
-$16,150.00  → 1,615,000 USD e2
-250.123456 tokens → 250,123,456 token e6
-2%          → 200 bps
-```
-
 ## Instruction Accounts
 
 The following accounts must be supplied to `buy` in the order defined by the instruction.
