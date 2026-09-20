@@ -21,23 +21,84 @@ pub fn buy(
 
 ## Instruction Data
 
-| Argument                        | Type  | Unit         | Description                                                                                                     |
-| ------------------------------- | ----- | ------------ | --------------------------------------------------------------------------------------------------------------- |
-| `lamports_amount`               | `u64` | Lamports     | Gross SOL amount submitted by the buyer before the buy fee. Must be greater than `0`.                           |
-| `expected_total_raised_usd_e2`  | `u64` | USD e2       | Expected `total_raised_usd_e2` from the bonding-curve account immediately before execution.                     |
-| `expected_total_sold_tokens_e6` | `u64` | Token e6     | Expected `total_sold_tokens_e6` from the bonding-curve account immediately before execution.                    |
-| `slippage_bps`                  | `u16` | Basis points | Maximum permitted increase in the bonding curve's average price between the expected state and execution state. |
+| Argument                        | Type  | Required | Required format                                                                        | Description                                                                                                     |
+| ------------------------------- | ----- | -------- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `lamports_amount`               | `u64` | Yes      | SOL amount must be passed in lamports.                                                 | Gross SOL amount submitted by the buyer before the buy fee. Must be greater than `0`.                           |
+| `expected_total_raised_usd_e2`  | `u64` | Yes      | USD value must be passed as a 2-decimal fixed-point integer (USD e2).                  | Expected `total_raised_usd_e2` from the bonding-curve account immediately before execution.                     |
+| `expected_total_sold_tokens_e6` | `u64` | Yes      | Token amount must be passed as a 6-decimal fixed-point integer (token e6).             | Expected `total_sold_tokens_e6` from the bonding-curve account immediately before execution.                    |
+| `slippage_bps`                  | `u16` | Yes      | Percentage must be converted to basis points before being passed. `100% = 10,000` bps. | Maximum permitted increase in the bonding curve's average price between the expected state and execution state. |
 
-The `expected_total_raised_usd_e2` and `expected_total_sold_tokens_e6` values are state snapshots used by the buy instruction slippage check logic. Read the current **`bonding_curve_pda`: seeds `[b"bonding-curve", mint]`** account immediately before constructing the transaction.
+The `expected_total_raised_usd_e2` and `expected_total_sold_tokens_e6` values are state snapshots used by the buy instruction's slippage check logic. Read the current **`bonding_curve_pda`** account, derived with seeds `[b"bonding-curve", mint]`, immediately before constructing the transaction.
 
-### Argument units
+### TypeScript Example
+
+```ts
+import { AnchorProvider, Program, BN } from "@coral-xyz/anchor";
+import { PublicKey } from "@solana/web3.js";
+
+// Your configured Anchor provider and RugFreePump program instance
+const provider = new AnchorProvider(connection, wallet, {});
+const program = new Program(IDL, provider);
+
+const mint = new PublicKey("TOKEN_MINT_ADDRESS");
+
+// Derive your bonding curve PDA using your project's derivation helper
+const [bondingCurvePda] = deriveBondingCurvePda(mint);
+
+// Fetch the current bonding curve state
+const bondingCurveAccount = await program.account.bondingCurvePda.fetch(
+  bondingCurvePda
+);
+
+// Extract the required protection states for the instruction arguments
+const expectedTotalRaisedUsdE2 = bondingCurveAccount.totalRaisedUsdE2;
+const expectedTotalSoldTokensE6 = bondingCurveAccount.totalSoldTokensE6;
+
+// Pass these fetched values along with your slippage configuration
+const txInstruction = await program.methods
+  .buy(
+    lamportsAmount, 
+    expectedTotalRaisedUsdE2, 
+    expectedTotalSoldTokensE6, 
+    slippageBps
+  )
+  .accounts({
+    buyer: buyerWallet,
+    mint,
+    bondingCurvePda,
+    // ... complete remaining required accounts mapping
+  })
+  .instruction();
+```
+
+### Argument value formats
+
+Instruction arguments use integer fixed-point representations rather than decimal floating-point values:
 
 ```text
-1 SOL   = 1,000,000,000 lamports
-1 token = 1,000,000 token units
+SOL:
+1 SOL = 1,000,000,000 lamports
+
+USD:
 $1.00   = 100 USD e2
 $123.45 = 12,345 USD e2
-100%    = 10,000 bps
+
+Token:
+1 token = 1,000,000 token units
+1.000000 token = 1,000,000 token e6
+
+Percentage:
+1%   = 100 bps
+100% = 10,000 bps
+```
+
+For example:
+
+```text
+1.5 SOL     → 1,500,000,000 lamports
+$16,150.00  → 1,615,000 USD e2
+250.123456 tokens → 250,123,456 token e6
+2%          → 200 bps
 ```
 
 ## Instruction Accounts
