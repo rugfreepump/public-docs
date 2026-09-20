@@ -28,7 +28,7 @@ pub fn buy(
 | `expected_total_sold_tokens_e6` | `u64` | Token e6     | Expected `total_sold_tokens_e6` from the bonding-curve account immediately before execution.                    |
 | `slippage_bps`                  | `u16` | Basis points | Maximum permitted increase in the bonding curve's average price between the expected state and execution state. |
 
-The `expected_*` values are state snapshots used by the on-chain slippage check. Read the current bonding-curve account immediately before constructing the transaction.
+The `expected_total_raised_usd_e2` and `expected_total_sold_tokens_e6` values are state snapshots used by the buy instruction slippage check logic. Read the current **`bonding_curve_pda`: seeds `[b"bonding-curve", mint]`** account immediately before constructing the transaction.
 
 ### Argument units
 
