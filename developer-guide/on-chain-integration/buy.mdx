@@ -18,14 +18,15 @@ pub fn buy(
     slippage_bps: u16,
 ) -> Result<()>
 ```
+
 ## Instruction Data
 
-| Argument | Type | Required | Required format | Description |
-|---|---|---|---|---|
-| `lamports_amount` | `u64` | Yes | Unsigned 64-bit integer representing the SOL amount in lamports (`1 SOL = 1,000,000,000 lamports`). | Gross SOL amount submitted by the buyer before the buy fee. The resulting net USD-equivalent contribution must satisfy the configured minimum purchase amount and must not exceed the remaining sale cap. |
-| `expected_total_raised_usd_e2` | `u64` | Yes | Unsigned integer representing a USD value with 2 decimal places (`$1.00 = 100 units`, `$123.45 = 12,345 units`). | The expected `total_raised_usd_e2` value fetched off-chain from the bonding-curve PDA account during transaction construction. It is used as a variable to calculate the expected average bonding-curve price for slippage protection. |
-| `expected_total_sold_tokens_e6` | `u64` | Yes | Unsigned integer representing a token amount with 6 decimal places (`1 token = 1,000,000 token units`). | The expected `total_sold_tokens_e6` value fetched off-chain from the bonding-curve PDA account during transaction construction. It is used as a variable to calculate the expected average bonding-curve price for slippage protection. |
-| `slippage_bps` | `u16` | Yes | Unsigned integer in basis points (`1% = 100 bps`, `100% = 10,000 bps`). | The maximum permitted increase in the bonding curve's average price, measured between the expected average price calculated from the off-chain supplied values and the current average price calculated by the `buy` instruction during execution. |
+| Argument                        | Type  | Required | Required format                                                                                                  | Description                                                                                                                                                                                                                                        |
+| ------------------------------- | ----- | -------- | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `lamports_amount`               | `u64` | Yes      | Unsigned 64-bit integer representing the SOL amount in lamports (`1 SOL = 1,000,000,000 lamports`).              | Gross SOL amount submitted by the buyer before the buy fee. The resulting net USD-equivalent contribution must satisfy the configured minimum purchase amount and must not exceed the remaining sale cap.                                          |
+| `expected_total_raised_usd_e2`  | `u64` | Yes      | Unsigned integer representing a USD value with 2 decimal places (`$1.00 = 100 units`, `$123.45 = 12,345 units`). | The expected `total_raised_usd_e2` value fetched off-chain from the bonding-curve PDA account during transaction construction. It is used as a variable to calculate the expected average bonding-curve price for slippage protection.             |
+| `expected_total_sold_tokens_e6` | `u64` | Yes      | Unsigned integer representing a token amount with 6 decimal places (`1 token = 1,000,000 token units`).          | The expected `total_sold_tokens_e6` value fetched off-chain from the bonding-curve PDA account during transaction construction. It is used as a variable to calculate the expected average bonding-curve price for slippage protection.            |
+| `slippage_bps`                  | `u16` | Yes      | Unsigned integer in basis points (`1% = 100 bps`, `100% = 10,000 bps`).                                          | The maximum permitted increase in the bonding curve's average price, measured between the expected average price calculated from the off-chain supplied values and the current average price calculated by the `buy` instruction during execution. |
 
 The `expected_total_raised_usd_e2` and `expected_total_sold_tokens_e6` values are state snapshots used by the `buy` instruction's slippage check logic. Read the current **`bonding_curve_pda`** account, derived with seeds `[b"bonding-curve", mint]`, immediately before constructing the transaction. These values, fetched from the bonding-curve PDA account, are already stored in their required formats and can be passed directly without unit conversion.
 
@@ -74,26 +75,27 @@ const txInstruction = await program.methods
   })
   .instruction();
 ```
+
 ## Instruction Accounts
 
 The following accounts must be supplied to `buy` in the order defined by the instruction.
 
-| Account | Address / derivation | Required state / role |
-|---|---|---|
-| `buyer` | Buyer's wallet address. | Must sign the transaction and pays for required account initialization. |
-| `mint` | Address of the token being purchased. | Must match `bonding_curve_pda.token_mint_address`. |
-| `admin_states_pda` | RugFreePump PDA: seeds `[b"admin-states"]`. | Must exist. |
-| `global_states_pda` | RugFreePump PDA: seeds `[b"global-states"]`. | Must exist. |
-| `bonding_curve_pda` | RugFreePump PDA: seeds `[b"bonding-curve", mint]`. | Data account that stores and controls the bonding-curve sale state for `mint`. |
-| `bonding_curve_vault` | RugFreePump PDA: seeds `[b"bonding-curve-vault", mint]`. | Must exist and hold the sale's SOL. |
-| `associated_bonding_curve_ata` | ATA for `mint`, owned by `bonding_curve_vault`. | Must exist and contain sufficient tokens for the purchase. |
-| `buyer_accumulation_pda` | RugFreePump PDA: seeds `[b"buyer-accumulation", bonding_curve_pda, buyer]`. | Created with `init_if_needed` when missing; `buyer` pays the required rent. |
-| `buyer_associated_token_account` | ATA for `mint`, owned by `buyer`. | Created with `init_if_needed` when missing; `buyer` pays the required rent. |
-| `platform_fee_vault` | RugFreePump PDA: seeds `[b"platform-fee-vault"]`. | Must exist and receives the buy fee. |
-| `sol_usd_price_feed` | Any valid Pyth `PriceUpdateV2` account for the required SOL/USD feed. Currently used account: `7UVimffxr9ow1uXYxsr4LHAcV58mLzhmwaeKvJ1pjLiE`. | Must contain a valid, accepted price update for the required SOL/USD feed. |
-| `token_program` | SPL Token Program: `TokenkegQfeZyiNwAJYbNbGKPFXCWuBvf9Ss623VQ5DA`. | Required program account. |
-| `associated_token_program` | Associated Token Program: `ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL`. | Required program account. |
-| `system_program` | Solana System Program: `11111111111111111111111111111111`. | Required program account. |
+| Account                          | Address / derivation                                                                                                                          | Required state / role                                                          |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `buyer`                          | Buyer's wallet address.                                                                                                                       | Must sign the transaction and pays for required account initialization.        |
+| `mint`                           | Address of the token being purchased.                                                                                                         | Must match `bonding_curve_pda.token_mint_address`.                             |
+| `admin_states_pda`               | RugFreePump PDA: seeds `[b"admin-states"]`.                                                                                                   | Must exist.                                                                    |
+| `global_states_pda`              | RugFreePump PDA: seeds `[b"global-states"]`.                                                                                                  | Must exist.                                                                    |
+| `bonding_curve_pda`              | RugFreePump PDA: seeds `[b"bonding-curve", mint]`.                                                                                            | Data account that stores and controls the bonding-curve sale state for `mint`. |
+| `bonding_curve_vault`            | RugFreePump PDA: seeds `[b"bonding-curve-vault", mint]`.                                                                                      | Must exist and hold the sale's SOL.                                            |
+| `associated_bonding_curve_ata`   | ATA for `mint`, owned by `bonding_curve_vault`.                                                                                               | Must exist and contain sufficient tokens for the purchase.                     |
+| `buyer_accumulation_pda`         | RugFreePump PDA: seeds `[b"buyer-accumulation", bonding_curve_pda, buyer]`.                                                                   | Created with `init_if_needed` when missing; `buyer` pays the required rent.    |
+| `buyer_associated_token_account` | ATA for `mint`, owned by `buyer`.                                                                                                             | Created with `init_if_needed` when missing; `buyer` pays the required rent.    |
+| `platform_fee_vault`             | RugFreePump PDA: seeds `[b"platform-fee-vault"]`.                                                                                             | Must exist and receives the buy fee.                                           |
+| `sol_usd_price_feed`             | Any valid Pyth `PriceUpdateV2` account for the required SOL/USD feed. RugFreePump uses: `7UVimffxr9ow1uXYxsr4LHAcV58mLzhmwaeKvJ1pjLiE`.       | Must contain a valid, accepted price update for the required SOL/USD feed.     |
+| `token_program`                  | SPL Token Program: `TokenkegQfeZyiNwAJYbNbGKPFXCWuBvf9Ss623VQ5DA`.                                                                            | Required program account.                                                      |
+| `associated_token_program`       | Associated Token Program: `ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL`.                                                                     | Required program account.                                                      |
+| `system_program`                 | Solana System Program: `11111111111111111111111111111111`.                                                                                    | Required program account.                                                      |
 
 `buyer_accumulation_pda` and `buyer_associated_token_account` are the only accounts created by `buy` when missing.
 
