@@ -95,7 +95,7 @@ The following accounts must be supplied to `buy` in the order defined by the ins
 | `buyer_associated_token_account` | ATA for `mint`, owned by `buyer`                                           | Created with `init_if_needed` when missing; `buyer` pays the required rent.                      |
 | `platform_fee_vault`             | RugFreePump PDA: seeds `[b"platform-fee-vault"]`                           | Must exist and receive the buy fee.                                                              |
 | `sol_usd_price_feed`             | RugFreePump uses: `7UVimffxr9ow1uXYxsr4LHAcV58mLzhmwaeKvJ1pjLiE`           | Must exist and be a valid Pyth `PriceUpdateV2` account for the required SOL/USD feed.            |
-| `token_program`                  | SPL Token Program: `TokenkegQfeZyiNwAJYbNbGKPFXCWuBvf9Ss623VQ5DA`          | Required Solana program account.                                                                 |
+| `token_program`                  | Token Program: `TokenkegQfeZyiNwAJYbNbGKPFXCWuBvf9Ss623VQ5DA`              | Required Solana program account.                                                                 |
 | `associated_token_program`       | Associated Token Program: `ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL`   | Required Solana program account.                                                                 |
 | `system_program`                 | System Program: `11111111111111111111111111111111`                         | Required Solana program account.                                                                 |
 
