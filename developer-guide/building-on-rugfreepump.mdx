@@ -3,97 +3,78 @@ title: "Building on RugFreePump"
 description: "Interact with the RugFreePump on-chain program using its public Solana interface to build custom applications or automations."
 ---
 
-RugFreePump exposes its protocol through a Solana program and its public Anchor interface. Developers can integrate directly with the on-chain program using standard Solana tooling.
+RugFreePump exposes its protocol through a native Solana program and its public Anchor interface. Developers can integrate directly with the on-chain program using standard Solana tooling.
 
-The RugFreePump web application and backend infrastructure are not required for direct on-chain integration.
+The RugFreePump web application and backend infrastructure are entirely decoupled from the core protocol and are not required for direct on-chain integration.
 
-## Development environments
+---
 
-RugFreePump provides separate Solana deployments for development and production.
+## Development Environments
 
-Use **Devnet** for development, integration testing, transaction construction, and program interaction testing.
+RugFreePump provides separate Solana deployments for staging and production. Use the program ID that matches your target Solana cluster:
 
-Use **Mainnet** for production integrations and real user transactions.
+* **Devnet:** For development, integration testing, transaction construction validation, and isolated program interaction.
+* **Mainnet:** For production integrations and live user transactions.
 
-Use the program ID corresponding to the target Solana cluster.
+| Deployment Cluster | Solana Cluster RPC Target | RugFreePump Program ID                         |
+| :----------------- | :------------------------ | :--------------------------------------------- |
+| **Devnet**         | `devnet`                  | `9hpBPEiywp7FPAq5uP253eAZzdJ1Cpd36L5RAYuc9xSw` |
+| **Mainnet**        | `mainnet-beta`            | `9hpBPEiywp7FPAq5uP253eAZzdJ1Cpd36L5RAYuc9xSw` |
 
-### Devnet
+---
 
-| Configuration              | Value                                          |
-| -------------------------- | ---------------------------------------------- |
-| **Solana cluster**         | `devnet`                                       |
-| **RugFreePump program ID** | `9hpBPEiywp7FPAq5uP253eAZzdJ1Cpd36L5RAYuc9xSw` |
+## Public Integration Surface
 
-### Mainnet
+The complete deployed program interface remains available through the Anchor IDL. Currently, the Developer Guide provides an exhaustive integration reference for the following primary entry point:
 
-| Configuration              | Value                                          |
-| -------------------------- | ---------------------------------------------- |
-| **Solana cluster**         | `mainnet-beta`                                 |
-| **RugFreePump program ID** | `9hpBPEiywp7FPAq5uP253eAZzdJ1Cpd36L5RAYuc9xSw` |
+| Instruction | Entry Point Type     | Functional Purpose                                                   |
+| :---------- | :------------------- | :------------------------------------------------------------------- |
+| `buy`       | Anchor Public Method | Purchases tokens from an active bonding-curve sale using native SOL. |
 
-For production integrations, use the Mainnet program ID with the `mainnet-beta` cluster.
+The `buy` instruction can be invoked directly by off-chain Solana clients (e.g., TypeScript SDKs) or by external on-chain Solana programs through Cross-Program Invocation (CPI), subject to the account, signer, authority, and state constraints enforced by the runtime.
 
-## Public integration surface
-
-The Developer Guide currently provides a detailed integration reference for:
-
-| Instruction | Purpose                                                       |
-| ----------- | ------------------------------------------------------------- |
-| `buy`       | Purchases tokens from an active bonding-curve sale using SOL. |
-
-The `buy` instruction is an Anchor program entry point and can be invoked directly by Solana clients or by other external Solana programs through CPI, subject to the account, signer, authority, and state requirements enforced by the instruction.
-
-The complete deployed program interface remains available through the Anchor IDL.
-
-## Protocol interface
-
-Direct integrations should use the on-chain program interface and the corresponding deployment artifacts.
-
-The primary integration artifacts are:
-
-* RugFreePump program ID
-* Anchor IDL
-* Generated TypeScript types, where applicable
-* Instruction account definitions
-* Instruction arguments
-* Program account state
-* Events emitted by the program
-* Instruction-specific PDA definitions and external accounts
-
-See [Anchor IDL & Types](./anchor-idl-and-types/usage) for the available IDL and generated types.
+---
 
 ## Protocol Accounting Units
 
-RugFreePump uses defined integer representations for protocol accounting.
+RugFreePump enforces deterministic integer-scaled values for all on-chain accounting to prevent floating-point precision loss.
 
-| Metric / Asset        | Protocol Representation | Smallest Base Unit | Conversion Rate                        |
-| --------------------- | ----------------------- | ------------------ | -------------------------------------- |
-| SOL                   | Lamports                | Lamport            | `1 SOL = 1,000,000,000 lamports (10⁹)` |
-| SPL Token             | 6-decimal fixed-point   | Base unit          | `1 token = 1,000,000 base units (10⁶)` |
-| USD-equivalent values | 2-decimal fixed-point   | Unit               | `$1.00 = 100 units (10²)`              |
-| Percentage            | Basis points            | Basis point (bps)  | `100% = 10,000 bps (1% = 100 bps)`     |
-| Time                  | Unix timestamp          | Second             | `1 second = 1 (Unix timestamp)`        |
+| Metric / Asset   | Protocol Representation | Smallest Base Unit | Conversion Rate & Scale                   |
+| :--------------- | :---------------------- | :----------------- | :---------------------------------------- |
+| **SOL**          | 9-decimal fixed-point   | Lamport            | `1 SOL = 1,000,000,000 lamports` (`10⁹`)  |
+| **SPL Token**    | 6-decimal fixed-point   | Base unit          | `1 token = 1,000,000 base units` (`10⁶`)  |
+| **Fiat (USD)**   | 2-decimal fixed-point   | Unit / Cent        | `$1.00 = 100 units` (`10²`)               |
+| **Rates & Fees** | Integer basis points    | Basis point (bps)  | `100% = 10,000 bps` (`1% = 100 bps`)      |
+| **Time**         | 64-bit Integer (`i64`)  | Second             | `1 second = 1` (Raw Unix epoch timestamp) |
 
-## On-chain state
+---
 
-The RugFreePump program and its Solana accounts are the authoritative source of protocol state.
+## On-Chain State & Integration Artifacts
 
-Off-chain applications may provide interfaces, indexing, caching, or other supporting functionality, but those services are not required for direct protocol interaction.
+The RugFreePump program state and its associated Solana accounts serve as the sole authoritative source of truth. Off-chain applications may provide indexing, caching, or data aggregation, but these layers are entirely optional.
 
-The [Buy](./on-chain-integration/buy) reference documents the accounts, arguments, state requirements, external accounts, and transaction requirements needed to construct the instruction.
+To implement a direct integration, your client or program will consume the following primary artifacts:
 
-## CPI compatibility
+* RugFreePump Program ID
+* Anchor IDL & generated TypeScript types
+* Instruction account layouts & argument definitions
+* Program Derived Address (PDA) seeds and external account dependencies
+* Program-emitted Events
 
-RugFreePump's public on-chain instructions are Anchor program entry points and can be invoked by other Solana programs through cross-program invocation (CPI).
+See the [Anchor IDL & Types](./anchor-idl-and-types/usage) reference for complete artifact downloads. For granular transaction construction data, see the [Buy](./on-chain-integration/buy) documentation.
 
-A CPI caller must satisfy the same validation requirements enforced by the target instruction.
+---
 
-RugFreePump does not currently provide a maintained CPI wrapper or Rust integration crate.
+## ⛓ CPI Compatibility
 
-A dedicated CPI wrapper and Rust crate are planned as future developer tooling.
+All public entry points are fully compatible with Cross-Program Invocation (CPI). On-chain callers must satisfy the identical structural validation, signer, and state requirements enforced against standard client transactions.
 
-## Next steps
+⚠️ **Note:** RugFreePump does not currently distribute a standalone CPI wrapper or Rust integration crate. A dedicated CPI utility crate is planned for a future developer tooling release. In the interim, programs should generate CPI helpers directly via the Anchor IDL.
 
-* [Buy](./on-chain-integration/buy)
-* [Anchor IDL & Types](./anchor-idl-and-types/usage)
-* [Developer limitations](./developer-limitations)
+---
+
+## Next Steps
+
+* [Integrate the Buy Instruction](./on-chain-integration/buy)
+* [Download Anchor IDL & Types](./anchor-idl-and-types/usage)
+* [Review Developer Limitations](./developer-limitations)
