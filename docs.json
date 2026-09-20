@@ -81,8 +81,7 @@
           {
             "group": "On-Chain Integration",
             "pages": [
-              "developer-guide/on-chain-integration/buy",
-              "developer-guide/on-chain-integration/withdraw"
+              "developer-guide/on-chain-integration/buy"
             ]
           },
           {
