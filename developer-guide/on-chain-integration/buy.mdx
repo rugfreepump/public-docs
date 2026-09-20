@@ -28,7 +28,9 @@ pub fn buy(
 | `expected_total_sold_tokens_e6` | `u64` | Yes      | Unsigned integer representing a token amount with 6 decimal places (`1 token = 1,000,000 token units`)           | The expected `total_sold_tokens_e6` value fetched off-chain from the bonding-curve PDA account during transaction construction. It is used as a variable to calculate the expected average bonding-curve price for slippage protection                |
 | `slippage_bps`                  | `u16` | Yes      | Unsigned integer in basis points (`1% = 100 bps`, `100% = 10,000 bps`)                                           | The maximum permitted increase in the bonding curve's average price, measured between the expected average price calculated from the off-chain supplied values and the current average price calculated by the `buy` instruction during execution |
 
-The `expected_total_raised_usd_e2` and `expected_total_sold_tokens_e6` values are state snapshots used by the `buy` instruction's slippage check logic. Read the current **`bonding_curve_pda`** account, derived with seeds `[b"bonding-curve", mint]`, immediately before constructing the transaction. These values, fetched from the bonding-curve PDA account, are already stored in their required formats and can be passed directly without unit conversion.
+The `expected_total_raised_usd_e2` and `expected_total_sold_tokens_e6` values are state snapshots used by the `buy` instruction's slippage check logic. Read the current **`bonding_curve_pda`** account, derived with seeds `[b"bonding-curve", mint]`, immediately before constructing the transaction. 
+
+These values, fetched from the bonding-curve PDA account, are already stored in their required formats and can be passed directly without unit conversion.
 
 ### TypeScript Example
 
