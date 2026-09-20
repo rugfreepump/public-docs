@@ -5,9 +5,9 @@ description: "Integrate with the protocol's buy instruction to purchase tokens f
 
 The `buy` instruction purchases tokens from an active RugFreePump bonding-curve sale using SOL.
 
-The instruction accepts a gross SOL amount, deducts the configured buy fee, converts the remaining SOL to USD-equivalent value using the validated Pyth SOL/USD price, and transfers the calculated token amount to the buyer.
+The instruction accepts a gross SOL amount, deducts the configured protocol fee, denominates the remaining SOL contribution in USD-equivalent terms using a validated Pyth SOL/USD price feed, calculates the corresponding token amount using the bonding curve pricing model, and transfers the tokens to the buyer.
 
-## Instruction
+### Instruction Signature
 
 ```rust
 pub fn buy(
@@ -40,7 +40,7 @@ $123.45 = 12,345 USD e2
 100%    = 10,000 bps
 ```
 
-## Accounts
+## Instruction Accounts
 
 The following accounts must be supplied to `buy` in the order defined by the instruction.
 
