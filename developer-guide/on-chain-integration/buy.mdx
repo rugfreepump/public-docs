@@ -28,6 +28,14 @@ pub fn buy(
 | `expected_total_sold_tokens_e6` | `u64` | Yes      | Token amount must be passed as a 6-decimal fixed-point integer.                        | Expected `total_sold_tokens_e6` from the bonding-curve account immediately before execution.                    |
 | `slippage_bps`                  | `u16` | Yes      | Percentage must be converted to basis points before being passed.                      | Maximum permitted increase in the bonding curve's average price between the expected state and execution state. |
 
+
+| Argument | Type | Required | Required format | Description |
+|---|---|---|---|---|
+| lamports_amount | u64 | Yes | Unsigned 64-bit integer ($1 \text{ SOL} = 10^9 \text{ lamports}$). | Gross SOL amount submitted by the buyer before fees. Must be between the allowed minimum and maximum constraints ($Min \le \text{amount} \le Max$). |
+| expected_total_raised_usd_e2 | u64 | Yes | Fixed-point integer with 2 decimal places ($\text{value} \times 10^2$). | The exact total USD volume raised expected in the bonding curve account state immediately prior to transaction execution. Used for slippage protection. |
+| expected_total_sold_tokens_e6 | u64 | Yes | Fixed-point integer with 6 decimal places ($\text{value} \times 10^6$). | The exact total token volume sold expected in the bonding curve account state immediately prior to transaction execution. Used for slippage protection. |
+| slippage_bps | u16 | Yes | Basis points where $1\% = 100 \text{ bps}$ (Max value: 10000 for 100%). | Maximum allowed percentage increase in the bonding curve's average token price between the expected state and the actual execution state. |
+
 The `expected_total_raised_usd_e2` and `expected_total_sold_tokens_e6` values are state snapshots used by the buy instruction's slippage check logic. Read the current **`bonding_curve_pda`** account, derived with seeds `[b"bonding-curve", mint]`, immediately before constructing the transaction.
 
 ### TypeScript Example
