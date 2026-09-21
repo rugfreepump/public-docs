@@ -101,6 +101,8 @@ The following accounts must be supplied to `buy` in the order defined by the ins
 
 ## TypeScript example of required PDAs & ATAs derivation
 
+### Program Derived Addresses (PDAs)
+
 ```ts
 const [adminStatesPda] = PublicKey.findProgramAddressSync(
   [Buffer.from("admin-states")],
@@ -141,9 +143,9 @@ const [platformFeeVault] = PublicKey.findProgramAddressSync(
   [Buffer.from("platform-fee-vault")],
   PROGRAM_ID,
 );
-```
 
-```ts
+### associated token accounts(ATAs)
+
 const associatedBondingCurveAta = getAssociatedTokenAddressSync(
   mint,
   bondingCurveVault,
