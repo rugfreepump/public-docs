@@ -7,6 +7,8 @@ The `buy` instruction purchases tokens from an active RugFreePump bonding-curve 
 
 The instruction accepts a gross SOL amount, deducts the configured protocol fee, denominates the remaining SOL contribution in USD-equivalent terms using a validated Pyth SOL/USD price feed, calculates the corresponding token amount using the bonding curve pricing model, and transfers the tokens to the buyer.
 
+## Execution Requirements
+
 ### Sale Status
 
 Before constructing a `buy` transaction, read the following fields from the required accounts and verify that the sale is eligible for purchase:
@@ -25,30 +27,30 @@ Because these values can change between transaction construction and execution, 
 
 ### Sale Cap and Finalization Buffer
 
-The bonding-curve token sale uses **fixed-point USD-equivalent values with 2 decimal places** for its sale cap and finalization threshold.
+The bonding-curve token sale uses **fixed-point USD-equivalent values with 2 decimal places** for its sale cap and finalization threshold. Buyers contribute **SOL**, and the value of their net SOL contribution is measured against these USD-denominated limits using the validated SOL/USD price.
 
-| Constant                          | Raw Value   | Human-Readable | Purpose                                                 |
-| :-------------------------------- | :---------- | :------------- | :------------------------------------------------------ |
-| `MAX_USD_RAISE_CAP_IN_USD_E2`     | `1,615,000` | $16,150.00     | Maximum USD-equivalent value a sale can raise.          |
-| `SALE_FINALIZATION_BUFFER_USD_E2` | `5,000`     | $50.00         | Remaining-capacity threshold used to finalize the sale. |
+| Constant                          | Raw Value   | Human-Readable | Purpose                                                               |
+| :-------------------------------- | :---------- | :------------- | :-------------------------------------------------------------------- |
+| `MAX_USD_RAISE_CAP_IN_USD_E2`     | `1,615,000` | $16,150.00     | Maximum USD-equivalent value of SOL that the sale can raise.          |
+| `SALE_FINALIZATION_BUFFER_USD_E2` | `5,000`     | $50.00         | Remaining USD-equivalent value of SOL at which the sale is finalized. |
 
-* **Contribution Valuation:** Purchases are made in **SOL**. The buyer's net SOL contribution is valued in USD-equivalent terms using the validated SOL/USD oracle price.
-* **Capacity Constraint:** A buyer's net USD-equivalent contribution must not exceed the sale's remaining USD-equivalent capacity.
-* **Auto-Finalization:** After a successful purchase, the sale is finalized when the remaining USD-equivalent capacity falls below `SALE_FINALIZATION_BUFFER_USD_E2`.
+* **Contribution Valuation:** After the buy fee is deducted, the buyer's remaining SOL contribution is valued using the validated SOL/USD price.
+* **Capacity Constraint:** The USD-equivalent value of the buyer's net SOL contribution must not exceed the sale's remaining USD-equivalent SOL capacity.
+* **Auto-Finalization:** After a successful purchase, the sale is finalized when the remaining USD-equivalent SOL capacity falls below `SALE_FINALIZATION_BUFFER_USD_E2`.
 
 The current sale total used for the capacity check is `bonding_curve_pda.total_raised_usd_e2`.
 
 ### Minimum and Maximum Purchase Limits
 
-* **Minimum Purchase:** `MIN_BUY_AMOUNT_IN_USD_E2 = 100`, representing $1.00. The minimum is evaluated against the buyer's **net USD-equivalent contribution after the buy fee**.
-* **Maximum Purchase:** There is no separate hard-coded per-purchase maximum. The maximum permitted SOL amount is constrained by the sale's **remaining USD-equivalent capacity**.
-* **Dynamic SOL Limits:** The allowable SOL purchase amount depends on the current SOL/USD oracle price, configured buy fee, and remaining sale capacity.
+* **Minimum Purchase:** `MIN_BUY_AMOUNT_IN_USD_E2 = 100`, representing $1.00. After the buy fee is deducted, the buyer's remaining SOL contribution must have a USD-equivalent value of at least $1.00.
+* **Maximum Purchase:** There is no separate hard-coded per-purchase maximum. The maximum permitted SOL amount is constrained by the sale's **remaining USD-equivalent SOL capacity**, after accounting for the buy fee and the current SOL/USD price.
+* **Dynamic SOL Limits:** The maximum valid SOL purchase amount changes with the sale's remaining USD-equivalent SOL capacity, the configured buy fee, and the current SOL/USD price.
 
 ### Buy Fee
 
 The `lamports_amount` argument represents the **gross SOL purchase amount**.
 
-The configured buy fee is deducted from the gross amount before calculating the buyer's net SOL contribution used for the minimum purchase and sale-cap checks.
+The configured buy fee is deducted from the gross SOL amount before the remaining SOL contribution is valued using the SOL/USD price and checked against the minimum purchase and remaining sale capacity.
 
 The current initialized buy fee is **100 bps (1%)** and is read from `global_states_pda.buy_fee_bps`.
 
@@ -60,7 +62,7 @@ The buyer must have sufficient SOL to cover the submitted gross `lamports_amount
 
 If `buyer_accumulation_pda` or `buyer_associated_token_account` does not already exist, the buyer also pays the required account creation rent.
 
-The transaction must therefore provide enough SOL for both the purchase and any required account initialization.
+The transaction must therefore provide enough SOL for both the gross purchase amount and any required account initialization.
 
 ### Slippage Protection
 
