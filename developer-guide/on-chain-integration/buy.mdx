@@ -31,8 +31,8 @@ The bonding-curve sale uses **fixed-point USD-equivalent values with 2 decimal p
 
 | Constant                          | Raw Value   | Human-Readable | Purpose                                                                    |
 | :-------------------------------- | :---------- | :------------- | :------------------------------------------------------------------------- |
-| `MAX_USD_RAISE_CAP_IN_USD_E2`     | `1,615,000` | $16,150.00     | Maximum USD-equivalent value that can be raised through SOL contributions. |
-| `SALE_FINALIZATION_BUFFER_USD_E2` | `5,000`     | $50.00         | Remaining USD-equivalent sale capacity at which the sale is finalized.     |
+| `MAX_USD_RAISE_CAP_IN_USD_E2`     | `1,615,000` | 16,150.00 USD  | Maximum USD-equivalent value that can be raised through SOL contributions. |
+| `SALE_FINALIZATION_BUFFER_USD_E2` | `5,000`     | 50.00 USD      | Remaining USD-equivalent sale capacity at which the sale is finalized.     |
 
 * **Contribution Valuation:** The buy fee is deducted from the gross SOL amount first. The remaining SOL amount is then valued in USD-equivalent terms using the validated SOL/USD price.
 * **Capacity Constraint:** The USD-equivalent value of the SOL amount remaining after the buy fee must not exceed the sale's remaining USD-equivalent capacity.
@@ -42,7 +42,7 @@ The current sale total used for the capacity check is `bonding_curve_pda.total_r
 
 ### Minimum and Maximum Purchase Limits
 
-* **Minimum Purchase:** `MIN_BUY_AMOUNT_IN_USD_E2 = 100`, representing $1.00. After the buy fee is deducted, the remaining SOL amount must have a USD-equivalent value of at least $1.00.
+* **Minimum Purchase:** `MIN_BUY_AMOUNT_IN_USD_E2 = 100`, representing 1.00 USD. After the buy fee is deducted, the remaining SOL amount must have a USD-equivalent value of at least 1.00 USD.
 * **Maximum Purchase:** There is no separate hard-coded per-purchase maximum. The maximum permitted SOL amount is constrained by the sale's **remaining USD-equivalent capacity**, after accounting for the buy fee and the current SOL/USD price.
 * **Dynamic SOL Limits:** The maximum valid SOL purchase amount changes with the sale's remaining USD-equivalent capacity, the configured buy fee, and the current SOL/USD price.
 
@@ -98,41 +98,9 @@ Before the price is used for the purchase calculation, the program validates:
 * The reported price is positive.
 * The oracle confidence interval does not exceed **2% of the reported price**.
 
-The validated price is scaled to a **fixed-point value with 2 decimal places** before being used by the purchase calculation.
+The validated price is scaled to a **fixed-point value with 2 decimal places** before being used in the purchase calculation.
 
-For example: **$123.45 → `12,345`**
-
-If any of these validations fail, the `buy` transaction is rejected.
-
-#### Pyth SOL/USD Feed ID
-
-```text
-0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d
-```
-
-#### Current `PriceUpdateV2` Account
-
-```text
-7UVimffxr9ow1uXYxsr4LHAcV58mLzhmwaeKvJ1pjLiE
-```
-
-This is the account currently used by RugFreePump, but it is not a fixed account required by the program. Developers may supply another valid Pyth `PriceUpdateV2` account containing an acceptable update for the same SOL/USD feed, provided it satisfies the program's validation requirements.
-
-### SOL/USD Price Feed
-
-The `sol_usd_price_feed` account must contain a valid Pyth `PriceUpdateV2` account for the SOL/USD price feed.
-
-Before the price is used for the purchase calculation, the program validates:
-
-* The Pyth update has `VerificationLevel::Full`.
-* The update corresponds to the **Pyth SOL/USD feed ID** configured in the RugFreePump program.
-* The price update is no older than **60 seconds**.
-* The reported price is positive.
-* The oracle confidence interval does not exceed **2% of the reported price**.
-
-The validated price is scaled to a **fixed-point value with 2 decimal places** before being used by the purchase calculation.
-
-For example: **$123.45 → `12,345`**
+For example: **123.45 USD → `12,345`**
 
 If any of these validations fail, the `buy` transaction is rejected.
 
@@ -143,8 +111,6 @@ If any of these validations fail, the `buy` transaction is rejected.
 ```
 
 #### Current `PriceUpdateV2` Account
-
-The current RugFreePump deployment uses:
 
 ```text
 7UVimffxr9ow1uXYxsr4LHAcV58mLzhmwaeKvJ1pjLiE
@@ -266,12 +232,12 @@ pub struct Buy<'info> {
 ```
 ## Instruction Data
 
-| Argument                        | Type  | Required | Required format                                                                                                  | Description                                                                                                                                                                                                                                        |
-| ------------------------------- | ----- | -------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `lamports_amount`               | `u64` | Yes      | Unsigned 64-bit integer representing the SOL amount in lamports (`1 SOL = 1,000,000,000 lamports`)               | Gross SOL amount submitted by the buyer before the buy fee. The resulting net USD-equivalent contribution must satisfy the configured minimum purchase amount and must not exceed the remaining sale cap                                            |
-| `expected_total_raised_usd_e2`  | `u64` | Yes      | Unsigned integer representing a USD value with 2 decimal places (`$1.00 = 100 units`, `$123.45 = 12,345 units`)  | The expected `total_raised_usd_e2` value fetched off-chain from the bonding-curve PDA account during transaction construction. It is used as a variable to calculate the expected average bonding-curve price for slippage protection                |
-| `expected_total_sold_tokens_e6` | `u64` | Yes      | Unsigned integer representing a token amount with 6 decimal places (`1 token = 1,000,000 token units`)           | The expected `total_sold_tokens_e6` value fetched off-chain from the bonding-curve PDA account during transaction construction. It is used as a variable to calculate the expected average bonding-curve price for slippage protection                |
-| `slippage_bps`                  | `u16` | Yes      | Unsigned integer in basis points (`1% = 100 bps`, `100% = 10,000 bps`)                                           | The maximum permitted increase in the bonding curve's average price, measured between the expected average price calculated from the off-chain supplied values and the current average price calculated by the `buy` instruction during execution |
+| Argument                        | Type  | Required | Required format                                                                                                        | Description                                                                                                                                                                                                                                        |
+| ------------------------------- | ----- | -------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `lamports_amount`               | `u64` | Yes      | Unsigned 64-bit integer representing the SOL amount in lamports (`1 SOL = 1,000,000,000 lamports`)                     | Gross SOL amount submitted by the buyer before the buy fee. The resulting net USD-equivalent contribution must satisfy the configured minimum purchase amount and must not exceed the remaining sale cap                                            |
+| `expected_total_raised_usd_e2`  | `u64` | Yes      | Unsigned integer representing a USD value with 2 decimal places (`1.00 USD = 100 units`, `123.45 USD = 12,345 units`)  | The expected `total_raised_usd_e2` value fetched off-chain from the bonding-curve PDA account during transaction construction. It is used as a variable to calculate the expected average bonding-curve price for slippage protection                |
+| `expected_total_sold_tokens_e6` | `u64` | Yes      | Unsigned integer representing a token amount with 6 decimal places (`1 token = 1,000,000 token units`)                 | The expected `total_sold_tokens_e6` value fetched off-chain from the bonding-curve PDA account during transaction construction. It is used as a variable to calculate the expected average bonding-curve price for slippage protection                |
+| `slippage_bps`                  | `u16` | Yes      | Unsigned integer in basis points (`1% = 100 bps`, `100% = 10,000 bps`)                                                 | The maximum permitted increase in the bonding curve's average price, measured between the expected average price calculated from the off-chain supplied values and the current average price calculated by the `buy` instruction during execution |
 
 The `expected_total_raised_usd_e2` and `expected_total_sold_tokens_e6` values are state snapshots used by the `buy` instruction's slippage check logic. Read the current **`bonding_curve_pda`** account, derived with seeds `[b"bonding-curve", mint]`, immediately before constructing the transaction. 
 
