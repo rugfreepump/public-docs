@@ -99,63 +99,63 @@ The following accounts must be supplied to `buy` in the order defined by the ins
 | `associated_token_program`       | Associated Token Program: `ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL`   | Required Solana program account                                                                  |
 | `system_program`                 | System Program: `11111111111111111111111111111111`                         | Required Solana program account                                                                  |
 
-## TypeScript example of required PDAs & ATAs Derivation
+## TypeScript example of required PDAs & ATAs derivation
 
 ```ts
 const [adminStatesPda] = PublicKey.findProgramAddressSync(
-    [Buffer.from("admin-states")],
-    PROGRAM_ID,
-  );
+  [Buffer.from("admin-states")],
+  PROGRAM_ID,
+);
 
 const [globalStatesPda] = PublicKey.findProgramAddressSync(
-    [Buffer.from("global-states")],
-    PROGRAM_ID,
-  );
+  [Buffer.from("global-states")],
+  PROGRAM_ID,
+);
 
 const [bondingCurvePda] = PublicKey.findProgramAddressSync(
-    [
-      Buffer.from("bonding-curve"),
-      mint.toBuffer(),
-    ],
-    PROGRAM_ID,
-  );
+  [
+    Buffer.from("bonding-curve"),
+    mint.toBuffer(),
+  ],
+  PROGRAM_ID,
+);
 
 const [bondingCurveVault] = PublicKey.findProgramAddressSync(
-    [
-      Buffer.from("bonding-curve-vault"),
-      mint.toBuffer(),
-    ],
-    PROGRAM_ID,
-  );
+  [
+    Buffer.from("bonding-curve-vault"),
+    mint.toBuffer(),
+  ],
+  PROGRAM_ID,
+);
 
 const [buyerAccumulationPda] = PublicKey.findProgramAddressSync(
-    [
-      Buffer.from("buyer-accumulation"),
-      bondingCurvePda.toBuffer(),
-      buyer.toBuffer(),
-    ],
-    PROGRAM_ID,
-  );
+  [
+    Buffer.from("buyer-accumulation"),
+    bondingCurvePda.toBuffer(),
+    buyer.toBuffer(),
+  ],
+  PROGRAM_ID,
+);
 
 const [platformFeeVault] = PublicKey.findProgramAddressSync(
-    [Buffer.from("platform-fee-vault")],
-    PROGRAM_ID,
-  );
+  [Buffer.from("platform-fee-vault")],
+  PROGRAM_ID,
+);
 ```
 
 ```ts
 const associatedBondingCurveAta = getAssociatedTokenAddressSync(
-    mint,
-    bondingCurveVault,
-    true,
-    TOKEN_PROGRAM_ID,
-    ASSOCIATED_TOKEN_PROGRAM_ID,
-  );
+  mint,
+  bondingCurveVault,
+  true,
+  TOKEN_PROGRAM_ID,
+  ASSOCIATED_TOKEN_PROGRAM_ID,
+);
 
 const buyerAssociatedTokenAccount = getAssociatedTokenAddressSync(
-    mint,
-    buyer,
-  );
+  mint,
+  buyer,
+);
 ```
 
 
