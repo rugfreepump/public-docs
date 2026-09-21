@@ -9,6 +9,22 @@ The instruction accepts a gross SOL amount, deducts the configured protocol fee,
 
 ## Execution Requirements
 
+### Sale Status
+
+Before constructing a `buy` transaction, read the following fields from the required accounts and verify that the sale is eligible for purchase:
+
+| Field                                  | Account             | Required value / condition                       |
+| :------------------------------------- | :------------------ | :----------------------------------------------- |
+| `is_platform_maintenance_mode_enabled` | `admin_states_pda`  | `false`                                          |
+| `is_sale_active`                       | `bonding_curve_pda` | `true`                                           |
+| `is_sale_finalized`                    | `bonding_curve_pda` | `false`                                          |
+| `is_finalized_sale_canceled`           | `bonding_curve_pda` | `false`                                          |
+| `sale_expires_at`                      | `bonding_curve_pda` | Current Unix timestamp must be before this value |
+
+The program also checks `sale_expires_at` during execution. If the current Unix timestamp is greater than or equal to `sale_expires_at`, the program sets `is_sale_active` to `false` and rejects the purchase.
+
+Because these values can change between transaction construction and execution, client-side checks should be treated as **pre-validation only**. The on-chain program performs the authoritative checks when the transaction executes.
+
 ### Sale Cap and Finalization Buffer
 
 The bonding-curve token sale uses **fixed-point USD-equivalent values with 2 decimal places** for its sale cap and finalization threshold.
@@ -22,15 +38,57 @@ The bonding-curve token sale uses **fixed-point USD-equivalent values with 2 dec
 * **Capacity Constraint:** A buyer's net USD-equivalent contribution must not exceed the sale's remaining USD-equivalent capacity.
 * **Auto-Finalization:** After a successful purchase, the sale is finalized when the remaining USD-equivalent capacity falls below `SALE_FINALIZATION_BUFFER_USD_E2`.
 
+The current sale total used for the capacity check is `bonding_curve_pda.total_raised_usd_e2`.
+
 ### Minimum and Maximum Purchase Limits
 
 * **Minimum Purchase:** `MIN_BUY_AMOUNT_IN_USD_E2 = 100`, representing $1.00. The minimum is evaluated against the buyer's **net USD-equivalent contribution after the buy fee**.
-* **Maximum Purchase:** There is no separate hardcoded per-purchase maximum. The maximum permitted SOL amount is constrained by the sale's **remaining USD-equivalent capacity**.
+* **Maximum Purchase:** There is no separate hard-coded per-purchase maximum. The maximum permitted SOL amount is constrained by the sale's **remaining USD-equivalent capacity**.
 * **Dynamic SOL Limits:** The allowable SOL purchase amount depends on the current SOL/USD oracle price, configured buy fee, and remaining sale capacity.
+
+### Buy Fee
+
+The `lamports_amount` argument represents the **gross SOL purchase amount**.
+
+The configured buy fee is deducted from the gross amount before calculating the buyer's net SOL contribution used for the minimum purchase and sale-cap checks.
+
+The current initialized buy fee is **100 bps (1%)** and is read from `global_states_pda.buy_fee_bps`.
+
+The configured fee may change through protocol administration.
+
+### Buyer SOL Balance
+
+The buyer must have sufficient SOL to cover the submitted gross `lamports_amount`.
+
+If `buyer_accumulation_pda` or `buyer_associated_token_account` does not already exist, the buyer also pays the required account creation rent.
+
+The transaction must therefore provide enough SOL for both the purchase and any required account initialization.
+
+### Slippage Protection
+
+The `buy` instruction includes slippage protection based on the bonding-curve state supplied by the caller.
+
+Before constructing the transaction, read the following fields from `bonding_curve_pda`:
+
+* `total_raised_usd_e2`
+* `total_sold_tokens_e6`
+
+Pass these current values as:
+
+* `expected_total_raised_usd_e2`
+* `expected_total_sold_tokens_e6`
+
+The program compares the expected average bonding-curve price derived from these values with the current average price at execution.
+
+`slippage_bps` specifies the maximum permitted increase in the average price.
+
+If the execution-time increase exceeds `slippage_bps`, the transaction is rejected.
+
+Because the bonding-curve state can change before execution, these values should be fetched immediately before constructing the transaction.
 
 ### SOL/USD Price Feed
 
-The `sol_usd_price_feed` account that the `buy` instruction expects must contain a valid Pyth `PriceUpdateV2` account for the SOL/USD price feed.
+The `sol_usd_price_feed` account must contain a valid Pyth `PriceUpdateV2` account for the SOL/USD price feed.
 
 Before the price is used for purchase calculation, the program validates:
 
@@ -61,6 +119,7 @@ The current RugFreePump deployment uses:
 ```
 
 This is the account currently used by RugFreePump. Developers may supply another valid Pyth `PriceUpdateV2` account containing an acceptable update for the same Pyth SOL/USD feed, provided it satisfies the program's validation requirements.
+
 
 ## Rust
 
