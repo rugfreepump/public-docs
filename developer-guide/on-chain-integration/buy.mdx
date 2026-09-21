@@ -11,26 +11,22 @@ The instruction accepts a gross SOL amount, deducts the configured protocol fee,
 
 ### Sale Cap and Finalization Buffer
 
-The bonding-curve token sale tracks parameters using **fixed-point numbers with 2 decimal places**. The limits and triggers are governed by the following constants:
+The bonding-curve token sale uses **fixed-point USD-equivalent values with 2 decimal places** for its sale cap and finalization threshold.
 
-| Constant | Raw Value | Human-Readable | Purpose |
-| :--- | :--- | :--- | :--- |
-| `MAX_USD_RAISE_CAP_IN_USD_E2` | `1,615,000` | \$16,150.00 | Maximum total USD value a sale can raise. |
-| `SALE_FINALIZATION_BUFFER_USD_E2` | `5,000` | \$50.00 | Threshold to automatically trigger sale finalization. |
+| Constant                          | Raw Value   | Human-Readable | Purpose                                                 |
+| :-------------------------------- | :---------- | :------------- | :------------------------------------------------------ |
+| `MAX_USD_RAISE_CAP_IN_USD_E2`     | `1,615,000` | $16,150.00     | Maximum USD-equivalent value a sale can raise.          |
+| `SALE_FINALIZATION_BUFFER_USD_E2` | `5,000`     | $50.00         | Remaining-capacity threshold used to finalize the sale. |
 
-* **Contribution Valuation:** Purchases are executed in **SOL**. A buyer’s net SOL contribution is dynamically converted to its USD equivalent using the validated oracle price.
-* **Capacity Constraints:** A user's net USD-equivalent contribution cannot exceed the remaining capacity of the sale.
-* **Auto-Finalization:** The sale instantly finalizes when a successful purchase drops the remaining sale capacity **below** `SALE_FINALIZATION_BUFFER_USD_E2`.
-
----
+* **Contribution Valuation:** Purchases are made in **SOL**. The buyer's net SOL contribution is valued in USD-equivalent terms using the validated SOL/USD oracle price.
+* **Capacity Constraint:** A buyer's net USD-equivalent contribution must not exceed the sale's remaining USD-equivalent capacity.
+* **Auto-Finalization:** After a successful purchase, the sale is finalized when the remaining USD-equivalent capacity falls below `SALE_FINALIZATION_BUFFER_USD_E2`.
 
 ### Minimum and Maximum Purchase Limits
 
-* **Minimum Purchase:** Enforced by the `MIN_BUY_AMOUNT_IN_USD_E2 = 100` constant (\$1.00 value). This is evaluated against the buyer's **net USD-equivalent contribution after subtracting the buy fee**.
-* **Maximum Purchase:** There is no hardcoded individual maximum limit. A purchase is restricted purely by the sale's **remaining USD-equivalent capacity**.
-* **Dynamic Scope:** The definitive minimum and maximum allowable SOL inputs fluctuate relative to the active SOL/USD price, configured protocol buy fees, and available curve capacity.
-
----
+* **Minimum Purchase:** `MIN_BUY_AMOUNT_IN_USD_E2 = 100`, representing $1.00. The minimum is evaluated against the buyer's **net USD-equivalent contribution after the buy fee**.
+* **Maximum Purchase:** There is no separate hardcoded per-purchase maximum. The maximum permitted SOL amount is constrained by the sale's **remaining USD-equivalent capacity**.
+* **Dynamic SOL Limits:** The allowable SOL purchase amount depends on the current SOL/USD oracle price, configured buy fee, and remaining sale capacity.
 
 ### SOL/USD Price Feed
 
