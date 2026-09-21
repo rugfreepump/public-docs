@@ -27,30 +27,30 @@ Because these values can change between transaction construction and execution, 
 
 ### Sale Cap and Finalization Buffer
 
-The bonding-curve sale uses **fixed-point USD-equivalent values with 2 decimal places** for its sale cap and finalization threshold. Buyers contribute **SOL**, and the value of the net SOL contribution is measured against these limits using the validated SOL/USD price.
+The bonding-curve sale uses **fixed-point USD-equivalent values with 2 decimal places** for its sale cap and finalization threshold. Buyers contribute **SOL**, and the value of the SOL contribution after the buy fee is deducted is measured against these limits using the validated SOL/USD price.
 
-| Constant                          | Raw Value   | Human-Readable | Purpose                                                                            |
-| :-------------------------------- | :---------- | :------------- | :--------------------------------------------------------------------------------- |
-| `MAX_USD_RAISE_CAP_IN_USD_E2`     | `1,615,000` | $16,150.00     | Maximum USD-equivalent value of SOL contributions that the sale can raise          |
-| `SALE_FINALIZATION_BUFFER_USD_E2` | `5,000`     | $50.00         | Remaining USD-equivalent SOL contribution capacity at which the sale is finalized  |
+| Constant                          | Raw Value   | Human-Readable | Purpose                                                                    |
+| :-------------------------------- | :---------- | :------------- | :------------------------------------------------------------------------- |
+| `MAX_USD_RAISE_CAP_IN_USD_E2`     | `1,615,000` | $16,150.00     | Maximum USD-equivalent value that can be raised through SOL contributions. |
+| `SALE_FINALIZATION_BUFFER_USD_E2` | `5,000`     | $50.00         | Remaining USD-equivalent sale capacity at which the sale is finalized.     |
 
-* **Contribution Valuation:** After the buy fee is deducted, the buyer's remaining SOL contribution is valued using the validated SOL/USD price.
-* **Capacity Constraint:** The USD-equivalent value of the buyer's net SOL contribution must not exceed the sale's remaining USD-equivalent SOL contribution capacity.
-* **Auto-Finalization:** After a successful purchase, the sale is finalized when the remaining USD-equivalent SOL contribution capacity falls below `SALE_FINALIZATION_BUFFER_USD_E2`.
+* **Contribution Valuation:** The buy fee is deducted from the gross SOL amount first. The remaining SOL amount is then valued in USD-equivalent terms using the validated SOL/USD price.
+* **Capacity Constraint:** The USD-equivalent value of the SOL amount remaining after the buy fee must not exceed the sale's remaining USD-equivalent capacity.
+* **Auto-Finalization:** After a successful purchase, the sale is finalized when the remaining USD-equivalent capacity falls below `SALE_FINALIZATION_BUFFER_USD_E2`.
 
 The current sale total used for the capacity check is `bonding_curve_pda.total_raised_usd_e2`.
 
 ### Minimum and Maximum Purchase Limits
 
-* **Minimum Purchase:** `MIN_BUY_AMOUNT_IN_USD_E2 = 100`, representing $1.00. After the buy fee is deducted, the buyer's remaining SOL contribution must have a USD-equivalent value of at least $1.00.
-* **Maximum Purchase:** There is no separate hard-coded per-purchase maximum. The maximum permitted SOL amount is constrained by the sale's **remaining USD-equivalent SOL contribution capacity**, after accounting for the buy fee and the current SOL/USD price.
-* **Dynamic SOL Limits:** The maximum valid SOL purchase amount changes with the sale's remaining USD-equivalent SOL contribution capacity, the configured buy fee, and the current SOL/USD price.
+* **Minimum Purchase:** `MIN_BUY_AMOUNT_IN_USD_E2 = 100`, representing $1.00. After the buy fee is deducted, the remaining SOL amount must have a USD-equivalent value of at least $1.00.
+* **Maximum Purchase:** There is no separate hard-coded per-purchase maximum. The maximum permitted SOL amount is constrained by the sale's **remaining USD-equivalent capacity**, after accounting for the buy fee and the current SOL/USD price.
+* **Dynamic SOL Limits:** The maximum valid SOL purchase amount changes with the sale's remaining USD-equivalent capacity, the configured buy fee, and the current SOL/USD price.
 
 ### Buy Fee
 
 The `lamports_amount` argument represents the **gross SOL purchase amount**.
 
-The configured buy fee is deducted from the gross SOL amount before the remaining SOL contribution is valued using the SOL/USD price and checked against the minimum purchase and remaining sale capacity.
+The configured buy fee is deducted from the gross SOL amount before the remaining SOL amount is valued using the SOL/USD price and checked against the minimum purchase and remaining sale capacity.
 
 The current initialized buy fee is **100 bps (1%)** and is read from `global_states_pda.buy_fee_bps`.
 
