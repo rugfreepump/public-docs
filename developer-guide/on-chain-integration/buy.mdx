@@ -7,25 +7,23 @@ The `buy` instruction purchases tokens from an active RugFreePump bonding-curve 
 
 The instruction accepts a gross SOL amount, deducts the configured protocol fee, denominates the remaining SOL contribution in USD-equivalent terms using a validated Pyth SOL/USD price feed, calculates the corresponding token amount using the bonding curve pricing model, and transfers the tokens to the buyer.
 
-## Execution Requirements
-
 ### Sale Status
 
 Before constructing a `buy` transaction, read the following fields from the required accounts and verify that the sale is eligible for purchase:
 
-| Field                                  | Account             | Required value / condition                                                        |
-| :------------------------------------- | :------------------ | :-------------------------------------------------------------------------------- |
-| `is_platform_maintenance_mode_enabled` | `admin_states_pda`  | `false`                                                                           |
-| `is_sale_active`                       | `bonding_curve_pda` | `true`                                                                            |
-| `is_sale_finalized`                    | `bonding_curve_pda` | `false`                                                                           |
-| `is_finalized_sale_canceled`           | `bonding_curve_pda` | `false`                                                                           |
-| `sale_expires_at`                      | `bonding_curve_pda` | Current Unix timestamp must be less than or equal to this `sale_expires_at` value |
+| Field                                  | Account             | Required value / condition                              |
+| :------------------------------------- | :------------------ | :------------------------------------------------------ |
+| `is_platform_maintenance_mode_enabled` | `admin_states_pda`  | `false`                                                 |
+| `is_sale_active`                       | `bonding_curve_pda` | `true`                                                  |
+| `is_sale_finalized`                    | `bonding_curve_pda` | `false`                                                 |
+| `is_finalized_sale_canceled`           | `bonding_curve_pda` | `false`                                                 |
+| `sale_expires_at`                      | `bonding_curve_pda` | Current Unix timestamp must be **less than** this value |
 
-The program also checks `sale_expires_at` during execution. If the current Unix timestamp is greater than or equal to `sale_expires_at`, the program sets `is_sale_active` to `false` and rejects the purchase.
+The program also checks `sale_expires_at` during execution. If the current Unix timestamp is **greater than or equal to** `sale_expires_at`, the program sets `is_sale_active` to `false` and rejects the purchase.
 
 Because these values can change between transaction construction and execution, client-side checks should be treated as **pre-validation only**. The on-chain program performs the authoritative checks when the transaction executes.
 
-### SaleCap and Finalization Buffer
+### Sale Cap and Finalization Buffer
 
 The bonding-curve token sale uses **fixed-point USD-equivalent values with 2 decimal places** for its sale cap and finalization threshold.
 
@@ -118,8 +116,7 @@ The current RugFreePump deployment uses:
 7UVimffxr9ow1uXYxsr4LHAcV58mLzhmwaeKvJ1pjLiE
 ```
 
-This is the account currently used by RugFreePump. Developers may supply another valid Pyth `PriceUpdateV2` account containing an acceptable update for the same Pyth SOL/USD feed, provided it satisfies the program's validation requirements.
-
+This is the account currently used by RugFreePump. It is not a fixed account required by the program. Developers may supply another valid Pyth `PriceUpdateV2` account containing an acceptable update for the same SOL/USD feed, provided it satisfies the program's validation requirements.
 
 ## Rust
 
@@ -262,7 +259,7 @@ The following accounts must be supplied to `buy` in the order defined by the ins
 | `buyer_accumulation_pda`         | RugFreePump PDA: seeds `[b"buyer-accumulation", bonding_curve_pda, buyer]` | Created with `init_if_needed` when missing; `buyer` pays the required rent                       |
 | `buyer_associated_token_account` | ATA for `mint`, owned by `buyer`                                           | Created with `init_if_needed` when missing; `buyer` pays the required rent                       |
 | `platform_fee_vault`             | RugFreePump PDA: seeds `[b"platform-fee-vault"]`                           | Must exist and receive the buy fee                                                               |
-| `sol_usd_price_feed`             | RugFreePump uses: `7UVimffxr9ow1uXYxsr4LHAcV58mLzhmwaeKvJ1pjLiE`           | Must exist and be a valid Pyth `PriceUpdateV2` account for the required SOL/USD feed             |
+| `sol_usd_price_feed`             | RugFreePump uses: `7UVimffxr9ow1uXYxsr4LHAcV58mLzhmwaeKvJ1pjLiE`           | Must be a valid Pyth PriceUpdateV2 account for the required SOL/USD feed and satisfy the program's validation requirements             |
 | `token_program`                  | Token Program: `TokenkegQfeZyiNwAJYbNbGKPFXCWuBvf9Ss623VQ5DA`              | Required Solana program account                                                                  |
 | `associated_token_program`       | Associated Token Program: `ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL`   | Required Solana program account                                                                  |
 | `system_program`                 | System Program: `11111111111111111111111111111111`                         | Required Solana program account                                                                  |
