@@ -101,7 +101,7 @@ The following accounts must be supplied to `buy` in the order defined by the ins
 
 ## Transaction Construction
 
-The following example derives the required accounts, reads the current bonding-curve state for slippage protection, constructs the `buy` instruction, and submits it in a versioned Solana transaction.
+The following example derives the required accounts, reads the current `bonding_curve_pda` data account state for slippage protection, constructs the `buy` instruction, and submits it in a versioned Solana transaction.
 
 ```ts
 import { Program } from "@coral-xyz/anchor";
