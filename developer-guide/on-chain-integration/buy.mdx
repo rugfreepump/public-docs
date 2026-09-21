@@ -21,7 +21,7 @@ Before constructing a `buy` transaction, read the following fields from the requ
 | `is_finalized_sale_canceled`           | `bonding_curve_pda` | `false`                                                 |
 | `sale_expires_at`                      | `bonding_curve_pda` | Current Unix timestamp must be **less than** this value |
 
-The program also checks `sale_expires_at` during execution. If the current Unix timestamp is **greater than or equal to** `sale_expires_at`, the program sets `is_sale_active` to `false` and rejects the purchase.
+If the current Unix timestamp is **greater than or equal to** `sale_expires_at`, the program sets `is_sale_active` to `false` and rejects the purchase.
 
 Because these values can change between transaction construction and execution, client-side checks should be treated as **pre-validation only**. The on-chain program performs the authoritative checks when the transaction executes.
 
@@ -95,7 +95,7 @@ Before the price is used for the purchase calculation, the program validates:
 * The Pyth update has `VerificationLevel::Full`.
 * The update corresponds to the **Pyth SOL/USD feed ID** configured in the RugFreePump program.
 * The price update is no older than **60 seconds**.
-* Whether the reported price is **positive**.
+* The reported price is **positive**.
 * The oracle confidence interval does not exceed **2% of the reported price**.
 
 The validated price is scaled to a **fixed-point value with 2 decimal places** before being used in the purchase calculation.
