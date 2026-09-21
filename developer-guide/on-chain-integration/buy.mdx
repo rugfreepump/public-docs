@@ -99,46 +99,7 @@ The following accounts must be supplied to `buy` in the order defined by the ins
 | `associated_token_program`       | Associated Token Program: `ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL`   | Required Solana program account                                                                  |
 | `system_program`                 | System Program: `11111111111111111111111111111111`                         | Required Solana program account                                                                  |
 
-`buyer_accumulation_pda` and `buyer_associated_token_account` are the only accounts created by `buy` when missing.
-
-Exact account rent is determined by the target Solana cluster at transaction execution time.
-
-### Bonding-curve token ATA
-
-The bonding-curve token ATA is owned by the `bonding_curve_vault` PDA, not by the `bonding_curve_pda`.
-
-Derive it with the bonding-curve vault as the owner and allow off-curve ownership:
-
-```ts
-const associatedBondingCurveAta =
-  getAssociatedTokenAddressSync(
-    mint,
-    bondingCurveVault,
-    true,
-    TOKEN_PROGRAM_ID,
-    ASSOCIATED_TOKEN_PROGRAM_ID,
-  );
-```
-
-This account must exist before calling `buy`.
-
-### Buyer token ATA
-
-The buyer's token ATA is derived normally:
-
-```ts
-const buyerAssociatedTokenAccount =
-  getAssociatedTokenAddressSync(
-    mint,
-    buyer,
-  );
-```
-
-`buy` creates it automatically when it does not already exist.
-
-## PDA Derivation
-
-All RugFreePump PDAs are derived with the RugFreePump program ID for the target deployment.
+## TypeScript example of required PDAs & ATAs Derivation
 
 ```ts
 const [adminStatesPda] =
@@ -188,29 +149,28 @@ const [platformFeeVault] =
   );
 ```
 
-The `buyer_accumulation_pda` uses the **bonding-curve PDA address** as its second seed:
+```ts
+const associatedBondingCurveAta =
+  getAssociatedTokenAddressSync(
+    mint,
+    bondingCurveVault,
+    true,
+    TOKEN_PROGRAM_ID,
+    ASSOCIATED_TOKEN_PROGRAM_ID,
+  );
 
-```text
-["buyer-accumulation", bondingCurvePda, buyer]
+const buyerAssociatedTokenAccount =
+  getAssociatedTokenAddressSync(
+    mint,
+    buyer,
+  );
 ```
 
-It does not use the mint directly.
 
-### Platform fee vault
 
-The account required by `buy` is derived from:
 
-```text
-["platform-fee-vault"]
-```
 
-This is distinct from the separate PDA derived from:
 
-```text
-["platform-fee"]
-```
-
-The `["platform-fee"]` PDA is not the fee vault supplied to `buy`.
 
 ## SOL/USD Price Feed
 
