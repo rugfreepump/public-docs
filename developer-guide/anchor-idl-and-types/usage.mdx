@@ -1,74 +1,71 @@
 ---
-title: "Usage"
-description: "Access the RugFreePump Anchor IDL and generated TypeScript types for direct integration with the on-chain program."
+title: "Anchor IDL & Types"
+description: "Access the published Anchor IDL and generated TypeScript types for the RugFreePump on-chain program."
 ---
 
-RugFreePump publishes its Anchor IDL and generated TypeScript types as the machine-readable integration artifacts for the on-chain program.
+RugFreePump publishes its Anchor IDL and generated TypeScript types as the machine-readable representation of its public on-chain program interface.
 
-The **Anchor IDL** describes the deployed program interface, including instructions, arguments, accounts, account types, events, and defined types.
+The **Anchor IDL** describes the program interface, including its instructions, accounts, arguments, events, and defined types.
 
-The **generated TypeScript types** provide the corresponding TypeScript representation of the IDL for integrations using TypeScript.
+The **generated TypeScript types** provide the corresponding TypeScript type representation for client integrations.
 
-These artifacts are deployment-specific and must correspond to the RugFreePump program being integrated with.
+RugFreePump maintains the same program interface across its supported Devnet and Mainnet deployments. The published IDL and generated TypeScript types therefore represent the shared RugFreePump interface rather than separate cluster-specific interfaces.
 
-## Published Resources
+## Published Artifacts
+
+The current integration artifacts are:
+
+| Artifact             | Description                                         |
+| :------------------- | :-------------------------------------------------- |
+| `rug_free_pump.json` | Published Anchor IDL for the RugFreePump program    |
+| `rug_free_pump.ts`   | Generated TypeScript type representation of the IDL |
 
 ### Anchor IDL
 
-The Anchor IDL is published as:
+The Anchor IDL is the canonical machine-readable description of the deployed RugFreePump program interface.
 
-`rug_free_pump.json`
-
-<a href="https://raw.githubusercontent.com/rugfreepump/public-docs/main/developer-guide/anchor-idl-and-types/resources/rug_free_pump.json">
-  View `rug_free_pump.json`
-</a>
+[View `rug_free_pump.json`](REPLACE_WITH_IDL_LINK)
 
 ### Generated TypeScript Types
 
-The generated TypeScript representation is published as:
+The generated TypeScript file provides the TypeScript representation of the published IDL for use by TypeScript integrations.
 
-`rug_free_pump.ts`
+[View `rug_free_pump.ts`](REPLACE_WITH_TYPES_LINK)
 
-<a href="https://raw.githubusercontent.com/rugfreepump/public-docs/main/developer-guide/anchor-idl-and-types/resources/rug_free_pump.ts">
-  View `rug_free_pump.ts`
-</a>
+## Supported Deployments
 
-## Deployment
+RugFreePump maintains both Devnet and Mainnet deployments of the protocol.
 
-The currently documented Devnet program ID is:
+The deployments are maintained against the same program interface. When the protocol implementation is updated, the corresponding program changes are applied across the supported clusters so developers can test against the same interface intended for production use.
 
-```text
-9hpBPEiywp7FPAq5uP253eAZzdJ1Cpd36L5RAYuc9xSw
-```
+| Deployment  | Solana Cluster | Program ID                                     |
+| :---------- | :------------- | :--------------------------------------------- |
+| **Devnet**  | `devnet`       | `9hpBPEiywp7FPAq5uP253eAZzdJ1Cpd36L5RAYuc9xSw` |
+| **Mainnet** | `mainnet-beta` | `9hpBPEiywp7FPAq5uP253eAZzdJ1Cpd36L5RAYuc9xSw` |
 
-The IDL and generated types must correspond to the program deployment being integrated with.
+The program ID shown for Mainnet is the currently documented deployment value. If the production deployment uses a different program ID, the Mainnet address will be updated independently without requiring a separate IDL or TypeScript artifact when the program interface remains unchanged.
 
-Do not combine artifacts from one deployed program version with a different program deployment.
+## Interface Synchronization
 
-## Integration References
+The published IDL and generated TypeScript types are maintained together with the RugFreePump program interface.
 
-The IDL provides the complete machine-readable representation of the deployed program interface.
+Interface changes that affect the published artifacts may include changes such as:
 
-The Developer Guide provides detailed integration requirements for the public instruction currently documented for direct integration:
+* Instruction definitions
+* Instruction arguments
+* Account structures
+* Account relationships
+* Events
+* Defined types
 
-* [Buy](../on-chain-integration/buy)
+When such changes are introduced, the published IDL and generated TypeScript types are updated to reflect the new program interface.
 
-Use the instruction reference for the accounts, arguments, PDA derivations, state requirements, and other transaction-level information required by that instruction.
+Devnet and Mainnet are kept synchronized with the corresponding program interface so developers can use Devnet to test against the same protocol interface used by the production deployment.
 
-## Artifact Consistency
+A change to the program address alone does not constitute an interface change and does not require a separate set of IDL or TypeScript artifacts.
 
-The following artifacts must correspond to the same deployed program interface:
+## Integration Reference
 
-```text
-Program ID
-    +
-Deployed program
-    +
-Anchor IDL
-    +
-Generated TypeScript types
-```
+The [Buy](../on-chain-integration/buy) reference provides the detailed requirements for the currently documented public integration entry point.
 
-A change to the RugFreePump hosted application does not necessarily represent a change to the on-chain program or its IDL.
-
-Direct integrations should use the published IDL and generated types corresponding to the target deployment.
+For the complete machine-readable interface, use the published Anchor IDL above.
