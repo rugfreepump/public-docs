@@ -99,69 +99,7 @@ The following accounts must be supplied to `buy` in the order defined by the ins
 | `associated_token_program`       | Associated Token Program: `ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL`   | Required Solana program account                                                                  |
 | `system_program`                 | System Program: `11111111111111111111111111111111`                         | Required Solana program account                                                                  |
 
-## TypeScript Example: Required PDA and ATA Derivation
-
-### Program Derived Addresses (PDAs)
-
-```ts
-const [adminStatesPda] = PublicKey.findProgramAddressSync(
-  [Buffer.from("admin-states")],
-  PROGRAM_ID,
-);
-
-const [globalStatesPda] = PublicKey.findProgramAddressSync(
-  [Buffer.from("global-states")],
-  PROGRAM_ID,
-);
-
-const [bondingCurvePda] = PublicKey.findProgramAddressSync(
-  [
-    Buffer.from("bonding-curve"),
-    mint.toBuffer(),
-  ],
-  PROGRAM_ID,
-);
-
-const [bondingCurveVault] = PublicKey.findProgramAddressSync(
-  [
-    Buffer.from("bonding-curve-vault"),
-    mint.toBuffer(),
-  ],
-  PROGRAM_ID,
-);
-
-const [buyerAccumulationPda] = PublicKey.findProgramAddressSync(
-  [
-    Buffer.from("buyer-accumulation"),
-    bondingCurvePda.toBuffer(),
-    buyer.toBuffer(),
-  ],
-  PROGRAM_ID,
-);
-
-const [platformFeeVault] = PublicKey.findProgramAddressSync(
-  [Buffer.from("platform-fee-vault")],
-  PROGRAM_ID,
-);
-```
-
-### Associated Token Accounts (ATAs)
-
-```ts
-const associatedBondingCurveAta = getAssociatedTokenAddressSync(
-  mint,
-  bondingCurveVault,
-  true,
-  TOKEN_PROGRAM_ID,
-  ASSOCIATED_TOKEN_PROGRAM_ID,
-);
-
-const buyerAssociatedTokenAccount = getAssociatedTokenAddressSync(
-  mint,
-  buyer,
-);
-```
-## TypeScript Example: Transaction Construction
+## Transaction Construction
 
 The following example derives the required accounts, reads the current bonding-curve state for slippage protection, constructs the `buy` instruction, and submits it in a versioned Solana transaction.
 
@@ -191,7 +129,6 @@ const lamportsAmount = new BN("1000000000"); // 1 SOL
 const slippageBps = 200; // 2%
 
 // Derive required PDAs
-
 const [adminStatesPda] = PublicKey.findProgramAddressSync(
   [Buffer.from("admin-states")],
   PROGRAM_ID,
@@ -233,7 +170,6 @@ const [platformFeeVault] = PublicKey.findProgramAddressSync(
 );
 
 // Derive required ATAs
-
 const associatedBondingCurveAta = getAssociatedTokenAddressSync(
   mint,
   bondingCurveVault,
@@ -248,45 +184,49 @@ const buyerAssociatedTokenAccount = getAssociatedTokenAddressSync(
 );
 
 // Fetch the current bonding-curve state
-const bondingCurveAccount = await program.account.bondingCurvePda.fetch(bondingCurvePda);
+const bondingCurveAccount =
+  await program.account.bondingCurvePda.fetch(
+    bondingCurvePda,
+  );
 
 // Read the state snapshot required for slippage protection
 const expectedTotalRaisedUsdE2 = new BN(
-    bondingCurveAccount.totalRaisedUsdE2.toString(),
-  );
+  bondingCurveAccount.totalRaisedUsdE2.toString(),
+);
 
 const expectedTotalSoldTokensE6 = new BN(
-    bondingCurveAccount.totalSoldTokensE6.toString(),
-  );
+  bondingCurveAccount.totalSoldTokensE6.toString(),
+);
 
 // Construct the buy instruction
 const buyInstruction = await program.methods
-    .buy(
-      lamportsAmount,
-      expectedTotalRaisedUsdE2,
-      expectedTotalSoldTokensE6,
-      slippageBps,
-    )
-    .accounts({
-      buyer,
-      mint,
-      adminStatesPda,
-      globalStatesPda,
-      bondingCurvePda,
-      bondingCurveVault,
-      associatedBondingCurveAta,
-      buyerAccumulationPda,
-      buyerAssociatedTokenAccount,
-      platformFeeVault,
-      solUsdPriceFeed: SOL_USD_PRICE_FEED_ACCOUNT,
-      tokenProgram: TOKEN_PROGRAM_ID,
-      associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
-      systemProgram: SystemProgram.programId,
-    })
-    .instruction();
+  .buy(
+    lamportsAmount,
+    expectedTotalRaisedUsdE2,
+    expectedTotalSoldTokensE6,
+    slippageBps,
+  )
+  .accounts({
+    buyer,
+    mint,
+    adminStatesPda,
+    globalStatesPda,
+    bondingCurvePda,
+    bondingCurveVault,
+    associatedBondingCurveAta,
+    buyerAccumulationPda,
+    buyerAssociatedTokenAccount,
+    platformFeeVault,
+    solUsdPriceFeed: SOL_USD_PRICE_FEED_ACCOUNT,
+    tokenProgram: TOKEN_PROGRAM_ID,
+    associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
+    systemProgram: SystemProgram.programId,
+  })
+  .instruction();
 
 // Fetch a recent blockhash
-const { blockhash } = await provider.connection.getLatestBlockhash("confirmed");
+const { blockhash } =
+  await provider.connection.getLatestBlockhash("confirmed");
 
 // Build the versioned transaction
 const messageV0 = new TransactionMessage({
@@ -300,10 +240,16 @@ const transaction = new VersionedTransaction(messageV0);
 // Sign and submit
 transaction.sign([wallet.payer]);
 
-const signature = await provider.connection.sendTransaction(transaction);
+const signature =
+  await provider.connection.sendTransaction(transaction);
 
 console.log(signature);
 ```
+
+`RUGFREEPUMP_PROGRAM_ID`, `IDL`, `provider`, `wallet`, `mint`, and `SOL_USD_PRICE_FEED_ACCOUNT` are application-specific values supplied by the integrating application.
+
+The `buyer_accumulation_pda` and `buyer_associated_token_account` are created automatically by the `buy` instruction if they do not already exist. The buyer pays the required account rent.
+
 
 
 
