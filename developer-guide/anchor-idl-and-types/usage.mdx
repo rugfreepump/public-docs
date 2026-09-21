@@ -7,32 +7,30 @@ RugFreePump exposes its public on-chain interface through an Anchor program.
 
 The published Anchor IDL provides the machine-readable description of the program interface. Generated TypeScript types provide compile-time support for TypeScript integrations.
 
-The IDL and generated types are deployment-specific and must correspond to the program being integrated with.
+The IDL and generated types are deployment-specific and must correspond to the deployed program being integrated with.
 
-## Published resources
+## Published Resources
 
 The repository contains the current integration artifacts:
 
 * `rug_free_pump.json` — Anchor IDL
 * `rug_free_pump.ts` — generated TypeScript type definition
 
-### Download
+### Anchor IDL
 
-<p>
-  <a href="https://raw.githubusercontent.com/rugfreepump/public-docs/main/developer-guide/anchor-idl-and-types/resources/rug_free_pump.json" download>
-    Download the Anchor IDL (`rug_free_pump.json`)
-  </a>
-</p>
+<a href="https://raw.githubusercontent.com/rugfreepump/public-docs/main/developer-guide/anchor-idl-and-types/resources/rug_free_pump.json">
+  View `rug_free_pump.json`
+</a>
 
-<p>
-  <a href="https://raw.githubusercontent.com/rugfreepump/public-docs/main/developer-guide/anchor-idl-and-types/resources/rug_free_pump.ts" download>
-    Download the generated TypeScript types (`rug_free_pump.ts`)
-  </a>
-</p>
+### Generated TypeScript Types
 
-The JSON file is the actual Anchor IDL.
+<a href="https://raw.githubusercontent.com/rugfreepump/public-docs/main/developer-guide/anchor-idl-and-types/resources/rug_free_pump.ts">
+  View `rug_free_pump.ts`
+</a>
 
-The TypeScript file is the generated type representation of that IDL and is intended to provide TypeScript type support.
+The JSON file is the Anchor IDL used to describe the deployed program interface.
+
+The TypeScript file is the generated type representation of that IDL and provides TypeScript type support for integrations.
 
 The currently documented Devnet program ID is:
 
@@ -40,9 +38,9 @@ The currently documented Devnet program ID is:
 9hpBPEiywp7FPAq5uP253eAZzdJ1Cpd36L5RAYuc9xSw
 ```
 
-Use the resource files corresponding to the deployment you are integrating with.
+Use the resource files corresponding to the deployment being integrated with.
 
-## What the IDL provides
+## What the IDL Provides
 
 The Anchor IDL describes the deployed program interface, including:
 
@@ -55,22 +53,19 @@ The Anchor IDL describes the deployed program interface, including:
 * Program metadata
 * Defined types
 
-The detailed integration references currently available in this guide are:
-
-* [Buy](../on-chain-integration/buy)
-* [Withdraw](../on-chain-integration/withdraw)
-
 The IDL is the machine-readable representation of the deployed program interface.
 
-## Installing client dependencies
+Detailed instruction requirements are documented separately where applicable. See the [Buy](../on-chain-integration/buy) reference for the currently documented public transaction interface.
 
-A TypeScript integration can use standard Anchor, Solana Web3.js, and SPL Token libraries.
+## Installing Client Dependencies
+
+A TypeScript integration can use standard Anchor and Solana libraries.
 
 ```bash
 npm install @coral-xyz/anchor @solana/web3.js @solana/spl-token bn.js
 ```
 
-Use dependency versions compatible with the deployed Anchor interface and your application.
+Use dependency versions compatible with the deployed Anchor interface and the integration environment.
 
 ## Loading the IDL
 
@@ -110,15 +105,15 @@ const program =
   );
 ```
 
-This read-only client can be used to fetch protocol accounts and inspect state.
+This read-only client can be used to fetch program accounts and inspect on-chain state.
 
-A transaction-signing application should configure an `AnchorProvider` with its own wallet.
+A transaction-signing integration must configure an `AnchorProvider` with its own wallet.
 
-## Read-only account access
+## Read-Only Account Access
 
-A wallet is not required to inspect protocol state.
+A wallet is not required to inspect program state.
 
-For example:
+For example, the bonding-curve PDA can be derived and its current state fetched directly:
 
 ```ts
 import { PublicKey } from "@solana/web3.js";
@@ -148,7 +143,6 @@ const bondingCurve =
 console.log({
   active: bondingCurve.isSaleActive,
   finalized: bondingCurve.isSaleFinalized,
-  expired: bondingCurve.isSaleExpired,
   totalRaisedUsdE2:
     bondingCurve.totalRaisedUsdE2.toString(),
   totalSoldTokensE6:
@@ -156,9 +150,9 @@ console.log({
 });
 ```
 
-Use current on-chain account state when making protocol decisions.
+The resulting account state is the authoritative source for the current on-chain sale state.
 
-## Reading global state
+## Reading Global State
 
 The global state account is derived from:
 
@@ -188,13 +182,13 @@ console.log({
 
 The `buy` instruction reads `buyFeeBps` from `GlobalStatesPDA`.
 
-Do not assume that every value present in a configuration account is consumed by every instruction. Refer to the specific instruction documentation for the source of each value.
+Instruction-specific documentation should be used to determine which on-chain state fields are relevant to a particular instruction.
 
-## Generated TypeScript types
+## Generated TypeScript Types
 
 The generated TypeScript file provides types corresponding to the Anchor program interface.
 
-Use generated types where they improve compile-time safety for:
+These types cover structures exposed by the IDL, including:
 
 * Account data
 * Program structures
@@ -202,105 +196,80 @@ Use generated types where they improve compile-time safety for:
 * Instruction clients
 * Defined protocol types
 
-Generated types do not replace the deployed program's actual state.
+Generated types describe the interface but do not replace the deployed program or its current on-chain state.
 
 The following must correspond:
 
 ```text
 Program ID
     +
-IDL version
+IDL
     +
 Generated types
     +
 Deployed program
 ```
 
-Do not combine an IDL or generated type file from one deployment with a different deployed program version.
+Do not combine an IDL or generated type file from one deployment or program version with a different deployed program.
 
-## Building an instruction
+## Building an Instruction
 
-Anchor can construct an instruction without immediately sending it.
+Anchor can construct an instruction without immediately submitting a transaction.
 
 For example:
 
 ```ts
 const instruction =
   await program.methods
-    .withdraw()
+    .buy(
+      lamportsAmount,
+      expectedTotalRaisedUsdE2,
+      expectedTotalSoldTokensE6,
+      slippageBps,
+    )
     .accounts({
       buyer,
-      adminStatesPda,
       mint,
+      adminStatesPda,
+      globalStatesPda,
       bondingCurvePda,
       bondingCurveVault,
+      associatedBondingCurveAta,
       buyerAccumulationPda,
       buyerAssociatedTokenAccount,
+      platformFeeVault,
+      solUsdPriceFeed,
       tokenProgram: TOKEN_PROGRAM_ID,
+      associatedTokenProgram:
+        ASSOCIATED_TOKEN_PROGRAM_ID,
       systemProgram:
         SystemProgram.programId,
     })
     .instruction();
 ```
 
-The resulting instruction can be placed into a transaction constructed by the integrating application.
+The exact instruction arguments, accounts, and state requirements are documented in the corresponding instruction reference.
 
-This allows the application to:
+The resulting instruction can be included in a transaction constructed by the integrating application.
 
-* Add compute-budget instructions
-* Add a priority fee
-* Combine multiple instructions
-* Build a versioned transaction
-* Use a custom transaction pipeline
-* Submit through custom RPC infrastructure
+## Integer Handling
 
-## Sending a transaction
+Protocol values use integer-scaled representations.
 
-An Anchor wallet provider can submit the instruction directly:
-
-```ts
-const signature =
-  await program.methods
-    .withdraw()
-    .accounts({
-      buyer,
-      adminStatesPda,
-      mint,
-      bondingCurvePda,
-      bondingCurveVault,
-      buyerAccumulationPda,
-      buyerAssociatedTokenAccount,
-      tokenProgram: TOKEN_PROGRAM_ID,
-      systemProgram:
-        SystemProgram.programId,
-    })
-    .rpc();
-
-console.log(signature);
-```
-
-For `buy`, always fetch fresh bonding-curve state before constructing the instruction because the expected state values form part of the protocol's slippage protection.
-
-## Integer handling
-
-Protocol values should be handled as exact integers.
-
-Prefer:
+Use an exact integer representation such as:
 
 * `BN`
 * `bigint`
-* Another exact integer representation
 
-for:
+for protocol values including:
 
 * Lamports
-* Token e6 amounts
-* USD e2 amounts
+* Token amounts in e6 units
+* USD-equivalent values in e2 units
 * Basis points
 * Large counters
-* Unix timestamps when arithmetic is required
 
-Example:
+For example:
 
 ```ts
 const lamportsAmount =
@@ -313,9 +282,9 @@ represents:
 0.1 SOL
 ```
 
-without converting the protocol amount through floating-point arithmetic.
+without passing the protocol amount through floating-point arithmetic.
 
-## Reading large account values
+## Reading Large Account Values
 
 Anchor account values representing large integers should be converted explicitly before arithmetic.
 
@@ -335,11 +304,11 @@ const totalSoldTokensE6 =
 
 This avoids accidental precision loss when values exceed JavaScript's safe integer range.
 
-## PDA derivation
+## PDA Derivation
 
-PDAs must use the exact seeds defined by the on-chain program.
+PDAs must use the exact seeds defined by the deployed on-chain program.
 
-### Bonding curve
+### Bonding Curve
 
 ```ts
 const [bondingCurvePda] =
@@ -352,7 +321,7 @@ const [bondingCurvePda] =
   );
 ```
 
-### Bonding-curve vault
+### Bonding-Curve Vault
 
 ```ts
 const [bondingCurveVault] =
@@ -365,7 +334,7 @@ const [bondingCurveVault] =
   );
 ```
 
-### Buyer accumulation
+### Buyer Accumulation
 
 ```ts
 const [buyerAccumulationPda] =
@@ -381,9 +350,7 @@ const [buyerAccumulationPda] =
 
 The buyer accumulation PDA uses the bonding-curve PDA as a seed component.
 
-Do not substitute the mint.
-
-### Admin states
+### Admin States
 
 ```ts
 const [adminStatesPda] =
@@ -393,7 +360,7 @@ const [adminStatesPda] =
   );
 ```
 
-### Global states
+### Global States
 
 ```ts
 const [globalStatesPda] =
@@ -403,9 +370,7 @@ const [globalStatesPda] =
   );
 ```
 
-### Platform fee vault
-
-For `buy`:
+### Platform Fee Vault
 
 ```ts
 const [platformFeeVault] =
@@ -423,26 +388,19 @@ RugFreePump emits Anchor events including:
 BuyCompleted
 BondingCurveSaleFinalized
 BondingCurveSaleExpired
-WithdrawCompleted
 ```
 
-Events are useful for:
+Events provide transaction-level information that can be used for indexing, activity tracking, analytics, and transaction interpretation.
 
-* Indexing
-* Analytics
-* Activity feeds
-* Transaction interpretation
-* Off-chain notifications
+Events should not replace current account state when an integration needs the authoritative current protocol state.
 
-Events should not replace current account state when an integration needs authoritative protocol state.
+For example, after observing a `BuyCompleted` event, an integration can read `BondingCurvePDA` to obtain the current sale state.
 
-For example, a client can observe `BuyCompleted` but should still read `BondingCurvePDA` when it needs the current sale state.
+## Direct Solana Integration
 
-## Direct Solana integration
+Anchor is not required to interact with the underlying Solana program.
 
-Anchor is not mandatory.
-
-A developer can construct Solana instructions directly if the integration correctly implements:
+A direct Solana integration can construct instructions using the deployed program interface, including:
 
 * Anchor instruction discriminators
 * Argument serialization
@@ -451,15 +409,12 @@ A developer can construct Solana instructions directly if the integration correc
 * Program IDs
 * Account layouts
 * Required signer relationships
-* Required validation assumptions
 
-The published IDL and generated types make standard Anchor integrations easier, but the underlying protocol remains a Solana program.
+The published IDL provides the machine-readable interface needed to determine these program-level requirements.
 
 ## CPI
 
-The documented RugFreePump instructions are Anchor program instructions and can be invoked through Solana CPI.
-
-A CPI integration must construct the invocation using the deployed instruction interface and satisfy its account and signer requirements.
+The documented RugFreePump instructions can be invoked through Solana Cross-Program Invocation (CPI), subject to the account, signer, authority, and state requirements enforced by each instruction.
 
 RugFreePump does not currently provide a maintained CPI wrapper or Rust integration crate.
 
@@ -467,28 +422,23 @@ A dedicated CPI wrapper and Rust crate are planned as future developer tooling.
 
 ## Versioning
 
-The IDL is version-specific.
+The IDL and generated types are version-specific and must correspond to the deployed program being integrated with.
 
-When updating an integration:
+When changing the deployed program or integration artifacts, verify that:
 
-1. Confirm the target program ID.
-2. Obtain the IDL corresponding to that deployment.
-3. Update generated types.
-4. Revalidate PDA derivation.
-5. Revalidate instruction accounts.
-6. Revalidate instruction arguments.
-7. Re-test transaction construction.
-8. Re-test event decoding.
-9. Revalidate protocol configuration assumptions.
+1. The target program ID is correct.
+2. The IDL corresponds to the deployed program.
+3. The generated TypeScript types correspond to the IDL.
+4. PDA derivations match the deployed interface.
+5. Instruction accounts and arguments match the deployed interface.
+6. Event definitions match the deployed interface.
 
-Do not assume that a change to the RugFreePump hosted application represents an on-chain protocol change.
+A change to the RugFreePump hosted application does not necessarily represent an on-chain program change.
 
-Likewise, do not assume that an internal application change is required for an on-chain integration to remain valid.
+The public integration boundary is the deployed RugFreePump on-chain program and its documented interface.
 
-## Integration boundary
-
-The public integration boundary is the RugFreePump on-chain program.
+## Integration Boundary
 
 RugFreePump's internal backend, database, transaction builders, HTTP services, and WebSocket infrastructure are not public developer interfaces.
 
-Direct integrations should depend on the documented on-chain interface rather than undocumented application internals.
+Direct integrations should depend on the published on-chain interface and deployment artifacts rather than undocumented application internals.
