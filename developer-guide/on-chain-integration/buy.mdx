@@ -95,7 +95,7 @@ Before the price is used for the purchase calculation, the program validates:
 * The Pyth update has `VerificationLevel::Full`.
 * The update corresponds to the **Pyth SOL/USD feed ID** configured in the RugFreePump program.
 * The price update is no older than **60 seconds**.
-* The reported price is positive.
+* Whether the reported price is **positive**.
 * The oracle confidence interval does not exceed **2% of the reported price**.
 
 The validated price is scaled to a **fixed-point value with 2 decimal places** before being used in the purchase calculation.
