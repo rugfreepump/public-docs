@@ -25,7 +25,7 @@ The program also checks `sale_expires_at` during execution. If the current Unix 
 
 Because these values can change between transaction construction and execution, client-side checks should be treated as **pre-validation only**. The on-chain program performs the authoritative checks when the transaction executes.
 
-### Sale Cap and Finalization Buffer
+### SaleCap and Finalization Buffer
 
 The bonding-curve token sale uses **fixed-point USD-equivalent values with 2 decimal places** for its sale cap and finalization threshold.
 
