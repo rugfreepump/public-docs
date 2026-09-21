@@ -143,9 +143,11 @@ const [platformFeeVault] = PublicKey.findProgramAddressSync(
   [Buffer.from("platform-fee-vault")],
   PROGRAM_ID,
 );
+```
 
 ### associated token accounts(ATAs)
 
+```ts
 const associatedBondingCurveAta = getAssociatedTokenAddressSync(
   mint,
   bondingCurveVault,
