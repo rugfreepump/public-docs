@@ -7,7 +7,7 @@ The `buy` instruction purchases tokens from an active RugFreePump bonding-curve 
 
 The instruction accepts a gross SOL amount, deducts the configured protocol fee, denominates the remaining SOL contribution in USD-equivalent terms using a validated Pyth SOL/USD price feed, calculates the corresponding token amount using the bonding curve pricing model, and transfers the tokens to the buyer.
 
-### Instruction Signature
+## Instruction Signature
 
 ```rust
 pub fn buy(
@@ -21,7 +21,7 @@ pub fn buy(
 
 ## Execution Requirements
 
-The `buy` instruction can execute only when the sale satisfies the required protocol state and purchase conditions.
+The execution of the `buy` instruction must satisfy the required protocol state and purchase conditions below.
 
 ### Sale State
 
@@ -109,64 +109,10 @@ The `sol_usd_price_feed` account must be the configured Pyth `PriceUpdateV2` acc
 
 The program validates:
 
-* Full Pyth verification
-* The configured SOL/USD feed ID
+* A valid Pyth `PriceUpdateV2` account for the required SOL/USD price feed (Ex: `7UVimffxr9ow1uXYxsr4LHAcV58mLzhmwaeKvJ1pjLiE`)
 * A positive price
 * Oracle confidence within 2% of the reported price
-* A price update no older than 24 hours
-
-### SOL/USD Feed ID
-
-```text
-0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d
-```
-
-### Devnet `PriceUpdateV2` Account
-
-```text
-7UVimffxr9ow1uXYxsr4LHAcV58mLzhmwaeKvJ1pjLiE
-```
-
-The `PriceUpdateV2` account is deployment-specific. Use the account configured for the target deployment.
-
-## Slippage Protection
-
-The following instruction arguments provide the state snapshot used for slippage protection:
-
-```text
-expected_total_raised_usd_e2
-expected_total_sold_tokens_e6
-slippage_bps
-```
-
-Read `total_raised_usd_e2` and `total_sold_tokens_e6` from the current `bonding_curve_pda` immediately before constructing the transaction and pass those values to `buy`.
-
-`slippage_bps` specifies the maximum permitted increase in the bonding curve's average price between the supplied state snapshot and the state observed when the transaction executes.
-
-For example:
-
-```text
-200 bps = 2%
-```
-
-If the permitted increase is exceeded, the transaction is rejected with `SlippageExceeded`.
-
-Because another purchase can change the sale state before execution, applications should fetch these values immediately before constructing and submitting the transaction.
-
-## Purchase Result
-
-A successful purchase:
-
-* Transfers the calculated tokens to the buyer's token account.
-* Transfers the buyer's net SOL contribution to the bonding-curve vault.
-* Transfers the configured buy fee to the platform fee vault.
-* Records the buyer's net SOL contribution in `buyer_accumulation_pda`.
-* Updates the bonding-curve sale state.
-* Finalizes the sale when the finalization condition is reached.
-
-All changes occur within the same Solana transaction.
-
-The token amount is calculated by the program during execution. The internal bonding-curve calculation is not required to construct a `buy` instruction.
+* A price update no older than 60 seconds
 
 ## Instruction Data
 
