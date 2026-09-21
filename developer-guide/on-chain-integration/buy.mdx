@@ -11,49 +11,19 @@ The instruction accepts a gross SOL amount, deducts the configured protocol fee,
 
 ### Sale Cap and Finalization Buffer
 
-The maximum USD-equivalent raise for a bonding-curve sale is:
-
-```text
-MAX_USD_RAISE_CAP_IN_USD_E2 = 1,615,000
-```
-
-which represents:
-
-```text
-$16,150.00
-```
+The maximum USD-equivalent raise for a bonding-curve sale is `MAX_USD_RAISE_CAP_IN_USD_E2 = 1,615,000`, representing $16,150.00.
 
 Purchases are made in **SOL**. The buyer's net SOL contribution is valued using the validated SOL/USD price for the purpose of the USD-equivalent sale cap.
 
 A purchase's **net USD-equivalent contribution** must not exceed the sale's remaining USD-equivalent capacity.
 
-The sale uses a finalization buffer of:
-
-```text
-SALE_FINALIZATION_BUFFER_USD_E2 = 5,000
-```
-
-which represents:
-
-```text
-$50.00
-```
+The sale uses a finalization buffer of `SALE_FINALIZATION_BUFFER_USD_E2 = 5,000`, representing $50.00.
 
 After a successful purchase, the sale is finalized when the remaining sale capacity falls below the finalization buffer.
 
 ### Minimum and Maximum Purchase Amount
 
-The minimum purchase is:
-
-```text
-MIN_BUY_AMOUNT_IN_USD_E2 = 100
-```
-
-which represents:
-
-```text
-$1.00
-```
+The minimum purchase is `MIN_BUY_AMOUNT_IN_USD_E2 = 100`, representing $1.00.
 
 Purchases are made in **SOL**, and the minimum purchase is evaluated against the buyer's **net USD-equivalent contribution after the buy fee**.
 
