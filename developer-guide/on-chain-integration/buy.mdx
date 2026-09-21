@@ -9,55 +9,9 @@ The instruction accepts a gross SOL amount, deducts the configured protocol fee,
 
 ## Execution Requirements
 
-The execution of the `buy` instruction must satisfy the required protocol state and purchase conditions below.
+### Sale Cap and Finalization Buffer
 
-### Sale State
-
-At execution time:
-
-* Platform maintenance mode must be disabled.
-* `is_sale_active` must be `true`.
-* `is_sale_finalized` must be `false`.
-* `is_finalized_sale_canceled` must be `false`.
-* The current time must be before `sale_expires_at`.
-
-If the sale expiration time has been reached, the program marks the sale inactive and rejects the purchase.
-
-### Purchase Amount
-
-`lamports_amount` must be greater than zero and the buyer must have sufficient SOL to cover the submitted amount.
-
-The configured buy fee is deducted from the gross amount before the purchase amount is evaluated.
-
-The current initialized buy fee is:
-
-```text
-100 bps = 1%
-```
-
-The fee is read from `GlobalStatesPDA.buy_fee_bps` and may change through protocol configuration.
-
-### Minimum Purchase
-
-The minimum purchase is evaluated against the buyer's **net USD-equivalent contribution after the buy fee**.
-
-The current minimum is:
-
-```text
-MIN_BUY_AMOUNT_IN_USD_E2 = 100
-```
-
-which represents:
-
-```text
-$1.00
-```
-
-Therefore, the required gross SOL amount depends on the current SOL/USD price and configured buy fee.
-
-### Sale Cap
-
-The current maximum USD-equivalent sale raise is:
+The maximum USD-equivalent raise for a bonding-curve sale is:
 
 ```text
 MAX_USD_RAISE_CAP_IN_USD_E2 = 1,615,000
@@ -69,13 +23,11 @@ which represents:
 $16,150.00
 ```
 
-The buyer's net USD-equivalent contribution must not exceed the remaining sale capacity.
+Purchases are made in **SOL**. The buyer's net SOL contribution is valued using the validated SOL/USD price for the purpose of the USD-equivalent sale cap.
 
-Applications should therefore check the current sale state before constructing a purchase transaction.
+A purchase's **net USD-equivalent contribution** must not exceed the sale's remaining USD-equivalent capacity.
 
-### Sale Finalization
-
-The protocol uses a finalization buffer:
+The sale uses a finalization buffer of:
 
 ```text
 SALE_FINALIZATION_BUFFER_USD_E2 = 5,000
@@ -87,9 +39,27 @@ which represents:
 $50.00
 ```
 
-After a successful purchase, if the remaining sale capacity falls below this buffer, the sale is finalized and becomes inactive.
+After a successful purchase, the sale is finalized when the remaining sale capacity falls below the finalization buffer.
 
-The final raised amount therefore does not necessarily equal exactly `$16,150.00`.
+### Minimum and Maximum Purchase Amount
+
+The minimum purchase is:
+
+```text
+MIN_BUY_AMOUNT_IN_USD_E2 = 100
+```
+
+which represents:
+
+```text
+$1.00
+```
+
+Purchases are made in **SOL**, and the minimum purchase is evaluated against the buyer's **net USD-equivalent contribution after the buy fee**.
+
+There is no separate fixed per-purchase maximum. The maximum permitted SOL purchase is limited by the sale's **remaining USD-equivalent capacity**.
+
+The permitted SOL purchase amount therefore depends on the current SOL/USD price, configured buy fee, and remaining sale capacity.
 
 ### SOL/USD Price Feed
 
