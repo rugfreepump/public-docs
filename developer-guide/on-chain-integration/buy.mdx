@@ -13,13 +13,13 @@ The instruction accepts a gross SOL amount, deducts the configured protocol fee,
 
 Before constructing a `buy` transaction, read the following fields from the required accounts and verify that the sale is eligible for purchase:
 
-| Field                                  | Account             | Required value / condition                       |
-| :------------------------------------- | :------------------ | :----------------------------------------------- |
+| Field                                  | Account             | Required value / condition                                      |
+| :------------------------------------- | :------------------ | :-----------------------------------------------                |
 | `is_platform_maintenance_mode_enabled` | `admin_states_pda`  | `false`                                          |
 | `is_sale_active`                       | `bonding_curve_pda` | `true`                                           |
 | `is_sale_finalized`                    | `bonding_curve_pda` | `false`                                          |
 | `is_finalized_sale_canceled`           | `bonding_curve_pda` | `false`                                          |
-| `sale_expires_at`                      | `bonding_curve_pda` | Current Unix timestamp must be before this value |
+| `sale_expires_at`                      | `bonding_curve_pda` | Current Unix timestamp must be less than or equal to this value |
 
 The program also checks `sale_expires_at` during execution. If the current Unix timestamp is greater than or equal to `sale_expires_at`, the program sets `is_sale_active` to `false` and rejects the purchase.
 
