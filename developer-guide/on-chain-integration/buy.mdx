@@ -194,6 +194,108 @@ The following accounts must be supplied to `buy` in the order defined by the ins
 | `associated_token_program`       | Associated Token Program: `ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL`   | Required Solana program account                                                                  |
 | `system_program`                 | System Program: `11111111111111111111111111111111`                         | Required Solana program account                                                                  |
 
+### Anchor Accounts Definition
+
+The `buy` instruction uses the following Anchor account context:
+
+```rust
+#[derive(Accounts)]
+#[instruction(
+    lamports_amount: u64,
+    expected_total_raised_usd_e2: u64,
+    expected_total_sold_tokens_e6: u64,
+    slippage_bps: u16
+)]
+pub struct Buy<'info> {
+    /// The user sending SOL and receiving tokens
+    #[account(mut)]
+    pub buyer: Signer<'info>,
+
+    /// The token mint being sold
+    #[account(
+        mut,
+        constraint = mint.key() == bonding_curve_pda.token_mint_address
+    )]
+    pub mint: Account<'info, Mint>,
+
+    #[account(
+        seeds = [b"admin-states"],
+        bump
+    )]
+    pub admin_states_pda: Box<Account<'info, AdminStatesPDA>>,
+
+    /// Global states PDA (tracks global sale settings)
+    #[account(
+        seeds = [b"global-states"],
+        bump,
+    )]
+    pub global_states_pda: Account<'info, GlobalStatesPDA>,
+
+    /// Bonding curve PDA (tracks state for this token sale)
+    #[account(
+        mut,
+        seeds = [b"bonding-curve", mint.key().as_ref()],
+        bump,
+    )]
+    pub bonding_curve_pda: Account<'info, BondingCurvePDA>,
+
+    /// Bonding curve vault (SOL vault for this bonding curve)
+    #[account(
+        mut,
+        seeds = [b"bonding-curve-vault", mint.key().as_ref()],
+        bump,
+    )]
+    pub bonding_curve_vault: SystemAccount<'info>,
+
+    /// PDA's token account (tokens available for sale)
+    #[account(
+        mut,
+        token::mint = mint,
+        token::authority = bonding_curve_vault,
+    )]
+    pub associated_bonding_curve_ata: Account<'info, TokenAccount>,
+
+    /// Buyer accumulation PDA (tracks how much this buyer has purchased)
+    #[account(
+        init_if_needed,
+        payer = buyer,
+        space = BuyerAccumulationPDA::LEN,
+        seeds = [
+            b"buyer-accumulation",
+            bonding_curve_pda.key().as_ref(),
+            buyer.key().as_ref(),
+        ],
+        bump,
+    )]
+    pub buyer_accumulation_pda: Account<'info, BuyerAccumulationPDA>,
+
+    /// Buyer's ATA for receiving tokens (auto-create if missing)
+    #[account(
+        init_if_needed,
+        payer = buyer,
+        associated_token::mint = mint,
+        associated_token::authority = buyer,
+    )]
+    pub buyer_associated_token_account: Account<'info, TokenAccount>,
+
+    /// Platform fee vault (validated against seeds)
+    #[account(
+        mut,
+        seeds = [b"platform-fee-vault"],
+        bump,
+    )]
+    pub platform_fee_vault: SystemAccount<'info>,
+
+    // Pyth SOL/USD price feed account
+    pub sol_usd_price_feed: Account<'info, PriceUpdateV2>,
+
+    /// Programs
+    pub token_program: Program<'info, Token>,
+    pub associated_token_program: Program<'info, AssociatedToken>,
+    pub system_program: Program<'info, System>,
+}
+```
+
 ### TypeScript Example: Transaction Construction
 
 The following example derives the required accounts, reads the current `bonding_curve_pda` data account state for slippage protection, constructs the `buy` instruction, and submits it in a versioned Solana transaction.
