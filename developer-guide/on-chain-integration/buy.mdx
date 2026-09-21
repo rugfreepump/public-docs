@@ -7,18 +7,6 @@ The `buy` instruction purchases tokens from an active RugFreePump bonding-curve 
 
 The instruction accepts a gross SOL amount, deducts the configured protocol fee, denominates the remaining SOL contribution in USD-equivalent terms using a validated Pyth SOL/USD price feed, calculates the corresponding token amount using the bonding curve pricing model, and transfers the tokens to the buyer.
 
-## Instruction Signature
-
-```rust
-pub fn buy(
-    ctx: Context<Buy>,
-    lamports_amount: u64,
-    expected_total_raised_usd_e2: u64,
-    expected_total_sold_tokens_e6: u64,
-    slippage_bps: u16,
-) -> Result<()>
-```
-
 ## Execution Requirements
 
 The execution of the `buy` instruction must satisfy the required protocol state and purchase conditions below.
@@ -114,6 +102,17 @@ The program validates:
 * Oracle confidence within 2% of the reported price
 * A price update no older than 60 seconds
 
+## Instruction Signature
+
+```rust
+pub fn buy(
+    ctx: Context<Buy>,
+    lamports_amount: u64,
+    expected_total_raised_usd_e2: u64,
+    expected_total_sold_tokens_e6: u64,
+    slippage_bps: u16,
+) -> Result<()>
+```
 ## Instruction Data
 
 | Argument                        | Type  | Required | Required format                                                                                                  | Description                                                                                                                                                                                                                                        |
