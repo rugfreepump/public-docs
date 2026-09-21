@@ -38,7 +38,7 @@ The bonding-curve sale uses **fixed-point USD-equivalent values with 2 decimal p
 * **Capacity Constraint:** The USD-equivalent value of the SOL amount remaining after the buy fee must not exceed the sale's remaining USD-equivalent capacity.
 * **Auto-Finalization:** After a successful purchase, the sale is finalized when the remaining USD-equivalent capacity falls below `SALE_FINALIZATION_BUFFER_USD_E2`.
 
-The current sale total used for the capacity check is `bonding_curve_pda.total_raised_usd_e2`.
+The program determines the sale's remaining USD-equivalent capacity by subtracting `bonding_curve_pda.total_raised_usd_e2` from `MAX_USD_RAISE_CAP_IN_USD_E2`.
 
 ### Minimum and Maximum Purchase Limits
 
