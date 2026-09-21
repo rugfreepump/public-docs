@@ -184,10 +184,7 @@ const buyerAssociatedTokenAccount = getAssociatedTokenAddressSync(
 );
 
 // Fetch the current bonding-curve state
-const bondingCurveAccount =
-  await program.account.bondingCurvePda.fetch(
-    bondingCurvePda,
-  );
+const bondingCurveAccount = await program.account.bondingCurvePda.fetch(bondingCurvePda);
 
 // Read the state snapshot required for slippage protection
 const expectedTotalRaisedUsdE2 = new BN(
@@ -225,8 +222,7 @@ const buyInstruction = await program.methods
   .instruction();
 
 // Fetch a recent blockhash
-const { blockhash } =
-  await provider.connection.getLatestBlockhash("confirmed");
+const { blockhash } = await provider.connection.getLatestBlockhash("confirmed");
 
 // Build the versioned transaction
 const messageV0 = new TransactionMessage({
@@ -240,8 +236,7 @@ const transaction = new VersionedTransaction(messageV0);
 // Sign and submit
 transaction.sign([wallet.payer]);
 
-const signature =
-  await provider.connection.sendTransaction(transaction);
+const signature = await provider.connection.sendTransaction(transaction);
 
 console.log(signature);
 ```
