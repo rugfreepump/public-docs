@@ -39,7 +39,7 @@ The `sol_usd_price_feed` account that the `buy` instruction expects must contain
 Before the price is used for purchase calculation, the program validates:
 
 * The Pyth update has `VerificationLevel::Full`.
-* The update corresponds to the **Pyth SOL/USD feed ID configured in the RugFreePump program**.
+* The update corresponds to the **Pyth SOL/USD feed ID** configured in the RugFreePump program.
 * The price update is no older than **60 seconds**.
 * The reported price is positive.
 * The oracle confidence interval does not exceed **2% of the reported price**.
