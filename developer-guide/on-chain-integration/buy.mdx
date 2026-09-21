@@ -34,39 +34,37 @@ The bonding-curve token sale tracks parameters using **fixed-point numbers with 
 
 ### SOL/USD Price Feed
 
-The `sol_usd_price_feed` account passed to the `buy` instruction must be a valid Pyth `PriceUpdateV2` account. 
+The `sol_usd_price_feed` account that the `buy` instruction expects must contain a valid Pyth `PriceUpdateV2` account for the SOL/USD price feed.
 
-The program executes the following deterministic assertions before utilizing the price data:
+Before the price is used for purchase calculation, the program validates:
 
-* **Guard Signatures:** The Pyth payload must possess a `VerificationLevel::Full`.
-* **Feed Identification:** The update must match the hardcoded **Pyth SOL/USD feed ID configured in the RugFreePump program**.
-* **Liveness Check:** The price update timestamp cannot be older than **60 seconds** relative to the cluster `Clock`.
-* **Sanity Filter:** The reported price must be a strictly positive integer (`> 0`).
-* **Confidence Interval:** The oracle confidence interval (`conf`) cannot exceed **2% of the reported price**.
+* The Pyth update has `VerificationLevel::Full`.
+* The update corresponds to the **Pyth SOL/USD feed ID configured in the RugFreePump program**.
+* The price update is no older than **60 seconds**.
+* The reported price is positive.
+* The oracle confidence interval does not exceed **2% of the reported price**.
 
-Upon passing validation, the raw price is normalized and scaled to a **fixed-point number with 2 decimal places**.
+The validated price is scaled to a **fixed-point number with 2 decimal places** before being used by the purchase calculation.
 
-```text id="1zpgum"
-Example: $123.45 → 12,345
-```
+For example: **$123.45 → 12,345**
 
-If any validation criteria fail, the program aborts processing and rejects the `buy` transaction.
+If any of these validations fail, the `buy` transaction is rejected.
 
 #### Pyth SOL/USD Feed ID
 
-```text id="cvd3gg"
+```text
 0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d
 ```
 
 #### Current `PriceUpdateV2` Account
 
-The production deployment utilizes this pull oracle account on Solana Mainnet:
+The current RugFreePump deployment uses:
 
-```text id="5soa95"
+```text
 7UVimffxr9ow1uXYxsr4LHAcV58mLzhmwaeKvJ1pjLiE
 ```
 
-This account is regularly maintained by public crank operators. Client integrations can supply any valid alternate `PriceUpdateV2` account containing an active SOL/USD update, provided it fully complies with the smart contract validations listed above.
+This is the account currently used by RugFreePump. Developers may supply another valid Pyth `PriceUpdateV2` account containing an acceptable update for the same Pyth SOL/USD feed, provided it satisfies the program's validation requirements.
 
 ## Rust
 
