@@ -93,14 +93,41 @@ The final raised amount therefore does not necessarily equal exactly `$16,150.00
 
 ### SOL/USD Price Feed
 
-The `sol_usd_price_feed` account must be the configured Pyth `PriceUpdateV2` account for the RugFreePump SOL/USD feed.
+The `sol_usd_price_feed` account that the `buy` instruction expects must contain a valid Pyth `PriceUpdateV2` account for the SOL/USD price feed.
 
-The program validates:
+Before the price is used for purchase calculation, the program validates:
 
-* A valid Pyth `PriceUpdateV2` account for the required SOL/USD price feed (Ex: `7UVimffxr9ow1uXYxsr4LHAcV58mLzhmwaeKvJ1pjLiE`)
-* A positive price
-* Oracle confidence within 2% of the reported price
-* A price update no older than 60 seconds
+* The Pyth update has `VerificationLevel::Full`.
+* The update corresponds to the **Pyth SOL/USD feed ID configured in the RugFreePump program**.
+* The price update is no older than **60 seconds**.
+* The reported price is positive.
+* The oracle confidence interval does not exceed **2% of the reported price**.
+
+The validated price is scaled to a **fixed-point number with 2 decimal places** before being used by the purchase calculation.
+
+For example:
+
+```text
+$123.45 → 12,345
+```
+
+If any of these validations fail, the `buy` transaction is rejected.
+
+#### Pyth SOL/USD Feed ID
+
+```text
+0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d
+```
+
+#### Current `PriceUpdateV2` Account
+
+The current RugFreePump deployment uses:
+
+```text
+7UVimffxr9ow1uXYxsr4LHAcV58mLzhmwaeKvJ1pjLiE
+```
+
+This is the account currently used by RugFreePump. Developers may supply another valid Pyth `PriceUpdateV2` account containing an acceptable update for the same Pyth SOL/USD feed, provided it satisfies the program's validation requirements.
 
 ## Rust
 
