@@ -27,24 +27,24 @@ Because these values can change between transaction construction and execution, 
 
 ### Sale Cap and Finalization Buffer
 
-The bonding-curve token sale uses **fixed-point USD-equivalent values with 2 decimal places** for its sale cap and finalization threshold. Buyers contribute **SOL**, and the value of their net SOL contribution is measured against these USD-denominated limits using the validated SOL/USD price.
+The bonding-curve sale uses **fixed-point USD-equivalent values with 2 decimal places** for its sale cap and finalization threshold. Buyers contribute **SOL**, and the value of the net SOL contribution is measured against these limits using the validated SOL/USD price.
 
-| Constant                          | Raw Value   | Human-Readable | Purpose                                                               |
-| :-------------------------------- | :---------- | :------------- | :-------------------------------------------------------------------- |
-| `MAX_USD_RAISE_CAP_IN_USD_E2`     | `1,615,000` | $16,150.00     | Maximum USD-equivalent value of SOL that the sale can raise.          |
-| `SALE_FINALIZATION_BUFFER_USD_E2` | `5,000`     | $50.00         | Remaining USD-equivalent value of SOL at which the sale is finalized. |
+| Constant                          | Raw Value   | Human-Readable | Purpose                                                                            |
+| :-------------------------------- | :---------- | :------------- | :--------------------------------------------------------------------------------- |
+| `MAX_USD_RAISE_CAP_IN_USD_E2`     | `1,615,000` | $16,150.00     | Maximum USD-equivalent value of SOL contributions that the sale can raise          |
+| `SALE_FINALIZATION_BUFFER_USD_E2` | `5,000`     | $50.00         | Remaining USD-equivalent SOL contribution capacity at which the sale is finalized  |
 
 * **Contribution Valuation:** After the buy fee is deducted, the buyer's remaining SOL contribution is valued using the validated SOL/USD price.
-* **Capacity Constraint:** The USD-equivalent value of the buyer's net SOL contribution must not exceed the sale's remaining USD-equivalent SOL capacity.
-* **Auto-Finalization:** After a successful purchase, the sale is finalized when the remaining USD-equivalent SOL capacity falls below `SALE_FINALIZATION_BUFFER_USD_E2`.
+* **Capacity Constraint:** The USD-equivalent value of the buyer's net SOL contribution must not exceed the sale's remaining USD-equivalent SOL contribution capacity.
+* **Auto-Finalization:** After a successful purchase, the sale is finalized when the remaining USD-equivalent SOL contribution capacity falls below `SALE_FINALIZATION_BUFFER_USD_E2`.
 
 The current sale total used for the capacity check is `bonding_curve_pda.total_raised_usd_e2`.
 
 ### Minimum and Maximum Purchase Limits
 
 * **Minimum Purchase:** `MIN_BUY_AMOUNT_IN_USD_E2 = 100`, representing $1.00. After the buy fee is deducted, the buyer's remaining SOL contribution must have a USD-equivalent value of at least $1.00.
-* **Maximum Purchase:** There is no separate hard-coded per-purchase maximum. The maximum permitted SOL amount is constrained by the sale's **remaining USD-equivalent SOL capacity**, after accounting for the buy fee and the current SOL/USD price.
-* **Dynamic SOL Limits:** The maximum valid SOL purchase amount changes with the sale's remaining USD-equivalent SOL capacity, the configured buy fee, and the current SOL/USD price.
+* **Maximum Purchase:** There is no separate hard-coded per-purchase maximum. The maximum permitted SOL amount is constrained by the sale's **remaining USD-equivalent SOL contribution capacity**, after accounting for the buy fee and the current SOL/USD price.
+* **Dynamic SOL Limits:** The maximum valid SOL purchase amount changes with the sale's remaining USD-equivalent SOL contribution capacity, the configured buy fee, and the current SOL/USD price.
 
 ### Buy Fee
 
@@ -90,7 +90,7 @@ Because the bonding-curve state can change before execution, these values should
 
 The `sol_usd_price_feed` account must contain a valid Pyth `PriceUpdateV2` account for the SOL/USD price feed.
 
-Before the price is used for purchase calculation, the program validates:
+Before the price is used for the purchase calculation, the program validates:
 
 * The Pyth update has `VerificationLevel::Full`.
 * The update corresponds to the **Pyth SOL/USD feed ID** configured in the RugFreePump program.
@@ -98,9 +98,9 @@ Before the price is used for purchase calculation, the program validates:
 * The reported price is positive.
 * The oracle confidence interval does not exceed **2% of the reported price**.
 
-The validated price is scaled to a **fixed-point number with 2 decimal places** before being used by the purchase calculation.
+The validated price is scaled to a **fixed-point value with 2 decimal places** before being used by the purchase calculation.
 
-For example: **$123.45 → 12,345**
+For example: **$123.45 → `12,345`**
 
 If any of these validations fail, the `buy` transaction is rejected.
 
@@ -118,7 +118,7 @@ The current RugFreePump deployment uses:
 7UVimffxr9ow1uXYxsr4LHAcV58mLzhmwaeKvJ1pjLiE
 ```
 
-This is the account currently used by RugFreePump. It is not a fixed account required by the program. Developers may supply another valid Pyth `PriceUpdateV2` account containing an acceptable update for the same SOL/USD feed, provided it satisfies the program's validation requirements.
+This is the account currently used by RugFreePump, but it is not a fixed account required by the program. Developers may supply another valid Pyth `PriceUpdateV2` account containing an acceptable update for the same SOL/USD feed, provided it satisfies the program's validation requirements.
 
 ## Rust
 
@@ -261,7 +261,7 @@ The following accounts must be supplied to `buy` in the order defined by the ins
 | `buyer_accumulation_pda`         | RugFreePump PDA: seeds `[b"buyer-accumulation", bonding_curve_pda, buyer]` | Created with `init_if_needed` when missing; `buyer` pays the required rent                       |
 | `buyer_associated_token_account` | ATA for `mint`, owned by `buyer`                                           | Created with `init_if_needed` when missing; `buyer` pays the required rent                       |
 | `platform_fee_vault`             | RugFreePump PDA: seeds `[b"platform-fee-vault"]`                           | Must exist and receive the buy fee                                                               |
-| `sol_usd_price_feed`             | RugFreePump uses: `7UVimffxr9ow1uXYxsr4LHAcV58mLzhmwaeKvJ1pjLiE`           | Must be a valid Pyth PriceUpdateV2 account for the required SOL/USD feed and satisfy the program's validation requirements             |
+| `sol_usd_price_feed`             | RugFreePump uses: `7UVimffxr9ow1uXYxsr4LHAcV58mLzhmwaeKvJ1pjLiE`           | Must be a valid Pyth PriceUpdateV2 account for the required SOL/USD feed and satisfy the program's validation requirements. The program does not require this specific account             |
 | `token_program`                  | Token Program: `TokenkegQfeZyiNwAJYbNbGKPFXCWuBvf9Ss623VQ5DA`              | Required Solana program account                                                                  |
 | `associated_token_program`       | Associated Token Program: `ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL`   | Required Solana program account                                                                  |
 | `system_program`                 | System Program: `11111111111111111111111111111111`                         | Required Solana program account                                                                  |
