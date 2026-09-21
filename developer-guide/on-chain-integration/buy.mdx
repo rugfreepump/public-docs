@@ -161,7 +161,6 @@ const buyerAssociatedTokenAccount = getAssociatedTokenAddressSync(
   buyer,
 );
 ```
-
 ## TypeScript Example: Transaction Construction
 
 The following example derives the required accounts, reads the current bonding-curve state for slippage protection, constructs the `buy` instruction, and submits it in a versioned Solana transaction.
@@ -192,6 +191,7 @@ const lamportsAmount = new BN("1000000000"); // 1 SOL
 const slippageBps = 200; // 2%
 
 // Derive required PDAs
+
 const [adminStatesPda] = PublicKey.findProgramAddressSync(
   [Buffer.from("admin-states")],
   PROGRAM_ID,
@@ -232,7 +232,8 @@ const [platformFeeVault] = PublicKey.findProgramAddressSync(
   PROGRAM_ID,
 );
 
-// Derive required token accounts
+// Derive required ATAs
+
 const associatedBondingCurveAta = getAssociatedTokenAddressSync(
   mint,
   bondingCurveVault,
@@ -247,25 +248,19 @@ const buyerAssociatedTokenAccount = getAssociatedTokenAddressSync(
 );
 
 // Fetch the current bonding-curve state
-const bondingCurveAccount =
-  await program.account.bondingCurvePda.fetch(
-    bondingCurvePda,
-  );
+const bondingCurveAccount = await program.account.bondingCurvePda.fetch(bondingCurvePda);
 
 // Read the state snapshot required for slippage protection
-const expectedTotalRaisedUsdE2 =
-  new BN(
+const expectedTotalRaisedUsdE2 = new BN(
     bondingCurveAccount.totalRaisedUsdE2.toString(),
   );
 
-const expectedTotalSoldTokensE6 =
-  new BN(
+const expectedTotalSoldTokensE6 = new BN(
     bondingCurveAccount.totalSoldTokensE6.toString(),
   );
 
 // Construct the buy instruction
-const buyInstruction =
-  await program.methods
+const buyInstruction = await program.methods
     .buy(
       lamportsAmount,
       expectedTotalRaisedUsdE2,
@@ -291,8 +286,7 @@ const buyInstruction =
     .instruction();
 
 // Fetch a recent blockhash
-const { blockhash } =
-  await provider.connection.getLatestBlockhash("confirmed");
+const { blockhash } = await provider.connection.getLatestBlockhash("confirmed");
 
 // Build the versioned transaction
 const messageV0 = new TransactionMessage({
@@ -301,23 +295,15 @@ const messageV0 = new TransactionMessage({
   instructions: [buyInstruction],
 }).compileToV0Message();
 
-const transaction =
-  new VersionedTransaction(messageV0);
+const transaction = new VersionedTransaction(messageV0);
 
 // Sign and submit
 transaction.sign([wallet.payer]);
 
-const signature =
-  await provider.connection.sendTransaction(
-    transaction,
-  );
+const signature = await provider.connection.sendTransaction(transaction);
 
 console.log(signature);
 ```
-
-`SOL_USD_PRICE_FEED_ACCOUNT`, `IDL`, `provider`, and the wallet are application-specific values supplied by the integrating application.
-
-The `buyer_accumulation_pda` and buyer token account are created automatically by `buy` when they do not already exist. The buyer pays the required account rent.
 
 
 
