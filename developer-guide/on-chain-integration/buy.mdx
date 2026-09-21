@@ -102,20 +102,17 @@ The following accounts must be supplied to `buy` in the order defined by the ins
 ## TypeScript example of required PDAs & ATAs Derivation
 
 ```ts
-const [adminStatesPda] =
-  PublicKey.findProgramAddressSync(
+const [adminStatesPda] = PublicKey.findProgramAddressSync(
     [Buffer.from("admin-states")],
     PROGRAM_ID,
   );
 
-const [globalStatesPda] =
-  PublicKey.findProgramAddressSync(
+const [globalStatesPda] = PublicKey.findProgramAddressSync(
     [Buffer.from("global-states")],
     PROGRAM_ID,
   );
 
-const [bondingCurvePda] =
-  PublicKey.findProgramAddressSync(
+const [bondingCurvePda] = PublicKey.findProgramAddressSync(
     [
       Buffer.from("bonding-curve"),
       mint.toBuffer(),
@@ -123,8 +120,7 @@ const [bondingCurvePda] =
     PROGRAM_ID,
   );
 
-const [bondingCurveVault] =
-  PublicKey.findProgramAddressSync(
+const [bondingCurveVault] = PublicKey.findProgramAddressSync(
     [
       Buffer.from("bonding-curve-vault"),
       mint.toBuffer(),
@@ -132,8 +128,7 @@ const [bondingCurveVault] =
     PROGRAM_ID,
   );
 
-const [buyerAccumulationPda] =
-  PublicKey.findProgramAddressSync(
+const [buyerAccumulationPda] = PublicKey.findProgramAddressSync(
     [
       Buffer.from("buyer-accumulation"),
       bondingCurvePda.toBuffer(),
@@ -142,16 +137,14 @@ const [buyerAccumulationPda] =
     PROGRAM_ID,
   );
 
-const [platformFeeVault] =
-  PublicKey.findProgramAddressSync(
+const [platformFeeVault] = PublicKey.findProgramAddressSync(
     [Buffer.from("platform-fee-vault")],
     PROGRAM_ID,
   );
 ```
 
 ```ts
-const associatedBondingCurveAta =
-  getAssociatedTokenAddressSync(
+const associatedBondingCurveAta = getAssociatedTokenAddressSync(
     mint,
     bondingCurveVault,
     true,
@@ -159,8 +152,7 @@ const associatedBondingCurveAta =
     ASSOCIATED_TOKEN_PROGRAM_ID,
   );
 
-const buyerAssociatedTokenAccount =
-  getAssociatedTokenAddressSync(
+const buyerAssociatedTokenAccount = getAssociatedTokenAddressSync(
     mint,
     buyer,
   );
