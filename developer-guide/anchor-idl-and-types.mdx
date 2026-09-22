@@ -23,20 +23,24 @@ The official integration artifacts are maintained in the RugFreePump repository:
 
 RugFreePump maintains separate Devnet and Mainnet deployments while keeping their program interfaces synchronized.
 
-When a program update changes the interface, the corresponding program version is deployed across the supported clusters and the published IDL and TypeScript types are updated accordingly.
+The same current program interface is maintained across both clusters. The program ID may differ between deployments, but the published IDL and TypeScript types represent the interface maintained across both environments.
 
 | Deployment Cluster | Solana Cluster Target | RugFreePump Program ID                         |
 | :----------------- | :-------------------- | :--------------------------------------------- |
 | **Devnet**         | `devnet`              | `9hpBPEiywp7FPAq5uP253eAZzdJ1Cpd36L5RAYuc9xSw` |
 | **Mainnet**        | `mainnet-beta`        | `6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P`  |
 
-> **Deployment note:** The program ID identifies a deployment and is independent of the program interface. If the program is deployed under a different address without changing its interface, the corresponding deployment address can be updated independently without requiring separate IDL or TypeScript artifacts.
+> **Deployment note:** The program ID identifies a deployment and is independent of the program interface. A change to a deployment address does not by itself require separate IDL or TypeScript artifacts when the program interface remains unchanged.
 
 ## Interface Synchronization & Versioning
 
-The published IDL and generated TypeScript types are updated when changes to the program interface require the published artifacts to change.
+The published IDL and generated TypeScript types are maintained as the current reference for the RugFreePump program interface.
 
-Examples include:
+**Last updated:** `September 22, 2026`
+
+The **Last updated** date above identifies the latest published state of the IDL and TypeScript artifacts. Developers should use this date as the reference point when determining whether they are working with the current published interface.
+
+Interface changes that require the published artifacts to be updated may include:
 
 * **Instructions:** Changes to public instruction definitions or entry points.
 * **Arguments:** Changes to instruction arguments or their types.
@@ -44,4 +48,8 @@ Examples include:
 * **Events:** Changes to program-emitted event definitions.
 * **Errors and Types:** Changes to custom errors or defined types represented in the IDL.
 
-Devnet and Mainnet are maintained against the same program interface so developers can use Devnet to test integrations against the interface intended for the production deployment.
+RugFreePump does not intentionally introduce breaking changes to its public program interface. However, breaking changes may become necessary in exceptional circumstances. If a change affects the published IDL or TypeScript types, the updated artifacts and **Last updated** date will be published here.
+
+Devnet and Mainnet are maintained against the same current program interface so developers can use Devnet to test integrations against the interface intended for the production deployment.
+
+> **Important:** The IDL and TypeScript files linked on this page are the authoritative published artifacts for the current RugFreePump interface. Developers should verify the **Last updated** date on this page when maintaining an integration and should not rely on an older local copy when a newer published version is available.
