@@ -14,37 +14,37 @@ RugFreePump maintains the identical program interface across its supported Devne
 
 The official integration artifacts are maintained in the RugFreePump repository:
 
-| Artifact | Source File | Description |
-| :--- | :--- | :--- |
-| **Anchor IDL** | [`rug_free_pump.json`](https://github.com/rugfreepump/public-docs/blob/main/idl-and-types/rug_free_pump.json) | Machine-readable description of the RugFreePump program interface. |
-| **TypeScript Types** | [`rug_free_pump.ts`](https://github.com/rugfreepump/public-docs/blob/main/idl-and-types/rug_free_pump.ts) | Generated TypeScript representation of the published program interface. |
+| Artifact             | Source File                                                                                                   | Description                                                             |
+| :------------------- | :------------------------------------------------------------------------------------------------------------ | :---------------------------------------------------------------------- |
+| **Anchor IDL**       | [`rug_free_pump.json`](https://github.com/rugfreepump/public-docs/blob/main/idl-and-types/rug_free_pump.json) | Machine-readable description of the RugFreePump program interface.      |
+| **TypeScript Types** | [`rug_free_pump.ts`](https://github.com/rugfreepump/public-docs/blob/main/idl-and-types/rug_free_pump.ts)     | Generated TypeScript representation of the published program interface. |
 
 ## Supported Deployments
 
-RugFreePump maintains separate Devnet and Mainnet deployments while keeping their underlying program interfaces strictly synchronized. 
+RugFreePump maintains separate Devnet and Mainnet deployments while keeping their underlying program interfaces strictly synchronized.
 
 The program ID may differ between deployments, but the published IDL and TypeScript types uniformly map to both environments.
 
-| Deployment Cluster | Solana Cluster Target | RugFreePump Program ID |
-| :--- | :--- | :--- |
-| **Devnet** | `devnet` | `9hpBPEiywp7FPAq5uP253eAZzdJ1Cpd36L5RAYuc9xSw` |
-| **Mainnet** | `mainnet-beta` | `6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P` |
+| Deployment Cluster | Solana Cluster Target | RugFreePump Program ID                         |
+| :----------------- | :-------------------- | :--------------------------------------------- |
+| **Devnet**         | `devnet`              | `9hpBPEiywp7FPAq5uP253eAZzdJ1Cpd36L5RAYuc9xSw` |
+| **Mainnet**        | `mainnet-beta`        | `6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P`  |
 
-:::info Deployment Address Parity
-A Program ID identifies a specific deployment and operates independently of the interface layout. Updating a cluster deployment address does not require new IDL or TypeScript artifacts if the underlying program interface remains unchanged.
-:::
+<Info>
+**Deployment Address Parity**
+
+A Program ID identifies a specific deployment and operates independently of the interface layout. Updating a cluster deployment address does not require new IDL or TypeScript artifacts if the underlying program interface remains unchanged. </Info>
 
 ## Interface Synchronization & Versioning
 
 The published IDL and generated TypeScript types serve as the live reference for the current RugFreePump program interface.
 
-:::tip Latency Verification
+<Tip>
 **Last updated:** `September 22, 2026`
 
-The timestamp above marks the latest published state of the IDL and TypeScript artifacts. Use this date as your baseline reference to ensure your local implementation maps to the current active specification.
-:::
+The timestamp above marks the latest published state of the IDL and TypeScript artifacts. Use this date as your baseline reference to ensure your local implementation maps to the current active specification. </Tip>
 
-Interface updates are triggered when contract modifications alter the underlying layout. Examples include:
+Interface updates are triggered when program modifications alter the published interface. Examples include:
 
 * **Instructions:** Changes to public instruction definitions or entry points.
 * **Arguments:** Modifications to instruction parameters or their data types.
@@ -52,10 +52,11 @@ Interface updates are triggered when contract modifications alter the underlying
 * **Events:** Adjustments to program-emitted event definitions.
 * **Errors and Types:** Additions or changes to custom errors and defined types represented in the IDL.
 
-While RugFreePump minimizes breaking changes to its public interface, exceptional protocol upgrades may require structural modifications. In these cases, updated artifacts and a revised **Last updated** timestamp will deploy here simultaneously.
+RugFreePump does not intentionally introduce breaking changes to its public interface. However, exceptional protocol upgrades may require structural modifications. In these cases, the updated artifacts and revised **Last updated** date will be published here.
 
-Devnet and Mainnet remain locked to the same current program interface version, guaranteeing that integrations successfully verified on Devnet behave identically when migrating to production.
+Devnet and Mainnet remain synchronized to the same current program interface, allowing developers to use Devnet to test against the interface intended for the production deployment.
 
-:::danger Production Warning
-The IDL and TypeScript files linked on this page are the sole authoritative assets for the active RugFreePump interface. When maintaining production integrations, verify the active **Last updated** date above—do not rely on cached or local schemas when a newer version is published.
-:::
+<Warning>
+**Production Warning**
+
+The IDL and TypeScript files linked on this page are the authoritative published artifacts for the active RugFreePump interface. When maintaining production integrations, verify the current **Last updated** date above and do not rely on an older cached or local copy when a newer version has been published. </Warning>
