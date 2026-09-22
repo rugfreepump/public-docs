@@ -30,21 +30,19 @@ The program ID may differ between deployments, but the published IDL and TypeScr
 | **Devnet**         | `devnet`              | `9hpBPEiywp7FPAq5uP253eAZzdJ1Cpd36L5RAYuc9xSw` |
 | **Mainnet**        | `mainnet-beta`        | `6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P`  |
 
-<Info>
-**Deployment Address Parity**
-
-A Program ID identifies a specific deployment and operates independently of the interface layout. Updating a cluster deployment address does not require new IDL or TypeScript artifacts if the underlying program interface remains unchanged. </Info>
+> **Deployment Address Parity**
+>
+> A Program ID identifies a specific deployment and operates independently of the interface layout. Updating a cluster deployment address does not require new IDL or TypeScript artifacts if the underlying program interface remains unchanged.
 
 ## Interface Synchronization & Versioning
 
 The published IDL and generated TypeScript types serve as the live reference for the current RugFreePump program interface.
 
-<Tip>
-**Last updated:** `September 22, 2026.`
+> **Last updated:** `September 22, 2026`
+>
+> This date marks the latest published state of the IDL and TypeScript artifacts. Developers should use this date as the baseline reference when determining whether their local implementation matches the current published interface.
 
-The timestamp above marks the latest published state of the IDL and TypeScript artifacts. Use this date as your baseline reference to ensure your local implementation maps to the current active specification. </Tip>
-
-Interface updates are triggered when program modifications alter the published interface. Examples include:
+Interface updates are made when program modifications alter the published interface. Examples include:
 
 * **Instructions:** Changes to public instruction definitions or entry points.
 * **Arguments:** Modifications to instruction parameters or their data types.
@@ -52,11 +50,10 @@ Interface updates are triggered when program modifications alter the published i
 * **Events:** Adjustments to program-emitted event definitions.
 * **Errors and Types:** Additions or changes to custom errors and defined types represented in the IDL.
 
-RugFreePump does not intentionally introduce breaking changes to its public interface. However, exceptional protocol upgrades may require structural modifications. In these cases, the updated artifacts and revised **Last updated** date will be published here.
+RugFreePump does not intentionally introduce breaking changes to its public interface. However, exceptional protocol upgrades may require structural modifications. If a change affects the published IDL or TypeScript types, the updated artifacts and revised **Last updated** date will be published here.
 
 Devnet and Mainnet remain synchronized to the same current program interface, allowing developers to use Devnet to test against the interface intended for the production deployment.
 
-<Warning>
-**Production Warning**
-
-The IDL and TypeScript files linked on this page are the authoritative published artifacts for the active RugFreePump interface. When maintaining production integrations, verify the current **Last updated** date above and do not rely on an older cached or local copy when a newer version has been published. </Warning>
+> **Production Warning**
+>
+> The IDL and TypeScript files linked on this page are the authoritative published artifacts for the active RugFreePump interface. When maintaining a production integration, verify the current **Last updated** date above and do not rely on an older cached or local copy when a newer version has been published.
