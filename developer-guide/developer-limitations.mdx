@@ -11,7 +11,7 @@ The RugFreePump hosted application and internal backend infrastructure are not r
 
 RugFreePump does not currently provide an official off-chain SDK.
 
-Direct integrations can interact with the on-chain program using standard Solana tooling and the published [Anchor IDL & Types](./anchor-idl-and-types/usage).
+Direct integrations can interact with the on-chain program using standard Solana tooling and the published [Anchor IDL & Types](./anchor-idl-and-types).
 
 No separate RugFreePump SDK is required to access the public on-chain interface.
 
@@ -79,7 +79,7 @@ RugFreePump maintains separate Solana deployments for Devnet and Mainnet.
 
 Program IDs, cluster configuration, and certain external accounts are deployment-specific and must be treated accordingly.
 
-The current published deployments are documented in [Anchor IDL & Types](./anchor-idl-and-types/usage).
+The current published deployments are documented in [Anchor IDL & Types](./anchor-idl-and-types).
 
 External dependencies such as the Pyth SOL/USD price account and other required program accounts must also satisfy the requirements of the target deployment and instruction.
 
@@ -129,7 +129,7 @@ RugFreePump does not intentionally introduce breaking changes to its public on-c
 
 However, exceptional protocol upgrades may modify instructions, arguments, accounts, events, errors, or defined types.
 
-When such a change affects the published interface, the corresponding IDL and generated TypeScript types are updated and the [Anchor IDL & Types](./anchor-idl-and-types/usage) page receives an updated **Last Updated** date.
+When such a change affects the published interface, the corresponding IDL and generated TypeScript types are updated and the [Anchor IDL & Types](./anchor-idl-and-types) page receives an updated **Last Updated** date.
 
 Developers should use the currently published artifacts rather than assuming that an older local copy remains compatible indefinitely.
 
