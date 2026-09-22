@@ -3,47 +3,50 @@ title: "Anchor IDL & Types"
 description: "Access the published Anchor IDL and TypeScript types for the RugFreePump on-chain program."
 ---
 
-RugFreePump publishes its **Anchor IDL** and **TypeScript types** as the definitive, machine-readable specification of its public on-chain interface.
+RugFreePump publishes its **Anchor IDL** and **TypeScript types** as the machine-readable representation of its public on-chain program interface.
 
-* **Anchor IDL:** Defines the complete program structure, including instructions, account layouts, arguments, events, custom errors, and custom types.
-* **TypeScript Types:** Provides strongly-typed representations of the IDL components for safe, predictable client-side integration.
+* **Anchor IDL:** Describes the program interface, including instructions, account layouts, arguments, events, errors, and defined types.
+* **TypeScript Types:** Provides the generated TypeScript representation of the IDL for strongly typed client integrations.
 
-RugFreePump maintains strict parity across all deployments. Because the program interface is identical across Devnet and Mainnet, the published IDL and types serve as a unified spec rather than cluster-specific variants.
+RugFreePump maintains the same program interface across its supported Devnet and Mainnet deployments. The published IDL and TypeScript types therefore represent the shared protocol interface rather than separate cluster-specific variants.
 
 ## Published Artifacts
 
-Download or inspect the official integration artifacts directly from the RugFreePump repository:
+The official integration artifacts are maintained in the RugFreePump repository:
 
-| Artifact | Source File | Description |
-| :--- | :--- | :--- |
-| **Anchor IDL** | [`rug_free_pump.json`](https://github.com/rugfreepump/public-docs/blob/main/idl-and-types/rug_free_pump.json) | Canonical JSON machine-readable description of the program interface. |
-| **TypeScript Types** | [`rug_free_pump.ts`](https://github.com/rugfreepump/public-docs/blob/main/idl-and-types/rug_free_pump.ts) | Strongly-typed interface definitions generated for TypeScript clients. |
+| Artifact             | Source File                                                                                                   | Description                                                             |
+| :------------------- | :------------------------------------------------------------------------------------------------------------ | :---------------------------------------------------------------------- |
+| **Anchor IDL**       | [`rug_free_pump.json`](https://github.com/rugfreepump/public-docs/blob/main/idl-and-types/rug_free_pump.json) | Machine-readable description of the RugFreePump program interface.      |
+| **TypeScript Types** | [`rug_free_pump.ts`](https://github.com/rugfreepump/public-docs/blob/main/idl-and-types/rug_free_pump.ts)     | Generated TypeScript representation of the published program interface. |
 
 ## Supported Deployments
 
-The protocol program interface is synchronized across both environments. When the protocol implementation updates, changes deploy simultaneously across clusters so developers can test against exact production behavior.
+RugFreePump maintains separate Devnet and Mainnet deployments while keeping their program interfaces synchronized.
 
-| Deployment Cluster | Solana Cluster Target | RugFreePump Program ID |
-| :--- | :--- | :--- |
-| **Devnet** | `devnet` | `9hpBPEiywp7FPAq5uP253eAZzdJ1Cpd36L5RAYuc9xSw` |
-| **Mainnet** | `mainnet-beta` | `6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P` |
+When a program update changes the interface, the corresponding program version is deployed across the supported clusters and the published IDL and TypeScript types are updated accordingly.
 
-:::tip Deployment Note
-A change to a deployment's program address alone does not constitute an interface change. If a production deployment updates to a new Program ID without changing underlying structures, the Mainnet address will be updated here independently without requiring new IDL or TypeScript artifacts.
-:::
+| Deployment Cluster | Solana Cluster Target | RugFreePump Program ID                         |
+| :----------------- | :-------------------- | :--------------------------------------------- |
+| **Devnet**         | `devnet`              | `9hpBPEiywp7FPAq5uP253eAZzdJ1Cpd36L5RAYuc9xSw` |
+| **Mainnet**        | `mainnet-beta`        | `6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P`  |
+
+> **Deployment note:** The program ID identifies a deployment and is independent of the program interface. If the program is deployed under a different address without changing its interface, the corresponding deployment address can be updated independently without requiring separate IDL or TypeScript artifacts.
 
 ## Interface Synchronization & Versioning
 
-The published IDL and generated TypeScript types are strictly coupled to the program interface state. Updates to these artifacts are triggered exclusively by breaking or non-breaking structural modifications, including:
+The published IDL and generated TypeScript types are updated when changes to the program interface require the published artifacts to change.
 
-* **Instruction Definitions:** Modifications to method names, entry points, or routing logic.
-* **Arguments & Signatures:** Changes to parameter sizing, byte order, or required signers.
-* **Account Structures:** Alterations to state-account schemas, sizing, or relative relationships.
-* **Telemetry & Errors:** Variations in program-emitted events or custom error codes.
+Examples include:
 
-Devnet and Mainnet are explicitly locked to the same interface version. This guarantees that integrations successfully verified on Devnet will execute safely against the live production deployment.
+* **Instructions:** Changes to public instruction definitions or entry points.
+* **Arguments:** Changes to instruction arguments or their types.
+* **Accounts:** Changes to account structures or account relationships exposed by the interface.
+* **Events:** Changes to program-emitted event definitions.
+* **Errors and Types:** Changes to custom errors or defined types represented in the IDL.
+
+Devnet and Mainnet are maintained against the same program interface so developers can use Devnet to test integrations against the interface intended for the production deployment.
 
 ## Integration Reference
 
-* **Granular Reference:** For transaction construction and exact account lists, see the [Buy Instruction](../on-chain-integration/buy) documentation.
-* **Complete Schema:** For the complete, unedited machine-readable program layout, parse the official Anchor IDL linked above.
+* **Detailed Reference:** For transaction construction and exact account requirements, see the [Buy Instruction](../on-chain-integration/buy) documentation.
+* **Complete Schema:** For the complete machine-readable program interface, use the published [Anchor IDL](https://github.com/rugfreepump/public-docs/blob/main/idl-and-types/rug_free_pump.json).
