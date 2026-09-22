@@ -84,12 +84,7 @@
               "developer-guide/on-chain-integration/buy"
             ]
           },
-          {
-            "group": "Anchor IDL & Types",
-            "pages": [
-              "developer-guide/anchor-idl-and-types/usage"
-            ]
-          },
+          "developer-guide/anchor-idl-and-types",
           "developer-guide/developer-limitations"
         ]
       },
