@@ -3,7 +3,7 @@ title: "Developer Limitations"
 description: "Understand the current scope and boundaries of the RugFreePump public developer interface."
 ---
 
-The public developer interface is strictly limited to the deployed **RugFreePump Solana program** and its published [Anchor IDL & Types](./anchor-idl-and-types). 
+The public developer interface is the deployed **RugFreePump Solana program** and its published [Anchor IDL & Types](./anchor-idl-and-types).
 
 RugFreePump does not provide off-chain infrastructure as part of its public developer interface. Direct integrations must interact with the on-chain program using standard Solana tooling.
 
@@ -11,28 +11,30 @@ RugFreePump does not provide off-chain infrastructure as part of its public deve
 
 RugFreePump currently does not provide the following public infrastructure or tooling:
 
-*   **No off-chain SDK:** No official off-chain SDK is provided or required.
-*   **No public REST API:** Internal backend services are private infrastructure and subject to change without notice.
-*   **No managed RPC or relaying:** Integrators must supply their own RPC nodes, transaction execution, and gas/retry management.
-*   **No data indexing:** Developers must manage their own data caching, indexing, and event monitoring.
-*   **No temporary helper crates:** There is currently no official CPI wrapper or Rust integration crate available.
+* **No off-chain SDK:** No official off-chain SDK is provided or required.
+* **No public REST API:** Internal backend services are private infrastructure and may change independently of the public on-chain interface.
+* **No managed RPC or transaction relaying:** Integrators must provide their own RPC access, transaction submission, transaction-fee handling, and retry infrastructure.
+* **No managed indexing or data services:** Developers must manage their own caching, indexing, event monitoring, and application data infrastructure.
+* **No CPI wrapper or Rust crate:** There is currently no official CPI wrapper or Rust integration crate.
 
-Developers are fully responsible for the off-chain infrastructure, wallet handling, and application architecture required by their own integrations.
+Developers are responsible for the off-chain infrastructure, wallet handling, and application architecture required by their own integrations.
 
 ## Solana Deployments
 
-RugFreePump maintains separate, independent on-chain deployments across clusters:
+RugFreePump maintains separate on-chain deployments across supported Solana clusters:
 
-*   **Devnet:** Provided for development, integration testing, and protocol staging.
-*   **Mainnet:** The authoritative production deployment for live protocol interactions.
+* **Devnet:** Provided for development, integration testing, and protocol testing.
+* **Mainnet:** The production deployment for live protocol interactions.
 
-Both deployments share the exact same underlying RugFreePump program interface, which is defined in the [Anchor IDL & Types](./anchor-idl-and-types) documentation. However, target program IDs, oracle endpoints (e.g., Pyth), and configuration parameters must match the active cluster environment.
+Both deployments are maintained against the same RugFreePump program interface, which is defined by the published [Anchor IDL & Types](./anchor-idl-and-types).
+
+Program IDs and deployment-specific configurations—including all instructions, their required accounts, and arguments must match the target Solana cluster.
 
 ## Future Developer Tooling
 
-To streamline direct protocol integrations, RugFreePump plans to introduce the following official tooling in future releases:
+RugFreePump plans to introduce the following official developer tooling in future releases:
 
-*   A dedicated **CPI wrapper**
-*   A dedicated **Rust integration crate**
+* A dedicated **CPI wrapper**
+* A dedicated **Rust integration crate**
 
-Until these tools are officially released, all third-party integrations must utilize the published on-chain program interface and standard Solana development tools.
+Until these tools are officially released, third-party integrations should use the published on-chain program interface and standard Solana development tools.
