@@ -13,14 +13,14 @@ During an active bonding curve sale, buyers contribute SOL in exchange for a pur
 
 Once the sale reaches its fundraising threshold and liquidity migration to Raydium CPMM succeeds, buyers can claim tokens according to the selected model:
 
-- **Token Unlocked (TU):** The entire purchased allocation becomes claimable immediately after successful migration.
-- **Token Locked (TL):** The purchased allocation becomes claimable gradually according to a predefined unlock schedule.
+- **Token Unlocked (TU):** The entire purchased token allocation becomes claimable immediately after successful migration.
+- **Token Locked (TL):** The purchased token allocation becomes claimable gradually according to a predefined unlock schedule.
 
-Both models follow the same bonding curve pricing, fundraising requirements, protocol fees, and sale expiration and withdrawal rules. The difference is the distribution of purchased tokens after migration.
+Both models follow the same bonding curve pricing, fundraising requirements, protocol fees, and sale expiration and withdrawal rules. The difference is how purchased tokens are distributed after liquidity migration to Raydium CPMM.
 
 ## Token Unlocked (TU)
 
-**Token Unlocked (TU)** allows buyers to claim **100% of their purchased token allocation** as soon as liquidity migration is successfully completed.
+**Token Unlocked (TU)** allows buyers to claim **100% of their purchased token allocation** as soon as liquidity migration is completed.
 
 There is no gradual unlock schedule or additional waiting period after migration. Buyers initiate a claiming transaction to receive their purchased tokens in their wallets.
 
@@ -28,7 +28,7 @@ TU provides full token availability following migration, allowing buyers to hold
 
 ## Token Locked (TL)
 
-**Token Locked (TL)** makes purchased tokens available gradually after successful liquidity migration, according to the unlock settings recorded when the sale was created.
+**Token Locked (TL)** makes purchased tokens available gradually after liquidity migration is completed, according to the unlock settings recorded when the sale was created.
 
 ### Current Token Unlock Settings
 
@@ -38,12 +38,10 @@ The following settings apply to newly created TL sales:
 | --- | --- |
 | Token Unlock Amount | **10.00%** |
 | Token Unlock Interval | **30 minutes** |
-| Unlock Schedule Begins | **After successful liquidity migration** |
+| Unlock Schedule Begins | **After liquidity migration** |
 | Full Token Availability | **5 hours after migration** |
 
-An additional **10% of each buyer's purchased allocation** becomes claimable every 30 minutes, beginning 30 minutes after successful migration. The full allocation becomes available after 5 hours.
-
-These percentages apply to each buyer's purchased allocation, not the token's total supply.
+An additional **10% of each buyer's purchased allocation** becomes claimable every 30 minutes, beginning 30 minutes after liquidity migration is completed. The full allocation becomes available 5 hours after liquidity migration is completed.
 
 ### Example: Unlocking 100,000 Purchased Tokens
 
@@ -63,7 +61,7 @@ Suppose a buyer purchases **100,000 tokens** in a TL sale using the current sett
 | 4 hours 30 minutes | 90% | 90,000 |
 | 5 hours | 100% | 100,000 |
 
-The amounts shown are cumulative, including any tokens already claimed.
+The amounts shown are cumulative and include any tokens already claimed.
 
 **Buyers do not need to claim tokens every 30 minutes.** Unclaimed unlocked tokens remain available for later claiming.
 
