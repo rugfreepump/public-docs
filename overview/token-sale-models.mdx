@@ -36,12 +36,12 @@ The following settings apply to newly created TL sales:
 
 | Setting | Current Value |
 | --- | --- |
-| Token Unlock Amount | **5.00%** |
+| Token Unlock Amount | **10.00%** |
 | Token Unlock Interval | **30 minutes** |
 | Unlock Schedule Begins | **After successful liquidity migration** |
-| Full Token Availability | **10 hours after migration** |
+| Full Token Availability | **5 hours after migration** |
 
-An additional **5% of each buyer's purchased allocation** becomes claimable every 30 minutes, beginning 30 minutes after successful migration. The full allocation becomes available after 10 hours.
+An additional **10% of each buyer's purchased allocation** becomes claimable every 30 minutes, beginning 30 minutes after successful migration. The full allocation becomes available after 5 hours.
 
 These percentages apply to each buyer's purchased allocation, not the token's total supply.
 
@@ -52,17 +52,22 @@ Suppose a buyer purchases **100,000 tokens** in a TL sale using the current sett
 | Time After Migration | Total Unlocked | Tokens Unlocked |
 | --- | --- | --- |
 | Immediately | 0% | 0 |
-| 30 minutes | 5% | 5,000 |
-| 1 hour | 10% | 10,000 |
-| 2 hours | 20% | 20,000 |
-| 5 hours | 50% | 50,000 |
-| 10 hours | 100% | 100,000 |
+| 30 minutes | 10% | 10,000 |
+| 1 hour | 20% | 20,000 |
+| 1 hour 30 minutes | 30% | 30,000 |
+| 2 hours | 40% | 40,000 |
+| 2 hours 30 minutes | 50% | 50,000 |
+| 3 hours | 60% | 60,000 |
+| 3 hours 30 minutes | 70% | 70,000 |
+| 4 hours | 80% | 80,000 |
+| 4 hours 30 minutes | 90% | 90,000 |
+| 5 hours | 100% | 100,000 |
 
 The amounts shown are cumulative, including any tokens already claimed.
 
 **Buyers do not need to claim tokens every 30 minutes.** Unclaimed unlocked tokens remain available for later claiming.
 
-For example, a buyer who waits five hours without claiming can claim 50,000 tokens in one transaction. If they have already claimed 10,000 tokens, the remaining claimable amount at that time is 40,000 tokens.
+For example, a buyer who waits 2 hours 30 minutes without claiming can claim 50,000 tokens in one transaction. If they have already claimed 20,000 tokens, the remaining claimable amount at that time is 30,000 tokens.
 
 Claiming unlocked tokens does not accelerate the release of tokens that remain locked.
 
@@ -95,11 +100,11 @@ The token sale model determines how contributors receive access to their purchas
 
 ### Choosing a Token Sale Model
 
-During token creation, the **Select a token sale model** section allows creators to choose either **TU** or **TL** before submitting the creation transaction.
+Creators choose between **TU** and **TL** through the RugFreePump Create Coin interface before confirming their token creation transaction.
 
-The selection is permanent. An existing TU sale cannot be converted to TL, and an existing TL sale cannot be converted to TU.
+**The selected model is permanent once the sale is created.** An existing TU sale cannot be converted to TL, and an existing TL sale cannot be converted to TU.
 
-For TL, the applicable unlock amount and interval are also permanently recorded at creation.
+For TL sales, the applicable unlock amount and interval are also permanently recorded at creation.
 
 ### When to Choose TU
 
