@@ -69,15 +69,15 @@ For example, a buyer who waits 2 hours 30 minutes without claiming can claim 50,
 
 Claiming unlocked tokens does not accelerate the release of tokens that remain locked.
 
-### Permanent Unlock Settings
+### Permanent Token Unlock Settings
 
 TL unlock settings are configured at the protocol level and recorded individually for each sale when it is created.
 
-**Once a TL sale is created, its unlock amount and interval are permanent.**
+**Once a TL sale is created, its unlock token amount and interval are permanent.**
 
-Protocol administrators may change the settings for future TL sales, but existing sales retain their original conditions.
+RugFreePump administrators may change the settings for future TL sales, but existing sales retain their original conditions.
 
-This document reflects the **current settings for newly created TL sales**. Buyers should review the settings associated with a specific sale, as older sales may have different unlock terms.
+This document reflects the **current settings for newly created TL sales**. Buyers should review the settings associated with a specific sale, as older sales may have different token unlock terms.
 
 ## TU vs TL: Key Differences
 
@@ -90,15 +90,15 @@ This document reflects the **current settings for newly created TL sales**. Buye
 | Unlock settings | Not applicable | Fixed when sale is created |
 | Model change after creation | Not allowed | Not allowed |
 
-Both models require successful liquidity migration and a buyer-initiated claiming transaction. Neither model transfers purchased tokens during the active fundraising phase.
+Both models require liquidity migration to be completed and a buyer-initiated claiming transaction. Neither model transfers purchased tokens to the buyer's wallet during the active fundraising phase.
 
 ## For Token Creators
 
-The token sale model determines how contributors receive access to their purchased tokens after a successful launch. Creators should choose the model that best fits their project's distribution approach and communicate its conditions clearly.
+The token sale model determines how contributors access their purchased tokens after a liquidity migration completes. Creators should choose the model that best fits their project's distribution approach and clearly communicate its conditions.
 
 ### Choosing a Token Sale Model
 
-Creators choose between **TU** and **TL** through the RugFreePump Create Coin interface before confirming their token creation transaction.
+Creators choose between **TU** and **TL** in the RugFreePump Create Coin interface before confirming their token-creation transaction.
 
 **The selected model is permanent once the sale is created.** An existing TU sale cannot be converted to TL, and an existing TL sale cannot be converted to TU.
 
@@ -113,7 +113,7 @@ TU may be appropriate for projects that prefer:
 - A simple, single-claim experience for buyers.
 - Full buyer control over claimed tokens from the beginning of external trading.
 
-Creators should consider that immediate token availability also permits buyers to sell their full claimed allocations shortly after migration.
+Creators should also consider that immediate token availability lets buyers sell their full claimed allocations shortly after migration.
 
 ### When to Choose TL
 
@@ -128,7 +128,7 @@ TL restricts when purchased allocations become claimable, but it does not preven
 
 ### Creator Responsibilities
 
-Creators should explain their selected model accurately, particularly when promoting a TL sale. Buyers must understand the applicable unlock amount, interval, and when unlocking begins.
+Creators should accurately explain their selected model, especially when promoting a TL sale. Buyers must understand the applicable unlock amount, interval, and when token unlocking begins.
 
 Neither model guarantees price stability, sustained demand, or project success. The protocol enforces the claiming conditions but does not guarantee a project's credibility or future performance.
 
@@ -136,11 +136,11 @@ For the complete launch process, see [Creating a Bonding Curve Sale](/user-guide
 
 ## For Token Buyers
 
-Before contributing SOL, buyers should review the selected sale model and understand when their purchased tokens will become available.
+Before contributing SOL, buyers should review the selected sale model and understand when they can access their purchased tokens.
 
 ### Buying Tokens
 
-The buying process is the same for TU and TL. Buyers purchase through the bonding curve, and their purchased token allocations are recorded on-chain.
+The buying process is the same for TU and TL. Buyers purchase through the bonding curve, and the protocol records their token allocations on-chain.
 
 Tokens remain in the protocol-controlled token account during fundraising. They do not appear in the buyer's wallet immediately after purchase.
 
@@ -153,13 +153,13 @@ Claiming becomes available only after **successful liquidity migration**, not me
 - **TU buyers** can claim their entire purchased allocation immediately after migration.
 - **TL buyers** can claim the unlocked portion of their allocation as it becomes available. They may claim periodically or wait until a larger amount, including the full allocation, has unlocked.
 
-Claims require a wallet transaction. RugFreePump does not charge an additional protocol fee for claiming, although Solana network fees and applicable token-account creation costs may apply.
+Claims require a wallet transaction. RugFreePump does not charge an additional protocol fee to claim, but Solana network fees and applicable token-account creation costs may apply.
 
 For step-by-step instructions, see [Claiming Purchased Tokens](/user-guides/for-token-buyers/claiming-purchased-tokens).
 
 ### If a Sale Does Not Successfully Launch
 
-If a sale expires without reaching its fundraising threshold, or is canceled through an authorized emergency procedure, eligible contributors may withdraw their contributed SOL under the protocol's withdrawal rules.
+If a sale expires without reaching its fundraising threshold, or is canceled through an authorized emergency procedure, contributors can withdraw their contributed SOL under the protocol's withdrawal rules.
 
 The TU or TL selection does not change these withdrawal conditions.
 
