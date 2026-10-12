@@ -28,6 +28,7 @@
         "group": "Overview",
         "pages": [
           "overview/overview",
+          "overview/token-sale-models",
           "overview/protocol-fees"
         ]
       },
