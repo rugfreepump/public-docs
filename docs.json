@@ -48,6 +48,7 @@
             "group": "For Token Buyers",
             "pages": [
               "user-guides/for-token-buyers/buying-bonding-curve-sale-tokens",
+              "user-guides/for-token-buyers/claiming-purchased-tokens",
               "user-guides/for-token-buyers/withdrawing-contributed-sol"
             ]
           },
