@@ -1,1 +1,167 @@
+---
+title: "Claiming Purchased Tokens"
+description: "Learn how to claim purchased tokens from a migrated RugFreePump bonding curve sale under the Token Unlocked (TU) or Token Locked (TL) sale model."
+---
 
+When a RugFreePump bonding curve sale successfully completes liquidity migration to Raydium CPMM, buyers become eligible to claim their purchased tokens according to the sale's selected token sale model.
+
+RugFreePump supports two models:
+
+- **Token Unlocked (TU):** Buyers can claim their entire purchased token allocation immediately after successful liquidity migration.
+- **Token Locked (TL):** Buyers can claim purchased tokens gradually as they become available under the sale's predefined unlock schedule.
+
+Purchased tokens are not transferred to buyers' wallets during the active fundraising phase. Instead, the protocol records each buyer's purchased token allocation on-chain and releases tokens through the claiming process after the applicable conditions are satisfied.
+
+For a detailed explanation of both models, see [Token Sale Models](/overview/token-sale-models).
+
+## Eligibility & UI Visibility
+
+The **Claim Token** panel automatically appears on the specific sale page when the following conditions are met:
+
+- The sale has successfully completed liquidity migration and entered the **Migrated** state.
+- You have connected the wallet used to purchase tokens from that sale.
+- Your wallet has a valid purchased token allocation recorded for the sale.
+
+The panel remains visible after you have claimed your entire allocation, allowing you to review your completed claim.
+
+*Note: If you did not purchase tokens from the sale, have not connected the participating wallet, or the sale has not completed migration, the claiming panel will not appear.*
+
+## Understanding Your Claimable Tokens
+
+The **Claim Token** panel displays your purchased token allocation and claiming status.
+
+The following information is available under both TU and TL:
+
+| Display | Description |
+| --- | --- |
+| **Available To Claim** | The amount of purchased tokens you can claim immediately. |
+| **Total Claimable** | Your total purchased token allocation recorded for the sale. |
+| **Claimable Balance** | Under TU, the amount currently available to claim. Under TL, the portion of your purchased allocation that has not yet been claimed, including tokens still locked. |
+| **Total Claimed** | The total amount of purchased tokens you have already claimed. |
+
+The displayed amounts are calculated using your recorded purchase and claim information.
+
+While the frontend may occasionally experience temporary indexing delays or synchronization issues, **the on-chain program determines the actual amount you are eligible to claim**. Frontend balances do not override the protocol's claiming rules.
+
+## Claiming Under Token Unlocked (TU)
+
+For a **TU sale**, your entire purchased token allocation becomes available as soon as liquidity migration succeeds.
+
+The Claim Token panel displays your full allocation under **Available To Claim** and **Total Claimable**, provided you have not already claimed it.
+
+TU uses a single full-allocation claim rather than gradual token unlocking.
+
+After a successful claim:
+
+- Your purchased tokens are transferred to your wallet.
+- **Available To Claim** and **Claimable Balance** become zero.
+- **Total Claimed** reflects your full purchased allocation.
+- The claim button displays **Fully Claimed** and becomes unavailable for further claims.
+
+There is no additional unlock waiting period after successful migration.
+
+## Claiming Under Token Locked (TL)
+
+For a **TL sale**, purchased tokens become available gradually according to the unlock schedule established when the sale was created.
+
+The schedule begins after successful liquidity migration. You can claim only the portion that has unlocked, but you do not need to submit a transaction every time more tokens become available.
+
+### Understanding Unlock Progress
+
+In addition to the standard token balances, the TL Claim Token panel displays:
+
+| Display | Description |
+| --- | --- |
+| **Unlock Progress** | The percentage of your purchased allocation that has unlocked. |
+| **Unlocks** | The number of completed unlock intervals compared with the total scheduled intervals. |
+| **Claimed** | The number of unlock intervals already covered by your successful claims. |
+| **Next Unlock In** | A live countdown until the next scheduled token unlock. |
+
+Once the entire allocation has unlocked, the countdown displays **Fully Unlocked**.
+
+**Fully Unlocked does not necessarily mean Fully Claimed.** Your remaining unlocked tokens must still be claimed through a wallet transaction.
+
+### Claiming Unlocked Tokens
+
+As each scheduled unlock occurs, the newly available tokens are added to your claimable amount.
+
+For example, consider a buyer who purchased **100,000 tokens** in a TL sale with an unlock schedule of **10% every 30 minutes**:
+
+- After 30 minutes, 10,000 tokens become available.
+- After 1 hour, 20,000 tokens have unlocked in total.
+- After 2 hours 30 minutes, 50,000 tokens have unlocked in total.
+- After 5 hours, the entire 100,000-token allocation has unlocked.
+
+If you have not claimed any tokens after 2 hours 30 minutes, you can claim all 50,000 unlocked tokens in one transaction.
+
+If you previously claimed 20,000 tokens, only the additional 30,000 unlocked tokens will be available to claim at that time.
+
+**Claiming does not accelerate the unlock schedule.** Tokens that remain locked cannot be claimed early.
+
+The exact unlock percentage and interval depend on the settings permanently recorded for the specific sale.
+
+For the current settings applicable to newly created TL sales, see [Token Sale Models](/overview/token-sale-models).
+
+## Transaction Fees
+
+RugFreePump charges **zero additional protocol fees** for claiming purchased tokens under either TU or TL.
+
+You only need sufficient SOL to cover the applicable Solana network transaction fee and any token-account creation costs required for your wallet.
+
+For TL sales, each separate claiming transaction may incur its own network fee. Buyers may therefore choose to wait and claim multiple unlocked portions together rather than submitting a transaction after every unlock.
+
+## Step-by-Step Claiming Process
+
+Once the sale reaches the **Migrated** state and you have tokens available to claim, follow these steps:
+
+1. **Connect Your Wallet:** Open the specific token sale page and connect the wallet used to purchase the tokens.
+
+2. **Review Your Claim:** Locate the **Claim Token** panel and check **Available To Claim**. For TL sales, review the unlock progress and next unlock countdown if additional tokens remain locked.
+
+3. **Initiate the Claim:** Click **Claim** followed by the token symbol. The interface displays `Preparing The Transaction...` while RugFreePump prepares your claim transaction.
+
+4. **Approve in Your Wallet:** Your connected wallet prompts you to approve the transaction while the interface displays `Waiting For Transaction Approval...`. Review the transaction and approve it.
+
+5. **Wait for Confirmation:** After submission, the interface displays `Waiting For Transaction Confirmation...` while checking the Solana network.
+
+6. **Verify Your Claim:** When the transaction succeeds, the interface displays `Transaction Succeeded` with a **Tx Link** to view the transaction on Solscan.
+
+After a successful claim, the claimed tokens are transferred to your wallet, and the claiming panel updates to reflect the completed transaction.
+
+For TU, the claim is complete after the full allocation has been transferred.
+
+For TL, you may return later to claim additional tokens as they unlock. Once your entire purchased allocation has been claimed, the button displays **Fully Claimed**.
+
+## When the Claim Button Is Unavailable
+
+The **Claim** button may be disabled under the following conditions:
+
+- **No tokens are currently available:** For TL sales, you may need to wait until the next unlock.
+- **Your allocation has been fully claimed:** The button displays **Fully Claimed**.
+- **A claim transaction is processing:** The button temporarily displays **Processing...**.
+- **Platform maintenance is enabled:** The interface displays `Claims are temporarily unavailable`.
+
+If a TL sale has reached **Fully Unlocked** but you have already claimed all available tokens, the claim button remains disabled because no additional tokens are available.
+
+## Troubleshooting Failed Transactions
+
+If your claim fails or does not complete, verify the following before trying again:
+
+- Your connected wallet matches the address that originally purchased the tokens.
+- The sale has successfully completed liquidity migration.
+- You have a positive amount displayed under **Available To Claim**.
+- Your wallet has sufficient SOL to cover the transaction fee and any applicable token-account creation costs.
+- Your wallet connection and Solana network connection are functioning correctly.
+- The platform is not temporarily restricting claims due to maintenance.
+
+If you reject the wallet approval request or the transaction times out before submission, the interface may display `Transaction Canceled Or Timeout`.
+
+If a submitted transaction fails, the interface displays `Transaction Failed. Please Try Again!` with a **Tx Link**.
+
+If the interface displays `Transaction Confirmation Timeout`, the transaction may have been submitted without its final status being retrieved successfully.
+
+**Before retrying a transaction with an uncertain confirmation status, open the Tx Link and verify its status on Solscan.** Avoid submitting another claim until you have checked whether the previous transaction succeeded.
+
+If your claim was confirmed on-chain but the displayed balances have not updated, refresh the sale page after allowing time for the platform's indexer to synchronize.
+
+If the issue persists, please contact **RugFreePump Support** and provide the sale address, your wallet address, and the relevant transaction signature.
