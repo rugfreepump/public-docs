@@ -1,1 +1,390 @@
+---
+title: "Token Sale Models"
+description: "Understand RugFreePump's Token Unlocked (TU) and Token Locked (TL) sale models, how they affect creators and buyers, and when purchased tokens become available to claim."
+---
 
+RugFreePump supports two token sale models: **Token Unlocked (TU)** and **Token Locked (TL)**.
+
+Both models operate within the same high-conviction bonding curve fundraising environment. Creators raise SOL toward a defined sale threshold, contributors purchase tokens through the bonding curve, and successful sales proceed toward liquidity migration on Raydium CPMM.
+
+The difference between TU and TL is **how purchased tokens become available to buyers after successful liquidity migration**.
+
+With **TU**, buyers can claim their entire purchased token allocation immediately after liquidity migration is completed.
+
+With **TL**, buyers receive access to their purchased tokens gradually according to a predefined token unlock schedule.
+
+The creator selects the sale model when creating the token. That selection becomes a permanent part of the sale's on-chain configuration.
+
+Understanding this distinction is important for both creators choosing how to launch their tokens and buyers deciding which projects to support.
+
+## Understanding Token Sale Models
+
+RugFreePump separates the active fundraising phase from the distribution of purchased tokens.
+
+When a contributor purchases tokens through an active bonding curve sale, the protocol records the purchased token allocation on-chain.
+
+**Purchased tokens are not immediately transferred to the buyer's wallet.**
+
+Instead, they remain under the protocol's token custody mechanism until the applicable claiming conditions are satisfied.
+
+This applies to both TU and TL.
+
+If the sale successfully reaches its fundraising threshold and liquidity migration is completed, buyers become eligible to claim purchased tokens according to the sale's selected model.
+
+If the sale expires without reaching its threshold, or a finalized sale is canceled through an authorized emergency procedure, eligible contributors can withdraw their contributed SOL according to the protocol's withdrawal rules.
+
+The selected sale model therefore determines **token availability after successful migration**, not whether the sale uses the bonding curve, requires fundraising, or follows the protocol's sale completion rules.
+
+## Token Unlocked (TU)
+
+**Token Unlocked (TU)** is designed for projects that want buyers to receive access to their entire purchased token allocation after successful liquidity migration.
+
+Under TU, buyers participate in the bonding curve fundraising phase without receiving tokens directly into their wallets at the time of purchase.
+
+The protocol records each buyer's purchased token allocation while the sale remains active.
+
+Once the sale reaches its threshold and liquidity migration is successfully completed, **100% of each buyer's purchased token allocation becomes available to claim**.
+
+There is no gradual token unlock schedule under TU.
+
+The progression is straightforward:
+
+**Purchase Tokens → Reach Sale Threshold → Complete Liquidity Migration → Claim 100% of Purchased Tokens**
+
+Buyers must initiate the claiming transaction themselves. Successful migration makes the allocation claimable; it does not automatically transfer the purchased tokens into their wallets.
+
+TU provides immediate access to the full purchased allocation after migration, but it does not guarantee that buyers will hold their tokens, that trading conditions will remain stable, or that the token will maintain its market value.
+
+## Token Locked (TL)
+
+**Token Locked (TL)** is designed for projects that want purchased tokens to become available gradually after successful liquidity migration.
+
+Like TU, TL uses the same bonding curve fundraising mechanism.
+
+Buyers purchase tokens during the active sale, and the protocol records their purchased token allocations on-chain.
+
+However, successful liquidity migration does not immediately make the entire purchased allocation claimable.
+
+Instead, **tokens become available gradually according to the unlock schedule established when the sale was created**.
+
+### Current Token Unlock Settings
+
+RugFreePump currently uses the following settings for newly created TL sales:
+
+| Setting | Current Value |
+| --- | --- |
+| Token Unlock Amount | **5.00%** |
+| Token Unlock Interval | **30 minutes** |
+| Unlock Schedule Begins | **After successful liquidity migration** |
+| Full Token Availability | **10 hours after liquidity migration** |
+
+Under these settings, an additional 5% of each buyer's purchased token allocation becomes available every 30 minutes after successful liquidity migration.
+
+The first 5% becomes available after the first 30 minutes.
+
+After 10 hours, the entire purchased token allocation becomes available to claim.
+
+These percentages apply to each buyer's purchased token allocation, not to the token's entire circulating supply.
+
+### Example: Understanding Token Unlocking
+
+Suppose a buyer purchases **100,000 tokens** in a TL sale using the current unlock settings.
+
+After the sale successfully completes liquidity migration, the buyer's token availability progresses as follows:
+
+| Time After Migration | Total Unlocked | Total Tokens Available |
+| --- | --- | --- |
+| Immediately | 0% | 0 |
+| 30 minutes | 5% | 5,000 |
+| 1 hour | 10% | 10,000 |
+| 2 hours | 20% | 20,000 |
+| 5 hours | 50% | 50,000 |
+| 10 hours | 100% | 100,000 |
+
+The values represent the total amount unlocked by each point in time, including tokens already claimed.
+
+Buyers do not need to claim tokens every 30 minutes.
+
+For example, if the buyer waits five hours after migration without claiming anything, **50,000 tokens will be available to claim in a single transaction**.
+
+If the buyer previously claimed 10,000 tokens after the first hour, an additional 40,000 tokens would be available after five hours.
+
+Once the full unlock period has passed, any remaining unclaimed purchased tokens become available under the sale's claiming rules.
+
+### Token Unlock Settings Are Fixed for Each Sale
+
+The token unlock amount and interval are configured at the protocol level.
+
+When a creator launches a TL sale, the protocol records the applicable settings for that specific sale.
+
+**Once the sale is created, its token unlock settings cannot be changed.**
+
+Protocol administrators may update the settings used for future TL sales. However, those changes do not modify the unlock terms of sales that have already been created.
+
+For example, a TL sale created with a 5% unlock amount every 30 minutes will retain those terms even if the protocol later introduces different settings for newly created sales.
+
+This ensures that creators and buyers can evaluate a sale using the unlock conditions established at its creation.
+
+The settings displayed in this document represent RugFreePump's current configuration for new TL sales. Existing sales may have different settings if they were created under an earlier configuration.
+
+## TU vs TL: Key Differences
+
+Both models share RugFreePump's core fundraising rules, but they offer different token distribution arrangements.
+
+| Feature | Token Unlocked (TU) | Token Locked (TL) |
+| --- | --- | --- |
+| Selected by creator | Yes | Yes |
+| Uses bonding curve fundraising | Yes | Yes |
+| Tokens delivered during purchase | No | No |
+| Purchased allocation recorded on-chain | Yes | Yes |
+| Claiming begins after migration | Yes | Yes |
+| Full allocation immediately claimable after migration | Yes | No |
+| Gradual token unlocking | No | Yes |
+| Buyer initiates token claims | Yes | Yes |
+| Sale model can change after creation | No | No |
+| Standard protocol fees | Same | Same |
+
+**Neither model is inherently risk-free or guarantees a successful project.**
+
+The choice determines when purchased tokens become available, not whether the token will appreciate, whether buyers will sell, or whether the creator will deliver on the project's objectives.
+
+## For Token Creators
+
+Choosing a token sale model is one of the important decisions a creator makes when launching a project on RugFreePump.
+
+The selection affects when contributors can access their purchased tokens after the fundraising phase succeeds.
+
+Creators should understand both models before deciding which arrangement best fits their project and community.
+
+### Choosing a Token Sale Model
+
+When creating a token, RugFreePump presents a **Select a token sale model** section.
+
+The creator chooses either **TU** or **TL** before submitting the token creation transaction.
+
+The selected model is recorded on-chain as part of the new sale's configuration.
+
+**The choice is permanent for that sale.**
+
+Creators cannot switch an existing TU sale to TL or an existing TL sale to TU after creation.
+
+For TL sales, the applicable token unlock settings are also recorded when the sale is created.
+
+Creators should therefore review the selected model and its conditions carefully before confirming the transaction.
+
+### When to Choose TU
+
+TU may be suitable for projects that want contributors to have immediate access to their entire purchased token allocation once liquidity migration succeeds.
+
+This model may appeal to creators who prefer:
+
+- Full token availability immediately after migration.
+- No gradual token unlock restrictions after migration.
+- A straightforward claiming experience.
+- Buyers having immediate control over their purchased tokens once claimed.
+
+TU does not restrict buyers from transferring or selling claimed tokens through supported external markets.
+
+Creators should consider that full token availability may also allow substantial selling activity shortly after liquidity migration.
+
+The absence of gradual unlocking does not guarantee market liquidity, price stability, or favorable trading conditions.
+
+### When to Choose TL
+
+TL may be suitable for projects that prefer a gradual release of purchased tokens following successful liquidity migration.
+
+This model may appeal to creators who want:
+
+- Purchased tokens to become available progressively.
+- A predefined distribution schedule that buyers can review.
+- Token availability to be spread across a period following migration.
+- Buyers to understand the token release arrangement before contributing.
+
+TL does not prevent market selling entirely.
+
+As tokens become claimable and buyers claim them, those tokens may be transferred or sold through external markets.
+
+A gradual unlock schedule also does not guarantee reduced volatility, sustained demand, or long-term project success.
+
+Creators should consider whether the unlock arrangement is appropriate for their project's objectives and whether their community understands the restrictions.
+
+### Understanding Your Responsibility
+
+The selected sale model becomes part of the terms under which buyers participate in the token sale.
+
+Creators should communicate the model clearly when presenting their projects to potential contributors.
+
+For TL sales, this includes explaining the token unlock amount, unlock interval, and the fact that the schedule begins only after successful liquidity migration.
+
+Creators should not describe locked tokens as immediately available or imply that a gradual unlock arrangement guarantees price stability.
+
+The protocol enforces the applicable claiming conditions, but it does not verify the quality of a project, the credibility of its creator, or the likelihood of future success.
+
+For the complete token creation process, see [Creating a Bonding Curve Sale](/user-guides/for-token-creators/creating-a-bonding-curve-sale).
+
+## For Token Buyers
+
+The selected token sale model directly affects when buyers can access their purchased tokens.
+
+Before contributing SOL to a project, buyers should identify whether the sale uses TU or TL and understand the corresponding claiming conditions.
+
+**Purchasing tokens does not mean those tokens will immediately appear in the buyer's wallet.**
+
+Both models require successful liquidity migration before purchased tokens become claimable.
+
+### Understanding the Sale Model Before Buying
+
+Buyers should review the sale model selected by the creator before confirming a purchase.
+
+For TU sales, the full purchased allocation becomes claimable after successful liquidity migration.
+
+For TL sales, purchased tokens become claimable gradually according to the unlock settings established when the sale was created.
+
+The selected model cannot be changed after creation.
+
+Buyers should evaluate whether they are comfortable with the applicable token availability conditions before contributing.
+
+### Buying Tokens Under TU and TL
+
+The purchasing process is fundamentally the same for both models.
+
+Buyers contribute SOL through the bonding curve while the sale is active.
+
+The protocol calculates the purchased token amount, applies the applicable buy fee, and records the buyer's purchased token allocation on-chain.
+
+The purchased tokens remain in the protocol-controlled token account rather than being transferred directly to the buyer's wallet.
+
+The difference between TU and TL becomes relevant after successful liquidity migration.
+
+For purchasing instructions, see [Buying Bonding Curve Sale Tokens](/user-guides/for-token-buyers/buying-bonding-curve-sale-tokens).
+
+### Claiming Tokens Under TU
+
+After successful liquidity migration, TU buyers can claim their full purchased token allocation.
+
+There is no additional waiting period imposed by a gradual unlock schedule.
+
+The buyer initiates a claiming transaction through RugFreePump, and the protocol transfers the claimable tokens into the buyer's wallet.
+
+Once the purchased allocation has been claimed, no additional purchased tokens remain claimable under that allocation.
+
+### Claiming Tokens Under TL
+
+After successful liquidity migration, TL buyers must wait for purchased tokens to become available according to the sale's unlock schedule.
+
+Using the current settings, 5% becomes available every 30 minutes.
+
+Buyers can claim the unlocked portion when it becomes available.
+
+They may also wait and claim a larger accumulated amount later.
+
+**Unclaimed unlocked tokens do not require a separate claim transaction for every unlock interval.**
+
+For example, a buyer can wait until the entire purchased allocation has unlocked and claim the available amount in one transaction.
+
+Claiming does not accelerate the unlock schedule or make future locked tokens available early.
+
+### Understanding the Waiting Period
+
+For both models, token claiming depends on successful liquidity migration.
+
+Reaching the fundraising threshold marks a sale as Completed, but it does not necessarily mean liquidity migration has already finished.
+
+TU buyers must wait until migration succeeds before claiming their full purchased allocation.
+
+TL buyers must also wait for successful migration, after which their token unlock schedule begins.
+
+The time between sale completion and successful migration is therefore separate from any TL token unlock waiting period.
+
+Buyers should account for both stages when evaluating when purchased tokens may become available.
+
+For practical claiming instructions, see [Claiming Purchased Tokens](/user-guides/for-token-buyers/claiming-purchased-tokens).
+
+## What Both Models Have in Common
+
+Although TU and TL use different token availability arrangements, their core fundraising mechanics remain the same.
+
+Both models operate through RugFreePump's Solana on-chain program.
+
+Both follow the protocol's bonding curve pricing and fundraising rules.
+
+Both require the sale to reach its defined threshold before successful liquidity migration can occur.
+
+Both use the same standard protocol fee structure.
+
+Both record purchased token allocations on-chain rather than immediately transferring tokens during the active fundraising phase.
+
+Both require buyers to initiate claiming transactions after the applicable conditions are satisfied.
+
+And both operate within the same sale expiration, withdrawal, and authorized emergency recovery framework.
+
+The sale model does not change RugFreePump's fundamental high-conviction fundraising design.
+
+It changes **how purchased tokens become accessible after a successful launch**.
+
+## Important Considerations
+
+### Token Availability Is Not a Guarantee of Market Value
+
+TU provides earlier access to the full purchased allocation, while TL distributes token availability gradually.
+
+Neither arrangement guarantees future demand, market liquidity, price appreciation, or protection from financial loss.
+
+### Liquidity Migration Must Succeed
+
+Purchased tokens do not become claimable merely because the sale reaches its fundraising threshold.
+
+The protocol must successfully complete the applicable liquidity migration process before token claiming becomes available.
+
+Migration delays, transaction failures, or exceptional recovery situations may affect when buyers can claim.
+
+### TL Does Not Eliminate Selling Pressure
+
+Gradual unlocking limits when purchased allocations become available to claim.
+
+It does not guarantee that buyers will hold their tokens after claiming, and it does not prevent trading activity involving tokens already available on external markets.
+
+### Claiming Requires a Transaction
+
+Claimable tokens are not automatically delivered to buyers.
+
+Buyers must submit the appropriate claiming transaction and pay the applicable Solana network transaction fee.
+
+Additional network-related costs, such as creating a token account when necessary, may apply.
+
+RugFreePump does not charge an additional protocol fee for claiming purchased tokens.
+
+### Sale Terms Remain Fixed
+
+A creator's TU or TL selection is permanent once the sale is created.
+
+For TL, the token unlock settings recorded at creation also remain fixed, regardless of later changes to the protocol's configuration for new sales.
+
+Buyers should review the terms of the specific sale they intend to participate in rather than assuming every existing TL sale uses the current default settings.
+
+## Related Guides
+
+For more information about creating, purchasing, claiming, and migrating tokens, see:
+
+- [Overview](/overview/overview) — Understand RugFreePump's high-conviction fundraising model.
+- [Creating a Bonding Curve Sale](/user-guides/for-token-creators/creating-a-bonding-curve-sale) — Learn how creators launch a token and select a sale model.
+- [Buying Bonding Curve Sale Tokens](/user-guides/for-token-buyers/buying-bonding-curve-sale-tokens) — Learn how buyers participate in active token sales.
+- [Claiming Purchased Tokens](/user-guides/for-token-buyers/claiming-purchased-tokens) — Understand the claiming process for TU and TL.
+- [Migrating Raised Liquidity](/user-guides/for-token-creators/migrating-raised-liquidity) — Understand how successful sales transition to Raydium CPMM.
+- [Withdrawing Contributed SOL](/user-guides/for-token-buyers/withdrawing-contributed-sol) — Learn how eligible contributors recover SOL from expired or canceled sales.
+
+## Choosing With Confidence
+
+RugFreePump provides creators with two approaches to purchased token availability while preserving the same structured fundraising environment.
+
+**TU prioritizes full token availability after successful migration.**
+
+**TL prioritizes gradual token availability through a predefined unlock schedule.**
+
+Neither model replaces the need for careful project evaluation, transparent communication, or an understanding of the risks involved.
+
+The purpose of offering both models is to allow creators to choose the distribution arrangement that fits their project while giving buyers clear, on-chain-enforced conditions for accessing purchased tokens.
+
+**Creators choose the model.  
+Buyers evaluate the terms.  
+The protocol enforces the claiming rules.**
