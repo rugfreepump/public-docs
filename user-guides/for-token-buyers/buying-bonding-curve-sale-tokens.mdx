@@ -233,7 +233,7 @@ The liquidity-provider tokens are automatically burned as part of the migration 
 
 After migration, the tokens are available for public trading through the created Raydium liquidity pool.
 
-After successful migration, purchased tokens become available to claim according to the sale's selected Token Unlocked (TU) or Token Locked (TL) model.
+After a successful migration, buyers can claim their purchased tokens based on the sale's selected token sale model. Token Unlocked (TU) purchases become fully claimable immediately, while Token Locked (TL) purchases become claimable gradually according to the sale's unlock schedule.
 
 For more information, see [Claiming Purchased Tokens](/user-guides/for-token-buyers/claiming-purchased-tokens).
 
@@ -255,7 +255,7 @@ A **Canceled** sale is an exceptional state used when a sale is canceled through
 
 Canceled sales do not proceed to liquidity migration.
 
-If you contributed SOL to a Canceled sale, you can use the withdrawal process to recover your contributed SOL.
+If you contributed SOL to a Canceled sale, you can withdraw your contributed SOL through the withdrawal process.
 
 For more information, see [**Withdrawing Contributed SOL**](https://rugfreepump.com/docs/user-guides/for-token-buyers/withdrawing-contributed-sol).
 
@@ -386,11 +386,11 @@ The sale page will show:
 
 Review the transaction in your wallet and approve it if everything is correct.
 
-Do not approve a transaction you do not understand or did not intentionally initiate.
+Do not approve a transaction you don't understand or didn't intentionally initiate.
 
 ## Step 3: Wait for Transaction Confirmation
 
-After approving the transaction, RugFreePump waits for the transaction to be confirmed on Solana.
+After you approve the transaction, RugFreePump waits for it to be confirmed on Solana.
 
 The sale page will show:
 
@@ -400,9 +400,9 @@ Keep the page open while it confirms.
 
 ## Step 4: Purchase Completed
 
-Once the transaction is successfully confirmed, your purchase is complete.
+Once the transaction confirms successfully, your purchase is complete.
 
-The purchased tokens are allocated to your wallet's purchase record and remain held in a protocol-controlled token account until they become available to claim after successful liquidity migration.
+The purchased tokens are recorded under your wallet address and remain held in the sale's token account until they become available to claim after successful liquidity migration.
 
 Your contribution is reflected in the sale's raised amount and contribution records.
 
@@ -428,7 +428,9 @@ You can then try again if the sale is still eligible for purchases.
 
 # After Your Purchase
 
-After a successful purchase, the purchased tokens belong to your connected wallet.
+After a successful purchase, the tokens you bought are recorded under your wallet address but are not immediately transferred to your wallet.
+
+The purchased tokens remain held in the sale's token account until the sale successfully completes liquidity migration. You can then claim them according to the selected token sale model.
 
 The sale page updates to reflect your contribution and the new sale progress.
 
@@ -526,7 +528,7 @@ The complete buying process is:
 8. **Buy:** Select **Buy** and approve the transaction in your wallet.
 9. **Confirm:** Wait for the transaction to be confirmed on Solana.
 10. **Purchase Confirmed:** After successful confirmation, your purchased tokens are allocated to your wallet's purchase record and held by the sale's token account.
-11. **Follow the Sale Outcome:** If the sale becomes Completed, wait for liquidity migration. If it becomes Migrated, liquidity is available on Raydium, and purchased tokens become claimable under the selected sale model. If it becomes Expired or Canceled, contributors can withdraw their contributed SOL through the withdrawal process.
+11. **Follow the Sale Outcome:** If the sale becomes Completed, wait for liquidity migration. If it becomes Migrated, liquidity is available on Raydium, and you can claim purchased tokens under the selected sale model. If it becomes Expired or Canceled, contributors can withdraw their contributed SOL through the withdrawal process.
 
 # What's Next?
 
@@ -536,10 +538,10 @@ If the sale reaches its hard cap, it becomes **Completed** and proceeds to the l
 
 If liquidity migration succeeds, the sale becomes **Migrated** and the liquidity becomes available for public trading on Raydium.
 
-After successful liquidity migration, you can claim your purchased tokens according to the selected Token Unlocked (TU) or Token Locked (TL) sale model.
+After a successful liquidity migration, you can claim your purchased tokens based on the selected Token Unlocked (TU) or Token Locked (TL) sale model.
 
 For the claiming process, see [Claiming Purchased Tokens](/user-guides/for-token-buyers/claiming-purchased-tokens).
 
-If the sale expires before reaching its hard cap, or is canceled through an exceptional mechanism, Contributors can use the withdrawal process.
+If the sale expires before reaching its hard cap, or is canceled through an exceptional mechanism, Contributors can withdraw the contributed SOL through the withdrawal process.
 
 Learn more: [**Withdrawing Contributed SOL**](https://rugfreepump.com/docs/user-guides/for-token-buyers/withdrawing-contributed-sol)
