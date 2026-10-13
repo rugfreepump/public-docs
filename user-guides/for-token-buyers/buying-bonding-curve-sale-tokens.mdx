@@ -7,7 +7,7 @@ Buying tokens on RugFreePump allows you to participate in an active bonding curv
 
 Before buying, review the sale information, understand how the purchase works, and make sure your wallet has enough SOL to cover the purchase and associated transaction costs.
 
-Once your purchase transaction succeeds, the purchased tokens are transferred to your wallet, and your contribution becomes part of the sale's raised funds.
+Once your purchase transaction succeeds, the purchased tokens are allocated to your wallet's purchase record and remain held by the protocol until they become available to claim after successful liquidity migration. Your contribution becomes part of the sale's raised funds.
 
 # Before You Start
 
@@ -21,10 +21,14 @@ The sale page displays:
 
 - **Mint Key:** The unique on-chain address that identifies the token. Verify the Mint Key to confirm that you are buying the correct token.
 - **Coin Name and Ticker:** Confirm that the displayed name and ticker match the coin you intended to purchase.
+- **Sale Model:** The selected sale model: **Token Unlocked** or **Token Locked**.
 - **Pool Address:** The on-chain account associated with the bonding curve sale and its raised funds.
 - **Total Supply:** The total supply of the coin.
 - **Tokens For Sale:** The portion of the supply available through the bonding curve.
 - **Tokens For Liquidity:** The portion of the supply reserved for liquidity after a successful migration.
+- **Token Unlock Amount (TL Only):** The percentage of purchased tokens that becomes available to claim during each unlock interval.
+- **Token Unlock Interval (TL Only):** The time between successive token unlocks.
+- **Token Unlock Activate (TL Only, After Migration):** The timestamp when the token unlock schedule was activated following successful liquidity migration.
 - **Hard Cap:** The maximum amount the sale can raise.
 - **Start Time:** When the sale became **Live**.
 - **End Time:** When the sale lifetime expires.
@@ -37,10 +41,12 @@ The sale page displays:
 - **Sale Progress:** The percentage of the hard cap reached.
 - **Tokens Sold:** The number of tokens purchased through the sale.
 - **Total Buyers:** The number of unique buyers who participated in the sale.
-- **Contributions:** Purchases made during the sale, including the contributor, SOL amount, USD value, tokens received, time, and transaction.
+- **Contributions:** Purchases made during the sale, including the contributor, SOL amount, USD value, tokens purchased, time, and transaction.
 - **Top Holders:** Wallets holding the largest portions of the coin's token supply.
 
 Review this information carefully before purchasing. The sale page data can change as other users participate, and the current sale state determines whether purchases are still accepted.
+
+Before purchasing, review the selected token sale model and understand when your purchased tokens will become available to claim. For more information, see [Token Sale Models](/overview/token-sale-models).
 
 ## Prerequisites Checklist
 
@@ -70,7 +76,7 @@ The purchase amount is subject to the current limits of the sale and your availa
 
 A **Buy Fee** is deducted from each bonding curve sale purchase.
 
-The remaining amount is used as the net bonding curve sale contribution for calculating the tokens you receive.
+The remaining amount is used as the net bonding curve sale contribution for calculating the tokens allocated to your purchase.
 
 For the current **Buy Fee** and its authorized update range, see [Protocol Fees](/protocol-fees).
 
@@ -164,7 +170,7 @@ RugFreePump bonding curve sales use a pricing curve where the token price change
 
 As more tokens are purchased and the sale raises more funds, the purchase price generally increases.
 
-This means the number of tokens you receive for a given amount of SOL can change as other users purchase tokens.
+This means the number of tokens allocated to your purchase for a given amount of SOL can change as other users purchase tokens.
 
 The purchase calculation uses the applicable SOL/USD price when the transaction is processed.
 
@@ -227,7 +233,9 @@ The liquidity-provider tokens are automatically burned as part of the migration 
 
 After migration, the tokens are available for public trading through the created Raydium liquidity pool.
 
-Your purchased tokens remain in your wallet.
+After successful migration, purchased tokens become available to claim according to the sale's selected Token Unlocked (TU) or Token Locked (TL) model.
+
+For more information, see [Claiming Purchased Tokens](/user-guides/for-token-buyers/claiming-purchased-tokens).
 
 A Migrated sale does **not** become withdrawable through the bonding curve withdrawal process.
 
@@ -275,7 +283,7 @@ The panel displays information such as:
 - **Max**
 - **Max Slippage**
 - **Transaction Priority**
-- The estimated number of tokens you will receive
+- The estimated number of tokens allocated to your purchase
 
 # Purchase Amount
 
@@ -394,7 +402,7 @@ Keep the page open while it confirms.
 
 Once the transaction is successfully confirmed, your purchase is complete.
 
-The purchased tokens are transferred to your wallet.
+The purchased tokens are allocated to your wallet's purchase record and remain held in a protocol-controlled token account until they become available to claim after successful liquidity migration.
 
 Your contribution is reflected in the sale's raised amount and contribution records.
 
@@ -420,7 +428,7 @@ You can then try again if the sale is still eligible for purchases.
 
 # After Your Purchase
 
-After a successful purchase, the purchased tokens belong to your connected wallet.
+After a successful purchase, your purchased token allocation is associated with your connected wallet and remains held by the protocol pending the sale's outcome.
 
 The sale page updates to reflect your contribution and the new sale progress.
 
@@ -433,7 +441,7 @@ Your purchase may affect:
 - The total number of buyers
 - The contribution history
 
-The token amount you receive is determined by the bonding curve pricing model and the applicable purchase conditions when the transaction is processed.
+The token amount allocated to your purchase is determined by the bonding curve pricing model and the applicable purchase conditions when the transaction is processed.
 
 # What Happens When the Sale Completes
 
@@ -444,7 +452,7 @@ At this point:
 - New bonding curve purchases are no longer accepted.
 - The sale enters the liquidity migration stage.
 - The creator has a 60-minute migration window.
-- Your purchased tokens remain in your wallet.
+- Your purchased token allocation remains held by the protocol pending the sale's outcome.
 
 During the migration window, it is normal for the sale page to display:
 
@@ -464,8 +472,10 @@ When liquidity migration succeeds:
 - Liquidity is created on **Raydium CPMM**.
 - The tokens reserved for liquidity are added to the liquidity pool.
 - Liquidity-provider tokens are automatically burned.
-- The purchased tokens in your wallet remain yours.
+- Your purchased tokens become available to claim according to the sale's selected token sale model.
 - The token becomes available for public trading through the migrated liquidity pool.
+
+For the claiming process, see [Claiming Purchased Tokens](/user-guides/for-token-buyers/claiming-purchased-tokens).
 
 # What Happens If the Sale Expires
 
@@ -476,7 +486,7 @@ If the sale lifetime expires before the hard cap is reached:
 - The sale does not proceed to liquidity migration.
 - Eligible contributors can withdraw their contributed SOL.
 
-Your purchased tokens and withdrawal eligibility are handled according to the protocol's on-chain rules.
+If the sale expires, purchased tokens are not released through the claiming process. Eligible contributors can instead recover their contributed SOL through the withdrawal process.
 
 For the withdrawal process, see [**Withdrawing Contributed SOL**](https://rugfreepump.com/docs/user-guides/for-token-buyers/withdrawing-contributed-sol).
 
@@ -489,6 +499,8 @@ If a sale becomes **Canceled**:
 - New bonding curve purchases are no longer accepted.
 - The sale does not proceed to liquidity migration.
 - Eligible contributors can withdraw their eligible contributed SOL.
+
+Purchased tokens are not released through the claiming process when a sale is Canceled. Eligible contributors can instead use the withdrawal process to recover their contributed SOL.
 
 For the withdrawal process, see [**Withdrawing Contributed SOL**](https://rugfreepump.com/docs/user-guides/for-token-buyers/withdrawing-contributed-sol).
 
@@ -504,7 +516,7 @@ Before purchasing, review the relevant sections of the **Security & Risk** docum
 
 The complete buying process is:
 
-1. **Review the Sale:** Confirm the coin, pool, sale progress, hard cap, countdown, and current status.
+1. **Review the Sale:** Confirm the coin, pool, selected token sale model, sale progress, hard cap, countdown, and current status.
 2. **Connect Your Wallet:** Connect Phantom or Solflare and authenticate your wallet.
 3. **Complete Consent:** Review and sign the required consent documents.
 4. **Check Your SOL:** Make sure you have enough SOL for the purchase and associated fees.
@@ -513,8 +525,8 @@ The complete buying process is:
 7. **Select Priority:** Choose Fast, Turbo, or Ultra transaction priority if desired.
 8. **Buy:** Select **Buy** and approve the transaction in your wallet.
 9. **Confirm:** Wait for the transaction to be confirmed on Solana.
-10. **Receive Tokens:** After successful confirmation, the purchased tokens are transferred to your wallet.
-11. **Follow the Sale Outcome:** If the sale becomes Completed, wait for liquidity migration. If it becomes Migrated, the liquidity is available on Raydium. If it becomes Expired or Canceled, eligible contributors can use the withdrawal process.
+10. **Purchase Confirmed:** After successful confirmation, your purchased tokens are allocated to your wallet's purchase record and held by the protocol pending the sale's outcome.
+11. **Follow the Sale Outcome:** If the sale becomes Completed, wait for liquidity migration. If it becomes Migrated, liquidity is available on Raydium and purchased tokens become claimable according to the selected sale model. If it becomes Expired or Canceled, eligible contributors can use the withdrawal process.
 
 # What's Next?
 
@@ -523,6 +535,10 @@ After purchasing, the outcome depends on how the sale progresses.
 If the sale reaches its hard cap, it becomes **Completed** and proceeds to the liquidity migration stage.
 
 If liquidity migration succeeds, the sale becomes **Migrated** and the liquidity becomes available for public trading on Raydium.
+
+After successful liquidity migration, you can claim your purchased tokens according to the selected Token Unlocked (TU) or Token Locked (TL) sale model.
+
+For the claiming process, see [Claiming Purchased Tokens](/user-guides/for-token-buyers/claiming-purchased-tokens).
 
 If the sale expires before reaching its hard cap, or is canceled through an exceptional mechanism, eligible contributors can use the withdrawal process.
 
