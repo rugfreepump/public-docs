@@ -3,11 +3,11 @@ title: "Withdrawing Contributed SOL"
 description: "Learn how to withdraw your contributed SOL from an Expired or Canceled RugFreePump bonding curve sale."
 ---
 
-When a bonding curve sale fails to reach its target and does not proceed to liquidity migration, contributors can reclaim their contributed SOL. Withdrawals become available as soon as a sale transitions to an **Expired** or **Canceled** state, and all distributions are governed strictly by the protocol's on-chain program.
+When a bonding curve sale fails to reach its target or is canceled without proceeding to liquidity migration, contributors can reclaim their contributed SOL. Withdrawals become available as soon as a sale transitions to an **Expired** or **Canceled** state, and all distributions are governed strictly by the protocol's on-chain program.
 
 ## Eligibility & UI Visibility
 
-The **Withdraw** button and your contributed amount will automatically appear on the specific sale page only if the following conditions are met:
+The **Withdraw SOL** card and your contributed amount will automatically appear on the specific sale page only if the following conditions are met:
 * The sale is officially in an **Expired** or **Canceled** state.
 * You have connected the exact wallet used to make the original contribution.
 
@@ -15,9 +15,17 @@ The **Withdraw** button and your contributed amount will automatically appear on
 
 ## Understanding Your Contributed Amount
 
-The contribution balance displayed on the frontend is populated by RugFreePump's data indexer. 
+The contribution balance displayed on the frontend is populated by RugFreePump's data indexer.
 
 While this data is typically accurate, temporary indexing delays or sync issues may occasionally display an incorrect balance. However, **frontend display issues do not affect your funds.** The on-chain program relies entirely on immutable on-chain records to calculate and disburse your exact withdrawal amount.
+
+The **Withdraw SOL** card displays:
+* **Available To Withdraw:** The amount of contributed SOL currently available for withdrawal.
+* **Contribution:** Your recorded SOL contribution to the sale.
+* **Status:** The current withdrawal status, displayed as **Available**, **Pending**, or **Completed**.
+* **Withdraw SOL:** The button used to initiate your withdrawal transaction.
+
+After a successful withdrawal, **Available To Withdraw** displays **0.0000 SOL**, the status changes to **Completed**, and the button displays **Withdraw Completed**.
 
 <Card type="info" title="Your Funds Are Safe">
 Even if the frontend indexer experiences a delay, your contribution remains completely secure on the blockchain and available for withdrawal.
@@ -25,7 +33,7 @@ Even if the frontend indexer experiences a delay, your contribution remains comp
 
 ## Transaction Fees
 
-RugFreePump charges **zero protocol fees** for processing withdrawals. 
+RugFreePump charges **zero protocol fees** for processing withdrawals.
 
 You only need to cover the standard **Solana network transaction fee** to execute the withdrawal. Please ensure your wallet holds a fractional amount of extra SOL to approve the network transaction.
 
@@ -33,26 +41,36 @@ You only need to cover the standard **Solana network transaction fee** to execut
 
 Once the sale status updates to **Expired** or **Canceled**, follow these steps to reclaim your SOL:
 
-1. **Initiate the Request:** Navigate to the sale page and click **Withdraw**. The UI will display: `Preparing The Transaction...`
+1. **Initiate the Request:** Navigate to the sale page and click **Withdraw SOL**. The UI will display: `Preparing The Transaction...`
 2. **Approve in Wallet:** Your connected wallet extension will prompt you with a transaction signature request while the page displays: `Waiting For Transaction Approval...` Review the details and click **Approve**.
-3. **Network Confirmation:** The platform will monitor the blockchain for finality, displaying: `Waiting For Transaction Confirmation...` 
+3. **Network Confirmation:** The platform will monitor the blockchain for transaction confirmation, displaying: `Waiting For Transaction Confirmation...`
 
-Once the network confirms the block, the process is complete, and your SOL will reflect in your balance.
+Once the network confirms the transaction successfully, the process is complete, and your SOL will reflect in your balance.
 
-## Post-Withdrawal Dynamics & Token Burning
+The withdrawal card will display **0.0000 SOL** under **Available To Withdraw**, the status will change to **Completed**, and the button will display **Withdraw Completed**.
+
+A **Transaction Succeeded** message will also appear with a transaction link to Solscan.
+
+## After a Successful Withdrawal
 
 When a withdrawal transaction completes successfully:
 * Your contributed SOL is returned directly to your wallet.
-* Any project tokens remaining in your wallet from that specific contribution are automatically burned.
-
-### What if you have already moved the tokens?
-Because the bonding curve sale failed to migrate liquidity, these project tokens hold no value within the ecosystem. The protocol calculates your return based solely on your original SOL contribution. Therefore, **you do not need to hold the tokens in your wallet for the withdrawal to succeed.** If you transferred them elsewhere, your SOL withdrawal will still execute normally.
+* Your available withdrawal balance becomes **0.0000 SOL**.
+* Your withdrawal status changes to **Completed**.
 
 ## Troubleshooting Failed Transactions
 
-If your transaction fails or does not complete, your funds are safe. Verify the following before trying again:
+If your transaction fails or does not complete, verify the following before trying again:
 * Your wallet is actively connected and matches the contributing address.
 * You have sufficient SOL to cover the Solana network gas fee.
 * The sale state has not changed.
+
+If the transaction confirmation times out, the withdrawal may still be processing on Solana. The UI will display **Transaction Confirmation Timeout** with a transaction link to Solscan.
+
+Do not immediately submit another withdrawal. Use the provided link to check the transaction status before trying again.
+
+If the transaction is confirmed as failed, the UI will display **Transaction Failed. Please Try Again!** with a transaction link.
+
+If withdrawals are temporarily disabled during platform maintenance, the **Withdraw SOL** button will be unavailable, and the UI will display **Withdrawals are temporarily unavailable**.
 
 If you meet all criteria and still cannot withdraw, please open a ticket with **RugFreePump Support**.
