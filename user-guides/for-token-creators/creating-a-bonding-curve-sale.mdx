@@ -198,6 +198,23 @@ Review your coin information carefully before approving the creation transaction
 Once the coin is created, its **Name, Ticker, Description, Image, and Social Links** are set as part of the coin's metadata and cannot be changed afterward.
 </Callout>
 
+# Select a Token Sale Model
+
+After entering your coin details and uploading your image, locate the **Select a token sale model** section on the creation form.
+
+The section displays the available token sale models:
+
+- **TU:** Token Unlocked
+- **TL:** Token Locked
+
+Select the option that best suits your project.
+
+Your selected token sale model is recorded when the coin is created and cannot be changed afterward.
+
+Review your selection carefully before continuing.
+
+For more information about the available models, see [Token Sale Models](/overview/token-sale-models).
+
 # Creator Incentive Program
 
 When the Creator Incentive Program is active, the creation page displays information about the incentive available to eligible creators.
@@ -235,7 +252,7 @@ The panel displays your wallet balance along with:
 - The SOL amount you want to spend
 - **Reset**
 - **Max**
-- The estimated number of tokens you will receive
+- The estimated number of tokens allocated to your purchase
 
 ## Initial Purchase Rules
 
@@ -255,7 +272,9 @@ The amount you enter is the **purchase amount**, not the net amount that is ulti
 
 A **Buy Fee** is deducted from each purchase, and the remaining amount is used as the net bonding-curve sale contribution.
 
-The number of tokens you receive is calculated by the bonding curve using the applicable SOL/USD price at the time the transaction is processed.
+The number of tokens allocated to your purchase is calculated by the bonding curve using the applicable SOL/USD price at the time the transaction is processed.
+
+Purchased tokens remain in a protocol-controlled token account during fundraising. They become available to claim only after successful liquidity migration, according to the selected token sale model.
 
 For the current **Buy Fee** and its authorized update range, see [Protocol Fees](/protocol-fees).
 
@@ -327,11 +346,11 @@ RugFreePump automatically redirects you to your newly created sale page.
 
 # If You Cancel the Transaction
 
-If you reject the wallet request or the transaction times out, the creation does not complete.
+If you reject the wallet request before submitting the transaction, the creation does not complete and no sale is created.
 
-No sale is created.
+If the transaction was submitted but confirmation times out, its final status may be uncertain. Check the transaction status before attempting to create the coin again.
 
-RugFreePump cleans up the metadata and temporary resources prepared for the attempted creation.
+When a creation attempt is canceled or fails before the transaction is submitted, RugFreePump cleans up the metadata and temporary resources prepared for the attempted creation.
 
 <Callout type="warning" title="Cleanup in Progress">
 During the cleanup process, the creation window remains locked and displays:
@@ -360,11 +379,14 @@ The sale page displays the main information about your bonding curve sale.
 
 This includes:
 
-- **Token Sale Model:** The selected sale model: **Token Unlocked** or **Token Locked**.
+- **Sale Model:** The selected sale model: **Token Unlocked** or **Token Locked**.
 - **Pool Address:** The on-chain account associated with the bonding curve sale and its raised funds.
 - **Total Supply:** The total supply of the coin.
 - **Tokens For Sale:** The portion of the supply available through the bonding curve.
 - **Tokens For Liquidity:** The portion of the supply reserved for liquidity after a successful migration.
+- **Token Unlock Amount (TL Only):** The percentage of purchased tokens that becomes available to claim during each unlock interval.
+- **Token Unlock Interval (TL Only):** The time between successive token unlocks.
+- **Token Unlock Activate (TL Only, After Migration):** The timestamp when the token unlock schedule was activated following successful liquidity migration.
 - **Hard Cap:** The maximum amount the sale can raise.
 - **Start Time:** When the sale became Live.
 - **End Time:** When the sale lifetime expires.
@@ -386,7 +408,7 @@ The sale information includes:
 - **Sale Progress:** The percentage of the hard cap reached.
 - **Tokens Sold:** The number of tokens purchased through the sale.
 - **Total Buyers:** The number of unique buyers who participated in the sale.
-- **Contributions:** Purchases made during the sale, including the contributor, SOL amount, USD value, tokens received, time, and transaction.
+- **Contributions:** Purchases made during the sale, including the contributor, SOL amount, USD value, tokens purchased, time, and transaction.
 - **Top Holders:** Wallets holding the largest portions of the coin's token supply.
 
 ## Understanding Sale Statuses
@@ -416,3 +438,7 @@ If your bonding curve sale reaches its hard cap and becomes **Completed**, you c
 Learn what happens next:
 
 [**Migrating Raised Liquidity**](https://rugfreepump.com/docs/user-guides/for-token-creators/migrating-raised-liquidity)
+
+After successful liquidity migration, buyers can claim their purchased tokens according to the selected token sale model. This also applies to the creator's initial purchase.
+
+For more information, see [Claiming Purchased Tokens](/user-guides/for-token-buyers/claiming-purchased-tokens).
