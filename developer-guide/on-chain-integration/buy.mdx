@@ -5,9 +5,9 @@ description: "Integrate with the protocol's buy instruction to purchase tokens f
 
 The `buy` instruction purchases tokens from an active RugFreePump bonding-curve sale using SOL.
 
-The instruction accepts a gross SOL amount, deducts the configured protocol fee, denominates the remaining SOL contribution in USD-equivalent terms using a validated Pyth SOL/USD price feed, calculates the corresponding token amount using the bonding curve pricing model, and records the purchased token amount under the buyer's on-chain account.
+The instruction accepts a gross SOL amount, deducts the configured protocol fee, denominates the remaining SOL contribution in USD-equivalent terms using a validated Pyth SOL/USD price feed, calculates the corresponding token amount using the bonding curve pricing model, and adds the purchased token amount to the buyer's cumulative token allocation recorded in their on-chain account.
 
-Purchased tokens are not transferred directly to the buyer during the purchase. They become claimable after successful liquidity migration according to the sale's selected token sale model.
+Purchased tokens are not transferred directly to the buyer during the purchase. They become claimable only after successful liquidity migration.
 
 ## Instruction Execution Requirements
 
