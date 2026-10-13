@@ -452,7 +452,7 @@ At this point:
 - New bonding curve purchases are no longer accepted.
 - The sale enters the liquidity migration stage.
 - The creator has a 60-minute migration window.
-- Your purchased token allocation remains held by the protocol pending the sale's outcome.
+- Your purchased token allocation remains held by the sale's token account.
 
 During the migration window, it is normal for the sale page to display:
 
@@ -486,7 +486,7 @@ If the sale lifetime expires before the hard cap is reached:
 - The sale does not proceed to liquidity migration.
 - Eligible contributors can withdraw their contributed SOL.
 
-If the sale expires, purchased tokens are not released through the claiming process. Eligible contributors can instead recover their contributed SOL through the withdrawal process.
+The purchased tokens are not released through the claiming process. Contributors can instead withdraw their contributed SOL through the withdrawal process.
 
 For the withdrawal process, see [**Withdrawing Contributed SOL**](https://rugfreepump.com/docs/user-guides/for-token-buyers/withdrawing-contributed-sol).
 
@@ -500,7 +500,7 @@ If a sale becomes **Canceled**:
 - The sale does not proceed to liquidity migration.
 - Eligible contributors can withdraw their eligible contributed SOL.
 
-Purchased tokens are not released through the claiming process when a sale is Canceled. Eligible contributors can instead use the withdrawal process to recover their contributed SOL.
+The purchased tokens are not released through the claiming process. Contributors can instead withdraw their contributed SOL through the withdrawal process.
 
 For the withdrawal process, see [**Withdrawing Contributed SOL**](https://rugfreepump.com/docs/user-guides/for-token-buyers/withdrawing-contributed-sol).
 
@@ -525,8 +525,8 @@ The complete buying process is:
 7. **Select Priority:** Choose Fast, Turbo, or Ultra transaction priority if desired.
 8. **Buy:** Select **Buy** and approve the transaction in your wallet.
 9. **Confirm:** Wait for the transaction to be confirmed on Solana.
-10. **Purchase Confirmed:** After successful confirmation, your purchased tokens are allocated to your wallet's purchase record and held by the protocol pending the sale's outcome.
-11. **Follow the Sale Outcome:** If the sale becomes Completed, wait for liquidity migration. If it becomes Migrated, liquidity is available on Raydium and purchased tokens become claimable according to the selected sale model. If it becomes Expired or Canceled, eligible contributors can use the withdrawal process.
+10. **Purchase Confirmed:** After successful confirmation, your purchased tokens are allocated to your wallet's purchase record and held by the sale's token account.
+11. **Follow the Sale Outcome:** If the sale becomes Completed, wait for liquidity migration. If it becomes Migrated, liquidity is available on Raydium, and purchased tokens become claimable under the selected sale model. If it becomes Expired or Canceled, contributors can withdraw their contributed SOL through the withdrawal process.
 
 # What's Next?
 
@@ -540,6 +540,6 @@ After successful liquidity migration, you can claim your purchased tokens accord
 
 For the claiming process, see [Claiming Purchased Tokens](/user-guides/for-token-buyers/claiming-purchased-tokens).
 
-If the sale expires before reaching its hard cap, or is canceled through an exceptional mechanism, eligible contributors can use the withdrawal process.
+If the sale expires before reaching its hard cap, or is canceled through an exceptional mechanism, Contributors can use the withdrawal process.
 
 Learn more: [**Withdrawing Contributed SOL**](https://rugfreepump.com/docs/user-guides/for-token-buyers/withdrawing-contributed-sol)
