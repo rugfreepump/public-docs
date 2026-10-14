@@ -30,6 +30,7 @@ The deployed on-chain program is responsible for the core protocol lifecycle, in
 * Sale expiration and finalization
 * Eligible withdrawals
 * Liquidity migration
+* Purchased token allocation and claiming
 * Recovery and cancellation operations
 * Required authority and account validation
 * Interactions with required external Solana programs
@@ -52,6 +53,7 @@ The on-chain execution layer governs protocol-controlled asset operations includ
 * Eligible withdrawals
 * Bonding-curve vault balances
 * Liquidity migration
+* Purchased token custody and claiming
 * Related protocol-controlled SOL and token transfers
 
 The off-chain infrastructure, including the dApp, APIs, databases, indexers, and metadata services, does not directly execute or control protocol-controlled asset movements.
@@ -93,6 +95,9 @@ These controls include:
 * Migration eligibility checks
 * Migration lock periods
 * Migration-state protection
+* Purchased token claim eligibility
+* Token unlock schedule enforcement
+* Prevention of claims exceeding the buyer's recorded token allocation
 * Recovery and cancellation state validation
 
 The on-chain program therefore determines which lifecycle transition is valid for the current on-chain state.
@@ -132,7 +137,7 @@ The purchase path currently requires:
 * Full Pyth verification
 * The expected SOL/USD price feed
 * A positive price
-* A price update no older than 60 seconds
+* A price update no older than 30 seconds
 * Oracle confidence within the configured 2% threshold
 
 These checks establish the conditions under which external price data can be accepted by the on-chain program.
@@ -160,6 +165,27 @@ Once revoked, that authority cannot subsequently be used to create additional to
 
 This establishes the protocol's fixed-supply behavior for tokens created through the current token-creation flow.
 
+## Purchased token custody and claiming
+
+Purchased tokens are not transferred directly to buyers during bonding-curve purchases.
+
+Instead, the RugFreePump on-chain program records each buyer's cumulative purchased token allocation in the buyer's on-chain accumulation account.
+
+The purchased tokens remain in protocol-controlled token custody throughout the bonding-curve sale and cannot be transferred to buyers before successful liquidity migration.
+
+After successful liquidity migration, buyers can claim their purchased tokens through the protocol's `claim_token` instruction.
+
+The on-chain program enforces token claiming according to the sale's selected token sale model:
+
+* **Token Unlocked (TU):** The buyer's full purchased token allocation becomes claimable immediately after successful liquidity migration.
+* **Token Locked (TL):** Purchased tokens become claimable gradually according to the sale's configured token unlock schedule.
+
+The token sale model and applicable unlock configuration are recorded in the sale's on-chain state.
+
+The claiming process is governed by on-chain account validation, the buyer's recorded purchased token allocation, the sale's migration state, and the applicable token unlock conditions.
+
+Off-chain infrastructure does not determine or override the amount of purchased tokens a buyer is permitted to claim.
+
 ## Liquidity migration security
 
 Liquidity migration represents a controlled transition from the RugFreePump bonding-curve environment to Raydium CPMM liquidity.
@@ -183,6 +209,18 @@ The on-chain program tracks the migration state of a sale and validates whether 
 Migration lock and state checks prevent conflicting migration-related operations from being accepted for the same sale.
 
 This keeps the migration process within the state transitions defined by the RugFreePump on-chain program.
+
+### Protection against premature liquidity pool creation
+
+RugFreePump's token custody architecture is designed to prevent buyers from creating competing liquidity pools using purchased tokens before the protocol's official liquidity migration.
+
+During the bonding-curve sale, purchased tokens are not transferred directly to buyers. Instead, the on-chain program records each buyer's cumulative purchased token allocation while the corresponding tokens remain under protocol-controlled custody.
+
+Buyers cannot claim or transfer their purchased tokens before successful liquidity migration. This prevents purchased token allocations from being used to initialize external liquidity pools ahead of the protocol's intended migration.
+
+Following successful migration, purchased tokens become claimable according to the sale's selected Token Unlocked (TU) or Token Locked (TL) model.
+
+This protection reduces the risk of premature liquidity pool creation interfering with the protocol's official Raydium CPMM migration.
 
 ### Recovery path
 
@@ -338,6 +376,7 @@ Publicly verifiable information includes:
 * Sale state
 * Protocol-controlled account activity
 * Liquidity migration transactions
+* Purchased token claim transactions
 * Resulting blockchain state
 
 The blockchain provides the authoritative record of executed protocol transactions and resulting on-chain state.
