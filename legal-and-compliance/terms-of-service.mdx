@@ -7,11 +7,13 @@ description: "RugFreePump Terms of Service"
 
 **Version: 1.0**
 
+> **Important Risk Warning:** Digital assets can lose some or all of their value. A successful purchase does not guarantee that tokens can immediately be claimed or traded. Liquidity migration, smart-contract operations, and third-party infrastructure may fail. RugFreePump uses upgradeable smart contracts and currently has concentrated administrative authority. Read the Risk Disclosure before participating.
+
 These Terms of Service ("Terms") govern your access to and use of RugFreePump, including the website at [https://rugfreepump.com](https://rugfreepump.com), its interfaces, smart-contract interactions, token-creation services, bonding-curve token sales, liquidity migration functionality, token-claiming functionality, and related features (collectively, the "Platform").
 
 **Please read these Terms carefully before connecting a wallet, creating a token, participating in a token sale, or otherwise using the Platform.**
 
-By accepting these Terms through the Platform's wallet-based consent process, you acknowledge that you have read, understood, and agreed to these Terms.
+By using the Platform, you agree to comply with the provisions applicable to your activities. Where the Platform requires wallet-based acceptance, signing the consent message constitutes your electronic acknowledgment of the identified document versions, subject to applicable law.
 
 If you do not agree, you must not use the Platform.
 
@@ -19,8 +21,8 @@ If you do not agree, you must not use the Platform.
 
 For purposes of these Terms:
 
-- **"RugFreePump," "we," "us," or "our"** refers to the Platform and its operator, as applicable.
-- **"User" or "you"** means any individual accessing or using the Platform.
+- **"RugFreePump," "we," "us," or "our"** means the person operating the RugFreePump Platform and, where the context requires, the Platform itself. The use of a project name does not represent that RugFreePump is an incorporated entity.
+- **"User" or "you"** means any person accessing or using the Platform, including a person acting with authority for an organization.
 - **"Creator"** means a User who creates or launches a token sale through the Platform.
 - **"Buyer"** means a User who purchases tokens through a bonding-curve sale.
 - **"Wallet"** means a blockchain-compatible digital wallet used to authenticate and authorize transactions.
@@ -51,7 +53,7 @@ The Platform provides functionality for:
 
 RugFreePump provides technical infrastructure and interfaces for interacting with blockchain-based systems.
 
-**RugFreePump is not a bank, brokerage, investment adviser, custodian, securities exchange, or guarantor of token value.**
+**RugFreePump does not provide banking, brokerage, investment-advisory, or custodial services through the described Platform functionality and does not guarantee token value. Legal characterization of any activity depends on applicable law, not merely this description.**
 
 The availability of any Platform feature does not mean that a token, Creator, transaction, or project has been approved, endorsed, verified, or determined to be lawful or financially suitable.
 
@@ -94,7 +96,7 @@ Connecting a wallet does not transfer ownership of its assets to RugFreePump.
 
 ### 4.2 Self-Custody
 
-Users remain responsible for their wallets, private keys, recovery phrases, authentication credentials, and transaction approvals.
+Users remain responsible for their wallets, private keys, recovery phrases, authentication credentials, and transaction approvals. RugFreePump does not hold User private keys or recovery phrases as part of its ordinary wallet-connection flow.
 
 RugFreePump does not require Users to disclose their private keys or recovery phrases.
 
@@ -142,9 +144,9 @@ The Platform may retain the signed message, signature, document metadata, and as
 
 By completing the consent process, you indicate your acceptance of the identified versions of the applicable documents.
 
-RugFreePump may require renewed acceptance when those documents are updated.
+RugFreePump requires acceptance of the current versions when its consent controls determine that a User has not accepted them. New document versions may require a new wallet signature before protected features can be used.
 
-Users who decline required consent may be unable to access certain authenticated or transaction-related features.
+Users who decline required consent cannot use features for which the Platform enforces that consent, including supported financial operations. Access to independent blockchain programs through third-party interfaces may be technically possible and is outside the Platform website's access controls.
 
 Electronic consent is subject to applicable laws concerning electronic records, signatures, and agreements.
 
@@ -166,7 +168,7 @@ Creators may submit information including:
 - Token sale model.
 - Applicable initial purchase amount or other supported creation parameters.
 
-Token-creation transactions may involve Platform fees, network fees, and other blockchain costs.
+Token-creation transactions may involve Platform fees, network fees, and other blockchain costs. A failed or abandoned creation attempt may leave temporary uploaded files or metadata subject to the Platform's cleanup processes; cleanup is not a guarantee of removal from all third-party caches or decentralized storage.
 
 ### 6.2 Creator Representations
 
@@ -193,7 +195,7 @@ Creators are responsible for their own statements, promotional materials, repres
 
 Creators must not imply that RugFreePump guarantees token performance, liquidity, price appreciation, profitability, or legal compliance.
 
-### 6.5 Publication of Token Metadata
+### 6.5 Publication, Storage, and Removal of Token Metadata
 
 Token images and metadata may be uploaded to public or publicly accessible storage infrastructure, including IPFS-related services and content-delivery systems.
 
@@ -300,7 +302,7 @@ Depending on the sale configuration, these parameters include:
 - The total number of unlock cycles.
 - The unlock schedule's starting timestamp.
 
-The unlock schedule begins in accordance with the applicable on-chain migration and finalization logic.
+For the current implemented TL model, the unlock schedule begins when liquidity migration is successfully finalized, not when the Buyer makes a purchase. Unlock intervals and cycle counts are sale-specific on-chain parameters.
 
 Claimable amounts depend on elapsed unlock cycles, previously claimed allocations, and the smart contract's calculation rules.
 
@@ -338,7 +340,7 @@ A User may withdraw only where the smart contract permits the operation and the 
 
 ### 9.3 Refund Calculation
 
-Where permitted, withdrawal amounts are calculated using the applicable smart-contract accounting and recorded contributions.
+Where permitted, withdrawal amounts are calculated using the applicable smart-contract accounting and recorded contributions. The currently reviewed withdrawal instruction does not impose a separate protocol withdrawal fee, but this does not eliminate blockchain network costs or other fees paid during participation.
 
 **A withdrawal is not a guarantee of reimbursement for every cost associated with participation.**
 
@@ -362,7 +364,7 @@ Users must not assume that all token purchases can be refunded.
 
 ### 10.1 Migration Process
 
-When a token sale satisfies the applicable finalization conditions, the Platform may support liquidity migration to a decentralized exchange.
+When a token sale satisfies the applicable finalization conditions, the Platform supports a liquidity migration transaction to Raydium CPMM under the program's specified conditions. The existence of that mechanism does not guarantee successful execution.
 
 The migration mechanism may involve:
 
@@ -430,7 +432,7 @@ These may include:
 - Third-party protocol fees.
 - Other fees expressly disclosed by the applicable transaction or Platform configuration.
 
-Certain Platform fees and settings may be updated through authorized administrative controls.
+Certain Platform fees and settings may be updated through authorized administrative controls. Current fee amounts should be confirmed against the applicable on-chain state and published fee documentation at the time of the transaction.
 
 The applicable on-chain configuration and executed transaction determine the actual amounts charged by the smart contract.
 
@@ -474,7 +476,7 @@ Authorized parties may be able to deploy program updates that modify supported f
 
 Certain important Platform functions are controlled by designated administrative authorities.
 
-At the time of this version, these authorities are not represented as being controlled by an independent decentralized governance organization or an implemented multisignature governance system.
+At the time of this version, a single operator controls the relevant administrative and upgrade authorities; a multisignature governance arrangement has not been implemented. Users should assess the resulting concentration-of-control and key-compromise risks.
 
 The concentration of administrative authority introduces operational, security, and governance risks.
 
@@ -525,7 +527,7 @@ Users acknowledge that:
 4. Successful recovery of all assets is not guaranteed.
 5. Authorized interventions may require additional transactions, operational coordination, or time.
 
-RugFreePump may determine whether to attempt an authorized intervention, subject to applicable law and smart-contract restrictions.
+The operator may determine whether to attempt an authorized intervention, subject to applicable law and smart-contract restrictions. An intervention cannot be assumed to restore the economic position a User expected before the incident.
 
 Nothing in these Terms creates an unconditional obligation to recover assets or reverse market losses.
 
@@ -556,7 +558,7 @@ Already executed on-chain distributions remain subject to the relevant blockchai
 
 Creators retain whatever rights they lawfully hold in content they submit.
 
-By submitting token metadata, images, descriptions, or other content, you grant RugFreePump a nonexclusive, worldwide, royalty-free license to host, store, reproduce, process, resize, distribute, display, and make that content available as reasonably necessary to operate, maintain, promote, and provide the Platform and its token-discovery features.
+By submitting token metadata, images, descriptions, or other content, you grant RugFreePump a nonexclusive, worldwide, royalty-free license, for as long as reasonably necessary to operate the Platform and subject to applicable law, to host, store, reproduce, process, resize, distribute, display, and make that content available through Platform services, including token discovery and ordinary service-related promotion. This does not authorize unrelated advertising uses of personal information.
 
 This license does not transfer ownership of your intellectual property to RugFreePump.
 
@@ -666,7 +668,7 @@ RugFreePump's bonding-curve structure and withdrawal mechanisms do not eliminate
 
 **You should never commit funds that you cannot afford to lose.**
 
-The separate **Risk Disclosure** provides additional details and must be reviewed before participating in financial operations.
+The separate **Risk Disclosure** provides additional details and forms part of the documents presented through the Platform's wallet-consent process.
 
 ## 19. No Fiduciary Relationship
 
@@ -710,7 +712,7 @@ Depending on the activity, this may include:
 - Functional visitor identifiers.
 - Operational records necessary for Platform services.
 
-RugFreePump's collection, use, storage, disclosure, and retention of personal data are addressed in the separate **Privacy Policy**.
+RugFreePump's collection, use, storage, disclosure, and retention of personal data are addressed in the separate **Privacy Policy**. The Platform uses functional and security-related storage, including a persistent visitor identifier for announcement-view status; it should not be described as cookie-free or as collecting no technical identifiers.
 
 Blockchain records and certain publicly distributed metadata may remain accessible independently of RugFreePump.
 
@@ -827,11 +829,11 @@ If you do not accept an updated version, you must discontinue use of features re
 
 ## 28. Legal Compliance and Disputes
 
-These Terms do not designate a single exclusive governing-law jurisdiction or court.
+These Terms do not designate an exclusive governing-law jurisdiction, forum, or mandatory arbitration procedure. This omission does not prevent a court or authority from determining which laws and procedures apply.
 
 Your use of the Platform remains subject to applicable laws and any mandatory legal rights, protections, or procedures that apply to you or to the Platform operator.
 
-If a dispute arises, Users are encouraged to first contact RugFreePump through its official communication channels and provide sufficient information to identify the relevant issue.
+If a dispute arises, Users are encouraged, but are not required, to contact RugFreePump through its official communication channels and provide sufficient information to identify the relevant issue. Users should not publicly disclose private keys, recovery phrases, session credentials, or other sensitive information.
 
 Nothing in these Terms requires a User to waive access to courts, regulatory authorities, or other remedies that cannot lawfully be waived.
 
@@ -853,7 +855,7 @@ Any waiver must be legally valid and applies only to the circumstances for which
 
 These Terms, together with the applicable Privacy Policy and Risk Disclosure accepted through the Platform's consent process, establish the principal conditions governing use of RugFreePump.
 
-Additional published policies, including the DMCA Policy and Trademark Guidelines, apply to the activities they address.
+The separately published DMCA Policy and Trademark Guidelines address copyright complaints and permitted brand use. They are not among the three documents included in the Platform's wallet-signed consent bundle.
 
 Specific on-chain transaction conditions and immutable blockchain records remain relevant to the execution and interpretation of individual transactions.
 
@@ -875,7 +877,7 @@ Any legally required operator-identification information, complaint-handling con
 
 ---
 
-**By completing the Platform's required wallet-based consent process, you acknowledge that you have read, understood, and accepted these Terms of Service and the applicable versions of the Privacy Policy and Risk Disclosure.**
+**By completing the Platform's required wallet-based consent process, you acknowledge acceptance of the identified versions of these Terms of Service, the Privacy Policy, and the Risk Disclosure, subject to applicable law.**
 
 **RugFreePump — Terms of Service — Version 1.0**
 
