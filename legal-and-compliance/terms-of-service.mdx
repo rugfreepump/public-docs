@@ -3,9 +3,9 @@ title: "Terms of Service"
 description: "RugFreePump Terms of Service"
 ---
 
-**Last Updated: October 14, 2026**
-
 **Version: 1.0**
+
+**Last Updated: October 14, 2026**
 
 > **Important Risk Warning:** Digital assets can lose some or all of their value. A successful purchase does not guarantee that tokens can immediately be claimed or traded. Liquidity migration, smart-contract operations, and third-party infrastructure may fail. RugFreePump uses upgradeable smart contracts and currently has concentrated administrative authority. Read the Risk Disclosure before participating.
 
@@ -168,7 +168,7 @@ Creators may submit information including:
 - Token sale model.
 - Applicable initial purchase amount or other supported creation parameters.
 
-Token-creation transactions may involve Platform fees, network fees, and other blockchain costs. A failed or abandoned creation attempt may leave temporary uploaded files or metadata subject to the Platform's cleanup processes; cleanup is not a guarantee of removal from all third-party caches or decentralized storage.
+Token-creation transactions may involve Platform fees, network fees, and other blockchain costs. A token-creation attempt may upload an image and metadata before the blockchain transaction is signed or confirmed. If creation is abandoned or fails, the Platform may attempt to clean up uploaded files from its managed storage. Such cleanup is not guaranteed to succeed or remove copies from independent IPFS gateways, caches, or third-party systems. A failed on-chain transaction does not itself mean that a Platform creation fee was successfully collected; the actual transaction and on-chain records determine whether a fee was charged.
 
 ### 6.2 Creator Representations
 
@@ -338,13 +338,15 @@ Withdrawals are not unrestricted redemptions.
 
 A User may withdraw only where the smart contract permits the operation and the relevant refundable balance exists.
 
-### 9.3 Refund Calculation
+### 9.3 Refund Calculation and Non-Refundable Fees
 
-Where permitted, withdrawal amounts are calculated using the applicable smart-contract accounting and recorded contributions. The currently reviewed withdrawal instruction does not impose a separate protocol withdrawal fee, but this does not eliminate blockchain network costs or other fees paid during participation.
+Where permitted, withdrawal amounts are calculated using the applicable smart-contract accounting and recorded contributions. The reviewed withdrawal instruction does not impose a separate protocol withdrawal fee; this does not mean that fees previously collected during token creation or purchases are returned.
 
-**A withdrawal is not a guarantee of reimbursement for every cost associated with participation.**
+**An eligible withdrawal returns only the amount refundable under the applicable on-chain accounting. It does not reverse the original purchase or refund Platform fees already collected.**
 
-Network transaction fees, priority fees, unrelated wallet expenses, and other nonrefundable costs may remain the User's responsibility.
+In particular, **Platform fees actually charged and collected in connection with token creation or token purchases are non-refundable merely because a sale expires, is canceled, does not finalize, cannot migrate, is subject to emergency intervention, or otherwise does not produce the outcome a User expected.** This includes fees deducted from a purchase before its net contribution is recorded. Any withdrawal of that net contribution does not include those previously collected fees.
+
+Network transaction fees, priority fees, token-account costs, and independent third-party charges are also not reimbursed by RugFreePump as part of an ordinary smart-contract withdrawal. Fees or amounts not actually collected are not treated as collected fees. These provisions are subject to any refund or other remedy expressly required by applicable law or provided by the applicable smart-contract mechanism.
 
 ### 9.4 No General Right to Reverse Blockchain Transactions
 
@@ -448,13 +450,24 @@ Network transaction fees are separate from Platform fees.
 
 They may be charged even where a transaction fails after submission, depending on network behavior.
 
-### 11.3 Fee Refundability
+### 11.3 Non-Refundable Platform Fees
 
-Unless expressly provided by the applicable smart-contract logic or required by law, fees paid for completed services or blockchain operations are not automatically refundable.
+**All Platform fees actually charged and successfully collected through the applicable smart-contract transaction are non-refundable, except where the applicable smart contract expressly provides otherwise or applicable law requires a refund or other remedy.** This applies independently of whether a token sale later expires, is canceled, fails to finalize, fails to migrate, enters an emergency recovery process, or otherwise does not achieve its intended outcome.
 
-This provision does not eliminate any nonwaivable legal rights.
+In particular:
 
-### 11.4 Fee Changes
+- A **token-creation fee** collected on a successfully executed creation transaction is not refunded because the created sale subsequently expires, is canceled, or fails to migrate.
+- A **purchase fee** collected when a buy transaction succeeds is not included in a later withdrawal of the Buyer's refundable contribution. An expired or canceled sale does not reverse the original purchase fee.
+- Any **sale-completion fee** is assessed only if and when the applicable on-chain conditions for that fee are met; where collected, it is not automatically reversible because a later migration or other operation fails.
+- **DEX pool-creation charges, network fees, priority fees, rent or account-creation expenses, and independent third-party charges** are distinct from Platform fees and are not ordinarily reimbursed by RugFreePump.
+
+A transaction that fails before a Platform fee is collected does not create a non-refundable Platform fee merely because it was attempted. On-chain transaction records determine what was actually charged. This section does not waive statutory refund, restitution, or consumer-protection rights that cannot lawfully be excluded.
+
+### 11.4 Refunds Are Different From Platform Fees
+
+A smart-contract withdrawal, if available, is a limited return of a Buyer's eligible contribution according to on-chain rules, **not a refund of every amount the Buyer spent**. Creators and Buyers must account for the possibility that their paid Platform fees and network costs will not be recovered even if the sale does not complete. The Platform does not guarantee that a refund transaction will succeed in all circumstances.
+
+### 11.5 Fee Changes
 
 RugFreePump may modify configurable fees through authorized procedures.
 
@@ -855,7 +868,7 @@ Any waiver must be legally valid and applies only to the circumstances for which
 
 These Terms, together with the applicable Privacy Policy and Risk Disclosure accepted through the Platform's consent process, establish the principal conditions governing use of RugFreePump.
 
-The separately published DMCA Policy and Trademark Guidelines address copyright complaints and permitted brand use. They are not among the three documents included in the Platform's wallet-signed consent bundle.
+The separately published DMCA Policy and Trademark Guidelines address copyright complaints and permitted brand use. They are not among the three documents included in the Platform's wallet-signed consent bundle. A separately published fee schedule or operational documentation may provide additional transaction details; no such document can override mandatory legal rights.
 
 Specific on-chain transaction conditions and immutable blockchain records remain relevant to the execution and interpretation of individual transactions.
 
@@ -863,14 +876,16 @@ If a description in these Terms differs from the actual execution of a blockchai
 
 ## 32. Contact and Official Communications
 
-Official Platform information is available through:
+Official Platform information and legal correspondence are available through:
 
 **Website:** [https://rugfreepump.com](https://rugfreepump.com)
 
-Users should rely on communication channels expressly identified through the official website.
+**Legal Contact:** [legal@rugfreepump.com](mailto:legal@rugfreepump.com)
+
+Users may send legal notices, intellectual-property complaints, and questions concerning these Terms to the legal contact above. Users should rely on communication channels expressly identified through the official website. Email delivery does not, by itself, establish that a formal notice has been legally served where applicable law requires another method.
 
 RugFreePump may publish operational announcements, security notices, legal-document updates, and other service-related information through its official interfaces and communication channels.
 
 Users should exercise caution regarding impersonation, fraudulent support accounts, and unauthorized requests for wallet credentials.
 
-Any legally required operator-identification information, complaint-handling contact, or service address must be provided in accordance with applicable law.
+The use of a public-facing project name and email address does not replace any operator-identification, service-address, designated-agent, or complaint-handling disclosures that applicable law requires. Any such legally required information must be provided through an appropriate lawful process.
