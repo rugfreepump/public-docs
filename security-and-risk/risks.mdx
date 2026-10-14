@@ -24,6 +24,7 @@ A software bug or previously unknown vulnerability could cause:
 * Withdrawals to fail or become unavailable
 * Sales to fail to finalize when expected
 * Liquidity migration to fail, be delayed, or produce an unexpected result
+* Purchased token claims to fail, become unavailable, or release an incorrect token amount
 * Administrative operations to behave unexpectedly
 * Transactions or asset transfers to produce an unexpected result
 
@@ -82,6 +83,7 @@ Changes to these settings can affect things such as:
 * Fees charged for creating or buying into a token sale
 * Creator incentive settings
 * Liquidity migration and DEX-related settings
+* Token unlock schedules configured for new Token Locked (TL) sales
 * Whether certain protocol features are available
 
 These settings can change over time, so the fees, conditions, or behavior of a new sale may differ from those of an earlier sale.
@@ -305,6 +307,28 @@ Moving from the bonding curve to external liquidity changes the trading environm
 
 Price, liquidity, spreads, volatility, and trading activity after migration can differ substantially from conditions during the bonding-curve sale.
 
+### Purchased token claim availability risk
+
+Purchasing tokens through a bonding-curve sale does not immediately transfer those tokens to the buyer's wallet.
+
+Instead, the protocol records the buyer's cumulative purchased token allocation on-chain.
+
+Purchased tokens become eligible for claiming only after successful liquidity migration. If migration is delayed, fails, or cannot be completed, buyers may be unable to claim their purchased tokens.
+
+Token claiming also depends on successful on-chain transaction execution and the availability of the required protocol-controlled token accounts.
+
+### Token unlock schedule risk
+
+RugFreePump supports Token Unlocked (TU) and Token Locked (TL) sale models.
+
+For TU sales, purchased tokens become fully claimable after successful liquidity migration.
+
+For TL sales, purchased tokens become claimable gradually according to the sale's configured on-chain token unlock schedule.
+
+Buyers participating in TL sales cannot claim their entire purchased token allocation immediately after migration.
+
+Market prices, liquidity conditions, and token demand may change substantially before all purchased tokens become claimable.
+
 ---
 
 ## Token and creator risks
@@ -513,6 +537,16 @@ The amount available for withdrawal can be limited by the SOL remaining in the b
 
 The program tracks each buyer's accumulated SOL contribution separately. As a result, withdrawals normally correspond to the recorded contribution, but the final withdrawal can be slightly lower if the remaining vault balance must retain its required rent-exempt amount.
 
+Withdrawals and purchased token claims are separate protocol operations. Eligible withdrawals return SOL contributions according to the applicable sale conditions, while purchased token claims release purchased token allocations only after successful liquidity migration.
+
+### Token claiming risk
+
+Token claiming depends on the sale's successful liquidity migration, the buyer's recorded purchased token allocation, the applicable token sale model, and the required on-chain account conditions.
+
+A claim transaction can fail because of invalid accounts, insufficient SOL for transaction or account-creation costs, protocol restrictions, or other execution errors.
+
+For Token Locked (TL) sales, only the portion unlocked under the applicable schedule is eligible for claiming at a given time.
+
 ### Liquidity migration risk
 
 Liquidity migration depends on the finalized sale state, required timing, authorities, accounts, and the Raydium CPMM program.
@@ -520,6 +554,8 @@ Liquidity migration depends on the finalized sale state, required timing, author
 A failed transaction, unexpected account state, external-program problem, or administrative restriction can delay or prevent migration.
 
 A migration that is already in progress can also temporarily prevent another migration or recovery operation for the same sale.
+
+Because purchased tokens cannot be claimed before successful liquidity migration, migration failures or delays can also delay access to purchased tokens.
 
 ### Raydium dependency risk
 
