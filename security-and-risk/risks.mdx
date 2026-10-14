@@ -529,15 +529,13 @@ Additional attempts can result in additional network transaction costs.
 
 ### Withdrawal risk
 
-Whether and how much a contributor can withdraw depends on the sale's final state and the program's withdrawal conditions.
+Whether and how much a contributor can withdraw depends on the sale’s final state and the program’s withdrawal conditions.
 
 A recorded contribution does not automatically mean that the full amount will always be immediately available for withdrawal.
 
 The amount available for withdrawal can be limited by the SOL remaining in the bonding-curve vault above its required rent-exempt balance.
 
-The program tracks each buyer's accumulated SOL contribution separately. As a result, withdrawals normally correspond to the recorded contribution, but the final withdrawal can be slightly lower if the remaining vault balance must retain its required rent-exempt amount.
-
-Withdrawals and purchased token claims are separate protocol operations. Eligible withdrawals return SOL contributions according to the applicable sale conditions, while purchased token claims release purchased token allocations only after successful liquidity migration.
+The program tracks each buyer’s accumulated SOL contribution separately. As a result, withdrawals normally correspond to the recorded contribution, but the final withdrawal can be slightly lower if the remaining vault balance must retain its required rent-exempt amount.
 
 ### Token claiming risk
 
@@ -546,6 +544,8 @@ Token claiming depends on the sale's successful liquidity migration, the buyer's
 A claim transaction can fail because of invalid accounts, insufficient SOL for transaction or account-creation costs, protocol restrictions, or other execution errors.
 
 For Token Locked (TL) sales, only the portion unlocked under the applicable schedule is eligible for claiming at a given time.
+
+The program tracks each buyer's cumulative purchased token allocation separately. As a result, token claims normally correspond to the amount eligible under the applicable token sale model and unlock conditions, but the final claim can be slightly lower if the remaining protocol-controlled token balance is insufficient to satisfy the full calculated claim amount.
 
 ### Liquidity migration risk
 
