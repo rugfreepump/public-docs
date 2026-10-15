@@ -329,7 +329,7 @@ RugFreePump operates administrative controls that can independently suppress any
 - `twitter` — X (formerly Twitter) account link.
 - `telegram` — Telegram link.
 
-The operator can select one, several, or all seven fields for a particular token. Selected values are set to `NULL` in the Platform database. The Platform presents neutral fallbacks for suppressed identifying content, including “Token name unavailable” for a removed name, “N/A” for a removed symbol, “Description unavailable” for a removed description, and a placeholder for a removed image. Suppressed website, X, and Telegram links are hidden from Platform-controlled interfaces.
+The operator can select one, several, or all seven fields for a particular token. Selected values are set to `NULL` in the Platform database. The Platform displays **Not Available** for removed token names or symbols, a neutral placeholder icon for removed token images, and hides removed descriptions, website links, X links, and Telegram links. Suppressed website, X, and Telegram links are hidden from Platform-controlled interfaces.
 
 These controls may be used to address substantiated trademark concerns, impersonation, false affiliation, fraudulent branding, phishing links, or other violations of applicable law or enforceable Platform policies. Their existence does not mean that every complaint will result in suppression.
 
@@ -702,6 +702,6 @@ Users should rely on official communication channels identified through the RugF
 
 **RugFreePump respects trademark rights and prohibits unlawful impersonation, misleading affiliation, and trademark infringement through the Platform. Creators remain responsible for the legality of their submitted coin names, tickers, images, descriptions, and other content.**
 
-**RugFreePump operates selective seven-field metadata moderation through its Platform-controlled database and interfaces, subject to applicable law and its policies. Existing administrative controls allow independent suppression of `name`, `symbol`, `image_url`, `description`, `website`, `twitter`, and `telegram` by setting selected Platform database fields to `NULL`, displaying neutral fallback content, and hiding suppressed external links. Such actions do not guarantee removal of the underlying token, original metadata, blockchain records, decentralized content, or independently available copies.**
+**RugFreePump operates selective seven-field metadata moderation through its Platform-controlled database and interfaces, subject to applicable law and its policies. Existing administrative controls allow independent suppression of `name`, `symbol`, `image_url`, `description`, `website`, `twitter`, and `telegram` by setting selected Platform database fields to `NULL`, displaying **Not Available** for suppressed token names and symbols, displaying a neutral placeholder icon for suppressed token images, and hiding suppressed descriptions and external links. Such actions do not guarantee removal of the underlying token, original metadata, blockchain records, decentralized content, or independently available copies.**
 
 **Nothing in these Guidelines waives mandatory rights, defenses, remedies, or obligations established by applicable law.**
