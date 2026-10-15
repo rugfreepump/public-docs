@@ -1,4 +1,903 @@
 ---
 title: "FAQ"
-description: "Answers to common questions about using RugFreePump."
+description: "Find answers to common questions about RugFreePump, token creation, bonding-curve sales, buying tokens, claiming, withdrawals, liquidity migration, rewards, and account safety."
 ---
+
+Welcome to the RugFreePump Frequently Asked Questions (FAQ).
+
+This page answers common questions from visitors, token Creators, and Buyers about using RugFreePump and understanding its main features.
+
+Questions are organized by topic so you can quickly find the information relevant to you.
+
+For detailed instructions, visit the linked user guides.
+
+## General Questions
+
+### What is RugFreePump?
+
+RugFreePump is a Solana-based token launchpad that allows users to create tokens, launch bonding-curve token sales, purchase tokens, and migrate successfully completed sales to Raydium for decentralized exchange trading.
+
+The Platform provides structured token-sale mechanisms, configurable token sale models, withdrawal functionality for eligible sales, and token-claiming functionality.
+
+Learn more in [Overview](../overview/overview).
+
+### Who can use RugFreePump?
+
+RugFreePump is designed for:
+
+- **Visitors** who want to discover and explore token projects.
+- **Token Creators** who want to create tokens and launch bonding-curve sales.
+- **Token Buyers** who want to participate in token sales, claim purchased tokens, or withdraw eligible contributions.
+
+Access to particular activities may depend on wallet connectivity, Platform availability, supported functionality, and applicable restrictions.
+
+### Which blockchain does RugFreePump use?
+
+RugFreePump operates on the **Solana blockchain**.
+
+Token creation, purchases, withdrawals, liquidity migration, and token claiming are performed through supported Solana transactions.
+
+### Do I need an account to use RugFreePump?
+
+RugFreePump uses wallet-based access rather than requiring a traditional username-and-password account for its main blockchain activities.
+
+You can explore publicly available Platform information without connecting a wallet.
+
+To perform wallet-dependent operations, you must connect a compatible Solana wallet and authorize the relevant actions.
+
+### Do I need to connect my wallet to browse tokens?
+
+No.
+
+You can browse publicly available token listings, sale information, and Platform statistics without connecting a wallet.
+
+A wallet is required when you want to perform supported blockchain transactions or access wallet-specific functionality.
+
+### Does RugFreePump hold my wallet's private keys?
+
+No.
+
+RugFreePump's ordinary wallet connection process does not require you to provide your private keys or recovery phrase.
+
+You remain responsible for securing your wallet and authorizing transactions.
+
+**Never share your private key or recovery phrase with anyone claiming to represent RugFreePump.**
+
+### Can I use RugFreePump on a mobile device?
+
+You may access RugFreePump through a compatible mobile browser or wallet application.
+
+Wallet connection and transaction approval depend on the capabilities of your device, browser, and wallet provider.
+
+### Where can I find my created and purchased tokens?
+
+After connecting your wallet, you can use the available profile features to view projects associated with your wallet.
+
+These may include tokens you created and token sales in which you participated.
+
+Displayed information depends on the Platform's indexing and synchronization processes.
+
+### Are all tokens on RugFreePump created or endorsed by RugFreePump?
+
+No.
+
+Tokens are created by independent Creators using the Platform.
+
+The appearance of a token in a listing, ranking, featured section, or trending section does not mean that RugFreePump has verified or endorsed the Creator or token.
+
+Always research a project before participating.
+
+## Token Sales and Bonding Curves
+
+### What is a bonding-curve token sale?
+
+A bonding-curve token sale uses a programmed pricing mechanism to determine token purchase allocations based on the applicable sale conditions and current on-chain state.
+
+Unlike a fixed-price sale, purchase conditions can change as tokens are sold and contributions accumulate.
+
+RugFreePump uses its on-chain bonding-curve mechanism to manage supported token sales before liquidity migration.
+
+### How many tokens are created for each RugFreePump sale?
+
+The supported token-creation mechanism uses a total supply of **1,000,000,000 tokens**.
+
+The supply is allocated as follows:
+
+| Allocation | Tokens | Percentage |
+|---|---:|---:|
+| Bonding-curve sale | 800,000,000 | 80% |
+| Raydium liquidity | 200,000,000 | 20% |
+| **Total** | **1,000,000,000** | **100%** |
+
+The designated liquidity allocation is used during successful migration according to the applicable on-chain mechanism.
+
+### What happens when a token sale reaches its completion conditions?
+
+When the applicable on-chain finalization conditions are satisfied, the sale becomes finalized.
+
+Finalization ends the ordinary bonding-curve purchasing stage and makes the sale eligible for the next supported lifecycle operation: liquidity migration.
+
+**Finalization does not mean that liquidity migration has already happened.**
+
+### Can a token sale expire without completing?
+
+Yes.
+
+A sale may expire without satisfying its required completion conditions.
+
+When this happens, the sale does not proceed through ordinary successful-sale liquidity migration.
+
+Eligible Buyers may be able to withdraw their refundable contributions according to the applicable smart-contract conditions.
+
+### Can I buy tokens after a sale is finalized or expired?
+
+No, not through the ordinary bonding-curve purchasing mechanism.
+
+Bonding-curve purchases are subject to the sale's active state and other on-chain conditions.
+
+After successful liquidity migration, tokens may instead become available for trading through supported independent decentralized exchange markets.
+
+### What is the difference between a bonding-curve purchase and a Raydium trade?
+
+A bonding-curve purchase takes place through RugFreePump's token-sale mechanism before successful liquidity migration.
+
+A Raydium trade takes place through an independent decentralized exchange liquidity pool after that pool has been created and funded.
+
+These operations use different pricing and execution mechanisms.
+
+### Does the bonding-curve price guarantee a token's future trading price?
+
+No.
+
+A token's bonding-curve purchase price does not guarantee its market price after liquidity migration.
+
+Secondary-market prices depend on supply, demand, liquidity, trading activity, and other market conditions.
+
+## Token Sale Models: TU and TL
+
+### What token sale models does RugFreePump support?
+
+RugFreePump supports two token sale models:
+
+- **TU — Token Unlocked**
+- **TL — Token Locked**
+
+Both models use the supported bonding-curve sale process, but they differ in how purchased tokens become claimable after successful liquidity migration.
+
+Learn more in [Token Sale Models](../overview/token-sale-models).
+
+### What is the TU sale model?
+
+TU stands for **Token Unlocked**.
+
+Under the TU model, purchased token allocations become eligible for claiming after successful liquidity migration, subject to the applicable on-chain conditions.
+
+TU does not mean that tokens are delivered to the Buyer's wallet immediately after purchase.
+
+### What is the TL sale model?
+
+TL stands for **Token Locked**.
+
+Under the TL model, purchased token allocations become claimable gradually according to the unlock schedule recorded for that particular sale.
+
+Buyers can claim eligible unlocked allocations as the required unlock cycles are completed.
+
+### When does the TL unlock schedule begin?
+
+The TL unlock schedule begins when the sale's liquidity migration is successfully finalized.
+
+It does not begin when the Buyer purchases tokens or when the bonding-curve sale reaches finalization.
+
+If liquidity migration is delayed, the unlock schedule is also delayed.
+
+### What is the default TL unlock schedule?
+
+The current default TL schedule unlocks **10% of purchased tokens every 30 minutes**, over **10 unlock cycles**.
+
+This represents a total scheduled unlocking period of **5 hours** after successful liquidity migration.
+
+These are default settings. The actual schedule for an individual TL sale is determined by its recorded on-chain parameters.
+
+### Can different TL sales have different unlock schedules?
+
+Yes.
+
+Administrative default settings may change for future token sales.
+
+Each TL sale uses its applicable recorded parameters, so Buyers should review the specific sale's unlock interval and total unlock cycles rather than assuming every TL sale has the same schedule.
+
+### Can a Creator change an existing sale from TU to TL or TL to TU?
+
+The token sale model is selected during token creation and recorded as part of the sale's on-chain configuration.
+
+The ordinary Creator workflow does not provide a mechanism to switch an existing sale between TU and TL after creation.
+
+### Can I claim TL tokens before their scheduled unlock time?
+
+No.
+
+The ordinary claiming mechanism only permits allocations that have become eligible under the applicable TL unlock schedule and on-chain accounting conditions.
+
+### Are TL tokens automatically transferred to my wallet after each unlock cycle?
+
+No.
+
+Unlocking makes the corresponding allocation eligible for claiming.
+
+You must perform the supported claiming transaction to receive claimable tokens in your wallet.
+
+### Which sale model is better?
+
+Neither model is automatically better for every Buyer or Creator.
+
+TU provides post-migration claim eligibility without the TL scheduled unlocking mechanism.
+
+TL distributes claim eligibility over time according to the sale-specific unlock schedule.
+
+Both models carry financial, technical, and market risks.
+
+## Creating Tokens
+
+### How do I create a token on RugFreePump?
+
+Connect a compatible Solana wallet and open the token-creation interface.
+
+Provide the required token information, select the supported sale model, review the applicable settings and fees, and authorize the necessary transactions.
+
+For complete instructions, see [Creating a Bonding-Curve Sale](./for-token-creators/creating-a-bonding-curve-sale).
+
+### What information do I need to create a token?
+
+The token-creation interface may request information such as:
+
+- Token name.
+- Token symbol or ticker.
+- Token image.
+- Token description.
+- Project website.
+- X account link.
+- Telegram link.
+- Token sale model and applicable creation settings.
+
+Some fields may be optional.
+
+Review the creation interface before submitting your transaction.
+
+### Can I change my token's name, ticker, image, or description after creation?
+
+The ordinary RugFreePump token-creation workflow does not provide Creators with a general mechanism to edit their token's original metadata after creation.
+
+Review your submitted information carefully before approving the creation transaction.
+
+### Can I delete a token after creating it?
+
+The ordinary Creator workflow does not provide a general mechanism to delete an existing token mint or erase its finalized blockchain history.
+
+A token's sale lifecycle remains subject to the applicable on-chain conditions.
+
+### Can I create multiple tokens?
+
+RugFreePump supports token creation through eligible wallet transactions.
+
+Each token creation is a separate operation with its own applicable requirements, fees, and blockchain records.
+
+### Do I need to own a website or social-media account to create a token?
+
+Not necessarily.
+
+The availability and requirements of optional project links depend on the token-creation interface.
+
+However, any links you submit should be accurate, lawful, and associated with the project you intend to represent.
+
+### Does RugFreePump verify every token Creator?
+
+No.
+
+The ability to create a token does not mean the Creator has undergone independent identity, financial, or project verification.
+
+Buyers should independently evaluate Creators and project information.
+
+### Can I purchase tokens from my own sale?
+
+The supported creation and purchasing workflows may allow a Creator to participate in their own sale, subject to the applicable on-chain rules and transaction conditions.
+
+Creator participation does not guarantee that the sale will complete or that the purchased tokens will retain value.
+
+### What happens if my token-creation transaction fails?
+
+A failed transaction does not establish a successfully created token sale.
+
+Depending on the point of failure, you may still incur Solana network transaction costs, and previously uploaded images or metadata may remain accessible through external storage infrastructure.
+
+Review the transaction result before attempting the operation again.
+
+## Buying Tokens
+
+### How do I buy tokens on RugFreePump?
+
+Connect a compatible Solana wallet, open an active token-sale page, enter your intended purchase amount, review the displayed transaction information, and approve the transaction through your wallet.
+
+For detailed instructions, see [Buying Bonding-Curve Sale Tokens](./for-token-buyers/buying-bonding-curve-sale-tokens).
+
+### What currency do I use to buy tokens?
+
+RugFreePump bonding-curve purchases use **SOL**.
+
+The Platform may display USD-referenced values using applicable SOL/USD pricing information.
+
+### What is the minimum purchase amount?
+
+The on-chain minimum purchase is USD-referenced and is currently **$1**, subject to the applicable smart-contract pricing and transaction requirements.
+
+The Platform interface may apply additional validation or safety margins.
+
+### Is there a maximum amount I can purchase?
+
+Purchases are limited by the applicable sale conditions, remaining sale capacity, available wallet balance, and transaction requirements.
+
+The supported bonding-curve mechanism uses a USD-referenced fundraising cap of **$16,150** per sale.
+
+This cap applies to the sale as a whole, not as a guaranteed individual purchase allowance.
+
+### What fees apply when buying tokens?
+
+The current RugFreePump token-purchase protocol fee is **1%**.
+
+Additional Solana network fees and applicable transaction costs may also apply.
+
+Review [Protocol Fees](../overview/protocol-fees) for more information.
+
+### Do purchased tokens appear in my wallet immediately?
+
+Not necessarily.
+
+Under the supported sale models, purchases record token allocations through the applicable on-chain accounting.
+
+Buyers must wait until the relevant claiming conditions are satisfied and then complete the supported claiming transaction.
+
+### Can I buy tokens without connecting a wallet?
+
+No.
+
+A supported wallet connection is required to authorize a token-purchase transaction.
+
+### Why did my purchase transaction fail?
+
+Possible reasons include:
+
+- The sale is no longer active.
+- The purchase amount does not satisfy applicable limits.
+- The remaining sale capacity is insufficient.
+- Your wallet does not have enough SOL.
+- The transaction no longer satisfies its slippage conditions.
+- Required SOL/USD oracle information is unavailable or outdated.
+- Network congestion or transaction execution errors.
+- Platform maintenance restrictions.
+
+Check the displayed error and current sale state before retrying.
+
+### What is slippage?
+
+Slippage refers to differences between expected transaction conditions and the conditions available when a transaction executes.
+
+RugFreePump uses applicable on-chain transaction protections to reject purchases that do not satisfy the required execution constraints.
+
+Slippage protection does not guarantee successful execution or future token value.
+
+### Can I cancel a completed purchase?
+
+A successfully executed blockchain purchase cannot ordinarily be canceled simply because the Buyer changes their mind.
+
+Withdrawal eligibility depends on the sale's on-chain state and the applicable withdrawal rules.
+
+### Can I sell purchased tokens before liquidity migration?
+
+Purchased allocations are not ordinarily available in the Buyer's wallet for transfer immediately after a bonding-curve purchase.
+
+The normal token-claiming process depends on successful liquidity migration and, for TL sales, the applicable unlock schedule.
+
+### How can I check whether my purchase succeeded?
+
+Review the transaction result in your wallet and the applicable RugFreePump sale or profile interface.
+
+You can also verify the transaction through an independent Solana blockchain explorer.
+
+Allow for possible delays in Platform indexing or transaction-status updates.
+
+## Liquidity Migration and Raydium
+
+### What is liquidity migration?
+
+Liquidity migration is the process of moving an eligible finalized bonding-curve sale into a supported Raydium CPMM liquidity pool.
+
+The operation uses the designated token and SOL liquidity according to the applicable on-chain mechanism.
+
+After successful migration, the token may become tradable through independent decentralized exchange interfaces.
+
+### Does liquidity migration happen immediately when a sale completes?
+
+Not necessarily.
+
+Sale finalization and liquidity migration are separate operations.
+
+Migration requires a successful transaction satisfying the relevant on-chain conditions.
+
+### Who performs liquidity migration?
+
+RugFreePump provides the supported liquidity-migration mechanism, which is subject to the applicable authorization, administrative configuration, and sale-state requirements.
+
+The migration workflow may involve an eligible Creator action or supported Platform-operated automation.
+
+For detailed instructions, see [Migrating Raised Liquidity](./for-token-creators/migrating-raised-liquidity).
+
+### Does the Creator have a deadline to migrate liquidity?
+
+The Platform may provide a reminder to the Creator after a sale has been finalized.
+
+The current workflow includes a **60-minute migration reminder**, but this reminder should not be interpreted as an enforced on-chain migration deadline.
+
+A finalized sale may remain awaiting migration if the required operation has not succeeded.
+
+### Is successful liquidity migration guaranteed?
+
+No.
+
+Migration can fail or be delayed because of blockchain conditions, account incompatibilities, third-party protocol requirements, administrative restrictions, or other technical issues.
+
+A finalized sale does not guarantee successful migration.
+
+### What happens if another Raydium pool already exists?
+
+A preexisting or conflicting pool may prevent RugFreePump's intended Raydium CPMM pool initialization from succeeding.
+
+This can delay or prevent ordinary liquidity migration.
+
+Users should not assume that RugFreePump has exclusive control over every external liquidity pool that another party might create.
+
+### What happens to the liquidity-provider tokens?
+
+Under RugFreePump's supported migration mechanism, the liquidity-provider tokens received during successful migration are burned.
+
+This is intended to prevent ordinary redemption of the corresponding liquidity position through those burned LP tokens.
+
+### Does burning LP tokens guarantee permanent liquidity?
+
+No.
+
+Burning LP tokens does not guarantee a functioning market, continuous trading availability, sufficient demand, or protection against token price declines.
+
+### Can I trade tokens immediately after migration?
+
+Successful migration establishes the intended liquidity pool, but actual trading depends on the relevant decentralized exchange, network conditions, wallet compatibility, and available market liquidity.
+
+Buyers must also claim their purchased tokens before trading those allocations from their wallets.
+
+For TL sales, only eligible unlocked allocations can be claimed.
+
+## Claiming Purchased Tokens
+
+### What does claiming tokens mean?
+
+Claiming is the process of transferring an eligible purchased token allocation to the Buyer's wallet through a supported on-chain transaction.
+
+Purchasing tokens and claiming tokens are separate operations.
+
+### When can I claim my TU tokens?
+
+TU purchased allocations become eligible for claiming after successful liquidity migration, subject to the applicable smart-contract conditions.
+
+### When can I claim my TL tokens?
+
+TL purchased allocations become claimable according to the sale-specific unlock schedule, beginning after successful liquidity migration.
+
+You can claim the amount that has become eligible under the relevant schedule and accounting rules.
+
+### How do I claim my purchased tokens?
+
+Connect the wallet used for the purchase, open the relevant token-sale page or supported claiming interface, review your claimable allocation, and approve the claiming transaction.
+
+See [Claiming Purchased Tokens](./for-token-buyers/claiming-purchased-tokens).
+
+### Do I need SOL to claim tokens?
+
+Yes.
+
+You should maintain enough SOL to cover applicable transaction fees and any required token-account creation costs.
+
+### Can I claim tokens using a different wallet?
+
+Claim eligibility is associated with the applicable on-chain Buyer records.
+
+The ordinary claiming workflow requires the appropriate wallet and account authorization.
+
+Connecting a different wallet does not automatically transfer the original Buyer's claim entitlement.
+
+### What happens if I do not claim immediately?
+
+Claimable tokens are not automatically transferred merely because their claim conditions have been satisfied.
+
+You must execute the supported claim transaction.
+
+The continued availability of a claim remains subject to the applicable on-chain program, account state, and technical conditions.
+
+### Why is my claimable amount zero?
+
+Possible reasons include:
+
+- Liquidity migration has not succeeded.
+- The relevant TL unlock cycle has not elapsed.
+- You have already claimed the currently available allocation.
+- The connected wallet does not match the eligible Buyer.
+- The Platform has not yet synchronized the latest blockchain state.
+
+Review the sale's status, token sale model, and claim information.
+
+### Why did my claim transaction fail?
+
+A claim may fail because of insufficient SOL, incompatible token-account conditions, network problems, account-state errors, maintenance restrictions, or unmet smart-contract requirements.
+
+Check the transaction result before retrying.
+
+## Withdrawals and Refunds
+
+### Can I withdraw SOL after purchasing tokens?
+
+Withdrawals are available only in eligible on-chain sale states.
+
+These include supported expired sales and certain administratively canceled sales, subject to the applicable smart-contract conditions.
+
+A purchase does not create an unrestricted right to withdraw SOL at any time.
+
+### Can I withdraw SOL while a sale is still active?
+
+The ordinary withdrawal mechanism is subject to the sale's applicable state restrictions.
+
+Buyers should not assume they can freely reverse purchases while a sale remains active.
+
+### What happens if a token sale expires?
+
+If the sale expires without successfully completing, eligible Buyers may be able to withdraw their refundable contributions through the supported withdrawal mechanism.
+
+### Can I withdraw SOL after successful liquidity migration?
+
+Ordinary contribution withdrawals are not available merely because a Buyer is dissatisfied with a token after successful migration.
+
+Once a sale has migrated, the normal lifecycle is token claiming and possible secondary-market trading.
+
+### Will I receive my entire original payment back?
+
+Not necessarily.
+
+Refundable amounts are determined by the applicable on-chain contribution accounting.
+
+Previously collected purchase fees are not included in the refundable contribution.
+
+Solana network transaction costs are also not refunded through the ordinary withdrawal mechanism.
+
+### Is there a withdrawal fee?
+
+The current RugFreePump withdrawal mechanism does **not** impose an additional protocol withdrawal fee.
+
+However, previously collected purchase fees remain non-refundable, and applicable Solana network fees may still be incurred.
+
+### How do I withdraw eligible SOL?
+
+Connect the wallet associated with the purchase, open the relevant sale or supported withdrawal interface, review the refundable amount, and authorize the withdrawal transaction.
+
+See [Withdrawing Contributed SOL](./for-token-buyers/withdrawing-contributed-sol).
+
+### Can I withdraw only part of my refundable contribution?
+
+The withdrawal mechanism follows the applicable on-chain accounting and transaction rules.
+
+Review the withdrawal interface and the detailed withdrawal guide for the supported withdrawal amount and behavior.
+
+### What if my withdrawal transaction fails?
+
+A withdrawal may fail because the sale is not eligible, the refundable balance is insufficient, required accounts are incompatible, the transaction cannot execute, or the network is experiencing problems.
+
+A displayed refundable balance does not guarantee that every attempted transaction will succeed.
+
+### Can RugFreePump refund my purchase fees if a sale fails?
+
+Previously collected Platform purchase fees are not automatically refundable when a sale expires, is canceled, or fails to migrate.
+
+Any mandatory rights or remedies under applicable law remain unaffected.
+
+## Platform Fees and Costs
+
+### Is RugFreePump completely free to use?
+
+Browsing publicly available information does not ordinarily require a blockchain transaction.
+
+Creating tokens, buying tokens, claiming allocations, withdrawing contributions, and other on-chain operations may involve Platform fees, network fees, or other applicable costs.
+
+### What is the token-purchase fee?
+
+The current token-purchase protocol fee is **1%**.
+
+### Are Solana network fees the same as RugFreePump fees?
+
+No.
+
+RugFreePump protocol fees are charges collected according to the applicable Platform transaction rules.
+
+Solana network fees are associated with executing transactions on the blockchain.
+
+Some operations may also involve priority fees, token-account creation costs, or third-party protocol charges.
+
+### Can fees change?
+
+Certain fees may be configurable through authorized Platform administration.
+
+Always review the applicable fee information before approving a transaction.
+
+For detailed information, visit [Protocol Fees](../overview/protocol-fees).
+
+## Discovery, Rankings, and Platform Statistics
+
+### What does a token's sale status mean?
+
+The Platform may display sale statuses such as:
+
+| Status | Meaning |
+|---|---|
+| **Live** | The bonding-curve sale is active |
+| **Completed** | The sale has finalized and is awaiting successful liquidity migration |
+| **Migrated** | Liquidity migration has succeeded |
+| **Expired** | The sale expired without ordinary successful completion |
+| **Canceled** | The sale was canceled through an applicable supported mechanism |
+
+Displayed statuses may temporarily lag behind the latest blockchain state.
+
+### What is the Featured section?
+
+The Featured section highlights token projects based on the Platform's applicable discovery and ranking mechanisms.
+
+Featured placement does not mean a project has been independently verified or endorsed.
+
+### What is the Trending section?
+
+The Trending section displays projects ranked using Platform activity and other applicable ranking calculations.
+
+Trending status may change as activity changes.
+
+A high ranking does not guarantee that a token is legitimate, valuable, or likely to appreciate.
+
+### Why does a token's rank change?
+
+Rankings can change because of new purchases, changes in recent activity, the performance of other projects, and the Platform's ranking calculations.
+
+### Are Platform statistics updated in real time?
+
+RugFreePump uses off-chain indexing and real-time communication systems to provide updated Platform information.
+
+Some information may refresh frequently, but temporary delays, connection interruptions, or inconsistencies can occur.
+
+### Why does a displayed amount differ from my wallet or blockchain explorer?
+
+The Platform may temporarily display information that has not yet synchronized with the latest blockchain state.
+
+Differences may also result from rounding, unit conversions, transaction confirmation status, or pricing updates.
+
+For completed on-chain transactions, consult the relevant blockchain records.
+
+## Reward Program
+
+### Does RugFreePump have a reward program?
+
+RugFreePump provides a Reward Program with supported participation-related rewards and incentives.
+
+The availability of individual reward categories depends on the current program rules, eligibility conditions, and Platform configuration.
+
+Learn more in [Reward Program](../reward-program/reward-program).
+
+### Who can participate in the Reward Program?
+
+Eligibility depends on the applicable reward category and published program conditions.
+
+Different rewards may be associated with qualifying Creator activity, Buyer activity, or other supported participation.
+
+### Are rewards guaranteed?
+
+No.
+
+Participating in RugFreePump does not automatically guarantee a reward.
+
+Eligibility, calculations, available funding, applicable snapshots, and distribution conditions may affect whether a reward is received.
+
+### How are reward amounts determined?
+
+Reward amounts depend on the applicable program rules, qualifying activity, calculation periods, and distribution conditions.
+
+Review the Reward Program documentation for the current methodology.
+
+### Can reward rules change?
+
+Reward Program settings and eligibility rules may change where permitted by the applicable program conditions and law.
+
+Users should review the current Reward Program information rather than assuming that earlier terms will always remain unchanged.
+
+### Where can I check my rewards?
+
+Use the available Reward Program interfaces and published information to review supported reward statistics, eligibility indicators, and distribution records.
+
+Displayed estimates or eligibility information may not represent a final guaranteed distribution.
+
+## Wallet Connections and Common Problems
+
+### Why is my wallet not connecting?
+
+Wallet connection problems may result from:
+
+- An unsupported or outdated wallet application.
+- Browser extension conflicts.
+- An unavailable wallet provider.
+- A rejected connection request.
+- Temporary browser or network problems.
+- An interrupted or expired wallet session.
+
+Check your wallet application and browser before retrying.
+
+### Why does RugFreePump ask me to sign a message?
+
+Certain wallet-based actions may require you to sign a message to confirm wallet control or acknowledge the applicable Platform documents.
+
+A wallet message signature is different from authorizing an on-chain transaction that transfers SOL or tokens.
+
+Always review what your wallet is asking you to sign.
+
+### Why do I need to acknowledge Platform documents?
+
+RugFreePump uses a wallet-based acknowledgment process for its principal legal documents where applicable.
+
+This helps associate the relevant document versions with a wallet's acknowledgment.
+
+See [RugFreePump Consent](./rugfreepump-consent) for details.
+
+### Will disconnecting my wallet delete my tokens or purchase history?
+
+No.
+
+Disconnecting a wallet from the website does not delete the wallet's blockchain assets or erase finalized transaction records.
+
+You can reconnect the appropriate wallet to access supported wallet-specific features.
+
+### What happens if I lose access to my wallet?
+
+If you lose the private keys or recovery phrase required to control your wallet, you may lose access to the associated assets and on-chain entitlements.
+
+RugFreePump cannot guarantee recovery of an inaccessible wallet.
+
+### Can RugFreePump reverse a transaction sent to the wrong address?
+
+RugFreePump cannot ordinarily reverse finalized Solana transactions or recover assets sent through mistaken transfers.
+
+Always verify transaction details before approving them.
+
+## Safety and Common Risks
+
+### Is RugFreePump rug-proof?
+
+No Platform can guarantee that every token or Creator is safe.
+
+RugFreePump includes mechanisms intended to support structured token sales, eligible withdrawals, liquidity migration, and token claiming.
+
+However, these mechanisms do not eliminate scams, price manipulation, smart-contract vulnerabilities, market losses, or other risks.
+
+See [Trust & Safety](./trust-and-safety).
+
+### Does RugFreePump guarantee that I will make money?
+
+No.
+
+Token purchases are speculative and may result in substantial or complete financial loss.
+
+Neither the TU nor TL sale model guarantees profitability.
+
+### Are token Creators verified by RugFreePump?
+
+Not necessarily.
+
+The ability to launch a token does not mean that the Creator's identity, business, claims, or intentions have been independently verified.
+
+### Can a token still lose value after liquidity migration?
+
+Yes.
+
+Token prices may decline sharply after migration, including to zero.
+
+A successfully created liquidity pool does not guarantee demand or a profitable exit.
+
+### Can liquidity migration fail even after a successful sale?
+
+Yes.
+
+Migration is a separate operation and may fail because of technical, administrative, network, or third-party protocol conditions.
+
+### Is the RugFreePump smart contract upgradeable?
+
+Yes.
+
+The RugFreePump on-chain program is upgradeable.
+
+Users should understand that authorized upgrades may change program behavior and introduce additional technical or administrative risks.
+
+### Who controls RugFreePump's administrative functions?
+
+RugFreePump currently operates under a single-operator administrative structure.
+
+A multisignature governance arrangement has not yet been implemented.
+
+Users should consider the risks associated with concentrated administrative authority and upgradeable smart contracts.
+
+For more information, visit [Security](../security-and-risk/security) and [Risks](../security-and-risk/risks).
+
+### Can RugFreePump remove misleading token information?
+
+RugFreePump has administrative controls to selectively suppress seven Creator-submitted metadata fields from its Platform-controlled database and interfaces:
+
+- Token name.
+- Token symbol.
+- Token image.
+- Token description.
+- Website link.
+- X link.
+- Telegram link.
+
+Removed names and symbols display **Not Available**, removed images use a neutral placeholder, and removed descriptions and external links are hidden.
+
+These measures do not automatically delete original blockchain metadata, cancel token sales, reverse transactions, or remove information retained by independent services.
+
+### How can I identify the correct token if its name or image is unavailable?
+
+Use the token's **Solana mint address** and relevant on-chain records.
+
+Names, symbols, images, and external links can be misleading, duplicated, or suppressed.
+
+The mint address is a more reliable identifier for distinguishing token mints.
+
+### What should I do if I discover a suspicious token or impersonation attempt?
+
+Avoid approving suspicious transactions or visiting untrusted links.
+
+Verify the token's mint address, Creator information, and relevant public records.
+
+Use the Platform's published contact or reporting channels where appropriate.
+
+### Where can I learn more about Platform security and risks?
+
+Read:
+
+- [Trust & Safety](./trust-and-safety)
+- [Security](../security-and-risk/security)
+- [Risks](../security-and-risk/risks)
+- [Security Disclosure](../security-and-risk/security-disclosure)
+
+These pages provide additional information about technical safeguards, known limitations, administrative controls, and relevant risks.
+
+## Getting More Help
+
+### Where should I start if I am new to RugFreePump?
+
+Start with [Getting Started](./getting-started).
+
+Then explore the guides relevant to your activity:
+
+- [Creating a Bonding-Curve Sale](./for-token-creators/creating-a-bonding-curve-sale)
+- [Migrating Raised Liquidity](./for-token-creators/migrating-raised-liquidity)
+- [Buying Bonding-Curve Sale Tokens](./for-token-buyers/buying-bonding-curve-sale-tokens)
+- [Claiming Purchased Tokens](./for-token-buyers/claiming-purchased-tokens)
+- [Withdrawing Contributed SOL](./for-token-buyers/withdrawing-contributed-sol)
+
+### What should I do if I cannot find an answer here?
+
+Review the relevant user guide and verify the current information displayed by the Platform.
+
+For Platform-related inquiries, use the official contact channels published at [rugfreepump.com](https://rugfreepump.com).
+
+Never provide private keys, wallet recovery phrases, or other sensitive authentication information when requesting assistance.
+
+---
+
+**Important:** This FAQ is intended to help visitors, Creators, and Buyers understand RugFreePump's functionality. Actual blockchain operations are governed by the deployed program and applicable transaction conditions. Platform features, fees, and supported settings may change, and no feature guarantees protection from financial loss.
