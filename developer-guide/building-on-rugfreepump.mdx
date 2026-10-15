@@ -57,7 +57,7 @@ See the [Anchor IDL & Types](./anchor-idl-and-types/usage) reference for complet
 
 ## CPI Compatibility
 
-All public entry points are fully compatible with Cross-Program Invocation (CPI). On-chain callers must satisfy the identical structural validation, signer, and state requirements enforced against standard client transactions.
+Public entry points may be invoked through Cross-Program Invocation (CPI), subject to the account, signer, authority, state, and Solana runtime requirements applicable to each instruction. On-chain callers must satisfy the same structural validation, signer, authority, and state requirements enforced against standard client transactions.
 
 **Note:** RugFreePump does not currently distribute a standalone CPI wrapper or Rust integration crate. A dedicated CPI utility crate is planned for a future developer tooling release. In the interim, programs should generate CPI helpers directly via the Anchor IDL.
 
