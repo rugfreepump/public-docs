@@ -7,7 +7,7 @@ description: "RugFreePump Copyright Protection, Infringement Reporting, and Cont
 
 **Version: 1.0**
 
-> **Important Copyright Notice:** RugFreePump respects copyright and provides a process for reporting potentially infringing content associated with the Platform. RugFreePump may take appropriate action concerning content and services under its control, subject to applicable law and technical capabilities. Current administrative functionality includes removing coin image references from the Platform's database. This does not guarantee removal of the original image, token metadata, blockchain records, or copies retained by independent services. Copyright complaints do not automatically cancel token sales, reverse transactions, or establish refund rights.
+> **Important Copyright Notice:** RugFreePump respects copyright and provides a process for reporting potentially infringing content associated with the Platform. RugFreePump may take appropriate action concerning content and services under its control, subject to applicable law and technical capabilities. The Platform operates administrative controls for selectively removing Creator-submitted token names, symbols, image URLs, descriptions, website URLs, X account URLs, and Telegram URLs from its database, individually or in combination. This does not guarantee removal of the original image, token metadata, blockchain records, or copies retained by independent services. Copyright complaints do not automatically cancel token sales, reverse transactions, or establish refund rights.
 
 This Copyright Policy ("Policy") explains how RugFreePump receives, evaluates, and responds to copyright infringement complaints involving [https://rugfreepump.com](https://rugfreepump.com), its token-creation services, token metadata, token-sale pages, discovery interfaces, and related functionality (collectively, the "Platform").
 
@@ -207,33 +207,31 @@ A complaint may be referred to a different Platform policy where its substance p
 
 RugFreePump may take appropriate action concerning disputed content through infrastructure under its control, subject to applicable law and available technical measures.
 
-### 7.1 Current Image-Reference Removal Capability
+### 7.1 Selective Token Metadata Removal
 
-RugFreePump currently maintains an administrative tool capable of removing coin image references from its Platform database.
+RugFreePump operates administrative controls that allow the operator to remove any combination of the following Creator-submitted fields from the Platform-controlled token metadata database:
 
-This functionality may be used where a token image is associated with copyright infringement or another applicable policy violation.
+- Token name (`name`).
+- Token symbol (`symbol`).
+- Token image URL (`image_url`).
+- Token description (`description`).
+- Website URL (`website`).
+- X account URL (`twitter`).
+- Telegram URL (`telegram`).
 
-Removing a database image reference does not necessarily:
+Each selected field can be cleared independently by setting its database value to `NULL`, without requiring the removal of other fields or the token project itself. The Platform displays neutral fallback content for removed names, symbols, images, and descriptions, and omits external links whose values have been removed.
 
-- Delete the original image from IPFS or another storage provider.
-- Modify the original token metadata.
-- Remove images cached by browsers or independent gateways.
-- Prevent third-party applications from retrieving the image.
-- Change the token name, symbol, or description.
-- Delete the token mint or associated blockchain accounts.
-- Remove the token project from every Platform interface.
+These controls may be used in response to substantiated copyright complaints and other applicable content-policy or legal concerns. A complaint does not automatically establish infringement or require removal; RugFreePump assesses the circumstances and applicable law.
 
-The practical effect of removal depends on how the relevant interfaces retrieve and display image information.
+Removing or suppressing Platform-controlled metadata does not necessarily delete original files from IPFS, change original token metadata, alter on-chain references, remove third-party caches, or prevent independent services from displaying previously published information.
 
-### 7.2 Other Available or Future Measures
+### 7.2 Scope of Platform-Controlled Measures
 
-Depending on the Platform's actual implementation, additional measures may include restricting the display of disputed content, disabling access to Platform-controlled files, modifying presentation of relevant content, or restricting future submissions.
+RugFreePump may selectively suppress disputed Creator-submitted metadata through its existing administrative controls and may take other legally appropriate actions concerning infrastructure or services under its control.
 
-**These are possible measures, not representations that every listed capability currently exists.**
+The seven-field metadata removal capability is not a complete token-delisting, wallet-blacklisting, project-deletion, or blockchain trading-blocking mechanism. It does not provide control over independent wallets, explorers, decentralized exchanges, IPFS gateways, or other third-party services.
 
-RugFreePump does not currently represent that it operates a complete token-delisting, wallet-blacklisting, project-removal, or trading-blocking system.
-
-Where a legally required action cannot be performed using an existing administrative tool, additional technical or operational measures may be necessary.
+Where applicable law requires measures beyond selective metadata removal, RugFreePump must address those obligations through appropriate legal, technical, or operational means.
 
 ### 7.3 No Automatic Cancellation of Token Sales
 
@@ -275,7 +273,7 @@ Token names, symbols, descriptions, images, and related links may be established
 
 RugFreePump's ordinary token-creation workflow does not provide a general mechanism for Creators to change these fields after creation.
 
-Removing an image reference from RugFreePump's database does not necessarily alter the original metadata file or its independent copies.
+Removing any of the seven Creator-submitted metadata fields from RugFreePump's database does not necessarily alter the original metadata file, on-chain references, or independently retained copies.
 
 ### 8.3 Decentralized Storage
 
@@ -355,7 +353,7 @@ Factors may include:
 - Applicable legal obligations.
 - Technical feasibility.
 
-Where legally appropriate and technically available, RugFreePump may restore or permit renewed display of content previously restricted through its systems.
+Where legally appropriate, RugFreePump may restore or permit renewed display of content previously restricted through its systems. Because removed metadata values are set to `NULL`, restoration may require the original value to be supplied or recovered from a lawful, reliable source; the Platform does not guarantee that it retains a restorable copy.
 
 **Restoration is not guaranteed merely because a Creator requests it.**
 
@@ -363,7 +361,7 @@ Content may remain restricted where it independently violates applicable law or 
 
 Where applicable law requires notification, restoration, or another action within a particular timeframe, those requirements take precedence.
 
-Restoration of a Platform-controlled image reference does not guarantee that independent services will display the same content or that previously deleted files remain available.
+Restoration of a Platform-controlled metadata value does not guarantee that independent services will display the same content or that previously deleted files remain available.
 
 ## 11. Repeated Copyright Infringement
 
@@ -381,9 +379,9 @@ Relevant factors may include:
 - Whether the User continues submitting disputed content.
 - Applicable legal requirements.
 
-Possible measures may include warnings, removal of image references, restrictions on Platform-controlled content, or other actions where technically available and legally appropriate.
+Possible measures may include warnings, selective removal of any combination of the seven Creator-submitted metadata fields, restrictions on Platform-controlled content, or other legally appropriate actions.
 
-The existence of this Policy does not establish that every possible enforcement mechanism is currently implemented.
+The existing metadata removal controls do not establish that RugFreePump can identify every individual behind a Wallet, delete token mints, or block independent blockchain transactions.
 
 RugFreePump uses Wallet-based access and does not claim an unrestricted ability to identify every individual behind a Wallet, prevent the creation of new Wallets, or block access to the Solana blockchain.
 
@@ -601,7 +599,7 @@ The contact information above is provided for general Platform communications an
 
 **Important Final Notice**
 
-**RugFreePump respects copyright and provides a process for reporting allegedly infringing material associated with Platform-controlled services. Its current administrative capabilities include removing coin image references from the Platform database. This does not guarantee removal of all disputed content from RugFreePump interfaces, the Solana blockchain, decentralized storage, or independent third-party services.**
+**RugFreePump respects copyright and provides a process for reporting allegedly infringing material associated with Platform-controlled services. Its administrative controls support selective removal of Creator-submitted token names, symbols, image URLs, descriptions, website URLs, X account URLs, and Telegram URLs from the Platform database, individually or in combination. Such removal does not guarantee deletion of original metadata or copies from the Solana blockchain, decentralized storage, or independent third-party services.**
 
 **Creators remain responsible for ensuring that the content they submit is lawful and appropriately authorized.**
 
