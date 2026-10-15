@@ -176,6 +176,14 @@ Token metadata uses off-chain infrastructure in addition to its on-chain referen
 
 Storage failures, gateway outages, unavailable images, CDN problems, or other infrastructure failures can prevent metadata or images from being displayed even when the on-chain metadata reference remains valid.
 
+### Platform content moderation risk
+
+Project information displayed by RugFreePump may become unavailable or change because of Platform-level content moderation, independently of blockchain or metadata storage availability.
+
+A project may continue to exist on-chain even when RugFreePump suppresses some or all of its creator-submitted information from its own displays.
+
+Users should verify token identities using the on-chain token mint address rather than relying solely on displayed names, ticker symbols, images, or external links.
+
 ### RPC dependency risk
 
 RugFreePump relies on Solana RPC infrastructure to submit transactions and retrieve blockchain data.
