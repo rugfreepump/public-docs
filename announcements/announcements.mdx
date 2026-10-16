@@ -1,38 +1,167 @@
 ---
 title: "Announcements"
-description: "Official RugFreePump announcements, platform updates, new features, maintenance notices, bug fixes, Reward Program results, and other important developments."
+description: "Official RugFreePump announcements, Reward Program results, platform improvements, feature releases, maintenance notices, bug fixes, and other important updates."
 ---
 
-Announcements are published in reverse chronological order, with the newest announcements appearing first.
+Welcome to the official **RugFreePump Announcements** page.
+
+This page contains official announcements about Platform launches, Reward Program activities, new features, system improvements, maintenance, and other important developments.
+
+Announcements are listed in reverse chronological order, with the newest publication appearing first.
 
 ---
 
-## Reward Program — Round 1 Results
+## ANN-000003
 
-**Published:** November 15, 2026
+### Token Sale Models — TU and TL Are Now Available
+
+**Published:** October 2026
+
+**Category:** Platform Features
+
+RugFreePump officially introduces two token sale models, **Token Unlocked (TU)** and **Token Locked (TL)**, available for token creators and contributors from the Platform's mainnet launch.
+
+Both models use the same structured bonding curve fundraising mechanism. The difference is how purchased tokens become available to contributors following successful liquidity migration to Raydium CPMM.
+
+**Token Unlocked (TU)**
+
+Under the TU model, contributors can claim their entire purchased token allocation immediately after successful liquidity migration.
+
+**Token Locked (TL)**
+
+Under the TL model, purchased token allocations become claimable gradually according to a predefined unlock schedule.
+
+The current TL configuration provides:
+
+- **10% unlock** every 30 minutes.
+- **10 total unlock cycles**.
+- The first 10% becomes available 30 minutes after successful liquidity migration.
+- The full purchased allocation becomes available after **5 hours**.
+
+The unlock schedule begins when liquidity migration succeeds, not when the contributor purchases tokens or when the sale reaches its fundraising hard cap.
+
+Contributors must initiate the applicable claiming transactions to transfer available tokens into their wallets.
+
+Creators select the applicable token sale model during coin creation. The selected model and relevant TL unlock settings are recorded for that sale and cannot be changed through the ordinary Creator workflow.
+
+These models provide different token distribution approaches without changing the underlying fundraising mechanism.
+
+For detailed information, visit [Token Sale Models](/overview/token-sale-models) and [Claiming Purchased Tokens](/user-guides/for-token-buyers/claiming-purchased-tokens).
+
+---
+
+## ANN-000002
+
+### Reward Program — Round 1 Is Now Live
+
+**Published:** October 2026
 
 **Category:** Reward Program
 
-The first RugFreePump Reward Program round has concluded.
+We are pleased to announce that **Round 1 of the RugFreePump Reward Program is officially live**.
 
-Finalized results, qualified participants, and reward distribution details will be published here.
+The Reward Program recognizes eligible token buyers and creators who contribute to Platform activity through qualifying on-chain transactions.
+
+Each reward period lasts **28 days**, with two independent reward categories:
+
+**Buyers Reward Pool — 6%**
+
+The Buyers Reward Pool receives 6% of eligible Platform revenue generated during the reward period.
+
+Buyers are ranked according to their qualifying SOL purchase volume during that period. The highest-ranked qualified participants share the Buyers Reward Pool proportionally based on their qualifying purchase volume.
+
+**Creators Reward Pool — 4%**
+
+The Creators Reward Pool receives 4% of eligible Platform revenue generated during the reward period.
+
+Creators are ranked primarily according to their number of successfully migrated bonding curve sales during the reward period. Qualifying purchase volume is used to resolve ranking ties.
+
+Qualified Creators share the Creators Reward Pool proportionally according to their successful migration counts.
+
+**Reward Distribution**
+
+Together, the two categories allocate **10% of eligible Platform revenue** to the Reward Program.
+
+Each category has its own predetermined Qualified Participant Count, which remains fixed throughout the reward period.
+
+Participants can monitor their leaderboard positions, qualifying activity, and estimated rewards through the Platform's Reward Program interface.
+
+At the end of the reward period, final rankings and reward allocations are determined and recorded in a permanent snapshot.
+
+Reward distributions are processed through the Platform's authorized distribution process. Qualified participants do not need to submit separate reward-claim transactions.
+
+**Important:** Leaderboard positions and estimated rewards may change throughout the reward period. Participation does not guarantee qualification or a reward payment.
+
+For complete eligibility rules, calculations, and distribution information, visit [Reward Program](/reward-program/reward-program).
 
 ---
 
-## Platform Update — Improved Transaction Confirmation
+## ANN-000001
 
-**Published:** November 10, 2026
+### Mainnet Launch — RugFreePump Is Officially Live
 
-**Category:** Platform Update
+**Published:** October 2026
 
-We have introduced improvements to transaction confirmation handling to provide clearer feedback during supported financial operations.
+**Category:** Platform Launch
+
+We are pleased to announce the official **mainnet launch of RugFreePump**, a Solana-native token launchpad built around structured bonding curve fundraising and liquidity migration.
+
+After an extensive development period, RugFreePump is now available for token creators, contributors, and visitors through the official Platform.
+
+**What Is Available at Launch?**
+
+RugFreePump introduces a bonding curve fundraising model where contributors purchase token allocations using SOL while a sale progresses toward its predefined fundraising hard cap.
+
+Unlike traditional bonding curve launchpads that support continuous buying and selling during fundraising, RugFreePump does not provide an ordinary bonding-curve sell-back mechanism.
+
+Every token sale follows a predefined supply allocation:
+
+- **1,000,000,000 tokens** in total supply.
+- **800,000,000 tokens** allocated to the bonding curve sale.
+- **200,000,000 tokens** reserved for Raydium CPMM liquidity.
+
+The current fundraising hard cap is **$16,150**, calculated using the protocol's applicable SOL/USD pricing.
+
+When a sale reaches its hard cap, it becomes Completed and becomes eligible for liquidity migration to Raydium CPMM.
+
+During successful migration, the protocol creates the intended liquidity pool and burns the resulting liquidity-provider tokens.
+
+Contributors can subsequently claim their purchased token allocations according to the selected Token Unlocked (TU) or Token Locked (TL) model.
+
+If a sale expires without reaching its hard cap, eligible contributors can withdraw their net contributed SOL through the protocol's supported withdrawal mechanism.
+
+**Platform Features**
+
+The initial mainnet release includes:
+
+- Token creation and structured bonding curve sales.
+- TU and TL token sale models.
+- SOL-based token purchases.
+- Raydium CPMM liquidity migration.
+- Automatic burning of liquidity-provider tokens during migration.
+- Purchased-token claiming.
+- Eligible SOL contribution withdrawals.
+- Project discovery, rankings, and sale statistics.
+- Wallet-based authentication and consent.
+- Buyer and Creator Reward Program participation.
+- On-chain transaction verification and documentation.
+
+**Security and Risk Awareness**
+
+RugFreePump is designed to reduce certain risks associated with token fundraising through defined on-chain rules and liquidity migration mechanisms.
+
+However, the Platform does not guarantee that projects will succeed, token prices will remain stable, or participants will avoid financial losses.
+
+The RugFreePump on-chain program is currently upgradeable and operates under a single-operator administrative structure. A formal third-party security audit has not yet been completed.
+
+Users should review the Platform's documentation, security disclosures, and risk information before participating.
+
+**Get Started**
+
+Visit the official Platform at [rugfreepump.com](https://rugfreepump.com).
+
+To learn how RugFreePump works, explore the [Overview](/overview/overview), [Getting Started](/user-guides/getting-started), and [Trust & Safety](/user-guides/trust-and-safety) guides.
+
+Thank you for being part of the RugFreePump launch.
 
 ---
-
-## Scheduled Platform Maintenance
-
-**Published:** November 5, 2026
-
-**Category:** Maintenance
-
-RugFreePump will undergo scheduled maintenance to improve platform reliability and operational performance.
