@@ -20,7 +20,7 @@ The platform also provides project discovery, profiles, statistics, analytics, r
 ## Official Links
 
 - **Website:** [rugfreepump.com](https://rugfreepump.com)
-- **Documentation:** [rugfreepump.com/docs](https://docs.rugfreepump.com)
+- **Documentation:** [docs.rugfreepump.com](https://docs.rugfreepump.com)
 - **Public Documentation Repository:** [github.com/rugfreepump/public-docs](https://github.com/rugfreepump/public-docs)
 
 ## Documentation Navigation
