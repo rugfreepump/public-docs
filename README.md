@@ -1,55 +1,53 @@
-# Mintlify Starter Kit
+# RugFreePump Documentation
 
-Use the starter kit to get your docs deployed and ready to customize.
+Official documentation repository for [RugFreePump](https://rugfreepump.com), a Solana-based token launch platform supporting Token Unlocked (TU) and Token Locked (TL) bonding-curve sale models.
 
-Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
+The documentation is built with [Mintlify](https://mintlify.com). Pages are written in MDX, and navigation and site configuration are managed through [`docs.json`](./docs.json).
 
-- Guide pages
-- Navigation
-- Customizations
-- API reference pages
-- Use of popular components
+## Documentation structure
 
-**[Follow the full quickstart guide](https://starter.mintlify.com/quickstart)**
+- **Welcome** — Platform introduction.
+- **Overview** — Token sale models and protocol fees.
+- **User Guides** — Getting started, creating token sales, purchasing tokens, claiming tokens, and withdrawing contributions.
+- **Reward Program** — Platform reward program.
+- **On-Chain Program** — On-chain execution information.
+- **Security & Risks** — Security information, risks, and security disclosures.
+- **Developer Guide** — Integration information, Anchor IDL, and TypeScript types.
+- **Legal & Compliance** — Terms, privacy, risk disclosure, copyright, and trademark policies.
+- **Announcements** — Platform announcements.
 
-## AI-assisted writing
+## Local development
 
-Set up your AI coding tool to work with Mintlify:
+Install the Mintlify CLI:
 
 ```bash
-npx skills add https://mintlify.com/docs
+npm install -g mint
 ```
 
-This command installs Mintlify's documentation skill for your configured AI tools like Claude Code, Cursor, Windsurf, and others. The skill includes component reference, writing standards, and workflow guidance.
+Start the local development server from the repository root:
 
-See the [AI tools guides](/ai-tools) for tool-specific setup.
-
-## Development
-
-Install the [Mintlify CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally. To install, use the following command:
-
-```
-npm i -g mint
-```
-
-Run the following command at the root of your documentation, where your `docs.json` is located:
-
-```
+```bash
 mint dev
 ```
 
-View your local preview at `http://localhost:3000`.
+Check for broken links:
 
-## Publishing changes
+```bash
+mint broken-links
+```
 
-Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app) to propagate changes from your repo to your deployment. Changes are deployed to production automatically after pushing to the default branch.
+## Repository conventions
 
-## Need help?
+Documentation pages use MDX with YAML frontmatter. Site navigation is maintained in `docs.json`.
 
-### Troubleshooting
+Changes to existing page paths should be reflected in navigation and internal links. Documentation must accurately describe the currently deployed RugFreePump protocol and should not present planned features as already available.
 
-- If your dev environment isn't running: Run `mint update` to ensure you have the most recent version of the CLI.
-- If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`.
+## Links
 
-### Resources
-- [Mintlify documentation](https://mintlify.com/docs)
+- Platform: https://rugfreepump.com
+- Documentation: https://rugfreepump.com/docs
+- Support: https://discord.gg/REPLACE_WITH_INVITE
+
+## License
+
+See the repository's `LICENSE` file if a documentation license is adopted.
