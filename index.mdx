@@ -5,37 +5,37 @@ description: "Welcome to the official documentation for RugFreePump."
 
 Welcome to the official **RugFreePump Documentation**.
 
-These docs are designed to help you **understand, use, research, verify, integrate with, and build on RugFreePump**, a Solana-native, high-conviction crowdfunded launchpad that uses structured bonding curve fundraising to help creators and contributors work toward a shared sale threshold.
+These docs are designed to help you **understand, use, research, verify, integrate with, and build on RugFreePump**, a Solana-native, high-conviction crowdfunded launchpad built around structured bonding curve fundraising and protocol-defined sale outcomes.
 
-Whether you are participating in a token sale, launching a project, exploring the protocol's economic model, developing an integration, or reviewing its on-chain execution, this documentation provides the resources relevant to your role and objectives.
+Whether you are participating in a token sale, launching a project, exploring the protocol, developing an integration, or reviewing its on-chain execution, this documentation helps you find the resources relevant to your goals.
 
 ## Who Is This Documentation For?
 
-RugFreePump documentation is organized around the participants, creators, developers, researchers, and reviewers who interact with the Platform and its underlying Solana program.
+RugFreePump documentation serves participants, creators, developers, researchers, and reviewers with different objectives and levels of technical experience.
 
 ### Token Buyers
 
-Learn how to prepare and secure a supported Solana wallet, participate in bonding curve sales, understand TU and TL token claiming conditions, withdraw eligible SOL contributions, and evaluate the risks of participating in token launches.
+Learn how to prepare a Solana wallet, participate in bonding curve sales, understand purchased token claiming conditions, manage eligible withdrawals, and make informed decisions about participation.
 
 ### Token Creators
 
-Learn how to create a coin, configure its metadata, select a token sale model, launch a bonding curve sale, manage the fundraising lifecycle, and migrate raised liquidity to Raydium CPMM after successful completion.
+Learn how to create a coin, configure its information, select a token sale model, launch a bonding curve sale, and complete the liquidity migration process following a successful sale.
 
 ### Developers & Integrators
 
-Explore the permissionless RugFreePump on-chain program, supported integration methods, Anchor IDL and generated types, and the technical limitations of building applications that interact with the protocol.
+Explore the public Solana on-chain program, supported integration methods, Anchor IDL and generated types, and the technical boundaries of building applications that interact with RugFreePump.
 
 ### Researchers & Analysts
 
-Examine RugFreePump's high-conviction fundraising model, bonding curve mechanics, TU and TL token distribution, protocol fees, sale outcomes, liquidity migration, and economic incentives.
+Examine the fundraising model, bonding curve mechanics, token sale models, protocol fees, sale lifecycle, liquidity migration, and economic principles underlying RugFreePump.
 
 ### Auditors & Technical Reviewers
 
-Review on-chain proof of execution, protocol security considerations, administrative authority, upgradeability, technical risks, and the responsible vulnerability disclosure process.
+Explore on-chain execution verification, protocol security, administrative authority, upgradeability, technical limitations, and responsible vulnerability disclosure.
 
 ### Ecosystem Participants
 
-Explore the Reward Program, official Platform announcements, wallet safety guidance, frequently asked questions, legal policies, and other resources covering the broader RugFreePump ecosystem.
+Discover the Reward Program, official announcements, frequently asked questions, safety resources, and legal policies relevant to the broader RugFreePump ecosystem.
 
 ## Explore the Documentation
 
@@ -83,106 +83,94 @@ Choose the documentation path that best matches what you want to accomplish, und
 
 ### New to RugFreePump?
 
-Start with **Overview** to understand RugFreePump's high-conviction fundraising approach and how it differs from traditional buy-and-sell bonding curve launches.
+Start with **Overview** to become familiar with the Platform's purpose, fundraising approach, and sale lifecycle.
 
-Begin with [Overview](/overview/overview) to explore the fundraising lifecycle, successful liquidity migration, and expired sale outcomes.
-
-Continue with [Token Sale Models](/overview/token-sale-models) to understand Token Unlocked (TU) and Token Locked (TL) claiming conditions, then review [Protocol Fees](/overview/protocol-fees) for current protocol charges and authorized update ranges.
+Read [Overview](/overview/overview) for the fundamental concepts, [Token Sale Models](/overview/token-sale-models) for the differences between Token Unlocked (TU) and Token Locked (TL) sales, and [Protocol Fees](/overview/protocol-fees) for current charges and their authorized update ranges.
 
 ### Want to Participate in a Launch?
 
-Start with **User Guides** to prepare your wallet, understand participation requirements, and learn how token purchases work.
+Start with **User Guides** to prepare for your first token purchase.
 
-Follow [Getting Started](/user-guides/getting-started) to set up a Phantom or Solflare wallet, obtain SOL, and connect to RugFreePump.
+Follow [Getting Started](/user-guides/getting-started) to prepare and connect a supported Solana wallet. Review [Trust & Safety](/user-guides/trust-and-safety) for wallet protection and [RugFreePump Consent](/user-guides/rugfreepump-consent) for the Platform's consent requirements.
 
-Before participating, review [Trust & Safety](/user-guides/trust-and-safety) for wallet protection and [RugFreePump Consent](/user-guides/rugfreepump-consent) for the wallet-based agreement required before Platform financial operations.
-
-When ready, follow [Buying Bonding Curve Sale Tokens](/user-guides/for-token-buyers/buying-bonding-curve-sale-tokens). For common questions about participation, visit the [FAQ](/user-guides/faq).
+Continue with [Buying Bonding Curve Sale Tokens](/user-guides/for-token-buyers/buying-bonding-curve-sale-tokens) for the purchase process, or visit the [FAQ](/user-guides/faq) for answers to common questions.
 
 ### Want to Launch a Token?
 
 Start with **User Guides → For Token Creators**.
 
-Follow [Creating a Bonding Curve Sale](/user-guides/for-token-creators/creating-a-bonding-curve-sale) to understand coin creation, metadata requirements, creator purchases, and selecting a permanent TU or TL sale model.
+Follow [Creating a Bonding Curve Sale](/user-guides/for-token-creators/creating-a-bonding-curve-sale) for coin creation, sale configuration, token sale model selection, and launch requirements.
 
-After a sale reaches its fundraising threshold, continue with [Migrating Raised Liquidity](/user-guides/for-token-creators/migrating-raised-liquidity) to understand migration to Raydium CPMM, liquidity provisioning, and LP token burning.
+Then explore [Migrating Raised Liquidity](/user-guides/for-token-creators/migrating-raised-liquidity) to understand the process that follows successful fundraising, including liquidity migration to Raydium CPMM.
 
 ### Want to Manage Your Contributions?
 
 Start with **User Guides → For Token Buyers**.
 
-Read [Buying Bonding Curve Sale Tokens](/user-guides/for-token-buyers/buying-bonding-curve-sale-tokens) to understand how purchases are processed and token allocations are recorded during fundraising.
+Review [Buying Bonding Curve Sale Tokens](/user-guides/for-token-buyers/buying-bonding-curve-sale-tokens) for information about purchases and recorded token allocations.
 
-After successful liquidity migration, follow [Claiming Purchased Tokens](/user-guides/for-token-buyers/claiming-purchased-tokens) to understand immediate TU claiming and gradual TL unlocking. Under the current TL settings, 10% becomes available every 30 minutes, with full availability after 5 hours.
+Follow [Claiming Purchased Tokens](/user-guides/for-token-buyers/claiming-purchased-tokens) to understand claiming eligibility and the different conditions under TU and TL sales.
 
-If a sale expires or is canceled through an authorized emergency procedure, follow [Withdrawing Contributed SOL](/user-guides/for-token-buyers/withdrawing-contributed-sol) to understand eligibility and the withdrawal process.
+For expired or eligible canceled sales, see [Withdrawing Contributed SOL](/user-guides/for-token-buyers/withdrawing-contributed-sol) for withdrawal requirements and instructions.
 
 ### Want to Understand the Protocol?
 
-Start with **Overview** to explore the fundamental mechanics and economic design of RugFreePump.
+Start with **Overview** to explore RugFreePump's design and operating principles.
 
-Read [Overview](/overview/overview) to understand structured fundraising, the absence of standard bonding-curve sell-back during active sales, sale progression, and liquidity migration.
+Read [Overview](/overview/overview) for the fundraising model and sale progression, then continue with [Token Sale Models](/overview/token-sale-models) and [Protocol Fees](/overview/protocol-fees) for token distribution and fee structures.
 
-Continue with [Token Sale Models](/overview/token-sale-models) for the differences between TU and TL, and [Protocol Fees](/overview/protocol-fees) for the applicable charges and allocations.
-
-For information about independently examining protocol execution, visit [Proof of Execution](/on-chain-program/proof-of-execution).
+For information about the verification of protocol operations, explore [Proof of Execution](/on-chain-program/proof-of-execution).
 
 ### Want to Build on RugFreePump?
 
 Start with the **Developer Guide**.
 
-Read [Building on RugFreePump](/developer-guide/building-on-rugfreepump) to understand integration with the public Solana program and the distinction between permissionless on-chain operations and Platform-operated services.
+Read [Building on RugFreePump](/developer-guide/building-on-rugfreepump) for the available development approach and integration considerations.
 
-For supported on-chain interaction, review [Buy](/developer-guide/on-chain-integration/buy).
+Explore [Buy](/developer-guide/on-chain-integration/buy) for the documented on-chain purchase integration, and [Anchor IDL & Types](/developer-guide/anchor-idl-and-types) for program interface resources.
 
-Continue with [Anchor IDL & Types](/developer-guide/anchor-idl-and-types) for program interface resources and [Developer Limitations](/developer-guide/developer-limitations) to understand integration boundaries and operational considerations.
+Before building, review [Developer Limitations](/developer-guide/developer-limitations) to understand the supported integration scope and existing boundaries.
 
 ### Want to Audit or Verify the Protocol?
 
 Start with **On-Chain Program**.
 
-Read [Proof of Execution](/on-chain-program/proof-of-execution) to understand how transactions, protocol operations, and their execution outcomes can be independently verified using Solana's public blockchain.
+Read [Proof of Execution](/on-chain-program/proof-of-execution) to understand how protocol operations and execution outcomes can be independently examined through Solana's public blockchain.
 
-For technical integration context, explore [Building on RugFreePump](/developer-guide/building-on-rugfreepump) and [Anchor IDL & Types](/developer-guide/anchor-idl-and-types).
+For supporting technical information, explore [Building on RugFreePump](/developer-guide/building-on-rugfreepump) and [Anchor IDL & Types](/developer-guide/anchor-idl-and-types).
 
-Review [Security](/security-and-risk/security) and [Risks](/security-and-risk/risks) to understand the protocol's authority model, upgradeability, security boundaries, and remaining technical and operational risks.
+Review [Security](/security-and-risk/security) and [Risks](/security-and-risk/risks) for protocol authority, security considerations, and remaining risks.
 
 ### Want to Understand Security and Risk?
 
 Start with **Security & Risks**.
 
-Begin with [Security](/security-and-risk/security) to understand the Platform's security approach, protocol-enforced controls, administrative authority, and important limitations.
+Read [Security](/security-and-risk/security) for the Platform's security approach and administrative controls, followed by [Risks](/security-and-risk/risks) for technical, financial, and operational risk considerations.
 
-Continue with [Risks](/security-and-risk/risks) for potential risks involving smart contracts, token projects, liquidity, wallets, market activity, and supporting infrastructure.
+If you identify a potential vulnerability, follow the [Security Disclosure](/security-and-risk/security-disclosure) process.
 
-If you discover a potential vulnerability, follow the [Security Disclosure](/security-and-risk/security-disclosure) process.
-
-For practical guidance on avoiding scams, protecting wallet credentials, and verifying transactions, also review [Trust & Safety](/user-guides/trust-and-safety).
+For practical wallet and transaction protection, also review [Trust & Safety](/user-guides/trust-and-safety).
 
 ### Want to Understand the Reward Program?
 
 Start with **Reward Program**.
 
-Read [Reward Program](/reward-program/reward-program) to understand the 28-day reward periods, separate buyer and creator rankings, eligibility requirements, reward calculations, and distribution procedures.
+Read [Reward Program](/reward-program/reward-program) for participation requirements, reward periods, buyer and creator rankings, eligibility, calculations, and distribution procedures.
 
-The program allocates defined portions of eligible Platform revenue to qualifying participants according to its published rules.
-
-For official reward-related announcements, program developments, and published results, visit [Announcements](/announcements/announcements).
+For official Reward Program developments and published results, visit [Announcements](/announcements/announcements).
 
 ### Want to Review Legal and Compliance Information?
 
 Start with **Legal & Compliance**.
 
-Review the [Terms of Service](/legal-and-compliance/terms-of-service) for Platform usage conditions, [Privacy Policy](/legal-and-compliance/privacy-policy) for information handling, and [Risk Disclosure](/legal-and-compliance/risk-disclosure) for important financial, technical, and participation risks.
+Review the [Terms of Service](/legal-and-compliance/terms-of-service), [Privacy Policy](/legal-and-compliance/privacy-policy), and [Risk Disclosure](/legal-and-compliance/risk-disclosure) for Platform conditions, information handling, user responsibilities, and important risks.
 
-For intellectual property matters, review the [Copyright Policy](/legal-and-compliance/copyright-policy) and [Trademark Guidelines](/legal-and-compliance/trademark-guidelines).
-
-These documents explain the applicable Platform policies, user responsibilities, rights, restrictions, and important limitations.
+For intellectual property matters, see the [Copyright Policy](/legal-and-compliance/copyright-policy) and [Trademark Guidelines](/legal-and-compliance/trademark-guidelines).
 
 ### Want to Follow Platform Updates?
 
 Start with **Announcements**.
 
-Visit [Announcements](/announcements/announcements) for official Platform announcements, Reward Program updates and results, feature releases, maintenance notices, bug fixes, and other important developments.
+Visit [Announcements](/announcements/announcements) for official Platform notices, Reward Program results, feature releases, maintenance information, bug fixes, and other important updates.
 
-Announcements are organized with the newest publications first, making it easier to follow recent updates while accessing earlier notices.
+Publications are organized with the newest announcements first, allowing you to follow recent developments and revisit earlier notices.
