@@ -1,333 +1,434 @@
 # RugFreePump Documentation — Agent Instructions
 
-## About This Repository
+## Project Overview
 
 This repository contains the official public documentation for RugFreePump, a Solana-native, high-conviction crowdfunded token launch platform.
 
-RugFreePump uses a bonding-curve fundraising model that separates the active fundraising phase from unrestricted public trading. Successful sales proceed to liquidity migration on Raydium CPMM, where the protocol burns the resulting LP tokens.
+RugFreePump uses a bonding-curve fundraising model that separates active fundraising from unrestricted public token trading. During the active fundraising phase, the protocol does not provide a standard bonding-curve sell-back operation.
 
-The platform supports two token sale models:
+When a sale reaches its fundraising threshold, it becomes eligible for liquidity migration to Raydium CPMM. The resulting liquidity provider (LP) tokens are burned by the protocol.
 
-- **Token Unlocked (TU):** Purchased tokens become fully claimable after successful liquidity migration.
-- **Token Locked (TL):** Purchased tokens become claimable gradually according to the unlock schedule recorded when the sale was created.
+If a sale expires without reaching its threshold, contributors may withdraw eligible SOL contributions under the protocol's withdrawal rules. Eligible withdrawals are also supported following an authorized emergency cancellation of a completed sale.
 
-The documentation is built with Mintlify.
+RugFreePump supports two token sale models:
 
-- Documentation pages use MDX with YAML frontmatter.
-- Site navigation and configuration are maintained in `docs.json`.
-- Public Anchor IDL and TypeScript type definitions are maintained in `idl-and-types/`.
-- The official platform domain is `https://rugfreepump.com`.
+- **Token Unlocked (TU):** Buyers can claim their full purchased token allocation after successful liquidity migration.
+- **Token Locked (TL):** Buyers can claim purchased tokens progressively according to the unlock schedule recorded when the sale was created.
 
-This repository contains public documentation and integration artifacts. It does not contain RugFreePump's unpublished proprietary on-chain or off-chain source code.
+The platform also provides project discovery, user profiles, statistics, analytics, real-time information, developer integrations, and an ecosystem reward program.
 
-## Sources of Truth
+## Repository Scope
 
-When maintaining the documentation, prioritize:
+This is a public Mintlify documentation repository.
 
-1. The current deployed RugFreePump on-chain program and its verified configuration.
-2. The current published Anchor IDL and generated TypeScript types.
-3. The current platform implementation, when verified by the project maintainer.
-4. The existing finalized documentation.
-5. The current `docs.json` for navigation and page paths.
+It contains:
 
-Do not assume that historical documentation, previous deployment addresses, outdated configuration values, or old navigation links are still correct.
+- MDX documentation pages.
+- The Mintlify `docs.json` configuration.
+- Public Anchor IDL files.
+- Generated TypeScript interface types.
+- Developer integration examples.
+- Public documentation assets.
+- Repository maintenance instructions.
 
-Do not invent implementation details or silently replace documented behavior with assumptions.
+It does not contain the unpublished proprietary source code for RugFreePump's on-chain program, frontend, backend, indexers, workers, administrative systems, or infrastructure.
 
-When authoritative sources conflict, identify the discrepancy and request clarification before making substantive changes.
+Do not introduce private source code, internal credentials, secrets, or sensitive operational information into this repository.
 
-## Documentation Structure
+## Official References
 
-The documentation is organized into these sections:
+- Platform: https://rugfreepump.com
+- Documentation: https://rugfreepump.com/docs
+- Public documentation repository: https://github.com/rugfreepump/public-docs
+- Legal contact: legal@rugfreepump.com
 
-- **Welcome:** Introduction to RugFreePump.
-- **Overview:** Fundraising model, token sale models, and protocol fees.
-- **User Guides:** Wallet setup, safety, consent, sale creation, purchasing, claiming, withdrawing, and liquidity migration.
-- **Reward Program:** Buyer and creator rewards, qualification, rankings, and distribution.
-- **On-Chain Program:** Publicly documented program behavior and proof of execution.
-- **Security & Risks:** Security information, protocol risks, and vulnerability reporting.
-- **Developer Guide:** On-chain integration, instructions, Anchor IDL, TypeScript types, and developer limitations.
-- **Legal & Compliance:** Terms of Service, Privacy Policy, Risk Disclosure, Copyright Policy, and Trademark Guidelines.
-- **Announcements:** Platform announcements.
+The current `docs.json` is authoritative for documentation navigation.
 
-Preserve this structure unless changes are explicitly requested.
+Do not invent deployment URLs, support destinations, social accounts, or program addresses.
+
+## Documentation Technology
+
+The documentation uses Mintlify.
+
+- Site configuration: `docs.json`
+- Page format: MDX
+- Frontmatter: YAML
+- Public interface artifacts: `idl-and-types/`
+- Branding assets: `logo/` and `favicon.svg`
+
+Documentation pages should have appropriate `title` and `description` frontmatter.
+
+Use Mintlify-supported MDX components and syntax.
+
+Keep page paths, navigation entries, and internal links synchronized.
+
+## Navigation Structure
+
+The current documentation navigation is organized into nine tabs.
+
+### Welcome
+
+- `index`
+
+### Overview
+
+- `overview/overview`
+- `overview/token-sale-models`
+- `overview/protocol-fees`
+
+### User Guides
+
+- `user-guides/getting-started`
+- `user-guides/trust-and-safety`
+- `user-guides/rugfreepump-consent`
+
+For Token Creators:
+
+- `user-guides/for-token-creators/creating-a-bonding-curve-sale`
+- `user-guides/for-token-creators/migrating-raised-liquidity`
+
+For Token Buyers:
+
+- `user-guides/for-token-buyers/buying-bonding-curve-sale-tokens`
+- `user-guides/for-token-buyers/claiming-purchased-tokens`
+- `user-guides/for-token-buyers/withdrawing-contributed-sol`
+
+Additional page:
+
+- `user-guides/faq`
+
+### Reward Program
+
+- `reward-program/reward-program`
+
+### On-Chain Program
+
+- `on-chain-program/proof-of-execution`
+
+### Security & Risks
+
+- `security-and-risk/security`
+- `security-and-risk/risks`
+- `security-and-risk/security-disclosure`
+
+### Developer Guide
+
+- `developer-guide/building-on-rugfreepump`
+- `developer-guide/on-chain-integration/buy`
+- `developer-guide/anchor-idl-and-types`
+- `developer-guide/developer-limitations`
+
+### Legal & Compliance
+
+- `legal-and-compliance/terms-of-service`
+- `legal-and-compliance/privacy-policy`
+- `legal-and-compliance/risk-disclosure`
+- `legal-and-compliance/copyright-policy`
+- `legal-and-compliance/trademark-guidelines`
+
+### Announcements
+
+- `announcements/announcements`
+
+These paths reflect the supplied `docs.json`. Verify them against the current repository before making navigation changes.
+
+Do not restore removed starter pages or add unrelated documentation sections.
+
+## Source of Truth
+
+Use the following hierarchy when reviewing technical documentation:
+
+1. The current deployed on-chain program and its verified state.
+2. The current authoritative Anchor IDL and generated types.
+3. The current platform implementation and configuration, when available and verified.
+4. Existing approved RugFreePump documentation.
+5. The current `docs.json` for navigation and public page paths.
+
+If the documentation conflicts with verified implementation behavior, identify the discrepancy before changing published content.
+
+Never invent protocol functionality, security guarantees, fees, program addresses, or operational procedures.
 
 ## Canonical Terminology
 
 Use these terms consistently:
 
 - **RugFreePump:** Official platform name.
-- **Bonding-curve sale:** The structured initial token fundraising process.
-- **Creator:** A participant who creates a token sale.
-- **Buyer / Contributor:** A participant who purchases tokens during fundraising.
-- **Token Unlocked (TU):** The sale model allowing the full purchased allocation to become claimable after successful liquidity migration.
-- **Token Locked (TL):** The sale model using a predefined gradual unlock schedule.
-- **Purchased token allocation:** Tokens purchased and recorded for a buyer before claiming.
-- **Claimable tokens:** Purchased tokens currently eligible to be claimed.
-- **Claimed tokens:** Tokens transferred to a buyer through a successful claim.
-- **Liquidity migration:** The transition from completed fundraising to Raydium CPMM liquidity.
+- **Bonding-curve sale:** The initial structured fundraising process.
+- **Creator:** The participant who creates a token sale.
+- **Buyer / Contributor:** A participant who purchases tokens through the bonding curve.
+- **Token Unlocked (TU):** The model allowing full token claiming after successful migration.
+- **Token Locked (TL):** The model allowing gradual token claiming after migration.
+- **Purchased token allocation:** Tokens purchased but not necessarily transferred to the buyer.
+- **Claimable tokens:** Purchased tokens currently eligible for claiming.
+- **Claimed tokens:** Tokens received through a completed claim.
+- **Liquidity migration:** The process of establishing liquidity on Raydium CPMM.
+- **Raydium CPMM:** The liquidity destination used by the protocol.
 - **LP tokens:** Liquidity provider tokens generated during pool creation.
-- **PDA:** Program Derived Address on Solana.
+- **PDA:** Program Derived Address.
 
-Do not confuse purchased allocations with tokens already held in a buyer's wallet.
+Do not confuse token purchasing, token unlocking, token claiming, and token trading.
 
-Do not describe token unlocking as an automatic wallet transfer. Claiming requires an eligible buyer to initiate the appropriate transaction.
+## Fundraising and Sale States
 
-## Protocol Behavior
+Preserve these protocol distinctions:
 
-### Fundraising
+- Buyers purchase token allocations during an active sale.
+- There is no standard bonding-curve sell-back operation during active fundraising.
+- Sale completion and successful liquidity migration are separate events.
+- Purchased tokens do not become claimable merely because the fundraising threshold was reached.
+- Expired sales and authorized emergency-canceled completed sales may support eligible withdrawals.
+- Withdrawals are not equivalent to unrestricted bonding-curve selling.
+- The selected sale model cannot be changed after sale creation.
 
-- RugFreePump does not provide a standard bonding-curve sell-back operation during active fundraising.
-- Buyers contribute SOL to purchase token allocations.
-- Purchased tokens are not immediately transferred to buyers' wallets.
-- Reaching the fundraising threshold and successfully migrating liquidity are separate events.
-- A completed sale must successfully migrate liquidity before purchased tokens become claimable.
-- Expired sales may become eligible for withdrawals under the protocol's rules.
-- Completed sales canceled through the authorized emergency procedure may also become eligible for withdrawals.
+Do not imply that successful fundraising guarantees a successful migration, market liquidity, token price, or project outcome.
 
-Do not describe eligible withdrawals as ordinary active-sale selling.
+## Token Claiming Rules
 
-### Token Sale Models
+Both TU and TL require successful liquidity migration before purchased tokens can be claimed.
 
-Creators select either TU or TL when creating a sale.
+For TU sales:
 
-The selected model cannot be changed after creation.
+- The full purchased allocation becomes claimable after successful migration.
+- Buyers must initiate a claiming transaction.
 
-The documented current TL configuration for newly created sales is:
+For TL sales:
 
-- Unlock percentage: 10% per interval.
-- Unlock interval: 30 minutes.
-- Unlock schedule begins after successful liquidity migration.
-- Full allocation becomes available after 10 intervals, or five hours.
+- Unlock settings are recorded when the sale is created.
+- The unlock schedule starts after successful liquidity migration.
+- The currently documented configuration unlocks 10% every 30 minutes.
+- The full allocation becomes available after five hours.
+- Buyers may claim available tokens periodically or wait.
+- Previously unclaimed unlocked tokens remain eligible for later claiming.
+- Unlocking does not automatically transfer tokens to a wallet.
 
-TL unlock settings are recorded for each sale at creation.
+Existing TL sales retain their recorded unlock settings even if administrators update defaults for future sales.
 
-Existing sales retain their recorded unlock conditions even if protocol administrators later change the defaults for new sales.
+Do not change published unlock settings without verifying the authoritative configuration.
 
-Do not change documented configuration values without verifying the current authoritative program configuration.
+## Fees and Numerical Accuracy
 
-### Liquidity Migration
+Protocol fees and financial parameters must match the current verified configuration.
 
-- Completed sales may proceed to Raydium CPMM liquidity migration.
-- The protocol burns the LP tokens generated through successful migration.
-- LP-token burning does not guarantee market liquidity, token price stability, future demand, or protection against loss.
+When documenting financial calculations:
 
-### Program Authority
+- Distinguish SOL from lamports.
+- Distinguish displayed token quantities from base units.
+- Preserve integer precision where applicable.
+- Identify percentages and basis points correctly.
+- Avoid floating-point assumptions in examples involving on-chain accounting.
+- Distinguish protocol fees from Solana network fees and third-party costs.
 
-RugFreePump's Solana program enforces protocol rules and state transitions.
+Do not silently change fee tables, contribution thresholds, allocation percentages, or other numerical parameters.
 
-The program remains upgradeable and subject to administrative authorities.
+## On-Chain Program and Governance
 
-Do not describe the protocol as immutable, fully decentralized, independently governed, or protected by active multisignature controls unless those claims have been verified against the current deployment.
+RugFreePump's Solana program is upgradeable.
 
-Distinguish protocol-enforced behavior from platform-level policies and administrator-controlled operations.
+The current governance and security disclosures must accurately reflect the deployed administrative authority structure.
 
-## Developer Integration Standards
+Do not claim:
 
-The public Developer Guide supports independent applications that interact with the RugFreePump on-chain program.
+- The program is immutable.
+- Upgrade authority has been revoked.
+- A multisignature arrangement is active when it is not.
+- The protocol is independently governed.
+- The protocol has completed an independent security audit unless verified.
+- Funds or token values are guaranteed.
 
-Public integration information may include:
+The on-chain program governs protocol state and financial execution.
 
-- Program IDs and deployment information.
-- Anchor IDL and generated TypeScript types.
-- Instruction definitions and arguments.
-- Account structures and constraints.
-- PDA derivations.
-- Events and error definitions.
-- Integration examples.
-- Solana transaction construction guidance.
+Off-chain databases, indexers, APIs, and WebSocket services provide supporting platform functionality but do not replace the blockchain as the source of truth for on-chain execution.
 
-All integration examples must match the current published interface and intended deployment.
+## Developer Documentation
 
-### Anchor IDL and TypeScript Types
+The public developer documentation supports independent integration with the RugFreePump on-chain program.
 
-The `idl-and-types/` directory contains public interface artifacts intended for developer reuse.
+Published resources include:
 
-Treat generated interface artifacts as authoritative outputs of the corresponding program build, not as narrative documentation to edit freely.
+- Anchor IDL.
+- Generated TypeScript types.
+- Instruction and account information.
+- Public program interface definitions.
+- Developer integration examples.
+- Documented integration limitations.
 
-Do not manually change instruction discriminators, account discriminators, account layouts, field names, argument types, enum variants, events, or error definitions without an authoritative interface update.
+The public interface artifacts are:
 
-When the program interface changes:
+- `idl-and-types/rug_free_pump.json`
+- `idl-and-types/rug_free_pump.ts`
 
-1. Obtain the updated authoritative IDL.
-2. Generate the corresponding TypeScript types.
-3. Verify that both artifacts describe the same interface.
-4. Review affected developer documentation.
-5. Update examples and references where necessary.
-6. Verify deployment compatibility before publication.
+These artifacts are intentionally public and reusable under the repository's applicable license.
 
-Do not claim that separate deployments use identical interfaces unless verified.
+Do not manually alter generated discriminators, instruction arguments, account layouts, event definitions, enum variants, or field types without an authoritative program interface update.
 
-### Code Examples
+When updating the interface:
 
-- Use accurate Solana and Anchor terminology.
-- Preserve integer precision for lamports, token base units, basis points, and other scaled values.
-- Avoid unsafe floating-point arithmetic for precision-sensitive blockchain calculations.
-- Use the correct instruction arguments, accounts, signers, and PDA seeds.
-- Distinguish complete runnable examples from illustrative pseudocode.
-- Do not invent instructions, fields, SDK functions, or program addresses.
-- Do not embed private keys, wallet recovery phrases, credentials, or internal service secrets.
+1. Obtain the authoritative updated IDL.
+2. Regenerate the TypeScript types.
+3. Verify consistency between the artifacts.
+4. Review affected integration examples.
+5. Verify relevant deployment compatibility.
+6. Update related documentation as necessary.
 
-Do not publish proprietary implementation source code merely to explain an integration.
+Do not invent program instructions, PDA seeds, account constraints, SDK methods, or transaction parameters.
 
 ## Public and Proprietary Boundaries
 
-RugFreePump intentionally publishes documentation and developer integration artifacts for public reuse.
+The repository is publicly accessible and MIT-licensed for RugFreePump-owned published materials.
 
-The public documentation repository is licensed under MIT, subject to applicable third-party notices and trademark rights.
+Developers may reuse the published documentation, Anchor IDL, TypeScript types, and integration examples under the applicable license.
 
-Unpublished proprietary implementation source code is not part of that license.
+This does not mean RugFreePump's private implementation repositories are open source.
 
-Do not disclose private source code from:
+Do not publish:
 
-- The Solana on-chain program.
-- Frontend and administrative applications.
-- Backend services.
-- Indexers and workers.
-- Internal APIs and operational services.
-- Deployment and infrastructure systems.
-- Internal administration and recovery tools.
+- Private Rust program source code.
+- Private frontend or backend source code.
+- Internal administrative service code.
+- Private worker and indexer implementations.
+- Infrastructure credentials.
+- Private keys or recovery phrases.
+- Internal security procedures.
+- Sensitive deployment configurations.
+- Confidential vulnerability information.
 
-Do not publish credentials, private keys, sensitive infrastructure details, or privileged operational procedures.
+Publicly documented interfaces may be described without disclosing proprietary implementations.
 
-Public interface information is permitted when intentionally approved for publication.
+## Security and Risk Documentation
 
-## Security and Risk Accuracy
+The name RugFreePump describes a platform design objective, not a guarantee that every token or project is free from risk.
 
-RugFreePump is designed to reduce certain risks associated with unrestricted bonding-curve selling, but it does not eliminate all technical, financial, or operational risks.
+Preserve accurate disclosure of:
 
-Do not claim or imply:
+- Creator and project risk.
+- Market and token price risk.
+- Smart-contract and upgradeability risk.
+- Wallet and transaction risk.
+- Liquidity and migration risk.
+- Third-party infrastructure dependencies.
+- Administrative authority limitations.
 
-- Guaranteed project success.
-- Guaranteed token prices, profits, or returns.
-- Guaranteed liquidity or market demand.
-- Complete protection against scams or malicious creators.
-- Immunity from smart-contract vulnerabilities.
-- Independent audits that have not occurred.
-- Immutable program code while upgrade authority remains active.
-- Multisignature governance before it has been implemented.
+Do not overstate the protections provided by the bonding-curve fundraising model or LP-token burning.
 
-Preserve distinctions between protocol-enforced protections, platform-level safeguards, third-party dependencies, and participant responsibilities.
+Security reports should follow the process described in:
 
-Potential vulnerabilities should be handled through the published security disclosure process.
+`security-and-risk/security-disclosure`
 
-Do not publicly disclose confidential vulnerability details without authorization.
+Do not publicly disclose confidential vulnerability information without authorization.
 
 ## Legal and Compliance Documentation
 
-The platform's wallet-based consent process covers three required documents:
+The platform's three wallet-consent documents are:
 
 - Terms of Service.
 - Privacy Policy.
 - Risk Disclosure.
 
-The repository also contains separate Copyright Policy and Trademark Guidelines.
+Other published policies include:
 
-Maintain the boundaries between these documents.
+- Copyright Policy.
+- Trademark Guidelines.
 
-Do not:
+Preserve the separation between these documents.
 
-- Change legal obligations or liability provisions as an incidental editorial improvement.
-- Introduce an unsupported governing jurisdiction.
-- Change legal contact information without verification.
-- Change document versions or publication dates without authorization.
-- Suggest that database-level content moderation can erase immutable blockchain records.
-- Merge independent legal policies without explicit approval.
+Do not modify legal rights, obligations, liability provisions, eligibility conditions, document versions, or publication dates without explicit authorization.
 
-Changes to consent-controlled documents must follow the platform's legal-document versioning process.
+Do not invent a governing jurisdiction.
 
-Substantive legal changes should receive appropriate review before publication.
+Do not describe platform-level content moderation as the ability to delete immutable blockchain records or independently hosted content.
 
-## Writing and Editorial Standards
+The platform's moderation capabilities are limited to the systems and data it controls.
 
-- Use clear, professional, accurate English.
-- Prefer active voice and direct explanations.
-- Use sentence case for headings.
-- Preserve established terminology.
-- Use **bold** for interface labels and important concepts.
-- Use inline code formatting for commands, paths, program identifiers, and field names.
-- Keep examples, tables, and calculations consistent with current protocol behavior.
-- Avoid unsupported promotional, security, or financial claims.
-- Explain limitations when they materially affect user understanding.
+Changes to consent-controlled legal documents must follow the established document-versioning and consent process.
 
-Preserve the intended audience, explanatory flow, paragraph structure, tone, and level of detail of existing documentation.
+## Editorial Standards
 
-Do not unnecessarily shorten, rewrite, or reorganize finalized pages.
+- Write clear, accurate, professional English.
+- Preserve the existing document's tone and explanatory structure.
+- Prefer direct explanations over promotional language.
+- Use consistent technical terminology.
+- Preserve meaningful warnings, qualifications, and examples.
+- Avoid unnecessary duplication across documentation sections.
+- Do not shorten finalized content without a specific reason.
+- Do not introduce unsupported claims.
+- Use tables where they improve technical clarity.
+- Use code formatting for identifiers, file paths, commands, and field names.
+- Preserve Mintlify-compatible MDX formatting.
 
-## Content Organization and Cross-References
+When making a targeted change, avoid unrelated rewrites.
 
-Prefer a clear primary location for each topic:
+## Internal Links
 
-- Fundraising concepts and token sale models belong in Overview.
-- Step-by-step platform operations belong in User Guides.
-- Reward qualification and distribution belong in Reward Program.
-- Program execution belongs in On-Chain Program.
-- Public integration interfaces belong in Developer Guide.
-- Security limitations belong in Security & Risks.
-- Legal rights and obligations belong in Legal & Compliance.
+Use root-relative paths for links between documentation pages.
 
-Other pages may provide relevant summaries and link to the primary explanation.
+Examples:
 
-Do not remove useful context solely to eliminate repetition.
+- `/overview/overview`
+- `/overview/token-sale-models`
+- `/user-guides/getting-started`
+- `/user-guides/for-token-buyers/claiming-purchased-tokens`
+- `/developer-guide/anchor-idl-and-types`
+- `/security-and-risk/security-disclosure`
+- `/legal-and-compliance/terms-of-service`
 
-## Navigation and Links
+Do not include `.mdx` extensions in documentation URLs.
 
-`docs.json` is the source of truth for the current documentation navigation.
+Do not assume old paths remain valid after a navigation change.
 
-Before changing page paths:
+When moving or renaming a page, check all affected links and consider redirects for previously published URLs.
 
-1. Check the current navigation configuration.
-2. Confirm the target MDX file exists.
-3. Search for references to the old path.
-4. Update affected internal links.
-5. Preserve existing public URLs where practical.
-6. Add redirects when appropriate and supported.
+## Documentation Changes
 
-Use root-relative paths for internal documentation links.
+Before editing:
 
-Use `https://rugfreepump.com` for official platform references.
+1. Read the affected page.
+2. Review the relevant `docs.json` navigation entry.
+3. Inspect related documentation where necessary.
+4. Confirm the requested scope.
+5. Verify any technical facts being changed.
 
-Do not invent production URLs or replace unconfirmed placeholders with guessed destinations.
+After editing:
 
-## Change Management
+1. Check MDX syntax and frontmatter.
+2. Confirm navigation references.
+3. Check internal links.
+4. Check local assets.
+5. Verify technical consistency.
+6. Ensure no sensitive information was introduced.
+7. Report any unresolved uncertainty.
 
-For documentation changes:
+## Local Development and Validation
 
-1. Identify the exact requested change.
-2. Read the affected page and relevant related pages.
-3. Preserve unrelated content.
-4. Apply only necessary changes.
-5. Check terminology and cross-references.
-6. Validate formatting, links, and navigation.
-7. Report unresolved uncertainty.
+Install the Mintlify CLI:
 
-For changes affecting protocol parameters, developer interfaces, security disclosures, or legal content, verify the authoritative source before publication.
+```bash
+npm install -g mint
+```
 
-## Local Validation
-
-From the repository root, run:
+Start the local documentation preview:
 
 ```bash
 mint dev
 ```
 
-Check documentation links:
+Validate the documentation:
+
+```bash
+mint validate
+```
+
+Check internal links:
 
 ```bash
 mint broken-links
 ```
 
-Also verify that:
-
-- `docs.json` is valid JSON.
-- Navigation entries reference existing pages.
-- Referenced local assets exist.
-- Public integration artifacts are present.
-- No obsolete starter content remains in published pages.
-- No private or sensitive files have been added.
+Run these commands from the repository root containing `docs.json`.
 
 ## Final Principle
 
-RugFreePump documentation must accurately describe the public platform and its on-chain interface while keeping unpublished proprietary implementation details private.
+Maintain RugFreePump's documentation as an accurate, consistent, transparent public reference.
 
-Preserve technical correctness, transparent risk disclosures, consistent terminology, and the existing finalized documentation.
+Support independent developer integrations through published interfaces while protecting unpublished proprietary implementation code.
+
+Preserve the established documentation unless a change is explicitly requested or supported by verified evidence.
