@@ -8,7 +8,7 @@ During the active fundraising phase, RugFreePump does not provide a standard bon
 
 When a sale successfully reaches its threshold, it can proceed to liquidity migration on Raydium CPMM. The LP tokens generated during migration are burned by the protocol.
 
-When a sale expires without reaching its threshold, contributors may withdraw eligible SOL contributions under the protocol's withdrawal rules.
+When a sale expires without reaching its threshold, contributors may withdraw eligible SOL contributions according to the protocol's withdrawal rules.
 
 RugFreePump supports two token sale models:
 
@@ -29,69 +29,69 @@ The documentation is organized into nine sections.
 
 ### Welcome
 
-- [Welcome](https://rugfreepump.com/docs)
+- [Welcome](https://docs.rugfreepump.com)
 
 ### Overview
 
-- [Overview](https://rugfreepump.com/docs/overview/overview)
-- [Token Sale Models](https://rugfreepump.com/docs/overview/token-sale-models)
-- [Protocol Fees](https://rugfreepump.com/docs/overview/protocol-fees)
+- [Overview](https://docs.rugfreepump.com/overview/overview)
+- [Token Sale Models](https://docs.rugfreepump.com/overview/token-sale-models)
+- [Protocol Fees](https://docs.rugfreepump.com/overview/protocol-fees)
 
 ### User Guides
 
 General guides:
 
-- [Getting Started](https://rugfreepump.com/docs/user-guides/getting-started)
-- [Trust & Safety](https://rugfreepump.com/docs/user-guides/trust-and-safety)
-- [RugFreePump Consent](https://rugfreepump.com/docs/user-guides/rugfreepump-consent)
+- [Getting Started](https://docs.rugfreepump.com/user-guides/getting-started)
+- [Trust & Safety](https://docs.rugfreepump.com/user-guides/trust-and-safety)
+- [RugFreePump Consent](https://docs.rugfreepump.com/user-guides/rugfreepump-consent)
 
 For token creators:
 
-- [Creating a Bonding Curve Sale](https://rugfreepump.com/docs/user-guides/for-token-creators/creating-a-bonding-curve-sale)
-- [Migrating Raised Liquidity](https://rugfreepump.com/docs/user-guides/for-token-creators/migrating-raised-liquidity)
+- [Creating a Bonding Curve Sale](https://docs.rugfreepump.com/user-guides/for-token-creators/creating-a-bonding-curve-sale)
+- [Migrating Raised Liquidity](https://docs.rugfreepump.com/user-guides/for-token-creators/migrating-raised-liquidity)
 
 For token buyers:
 
-- [Buying Bonding Curve Sale Tokens](https://rugfreepump.com/docs/user-guides/for-token-buyers/buying-bonding-curve-sale-tokens)
-- [Claiming Purchased Tokens](https://rugfreepump.com/docs/user-guides/for-token-buyers/claiming-purchased-tokens)
-- [Withdrawing Contributed SOL](https://rugfreepump.com/docs/user-guides/for-token-buyers/withdrawing-contributed-sol)
+- [Buying Bonding Curve Sale Tokens](https://docs.rugfreepump.com/user-guides/for-token-buyers/buying-bonding-curve-sale-tokens)
+- [Claiming Purchased Tokens](https://docs.rugfreepump.com/user-guides/for-token-buyers/claiming-purchased-tokens)
+- [Withdrawing Contributed SOL](https://docs.rugfreepump.com/user-guides/for-token-buyers/withdrawing-contributed-sol)
 
 Additional guide:
 
-- [Frequently Asked Questions](https://rugfreepump.com/docs/user-guides/faq)
+- [Frequently Asked Questions](https://docs.rugfreepump.com/user-guides/faq)
 
 ### Reward Program
 
-- [Reward Program](https://rugfreepump.com/docs/reward-program/reward-program)
+- [Reward Program](https://docs.rugfreepump.com/reward-program/reward-program)
 
 ### On-Chain Program
 
-- [Proof of Execution](https://rugfreepump.com/docs/on-chain-program/proof-of-execution)
+- [Proof of Execution](https://docs.rugfreepump.com/on-chain-program/proof-of-execution)
 
 ### Security & Risks
 
-- [Security](https://rugfreepump.com/docs/security-and-risk/security)
-- [Risks](https://rugfreepump.com/docs/security-and-risk/risks)
-- [Security Disclosure](https://rugfreepump.com/docs/security-and-risk/security-disclosure)
+- [Security](https://docs.rugfreepump.com/security-and-risk/security)
+- [Risks](https://docs.rugfreepump.com/security-and-risk/risks)
+- [Security Disclosure](https://docs.rugfreepump.com/security-and-risk/security-disclosure)
 
 ### Developer Guide
 
-- [Building on RugFreePump](https://rugfreepump.com/docs/developer-guide/building-on-rugfreepump)
-- [On-Chain Integration — Buy](https://rugfreepump.com/docs/developer-guide/on-chain-integration/buy)
-- [Anchor IDL & Types](https://rugfreepump.com/docs/developer-guide/anchor-idl-and-types)
-- [Developer Limitations](https://rugfreepump.com/docs/developer-guide/developer-limitations)
+- [Building on RugFreePump](https://docs.rugfreepump.com/developer-guide/building-on-rugfreepump)
+- [On-Chain Integration — Buy](https://docs.rugfreepump.com/developer-guide/on-chain-integration/buy)
+- [Anchor IDL & Types](https://docs.rugfreepump.com/developer-guide/anchor-idl-and-types)
+- [Developer Limitations](https://docs.rugfreepump.com/developer-guide/developer-limitations)
 
 ### Legal & Compliance
 
-- [Terms of Service](https://rugfreepump.com/docs/legal-and-compliance/terms-of-service)
-- [Privacy Policy](https://rugfreepump.com/docs/legal-and-compliance/privacy-policy)
-- [Risk Disclosure](https://rugfreepump.com/docs/legal-and-compliance/risk-disclosure)
-- [Copyright Policy](https://rugfreepump.com/docs/legal-and-compliance/copyright-policy)
-- [Trademark Guidelines](https://rugfreepump.com/docs/legal-and-compliance/trademark-guidelines)
+- [Terms of Service](https://docs.rugfreepump.com/legal-and-compliance/terms-of-service)
+- [Privacy Policy](https://docs.rugfreepump.com/legal-and-compliance/privacy-policy)
+- [Risk Disclosure](https://docs.rugfreepump.com/legal-and-compliance/risk-disclosure)
+- [Copyright Policy](https://docs.rugfreepump.com/legal-and-compliance/copyright-policy)
+- [Trademark Guidelines](https://docs.rugfreepump.com/legal-and-compliance/trademark-guidelines)
 
 ### Announcements
 
-- [Announcements](https://rugfreepump.com/docs/announcements/announcements)
+- [Announcements](https://docs.rugfreepump.com/announcements/announcements)
 
 These paths follow the repository's supplied `docs.json` navigation configuration.
 
@@ -107,19 +107,19 @@ Developers can use the published Anchor IDL and generated TypeScript types to co
 
 | Artifact | Source |
 | --- | --- |
-| Anchor IDL | [rug_free_pump.json](https://github.com/rugfreepump/public-docs/blob/main/idl-and-types/rug_free_pump.json) |
-| TypeScript Types | [rug_free_pump.ts](https://github.com/rugfreepump/public-docs/blob/main/idl-and-types/rug_free_pump.ts) |
+| Anchor IDL | [rug_free_pump.json](./idl-and-types/rug_free_pump.json) |
+| TypeScript Types | [rug_free_pump.ts](./idl-and-types/rug_free_pump.ts) |
 
-The files are maintained in the repository's `idl-and-types/` directory.
+These files are maintained in the repository's `idl-and-types/` directory.
 
 Developers should verify that the published interface artifacts are compatible with the intended program deployment.
 
 For implementation guidance, see:
 
-- [Building on RugFreePump](https://rugfreepump.com/docs/developer-guide/building-on-rugfreepump)
-- [On-Chain Integration — Buy](https://rugfreepump.com/docs/developer-guide/on-chain-integration/buy)
-- [Anchor IDL & Types](https://rugfreepump.com/docs/developer-guide/anchor-idl-and-types)
-- [Developer Limitations](https://rugfreepump.com/docs/developer-guide/developer-limitations)
+- [Building on RugFreePump](https://docs.rugfreepump.com/developer-guide/building-on-rugfreepump)
+- [On-Chain Integration — Buy](https://docs.rugfreepump.com/developer-guide/on-chain-integration/buy)
+- [Anchor IDL & Types](https://docs.rugfreepump.com/developer-guide/anchor-idl-and-types)
+- [Developer Limitations](https://docs.rugfreepump.com/developer-guide/developer-limitations)
 
 ### Public Interface vs. Proprietary Implementation
 
@@ -222,7 +222,7 @@ Run:
 mint broken-links
 ```
 
-These commands help identify documentation configuration problems, invalid pages, and broken internal links.
+Command availability may depend on the installed Mintlify CLI version.
 
 ## Documentation Maintenance
 
@@ -246,16 +246,16 @@ For detailed maintenance rules, see [AGENTS.md](./AGENTS.md).
 
 RugFreePump's on-chain program enforces defined protocol rules, but it does not guarantee the success, legitimacy, market performance, or safety of projects launched through the platform.
 
-The program is upgradeable and subject to administrative controls.
+The program is upgradeable and subject to administrative controls. The current administrative and upgrade authorities are held by the platform's sole operator, without an active multisignature governance arrangement.
 
 Users and developers should understand the associated technical, operational, wallet, liquidity, and market risks.
 
 Relevant documentation:
 
-- [Security](https://rugfreepump.com/docs/security-and-risk/security)
-- [Risks](https://rugfreepump.com/docs/security-and-risk/risks)
-- [Security Disclosure](https://rugfreepump.com/docs/security-and-risk/security-disclosure)
-- [Risk Disclosure](https://rugfreepump.com/docs/legal-and-compliance/risk-disclosure)
+- [Security](https://docs.rugfreepump.com/security-and-risk/security)
+- [Risks](https://docs.rugfreepump.com/security-and-risk/risks)
+- [Security Disclosure](https://docs.rugfreepump.com/security-and-risk/security-disclosure)
+- [Risk Disclosure](https://docs.rugfreepump.com/legal-and-compliance/risk-disclosure)
 
 Security vulnerabilities should be reported through the process described in the Security Disclosure documentation rather than disclosed through public issues containing sensitive exploit information.
 
@@ -265,14 +265,14 @@ The platform maintains separate legal and compliance documents governing platfor
 
 The three documents associated with RugFreePump's wallet-based consent process are:
 
-- [Terms of Service](https://rugfreepump.com/docs/legal-and-compliance/terms-of-service)
-- [Privacy Policy](https://rugfreepump.com/docs/legal-and-compliance/privacy-policy)
-- [Risk Disclosure](https://rugfreepump.com/docs/legal-and-compliance/risk-disclosure)
+- [Terms of Service](https://docs.rugfreepump.com/legal-and-compliance/terms-of-service)
+- [Privacy Policy](https://docs.rugfreepump.com/legal-and-compliance/privacy-policy)
+- [Risk Disclosure](https://docs.rugfreepump.com/legal-and-compliance/risk-disclosure)
 
 Additional policies:
 
-- [Copyright Policy](https://rugfreepump.com/docs/legal-and-compliance/copyright-policy)
-- [Trademark Guidelines](https://rugfreepump.com/docs/legal-and-compliance/trademark-guidelines)
+- [Copyright Policy](https://docs.rugfreepump.com/legal-and-compliance/copyright-policy)
+- [Trademark Guidelines](https://docs.rugfreepump.com/legal-and-compliance/trademark-guidelines)
 
 For legal inquiries, contact:
 
@@ -282,7 +282,7 @@ legal@rugfreepump.com
 
 This public repository is distributed under the [MIT License](./LICENSE) for materials RugFreePump owns or is authorized to license.
 
-This includes the intentionally published:
+This includes intentionally published:
 
 - Documentation content.
 - Anchor IDL.
@@ -296,7 +296,7 @@ The license does not extend to RugFreePump's unpublished proprietary on-chain or
 
 Third-party materials remain subject to their respective licenses and notices.
 
-The RugFreePump name, logos, and other brand identifiers remain subject to applicable trademark rights and the published [Trademark Guidelines](https://rugfreepump.com/docs/legal-and-compliance/trademark-guidelines).
+The RugFreePump name, logos, and other brand identifiers remain subject to applicable trademark rights and the published [Trademark Guidelines](https://docs.rugfreepump.com/legal-and-compliance/trademark-guidelines).
 
 ## Contact
 
@@ -304,8 +304,10 @@ The RugFreePump name, logos, and other brand identifiers remain subject to appli
 
 **Documentation:** https://docs.rugfreepump.com
 
+**Public Documentation Repository:** https://github.com/rugfreepump/public-docs
+
 **Legal Contact:** legal@rugfreepump.com
 
-For security reports, follow the official [Security Disclosure](https://rugfreepump.com/docs/security-and-risk/security-disclosure) process.
+For security reports, follow the official [Security Disclosure](https://docs.rugfreepump.com/security-and-risk/security-disclosure) process.
 
 For general support, use the official support channels linked from the RugFreePump website.
