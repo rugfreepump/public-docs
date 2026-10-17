@@ -8,7 +8,7 @@ RugFreePump uses a bonding-curve fundraising model that separates active fundrai
 
 When a sale reaches its fundraising threshold, it becomes eligible for liquidity migration to Raydium CPMM. The resulting liquidity provider (LP) tokens are burned by the protocol.
 
-If a sale expires without reaching its threshold, contributors may withdraw eligible SOL contributions under the protocol's withdrawal rules. Eligible withdrawals are also supported following an authorized emergency cancellation of a completed sale.
+If a sale expires without reaching its threshold, contributors may withdraw eligible SOL contributions according to the protocol's withdrawal rules. Eligible withdrawals are also supported following an authorized emergency cancellation of a completed sale.
 
 RugFreePump supports two token sale models:
 
@@ -33,7 +33,7 @@ It contains:
 
 It does not contain the unpublished proprietary source code for RugFreePump's on-chain program, frontend, backend, indexers, workers, administrative systems, or infrastructure.
 
-Do not introduce private source code, internal credentials, secrets, or sensitive operational information into this repository.
+Do not introduce private source code, credentials, secrets, or sensitive operational information into this repository.
 
 ## Official References
 
@@ -44,7 +44,7 @@ Do not introduce private source code, internal credentials, secrets, or sensitiv
 
 The current `docs.json` is authoritative for documentation navigation.
 
-Do not invent deployment URLs, support destinations, social accounts, or program addresses.
+Do not invent deployment URLs, support destinations, social accounts, program addresses, or other official references.
 
 ## Documentation Technology
 
@@ -64,7 +64,7 @@ Keep page paths, navigation entries, and internal links synchronized.
 
 ## Navigation Structure
 
-The current documentation navigation is organized into nine tabs.
+The documentation navigation is organized into nine tabs.
 
 ### Welcome
 
@@ -130,21 +130,21 @@ Additional page:
 
 - `announcements/announcements`
 
-These paths reflect the supplied `docs.json`. Verify them against the current repository before making navigation changes.
+These paths reflect the supplied `docs.json`. Always verify against the current configuration before modifying navigation.
 
-Do not restore removed starter pages or add unrelated documentation sections.
+Do not restore removed starter pages or introduce unrelated documentation sections.
 
 ## Source of Truth
 
-Use the following hierarchy when reviewing technical documentation:
+Use the following sources when reviewing technical documentation:
 
-1. The current deployed on-chain program and its verified state.
-2. The current authoritative Anchor IDL and generated types.
-3. The current platform implementation and configuration, when available and verified.
+1. The current deployed on-chain program and verified on-chain state.
+2. The authoritative Anchor IDL and generated TypeScript types.
+3. The current platform implementation and configuration, when verified.
 4. Existing approved RugFreePump documentation.
-5. The current `docs.json` for navigation and public page paths.
+5. The current `docs.json` for navigation and page paths.
 
-If the documentation conflicts with verified implementation behavior, identify the discrepancy before changing published content.
+If published documentation conflicts with verified implementation behavior, identify the discrepancy before changing content.
 
 Never invent protocol functionality, security guarantees, fees, program addresses, or operational procedures.
 
@@ -180,7 +180,7 @@ Preserve these protocol distinctions:
 - Withdrawals are not equivalent to unrestricted bonding-curve selling.
 - The selected sale model cannot be changed after sale creation.
 
-Do not imply that successful fundraising guarantees a successful migration, market liquidity, token price, or project outcome.
+Do not imply that successful fundraising guarantees successful migration, future market liquidity, token price, or project outcome.
 
 ## Token Claiming Rules
 
@@ -224,20 +224,22 @@ Do not silently change fee tables, contribution thresholds, allocation percentag
 
 RugFreePump's Solana program is upgradeable.
 
-The current governance and security disclosures must accurately reflect the deployed administrative authority structure.
+The current administrative and upgrade authorities are controlled by the platform's sole operator. No active multisignature governance arrangement has been implemented.
+
+Future governance changes must not be described as existing protections before deployment and verification.
 
 Do not claim:
 
 - The program is immutable.
 - Upgrade authority has been revoked.
-- A multisignature arrangement is active when it is not.
+- A multisignature arrangement is active.
 - The protocol is independently governed.
-- The protocol has completed an independent security audit unless verified.
+- An independent security audit has been completed unless verified.
 - Funds or token values are guaranteed.
 
 The on-chain program governs protocol state and financial execution.
 
-Off-chain databases, indexers, APIs, and WebSocket services provide supporting platform functionality but do not replace the blockchain as the source of truth for on-chain execution.
+Off-chain databases, indexers, APIs, and WebSocket services provide supporting functionality but do not replace the blockchain as the source of truth for on-chain execution.
 
 ## Developer Documentation
 
@@ -310,9 +312,9 @@ Preserve accurate disclosure of:
 
 Do not overstate the protections provided by the bonding-curve fundraising model or LP-token burning.
 
-Security reports should follow the process described in:
+Security reports should follow the process described at:
 
-`security-and-risk/security-disclosure`
+https://docs.rugfreepump.com/security-and-risk/security-disclosure
 
 Do not publicly disclose confidential vulnerability information without authorization.
 
@@ -371,11 +373,13 @@ Examples:
 - `/security-and-risk/security-disclosure`
 - `/legal-and-compliance/terms-of-service`
 
-Do not include `.mdx` extensions in documentation URLs.
+The documentation is hosted at `https://docs.rugfreepump.com`, so a root-relative documentation link resolves against that subdomain.
 
-Do not assume old paths remain valid after a navigation change.
+Do not use `https://rugfreepump.com/docs` for documentation links.
 
-When moving or renaming a page, check all affected links and consider redirects for previously published URLs.
+Do not include `.mdx` extensions in published documentation URLs.
+
+When moving or renaming a page, check affected links and consider redirects for previously published URLs.
 
 ## Documentation Changes
 
@@ -423,7 +427,7 @@ Check internal links:
 mint broken-links
 ```
 
-Run these commands from the repository root containing `docs.json`.
+Run these commands from the repository root containing `docs.json`. Confirm command availability against the installed Mintlify CLI version.
 
 ## Final Principle
 
