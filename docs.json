@@ -34,93 +34,138 @@
     }
   },
   "navigation": {
-    "pages": [
+    "tabs": [
       {
-        "group": "Welcome",
-        "pages": [
-          "index"
-        ]
-      },
-      {
-        "group": "Overview",
-        "pages": [
-          "overview/overview",
-          "overview/token-sale-models",
-          "overview/protocol-fees"
-        ]
-      },
-      {
-        "group": "User Guides",
-        "pages": [
-          "user-guides/getting-started",
-          "user-guides/trust-and-safety",
-          "user-guides/rugfreepump-consent",
+        "tab": "Welcome",
+        "groups": [
           {
-            "group": "For Token Creators",
+            "group": "Welcome",
             "pages": [
-              "user-guides/for-token-creators/creating-a-bonding-curve-sale",
-              "user-guides/for-token-creators/migrating-raised-liquidity"
+              "index"
             ]
-          },
+          }
+        ]
+      },
+      {
+        "tab": "Overview",
+        "groups": [
           {
-            "group": "For Token Buyers",
+            "group": "Overview",
             "pages": [
-              "user-guides/for-token-buyers/buying-bonding-curve-sale-tokens",
-              "user-guides/for-token-buyers/claiming-purchased-tokens",
-              "user-guides/for-token-buyers/withdrawing-contributed-sol"
+              "overview/overview",
+              "overview/token-sale-models",
+              "overview/protocol-fees"
             ]
-          },
-          "user-guides/faq"
+          }
         ]
       },
       {
-        "group": "Reward Program",
-        "pages": [
-          "reward-program/reward-program"
-        ]
-      },
-      {
-        "group": "On-Chain Program",
-        "pages": [
-          "on-chain-program/proof-of-execution"
-        ]
-      },
-      {
-        "group": "Security & Risks",
-        "pages": [
-          "security-and-risk/security",
-          "security-and-risk/risks",
-          "security-and-risk/security-disclosure"
-        ]
-      },
-      {
-        "group": "Developer Guide",
-        "pages": [
-          "developer-guide/building-on-rugfreepump",
+        "tab": "User Guides",
+        "groups": [
           {
-            "group": "On-Chain Integration",
+            "group": "User Guides",
             "pages": [
-              "developer-guide/on-chain-integration/buy"
+              "user-guides/getting-started",
+              "user-guides/trust-and-safety",
+              "user-guides/rugfreepump-consent",
+              {
+                "group": "For Token Creators",
+                "pages": [
+                  "user-guides/for-token-creators/creating-a-bonding-curve-sale",
+                  "user-guides/for-token-creators/migrating-raised-liquidity"
+                ]
+              },
+              {
+                "group": "For Token Buyers",
+                "pages": [
+                  "user-guides/for-token-buyers/buying-bonding-curve-sale-tokens",
+                  "user-guides/for-token-buyers/claiming-purchased-tokens",
+                  "user-guides/for-token-buyers/withdrawing-contributed-sol"
+                ]
+              },
+              "user-guides/faq"
             ]
-          },
-          "developer-guide/anchor-idl-and-types",
-          "developer-guide/developer-limitations"
+          }
         ]
       },
       {
-        "group": "Legal & Compliance",
-        "pages": [
-          "legal-and-compliance/terms-of-service",
-          "legal-and-compliance/privacy-policy",
-          "legal-and-compliance/risk-disclosure",
-          "legal-and-compliance/copyright-policy",
-          "legal-and-compliance/trademark-guidelines"
+        "tab": "Reward Program",
+        "groups": [
+          {
+            "group": "Reward Program",
+            "pages": [
+              "reward-program/reward-program"
+            ]
+          }
         ]
       },
       {
-        "group": "Announcements",
-        "pages": [
-          "announcements/announcements"
+        "tab": "On-Chain Program",
+        "groups": [
+          {
+            "group": "On-Chain Program",
+            "pages": [
+              "on-chain-program/proof-of-execution"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Security & Risks",
+        "groups": [
+          {
+            "group": "Security & Risks",
+            "pages": [
+              "security-and-risk/security",
+              "security-and-risk/risks",
+              "security-and-risk/security-disclosure"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Developer Guide",
+        "groups": [
+          {
+            "group": "Developer Guide",
+            "pages": [
+              "developer-guide/building-on-rugfreepump",
+              {
+                "group": "On-Chain Integration",
+                "pages": [
+                  "developer-guide/on-chain-integration/buy"
+                ]
+              },
+              "developer-guide/anchor-idl-and-types",
+              "developer-guide/developer-limitations"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Legal & Compliance",
+        "groups": [
+          {
+            "group": "Legal & Compliance",
+            "pages": [
+              "legal-and-compliance/terms-of-service",
+              "legal-and-compliance/privacy-policy",
+              "legal-and-compliance/risk-disclosure",
+              "legal-and-compliance/copyright-policy",
+              "legal-and-compliance/trademark-guidelines"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Announcements",
+        "groups": [
+          {
+            "group": "Announcements",
+            "pages": [
+              "announcements/announcements"
+            ]
+          }
         ]
       }
     ]
