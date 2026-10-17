@@ -302,7 +302,7 @@ The RugFreePump name, logos, and other brand identifiers remain subject to appli
 
 **Official Website:** https://rugfreepump.com
 
-**Documentation:** https://rugfreepump.com/docs
+**Documentation:** https://docs.rugfreepump.com
 
 **Legal Contact:** legal@rugfreepump.com
 
