@@ -92,11 +92,11 @@ If you select a transaction priority level, an additional Solana priority fee is
 
 The priority fee is a network fee and is separate from the RugFreePump **Buy Fee**.
 
-<Callout type="warning" title="Keep a SOL Buffer">
-Make sure your wallet contains enough SOL to cover your purchase amount, the applicable Buy Fee, Solana network fees, and your selected priority fee.
+<Warning>
+  Make sure your wallet contains enough SOL to cover your purchase amount, the applicable Buy Fee, Solana network fees, and your selected priority fee.
 
-Keeping a small additional SOL buffer can help avoid transaction failures caused by the total transaction cost exceeding your available balance.
-</Callout>
+  Keeping a small additional SOL buffer can help avoid transaction failures caused by the total transaction cost exceeding your available balance.
+</Warning>
 
 # Open the Sale Page
 
@@ -156,13 +156,21 @@ To complete the consent process:
 
 The consent signature **does not transfer SOL or tokens**.
 
-<Callout type="info" title="Policy Updates">
-Your consent remains valid for the current versions of the required documents.
+<Info>
+  Your consent remains valid for the current versions of the required documents.
 
-If RugFreePump publishes a new version of the Terms of Service, Privacy Policy, or Risk Disclosure, you may be asked to review and sign the updated documents before performing another financial operation.
+  If RugFreePump publishes a new version of the Terms of Service, Privacy Policy, or Risk Disclosure, you may be asked to review and sign the updated documents before performing another financial operation.
 
-For more information, see the [RugFreePump Consent Documentation](/user-guides/rugfreepump-consent).
-</Callout>
+  For more information, see the [RugFreePump Consent Documentation](https://rugfreepump.com/docs/user-guides/rugfreepump-consent).
+</Info>
+
+<Info title="Policy Updates">
+  Your consent remains valid for the current versions of the required documents.
+
+  If RugFreePump publishes a new version of the Terms of Service, Privacy Policy, or Risk Disclosure, you may be asked to review and sign the updated documents before performing another financial operation.
+
+  For more information, see the [RugFreePump Consent Documentation](/user-guides/rugfreepump-consent).
+</Info>
 
 # Understand the Bonding Curve Sale
 
@@ -211,7 +219,7 @@ The sale then enters the liquidity migration stage.
 
 ### Liquidity Migration Pending
 
-After the sale becomes Completed, the pool creator is given an approximately **60-minute migration reminder period** to prepare for liquidity migration. 
+After the sale becomes Completed, the pool creator is given an approximately **60-minute migration reminder period** to prepare for liquidity migration.
 
 The creator can still initiate migration after this period ends.
 
@@ -261,17 +269,17 @@ If you contributed SOL to a Canceled sale, you can withdraw your contributed SOL
 
 For more information, see [**Withdrawing Contributed SOL**](/user-guides/for-token-buyers/withdrawing-contributed-sol).
 
-<Callout type="info" title="Normal Sale Lifecycle">
-The normal lifecycle is:
+<Info>
+  The normal lifecycle is:
 
-**Live → Completed → Migrated**
+  **Live → Completed → Migrated**
 
-A sale can instead become:
+  A sale can instead become:
 
-**Live → Expired**
+  **Live → Expired**
 
-Cancellation is an exceptional outcome and is not part of the normal sale lifecycle.
-</Callout>
+  Cancellation is an exceptional outcome and is not part of the normal sale lifecycle.
+</Info>
 
 # Configure Your Purchase
 
@@ -336,18 +344,18 @@ This can reduce failures caused by price movement, but it also means you accept 
 
 If the sale moves beyond your selected slippage tolerance, the transaction fails instead of executing outside the limit you specified.
 
-<Callout type="warning" title="Choose Your Slippage Carefully">
-Higher slippage does not guarantee a successful transaction.
+<Warning>
+  Higher slippage does not guarantee a successful transaction.
 
-It only increases the amount of price movement your transaction is willing to accept.
-</Callout>
+  It only increases the amount of price movement your transaction is willing to accept.
+</Warning>
 
 # Select Transaction Priority
 
 RugFreePump provides three fixed transaction priority options.
 
 | Priority | Priority Fee |
-| --- | ---: |
+| --- | --: |
 | **Fast** | **0.000020 SOL** |
 | **Turbo** | **0.000100 SOL** |
 | **Ultra** | **0.000200 SOL** |
@@ -358,9 +366,9 @@ These priority tiers are fixed and are not dynamically adjusted based on network
 
 The priority fee is a **Solana network fee**, not a RugFreePump protocol fee.
 
-<Callout type="warning" title="Failed Transactions">
-If a transaction is processed by the network but ultimately fails, the selected priority fee may still be charged by the network.
-</Callout>
+<Warning>
+  If a transaction is processed by the network but ultimately fails, the selected priority fee may still be charged by the network.
+</Warning>
 
 # Buy Tokens
 
