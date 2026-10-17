@@ -16,6 +16,23 @@
     "raiseIssue": true
   },
   "favicon": "/favicon.svg",
+  "navbar": {
+    "links": [
+      {
+        "label": "Announcements",
+        "href": "/announcements/announcements"
+      },
+      {
+        "label": "Support",
+        "href": "https://discord.gg/REPLACE_WITH_INVITE"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Launch App",
+      "href": "https://rugfreepump.com"
+    }
+  },
   "navigation": {
     "pages": [
       {
