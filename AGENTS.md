@@ -38,7 +38,7 @@ Do not introduce private source code, internal credentials, secrets, or sensitiv
 ## Official References
 
 - Platform: https://rugfreepump.com
-- Documentation: https://rugfreepump.com/docs
+- Documentation: https://docs.rugfreepump.com
 - Public documentation repository: https://github.com/rugfreepump/public-docs
 - Legal contact: legal@rugfreepump.com
 
