@@ -140,5 +140,13 @@
       "cursor",
       "vscode"
     ]
+  },
+  "footer": {
+    "socials": {
+      "telegram": "https://t.me/REPLACE_WITH_CHANNEL",
+      "x": "https://x.com/REPLACE_WITH_USERNAME",
+      "discord": "https://discord.gg/REPLACE_WITH_INVITE",
+      "github": "https://github.com/REPLACE_WITH_ORGANIZATION"
+    }
   }
 }
