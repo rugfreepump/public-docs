@@ -194,7 +194,7 @@
       "telegram": "https://t.me/REPLACE_WITH_CHANNEL",
       "x": "https://x.com/REPLACE_WITH_USERNAME",
       "discord": "https://discord.gg/REPLACE_WITH_INVITE",
-      "github": "https://github.com/REPLACE_WITH_ORGANIZATION"
+      "github": "https://github.com/rugfreepump"
     }
   },
   "description": "RugFreePump is a Solana-native token launch platform featuring structured bonding-curve fundraising, Token Unlocked (TU) and Token Locked (TL) sale models, Raydium CPMM liquidity migration, and an ecosystem reward program. Explore official documentation, user guides, protocol mechanics, security and risk disclosures, and developer integration resources.",
