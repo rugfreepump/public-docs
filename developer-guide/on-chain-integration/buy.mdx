@@ -251,21 +251,32 @@ The following accounts must be supplied to `buy` in the order defined by the ins
 The following example derives the required accounts, reads the current `bonding_curve_pda` data account state for slippage protection, constructs the `buy` instruction, and submits it in a versioned Solana transaction.
 
 ```ts
-import { Program } from "@coral-xyz/anchor";
+import { BN } from "@coral-xyz/anchor";
 import {
   PublicKey,
   SystemProgram,
   TransactionMessage,
   VersionedTransaction,
 } from "@solana/web3.js";
-import BN from "bn.js";
 
-// Your configured Anchor program, connection, and wallet
-const program = new Program(IDL, provider);
+// Application-provided:
+// - program: configured RugFreePump Anchor Program
+// - provider: configured Anchor provider
+// - wallet: connected wallet supporting signTransaction()
 
-const PROGRAM_ID = new PublicKey("RUGFREEPUMP_PROGRAM_ID");
+const PROGRAM_ID = program.programId;
+const connection = provider.connection;
+
 const mint = new PublicKey("TOKEN_MINT_ADDRESS");
 const buyer = wallet.publicKey;
+
+if (!buyer || !wallet.signTransaction) {
+  throw new Error("A connected signing wallet is required");
+}
+
+const solUsdPriceFeed = new PublicKey(
+  "7UVimffxr9ow1uXYxsr4LHAcV58mLzhmwaeKvJ1pjLiE"
+);
 
 const lamportsAmount = new BN("1000000000"); // 1 SOL
 const slippageBps = 200; // 2%
@@ -273,28 +284,22 @@ const slippageBps = 200; // 2%
 // Derive required PDAs
 const [adminStatesPda] = PublicKey.findProgramAddressSync(
   [Buffer.from("admin-states")],
-  PROGRAM_ID,
+  PROGRAM_ID
 );
 
 const [globalStatesPda] = PublicKey.findProgramAddressSync(
   [Buffer.from("global-states")],
-  PROGRAM_ID,
+  PROGRAM_ID
 );
 
 const [bondingCurvePda] = PublicKey.findProgramAddressSync(
-  [
-    Buffer.from("bonding-curve"),
-    mint.toBuffer(),
-  ],
-  PROGRAM_ID,
+  [Buffer.from("bonding-curve"), mint.toBuffer()],
+  PROGRAM_ID
 );
 
 const [bondingCurveVault] = PublicKey.findProgramAddressSync(
-  [
-    Buffer.from("bonding-curve-vault"),
-    mint.toBuffer(),
-  ],
-  PROGRAM_ID,
+  [Buffer.from("bonding-curve-vault"), mint.toBuffer()],
+  PROGRAM_ID
 );
 
 const [buyerAccumulationPda] = PublicKey.findProgramAddressSync(
@@ -303,25 +308,24 @@ const [buyerAccumulationPda] = PublicKey.findProgramAddressSync(
     bondingCurvePda.toBuffer(),
     buyer.toBuffer(),
   ],
-  PROGRAM_ID,
+  PROGRAM_ID
 );
 
 const [platformFeeVault] = PublicKey.findProgramAddressSync(
   [Buffer.from("platform-fee-vault")],
-  PROGRAM_ID,
+  PROGRAM_ID
 );
 
 // Fetch the current bonding-curve state
-const bondingCurveAccount = await program.account.bondingCurvePda.fetch(bondingCurvePda);
+const bondingCurveAccount =
+  await program.account.bondingCurvePda.fetch(bondingCurvePda);
 
 // Read the state snapshot required for slippage protection
-const expectedTotalRaisedUsdE2 = new BN(
-  bondingCurveAccount.totalRaisedUsdE2.toString(),
-);
+const expectedTotalRaisedUsdE2 =
+  bondingCurveAccount.totalRaisedUsdE2;
 
-const expectedTotalSoldTokensE6 = new BN(
-  bondingCurveAccount.totalSoldTokensE6.toString(),
-);
+const expectedTotalSoldTokensE6 =
+  bondingCurveAccount.totalSoldTokensE6;
 
 // Construct the buy instruction
 const buyInstruction = await program.methods
@@ -329,9 +333,9 @@ const buyInstruction = await program.methods
     lamportsAmount,
     expectedTotalRaisedUsdE2,
     expectedTotalSoldTokensE6,
-    slippageBps,
+    slippageBps
   )
-  .accounts({
+  .accountsStrict({
     buyer,
     mint,
     adminStatesPda,
@@ -340,13 +344,14 @@ const buyInstruction = await program.methods
     bondingCurveVault,
     buyerAccumulationPda,
     platformFeeVault,
-    solUsdPriceFeed: SOL_USD_PRICE_FEED_ACCOUNT,
+    solUsdPriceFeed,
     systemProgram: SystemProgram.programId,
   })
   .instruction();
 
 // Fetch a recent blockhash
-const { blockhash } = await provider.connection.getLatestBlockhash("confirmed");
+const { blockhash, lastValidBlockHeight } =
+  await connection.getLatestBlockhash("confirmed");
 
 // Build the versioned transaction
 const messageV0 = new TransactionMessage({
@@ -358,11 +363,29 @@ const messageV0 = new TransactionMessage({
 const transaction = new VersionedTransaction(messageV0);
 
 // Sign and submit
-transaction.sign([wallet.payer]);
+const signedTransaction = await wallet.signTransaction(transaction);
 
-const signature = await provider.connection.sendTransaction(transaction);
+const signature = await connection.sendRawTransaction(
+  signedTransaction.serialize()
+);
 
-console.log(signature);
+// Confirm transaction execution
+const confirmation = await connection.confirmTransaction(
+  {
+    signature,
+    blockhash,
+    lastValidBlockHeight,
+  },
+  "confirmed"
+);
+
+if (confirmation.value.err) {
+  throw new Error(
+    `Buy transaction failed: ${JSON.stringify(confirmation.value.err)}`
+  );
+}
+
+console.log("Buy transaction confirmed:", signature);
 ```
 
 `RUGFREEPUMP_PROGRAM_ID`, `IDL`, `provider`, `wallet`, `mint`, and `SOL_USD_PRICE_FEED_ACCOUNT` are application-specific values supplied by the integrating application.
