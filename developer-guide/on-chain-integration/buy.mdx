@@ -388,6 +388,6 @@ if (confirmation.value.err) {
 console.log("Buy transaction confirmed:", signature);
 ```
 
-`RUGFREEPUMP_PROGRAM_ID`, `IDL`, `provider`, `wallet`, `mint`, and `SOL_USD_PRICE_FEED_ACCOUNT` are application-specific values supplied by the integrating application.
+`program`, `provider`, and `wallet` are application-specific instances supplied by the integrating application. The `program` instance must be configured with the RugFreePump IDL and deployed program address, while `provider` must expose a Solana connection and `wallet` must support signing versioned transactions. Replace `TOKEN_MINT_ADDRESS` with the mint address of the token being purchased.
 
 The `buyer_accumulation_pda` is created automatically by the `buy` instruction if it does not already exist. The buyer pays the required account rent.
