@@ -16,8 +16,8 @@
     "raiseIssue": true
   },
   "favicon": {
-    "light": "/images/RugFreePumpLogo.png",
-    "dark": "/images/RugFreePumpLogo.png"
+    "light": "/logo/light.webp",
+    "dark": "/logo/dark.webp"
   },
   "navbar": {
     "links": [
